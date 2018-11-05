@@ -1,101 +1,27 @@
-<!DOCTYPE HTML>
-<html>
-<head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="utf-8">
-  
-  <title>归档：2018/11 | 治部少辅 | 大一大万大吉</title>
-
-  
-  <meta name="author" content="Woody Huang">
-  
-
-  
-  <meta name="description" content="随便写写">
-  
-
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  
-
-  <meta property="og:site_name" content="治部少辅">
-
-  
-  <meta property="og:image" content="/favicon.ico">
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-</head>
-
-
-<body>
-<div class="blog">
-  <div class="content">
-
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">治部少辅</a>
-    </h1>
-    <p class="site-description">大一大万大吉</p>
-  </div>
-  <nav class="site-navigation">
-    <ul>
-      
-        <li><a href="/">主页</a></li>
-      
-        <li><a href="/archives">归档</a></li>
-      
-    </ul>
-  </nav>
-</header>
-
-    <main class="site-main posts-loop">
-    
-
-<article>
-
-  <h2 class="article-title ">2018/11</h2>
-
-  <div class="archive">
-    
-      <div class="post archive">
-        <div class="archive-post">
-          <time datetime="2018-11-05T05:01:41.633Z">
-            <a href="/posts/2018/11/05/hello-world/">2018-11-05</a>
-          </time>
-          
-            <h3 class="archive-title"><a href="/posts/2018/11/05/hello-world/"><span>Hello World</span></a></h3>
-          
-        </div>
-      </div>
-    
-    <nav class="pagination">
-  
-  
-</nav>
-  </div>
-
-</article>
-    </main>
-
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    <br>
-    
-    &copy; 2018 Woody Huang
-    
-  </p>
-</footer>
-    
-  </div>
-</div>
-</body>
-</html>
+extends ./_partial/layout.pug
+block content
+  include ./_partial/page_header.pug
+  ul.post-list(style='max-width:'+ theme.content_width +'px')
+    each post in page.posts.data
+      li 
+        p.date #{time(post.date, 'LL')}
+        if post.title
+          h4.title
+            a(href=url_for(post.path)) #{post.title}
+          .excerpt !{post.excerpt}
+        else
+          .no-title !{post.content}
+        if post.photos && post.photos.length
+          a(href=url_for(post.path))
+            img.photo(src=post.photos[0])
+        ul.meta
+          li
+            i.icon.icon-author
+            | #{config.author}
+          li
+            i.icon.icon-clock
+            | #{parseInt(post.content ? post.content.length/900 : 0)} Minutes
+          li
+            i.icon.icon-category
+            | !{list_categories(post.categories)}
+  include ./_partial/pagination.pug
