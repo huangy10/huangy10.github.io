@@ -51,8 +51,8 @@
 <p>三个命令，就可以逐步完成清理之前的生成，重新生成静态文件，将静态文件部署到Github上。全部完成后访问<a href="http://username.github.io" target="_blank" rel="noopener">username.github.io</a> 。就可以看到站点了。</p>
 <h2 id="2-Hexo-Advanced"><a href="#2-Hexo-Advanced" class="headerlink" title="2. Hexo Advanced"></a>2. Hexo Advanced</h2><h3 id="2-1-自定义域名"><a href="#2-1-自定义域名" class="headerlink" title="2.1 自定义域名"></a>2.1 自定义域名</h3><p>使用github提供的免费域名还是不够fancy，我还是希望使用自己的域名。首先进入域名管理后台，添加两条记录。分别是</p>
 <ul>
-<li>yourdomain.com添加一条A记录，指向username.github.io对应的ip地址。（这个ip地址可以通过ping命令看到）</li>
-<li><a href="http://www.yourdomain.com添加一条CNAME记录，指向username.github.io" target="_blank" rel="noopener">www.yourdomain.com添加一条CNAME记录，指向username.github.io</a></li>
+<li>yourdomain.com 添加一条A记录，指向username.github.io对应的ip地址。（这个ip地址可以通过ping命令看到）</li>
+<li><a href="http://www.yourdomain.com" target="_blank" rel="noopener">www.yourdomain.com</a> 添加一条CNAME记录，指向username.github.io</li>
 </ul>
 <p>然后在本地博客工程中的<code>public</code>文件夹下，添加一个<code>CNAME</code>文件，文件中写入自定义的域名<code>www.yourdomain.com</code>。重新三连：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean; hexo g; hexo d</span><br></pre></td></tr></table></figure>
