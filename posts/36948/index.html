@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="随便写写"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>macOS绕过SIP安全机制限制的一种办法 - 治部少辅</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"><script src="https://cdn-city.livere.com/js/embed.dist.js" async></script></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com/huangy10"><span>Github</span></a></li><li><a href="/archives"><span>Archives</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="https://i.loli.net/2018/11/05/5bdfeccbb2696.jpg"><div class="post-title"><h1 class="title">macOS绕过SIP安全机制限制的一种办法</h1><ul class="meta"><li><i class="icon icon-author"></i>Woody Huang</li><li><i class="icon icon-clock"></i>2 Minutes</li><li><i class="icon icon-calendar"></i>November 21, 2018</li></ul></div></div><div class="article-content" style="max-width:800px"><p><a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="noopener">SIP(System Security Protection)</a>是苹果在OSX EI Capitan及其后版本的操作系统中引入了一种新的安全机制。望文生义就可以看出，这个安全机制是用来维持系统的完整性，保护系统免收恶意软件的篡改。具体来说，SIP限制了root账户的权限范围，限制了root用户在对一些系统保护目录即其中文件的操作能力。</p>
+<p>SIP的保护范围包括下列路径：</p>
+<ul>
+<li>/System</li>
+<li>/usr</li>
+<li>/bin</li>
+<li>/sbin</li>
+<li>OSX的预装应用</li>
+</ul>
+<p>第三方应用可以继续操作的目录包括：</p>
+<ul>
+<li>/Applications</li>
+<li>/Library</li>
+<li>/usr/local</li>
+</ul>
+<p>但是<strong>任何对于安全性加强都意味着对灵活性的削弱</strong>。例如，在SIP保护下，类似<a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="noopener">proxychains-ng</a>的程序无法再给受保护的目录下的程序添加网络钩子(hook)。</p>
+<blockquote>
+<p>proxychains ng (new generation) - a preloader which hooks calls to sockets in dynamically linked programs and redirects it through one or more socks/http proxies.</p>
+</blockquote>
+<p>一般来说，很多解决方案都建议关闭SIP功能（例如proxychains-ng的issue中给出的方法：<a href="https://github.com/rofl0r/proxychains-ng/issues/78" target="_blank" rel="noopener"># issue78</a>）。不过这样也意味着丧失了SIP提供的保护功能。<a href="https://www.tcdw.net/post/proxychains-with-sip/" target="_blank" rel="noopener">这篇文章</a>给出了一个妥协的做法。在保留SIP的保护的同时，为保护目录下的程序应用proxychains-ng（其他类似的应用场景也可以使用这个办法）。这个解决方案的思路其实很简单：既然保护目录下的程序我们不能动，那么我们把保护目录下的程序复制一份到其他目录下运行就可以。</p>
+<p>首先创建一个新的文件夹：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.unprotected_apps</span><br></pre></td></tr></table></figure>
+<p>然后将这个路径添加到<code>PATH</code>环境变量的头部：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 可以添加到shell的配置文件中，如~/.bashrc或者~/.zshrc</span></span><br><span class="line">export PATH="~/.unprotected_apps:$PATH"</span><br></pre></td></tr></table></figure>
+<p>然后将需要添加钩子的应用复制到这个目录下就可以了，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp $(which ssh) ~/usr/bin/ssh</span><br><span class="line">cp $(which curl) ~/usr/bin/curl</span><br></pre></td></tr></table></figure>
+<p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/macOS/">macOS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/教程/">教程</a><span class="tag-list-count">7</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/教程/">教程</a><span class="category-list-count">7</span></li></ul></div></div><div class="article-comment" id="lv-container" data-id="city" data-uid="MTAyMC80MDkyMC8xNzQ0NQ==" style="max-width:800px"></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/posts/37347/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/huangy10" title="Github" target="_blank"><i class="icon icon-github"></i></a></li><li><a href="https://www.zhihu.com/people/woody-huang" title="Zhihu" target="_blank"><i class="icon icon-zhihu"></i></a></li><li><a href="mailto:woodyhuang1@gmail.com" title="Email" target="_blank"><i class="icon icon-email"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2018 治部少辅<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script><script src="https://www.googletagmanager.com/gtag/js?id=UA-114736006-1" async></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-114736006-1');</script></body></html>
