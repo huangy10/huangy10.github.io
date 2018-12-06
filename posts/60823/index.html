@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="zh-cn"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"><meta name="format-detection" content="telephone=no"><meta name="format-detection" content="email=no"><meta name="description" content="随便写写"><meta name="keywords" content="Hexo, Gruntjs, Nodejs, Reactjs, Vuejs"><title>TCP:拥堵控制 - 治部少辅</title><link rel="stylesheet" href="/css/main_style.min.css"><link rel="icon" href="/favicon.ico"><script src="https://cdn-city.livere.com/js/embed.dist.js" async></script></head><body><input id="navi" type="checkbox"><ul class="main-navication"><li><a href="/"><span>Home</span></a></li><li><a href="https://github.com/huangy10"><span>Github</span></a></li><li><a href="/archives"><span>Archives</span></a></li></ul><div class="wrapper" id="wrap"><div class="post-header"><label class="navi-button light" for="navi">MENU</label><img class="background" src="https://i.loli.net/2018/11/05/5bdfeccbb2696.jpg"><div class="post-title"><h1 class="title">TCP:拥堵控制</h1><ul class="meta"><li><i class="icon icon-author"></i>Woody Huang</li><li><i class="icon icon-clock"></i>7 Minutes</li><li><i class="icon icon-calendar"></i>December 5, 2018</li></ul></div></div><div class="article-content" style="max-width:800px"><p>网络数据包如果一次发送太多，就会造成网络拥堵；如果发送太少，就浪费了带宽，延长了通信时间。TCP 协议有一个拥堵窗口机制，负责动态调整每次发送数据包的数量。本文通俗地解释了这种算法的细节。</p>
+<p>本文翻译自<a href="http://squidarth.com/rc/programming/networking/2018/07/18/intro-congestion.html" target="_blank" rel="noopener">Intro to Congestion Control</a><br><a id="more"></a></p>
+<p>这个夏天，我一直在思考更好地解决网络拥塞问题的方法。在这篇文章中，我将会讨论为什么网络拥塞问题会出现，以及一些传统的解决办法。如果你有更深厚的兴趣，这个<a href="http://squidarth.com/demonstrating-congestion-control.html" target="_blank" rel="noopener">Juptier notebook</a>包含了我用来获取相应结果的代码，以及对这些结果的分析。</p>
+<h2 id="什么是TCP"><a href="#什么是TCP" class="headerlink" title="什么是TCP"></a>什么是TCP</h2><p>在我们开始正文讨论之前，我来先简要介绍一些信息在网络上流通的细节。</p>
+<p><a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener">TCP</a>协议被用来将信息从一台电脑经过英特网传输给另一台电脑。这个协议也是这篇文章所关注的协议。把TCP协议同其他协议（如UDP）区分开来的特征是，TCP确保了100%的传输成功率。也就是说如果你从一台电脑上发送了100kb的数据，那么你会在接收端准确地收到这100kb的数据。</p>
+<p>TCP的这个特性非常强大，而这一特性也是很多网络应用采用TCP协议的原因。现有的Web应用和Email都是构筑于TCP协议之上。</p>
+<p>TCP实现所有数据的可靠传输的核心原理是，对于从A端发送到B端的数据，B端会发送回一个ACK(Acknowlegement)信息给A端来告知自己收到了对应的信息。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/425ffff00e7427abb333fbfe203f54fe.png" alt="TCP传输"></p>
+<p>另外还值得注意的是，TCP工作在IP协议之上，IP协议最多允许在一个包中包含1500个字节的数据，因此要发送100kb的数据，需要拆分成多个分段。根据TCP协议，每个分段都会收到对应的ACK。</p>
+<p>如果发送者没有收到一个数据分段的ACK，其会重新发送这个分段。</p>
+<h2 id="什么时候会还产生拥塞"><a href="#什么时候会还产生拥塞" class="headerlink" title="什么时候会还产生拥塞"></a>什么时候会还产生拥塞</h2><p>拥塞（Congestion）问题是由于网络传输延时导致的。信息传输速率会收到物理信道，如以太网线，蜂窝网络等，的制约。在因特网中，大部分独立设备都连接到这些信道上。</p>
+<p>下图是一个典型场景：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/41a5dc5f5cc16669201e09c56522c2e6.png" alt="拥塞产生的场景"></p>
+<p>在上面的示意图中，两个发送者要各自要传输1GB的数据。然而这两个发送者最终接入到了一个1GB的链接中。第二个链接的传输能力无法匹配上前两个链接的输入，故而不得不丢弃一部分数据包。如果发送者不主动调整自己的发送速度，那么会产生非常坏的情况。在TCP协议中，如果发送者发现一个数据分段没有送达，会重新发送这个数据包。那么拥塞情况会持续，两个发送者会无法完成发送过程。</p>
+<p>为了让两个发送者能够成功传输各自的数据，他们需要共同减少发送数据的速率。如果只有一个发送者减少了发送的数据，而另一个仍然维持1GB的发送量，那么仍然会产生拥塞。在因特网的架构中，不会有一个中央控制系统来协调两者的发送速率。</p>
+<h2 id="迂回：什么是链接-link-？"><a href="#迂回：什么是链接-link-？" class="headerlink" title="迂回：什么是链接(link)？"></a>迂回：什么是链接(link)？</h2><p>在我们深入到这个问题的解决方案前，我还想进一步讨论链接（link）的属性。关于网络链接，有下面三个重要的细节问题你需要知道：</p>
+<ul>
+<li>延时（毫秒）：一个包从链接的一端发送到另一端需要的时间</li>
+<li>带宽（mb/s）：链接每秒能够通过的比特数</li>
+<li>队列：在链接正在工作时，等候发送包的队列的长度，以及在队列满时管理队列的策略</li>
+</ul>
+<p>如果把链接比喻成水管，那么延时可以理解为管道的长度，带宽就是水管的周长。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/3f08678913f4a2d53eebcbc0d9f483b2.png" alt="链接模型"></p>
+<p>关于链接还有一个重要的统计参数时带宽延时积（bandwidth-delay product, BDP）。这个参数表现了体现了停留在链接中的数据量，可以理解为管道本身的容量。当链接中传输的数据量达到了BDP时，就可以说链接被充分利用了。如果发送端尝试发送比BDP更多的数据，那么链接的队列将会填满，并最终开始丢包。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>在给出方法之前，我们要思考一个问题：发送者如何知道产生了拥塞呢？如同我们之前提到的，因特网是一个分布式的系统，故而并没有一个位于中央的协调者来在下游链接产生拥塞的时候提醒发送者要减慢发送速度。</p>
+<p>主要有两个指标：<strong>丢包率</strong>和<strong>传输往返时间</strong>。在拥塞发生时，链接的队列逐渐填满，开始发生丢包。如果一个发送者注意到了丢包现象，这就很可能意味着发生了丢包。另一个队列满负荷的现象是数据包在队列中等待的时间增加了，这会导致传输往返时间，即发送包到收到ACK的时间增加。</p>
+<p>今天的一些拥塞控制机制考虑了上面两个指标，不过在一些比较早期的设计中，只使用到了丢包率这一个指标。</p>
+<p>还需要注意的是，发送者可能并不提前知道传输链接的特性参数。例如，如果你访问”<a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a>“，那么你发送的数据包可能要经过很多不同性质的链接才能到达Google的服务器，而你的传输速率是收到其中最慢的链接的制约的。</p>
+<p>因此，出了规避网络拥塞的能力，拥塞控制机制还需要能够探索可用带宽的具体大小。</p>
+<h2 id="拥塞窗口（Congestion-Window）"><a href="#拥塞窗口（Congestion-Window）" class="headerlink" title="拥塞窗口（Congestion Window）"></a>拥塞窗口（Congestion Window）</h2><p>理解任何拥塞控制机制的关键在于理解拥塞窗口的概念。拥塞窗口指的是在收到一个ACK前发送者能发送的包的数量。如果一个发送者的拥塞窗口被设置为2，这意味着在发送了两个包之后，它必须等到接收端回复的ACK之后才能继续发送。</p>
+<p>拥塞窗口越大，发送者就能在相通的时间间隔内向接收端发送更多的数据包。为了更加直观的理解，假设网络传输的延时是88ms，拥塞窗口设置为10，那么在一轮往返传输（88 * 2 = 176ms）时间内可以发送10个数据包。而如果拥塞窗口设置为20，则相同的时间间隔内可以发送20个数据包。</p>
+<p>不过当然，提升拥塞窗口的大小，也会提高发生拥塞的概率。拥塞控制算法的目标，就是计算出合适的拥塞窗口大小。</p>
+<p>从理论角度来看，拥塞窗口的大小应当就是链接的BDP。</p>
+<h2 id="TCP-Tahoe"><a href="#TCP-Tahoe" class="headerlink" title="TCP Tahoe"></a>TCP Tahoe</h2><p>TCP Tahoe是在80年代设计出来的拥塞控制算法。那是拥塞问题才刚刚在因特网上出现。算法本身非常简单。增加拥塞窗口分为两个阶段：</p>
+<p><strong>第一阶段： Slow Start</strong>：算法的开始状态是Slow Start。在这个阶段拥塞窗口在每收到一个ACK就增加1。这种机制有效地在每轮往返传输成功后，将拥塞窗口的大小翻倍。如果拥塞窗口的大小是4，那么在同时会有4个包在传输路途中。当每个包的ACK返回时，拥塞窗口加一，即当这四个包的ACK都收到后，拥塞窗口会翻倍成为8。这个过程会一直持续到拥塞窗口达到阈值，<code>ssthresh</code>。</p>
+<p><strong>第二阶段：Congestion Avoidance</strong>：当拥塞窗口达到阈值<code>ssthresh</code>时，进入Congestion Avoidance阶段。在这一阶段，每轮往返传输后拥塞窗口加一。也就是说，在上面的例子中，当所有4个包的ACK收到后，拥塞窗口只会加1. 在这个阶段拥塞窗口的大小会大大减小。</p>
+<p>当Tahoe检测到丢包后，会把<code>ssthresh</code>设置为当前拥塞窗口的一半，然后将拥塞窗口设置为1，算法重新回到Slow Start阶段。</p>
+<h3 id="丢包检测与快速重传"><a href="#丢包检测与快速重传" class="headerlink" title="丢包检测与快速重传"></a>丢包检测与快速重传</h3><p>TCP发送端有两种方法来检测丢包现象：</p>
+<ol>
+<li>发送端超时。发送端会给每个发送出去的数据包设置一个超时。如果在超时时限达到时尚未收到该包的ACK，则认为发生丢包，并重传改数据包，将拥塞窗口设置为1.</li>
+<li>接受者发送回重复的ACK。在TCP中，接收端只会接收按照顺序发送的包。如果收到了不合顺序的包，接收端会返回他收到的最后一个符合顺序的包的ACK。例如，接收端收到了1，2，3，其后又收到了包5，那么接收端会再次回复3的ACK。在Tahoe中，如果发送端检测到重复的ACK，就意味着发生了丢包。这种机制被称为快速重传(Fast Retransmit)，因为这种机制不一定要等待到传输超时。</li>
+</ol>
+<h3 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h3><p>在开头提到的<a href="http://squidarth.com/demonstrating-congestion-control.html" target="_blank" rel="noopener">Jupitor Notebook</a>中，我实现了Tahoe，下图是拥塞窗口随着时间变化的曲线：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/5e69012dbb6b7ebb8e7d137e0d70bf61.png" alt="Tahoe的拥塞窗口曲线"></p>
+<p>注意到上图的中变化曲线存在锯齿形的行为。开始的突增为Slow-Start阶段，后面的平缓部分为Congestion Avoidance阶段。急遽掉落到1则是由于丢包导致的。</p>
+<h3 id="为什么Tahoe要如此工作？"><a href="#为什么Tahoe要如此工作？" class="headerlink" title="为什么Tahoe要如此工作？"></a>为什么Tahoe要如此工作？</h3><p>Tahoe在工作过程中不断增加拥塞门限的原因是因为网络条件会随着时间不断变化。例如如果另一个发送者开始在同一个信道上发送数据，这会导致可用带宽的降低，其他的发送者需要按照实际情况调整。相反，如果有一个发送者停止发送数据了，可用带宽会增加，这也需要其他发送者根据实际情况来调整。</p>
+<p>这种方法其实还是存在很多问题，这也是Tahoe目前已经基本没人使用了。特别的，Tahoe需要很长的时间，尤其是在高带宽网络上，才能全面有效地利用可用带宽。这是因为在拥塞窗口增长到Slow Start门限以后，其增长就变得非常缓慢了。</p>
+<p>另外一个问题是，发生丢包并不一定意味着网络发生了拥塞，例如Wifi信道下，本身信道就是可能发送丢失的。对于丢包产生剧烈的将拥塞窗口砍到1并不总是合适的做法。</p>
+<p>最后一个问题是，Tahoe使用丢包这个因子来作为判断是否发生丢包的依据。然而由于拥塞发生了丢包，此时调整拥塞窗口已经太晚了。</p>
+<h2 id="其他的方法"><a href="#其他的方法" class="headerlink" title="其他的方法"></a>其他的方法</h2><p>80年代以后，涌现了不少新的算法来解决上面这些问题。我会在将来的文章中详细讨论这些方法：</p>
+<ol>
+<li><p>CUBIC：这个算法在2005年实现，目前是Linux系统的默认拥塞控制算法。如同Tahoe，这个CUBIC也是用丢包作为判断拥塞是否发生的依据。不同的是，CUBIC在高带宽网络下的性能要远高于Tahoe。不同于Tahoe在每一轮往返传输后将拥塞窗口增加1的做法，CUBIC如同其名，使用一个立方函数来确定窗口大小，从而实现拥塞窗口的快速增长。</p>
+</li>
+<li><p>BBR(Bufferbloat)：这是最近才被Google提出的新的算法。不同于CUBIC和Tahoe，这个算法使用延时来作为判断拥塞是否发生的标识。这背后的思路是延时是拥塞在导致丢包前就能起作用的判断因子。在实际丢包发生前就开始减少发送速率能够带来更高的吞吐率。</p>
+</li>
+</ol>
+<h2 id="公平性"><a href="#公平性" class="headerlink" title="公平性"></a>公平性</h2><p>在研究拥塞控制算法时，一个有意思的问题是考虑不同的算法对于同一网络链接上的各个发送者是否公平。如果一个算法在发生拥塞时，没有缩减发送规模，而是按照之前相同的速率继续发送，那么这个算法就是不公平的。在<a href="http://squidarth.com/demonstrating-congestion-control.html#Low-Bandwidth,-1-Fixed-Window,-1-Tahoe" target="_blank" rel="noopener">这个结果</a>中，如果同一个链接上 有一个发送者没有采用拥塞窗口控制，而另一个发送者使用Tahoe。从结果可以看到，在一分钟的时间内，Tahoe发送者几乎没法发送任何数据，因为它没有机会增加它的拥塞窗口。而固定窗口的发送者全占了发送信道。</p>
+<p>尽管固定窗口发送者是一个不好的情形，这种算法可能具有对其他的算法的不公平地位，从而占据更多带宽。由于缺乏中央控制这，可能有贪婪的发送者蓄意采用固定窗口来谋取更大的带宽。这就是需要从博弈论的角度来研究拥塞控制算法了。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>拥塞控制算法是互联网的基础，同时也是在有限信息条件下进行分布式决策的一种迷人的实践。</p>
+<p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>
+</div><div class="article-meta" style="max-width:800px"><div class="tags"><i class="icon icon-tag"></i><ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP-IP/">TCP/IP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/网络/">网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/翻译/">翻译</a><span class="tag-list-count">1</span></li></ul></div><div class="categories"><i class="icon icon-category"></i><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/形而上/">形而上</a><span class="category-list-count">1</span></li></ul></div></div><div class="article-comment" id="lv-container" data-id="city" data-uid="MTAyMC80MDkyMC8xNzQ0NQ==" style="max-width:800px"></div><ul class="navication"><li class="home"><a href="/"><i class="icon icon-home"></i></a></li><li><a href="/posts/56042/"><i class="icon icon-arror-right"></i></a></li></ul><div class="page-footer"><div class="top"><ul class="social"><li><a href="https://github.com/huangy10" title="Github" target="_blank"><i class="icon icon-github"></i></a></li><li><a href="https://www.zhihu.com/people/woody-huang" title="Zhihu" target="_blank"><i class="icon icon-zhihu"></i></a></li><li><a href="mailto:woodyhuang1@gmail.com" title="Email" target="_blank"><i class="icon icon-email"></i></a></li></ul></div><div class="bottom"><p class="copyright">© 2018 治部少辅<br><small>POWER BY <a href="https://hexo.io" target="_blank">HEXO</a></small><small>, THEME BY <a href="https://github.com/BoizZ/hexo-theme-laughing" target="_blank">LAUGHING</a></small></p></div></div></div><script>var wrap = document.getElementById('wrap');
+window.onload = function () {
+  wrap.className += ' done';
+}</script><script src="https://www.googletagmanager.com/gtag/js?id=UA-114736006-1" async></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-114736006-1');</script></body></html>
