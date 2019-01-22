@@ -118,8 +118,7 @@
 <p>这里的protocol应当对应的是1.1.3中提到的总线。推理过程如下：</p>
 <ol>
 <li><a href="https://lwn.net/Articles/746776/" target="_blank" rel="noopener">https://lwn.net/Articles/746776/</a> 这个链接中提叫的patch描述中称：This patch set aims to improve this situation by adding a new NETLINK_DESC bus with two commands</li>
-<li>在<a href="#8642ah">参考文献</a>中谈论Netlink总线时，聚到了rtnetlink这个例子。根据rtnetlink的<a href="http://man7.org/linux/man-pages/man7/rtnetlink.7.html" target="_blank" rel="noopener">man page</a>，</li>
-<li><p><code><br>#include &lt;asm/types.h&gt;<br>#include &lt;linux/netlink.h&gt;<br>#include &lt;linux/rtnetlink.h&gt;<br>#include &lt;sys/socket.h&gt;</code></p>
+<li><p>在<a href="#8642ah">参考文献</a>中谈论Netlink总线时，聚到了rtnetlink这个例子。根据rtnetlink的<a href="http://man7.org/linux/man-pages/man7/rtnetlink.7.html" target="_blank" rel="noopener">man page</a>，<br><code style="background-color: rgb(255, 255,255)"><br>#include &lt;asm/types.h&gt;<br>#include &lt;linux/netlink.h&gt;<br>#include &lt;linux/rtnetlink.h&gt;<br>#include &lt;sys/socket.h&gt;</code></p>
 <p>rtnetlink_socket = socket(AF_NETLINK, int socket_type, NETLINK_ROUTE);<br></p>
 </li>
 </ol>
