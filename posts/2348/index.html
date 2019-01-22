@@ -119,17 +119,12 @@
 <ol>
 <li><a href="https://lwn.net/Articles/746776/" target="_blank" rel="noopener">https://lwn.net/Articles/746776/</a> 这个链接中提叫的patch描述中称：This patch set aims to improve this situation by adding a new NETLINK_DESC bus with two commands</li>
 <li>在<a href="#8642ah">参考文献</a>中谈论Netlink总线时，聚到了rtnetlink这个例子。根据rtnetlink的<a href="http://man7.org/linux/man-pages/man7/rtnetlink.7.html" target="_blank" rel="noopener">man page</a>，</li>
-<li><code></code></li>
+<li><p><code><br>#include &lt;asm/types.h&gt;<br>#include &lt;linux/netlink.h&gt;<br>#include &lt;linux/rtnetlink.h&gt;<br>#include &lt;sys/socket.h&gt;</code></p>
+<p>rtnetlink_socket = socket(AF_NETLINK, int socket_type, NETLINK_ROUTE);<br></p>
+</li>
 </ol>
 </blockquote>
-<pre><code>#include &lt;asm/types.h&gt;
-#include &lt;linux/netlink.h&gt;
-#include &lt;linux/rtnetlink.h&gt;
-#include &lt;sys/socket.h&gt;
-
-rtnetlink_socket = socket(AF_NETLINK, int socket_type, NETLINK_ROUTE);
-&lt;/code&gt;
-</code></pre><h3 id="9-1-2-绑定socket地址"><a href="#9-1-2-绑定socket地址" class="headerlink" title="9.1.2 绑定socket地址"></a>9.1.2 绑定socket地址</h3><p>在打开了一个socket之后，我们需要为socket绑定一个本地地址。Netlink的地址格式如下：</p>
+<h3 id="9-1-2-绑定socket地址"><a href="#9-1-2-绑定socket地址" class="headerlink" title="9.1.2 绑定socket地址"></a>9.1.2 绑定socket地址</h3><p>在打开了一个socket之后，我们需要为socket绑定一个本地地址。Netlink的地址格式如下：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_nl</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">sa_family_t</span>    nl_family;  <span class="comment">/* AF_NETLINK   */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">short</span> nl_pad;     <span class="comment">/* zero         */</span></span><br><span class="line">  __u32          nl_pid;     <span class="comment">/* process pid */</span></span><br><span class="line">  __u32          ;  <span class="comment">/* mcast groups mask */</span></span><br><span class="line">&#125; nladdr;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>这里的nl_pid可以通过getpid()这个函数来获取当前进程的pid来进行赋值</p>
