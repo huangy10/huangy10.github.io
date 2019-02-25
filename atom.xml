@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-02-25T05:53:17.032Z</updated>
+  <updated>2019-02-25T06:45:36.389Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -17,11 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在小米电视和小米盒子上看YOUTUBE</title>
+    <link href="http://www.codewoody.com/posts/5827/"/>
+    <id>http://www.codewoody.com/posts/5827/</id>
+    <published>2019-02-25T06:41:32.000Z</published>
+    <updated>2019-02-25T06:45:36.389Z</updated>
+    
+    <content type="html"><![CDATA[</p><p>使用小米电视和小米盒子看YouTube上的视频，是很多中国电视用户很想做的事情，下面，我就介绍一种很简单的方法，不用ROOT小米电视或小米盒子，不用重装系统，几分钟的设置就可以在小米电视和小米盒子上看YouTube的方法。</p><p>首先需要下载两个APK应用，第一个是<a href="https://smartyoutubetv.github.io/" target="_blank" rel="noopener">SmartYouTubeTV</a>，点击这里下载最新版SmartYouTubeTV，将其复制到U盘。第二个是Shadowsocks，访问<a href="https://www.apkmirror.com/" target="_blank" rel="noopener">apkmirror</a>网站，搜索Shadowsocks，找到最新版后，下载universal的apk到U盘即可。</p><p>之后，打开小米电视或小米盒子，在“设置-账户与安全”里，选择“允许安装未知来源的应用”。插入U盘，将上述两个apk文件安装到电视上。</p><p>最后，在Shadowsocks上设置好服务器地址，打开SmartYouTubeTV，选择第一个，然后可以选择登陆Google账号，登陆的时候，会让用户在手机上访问 youtube.com/activate 来登陆激活，登陆好了后，电视即可和电脑浏览器的YouTube同步了。</p><p>Smart YouTube TV里登陆Google账号后，你会发现，YouTube里的订阅、上传、历史什么的功能全部可以正常使用了，完美支持小米遥控器控制，观看视频体验极佳，完全不亚于官方的应用。</p><p>当然，用户也可以选择安装官方的YouTube应用，但必须安装Google框架等一堆东西，使用体验可能还未必好。</p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;![youtube]&lt;a href=&quot;https://imgs.codewoody.com/uploads/big/3a0199722bba55dfde8d97ff1aac0f5b.jpg&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://imgs.codewoody.com/uploads/big/3a0199722bba55dfde8d97ff1aac0f5b.jpg&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="翻墙" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E5%A2%99/"/>
+    
+  </entry>
+  
+  <entry>
     <title>如何在普通网络环境下上北邮人</title>
     <link href="http://www.codewoody.com/posts/54288/"/>
     <id>http://www.codewoody.com/posts/54288/</id>
     <published>2019-02-25T05:26:40.000Z</published>
-    <updated>2019-02-25T05:53:17.032Z</updated>
+    <updated>2019-02-25T06:42:10.179Z</updated>
     
     <content type="html"><![CDATA[<p>在学校里看剧、电影，下载破解游戏基本都靠<a href="bt.byr.cn">北邮人</a>。一方面资源比较全，另一方面是走IPv6，不需要走计费的校园网IPv4流量。不过由于北邮人只支持IPv6，而国内IPv6基本只有校园网有。问题来了，怎么在校外的纯IPv4环境下使用IPv6 Only的北邮人呢？<br><img src="https://imgs.codewoody.com/uploads/big/1b99a38129580435479cfa72b086b3b5.jpg" alt="IPv6"><br><a id="more"></a></p><h2 id="从IPv4到IPv6"><a href="#从IPv4到IPv6" class="headerlink" title="从IPv4到IPv6"></a>从IPv4到IPv6</h2><p>这是最重要的一步。你首先需要一个支持IPv6的VPS。国内目前支持IPv6的好像只有阿里云？，即便支持，国内的IPv6 VPS又贵又难用（需要申请）。因此最好的方案是采用海外的VPS。听起来用海外的VPS会很慢？其实海外的VPS主要是延时高，其实速度还是挺快的，而且P2P传输业务受到延时的影响挺小的，实测利用我的VPS可以达到5MB/s的P2P下载速度（在服务器上看上下行都是5MB/s，基本跑满了100M的带宽）。我用的VPS是<a href="www.digitalocean.com">Digital Ocean</a>的旧金山节点。价格是$5一个月。平均下来每天一块钱吧。注意创建Droplet的时候要自己勾选IPv6（添加IPv6是免费的）。</p><p><img src="https://imgs.codewoody.com/uploads/big/c052a17e4f29aea937edaec279b366e9.png" alt="选择IPv6"></p><p>在服务器上我部署了Shadowsocks服务。SS服务器可以直接无痛支持IPv4到IPv6的转换。关于如何部署Shadowsocks，这方面的教程文章网上汗牛充栋，我这里就不提供了。</p><h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>首先需要将北邮人的网址bt.byr.cn添加到Shadowsocks客户端的代理列表。</p><p><img src="https://imgs.codewoody.com/uploads/big/e9cf5e6db36fbdccf7fc9c4f330ce8b0.png" alt="Shadowsocks选项"></p><p>点击Shadowsocks小飞机，选择“编辑PAC用户自定规则”。在弹出的框中输入<code>||bt.byr.cn</code>：</p><p><img src="https://imgs.codewoody.com/uploads/big/b2e5cef758cd665368a3ecb56e139a32.png" alt="编辑PAC用户自定规则"></p><p>然后你就能在IPv4网络环境下打开北邮人的网页啦。</p><p>接下来是设置下载客户端uTorrent的网络设置。打开uTorrent的设置(Preferences)，进入到Network。进行如下设置：</p><p><img src="https://imgs.codewoody.com/uploads/big/6281a4baa6ef2e535ce877dbf455ac6a.png" alt="uTorrent设置"></p><blockquote><p>注意：上面的Socks5设置中，端口会与你的Shadowsocks设置有关。如果你没有动过相关设置的话，应该就是1086端口。<br>查看你的Shadowsocks客户端Sock5代理端口设置的方式是单击Shadowsocks小飞机，选择偏好设置，在弹出的窗口中点击“高级”，其中“本地Socks5监听端口”即为应该填写到uTorrent设置中的代理端口。</p></blockquote><p>大功告成！_(:з」∠)_</p><p>文章链接 <a href="http://www.codewoody.com/posts/54288/">http://www.codewoody.com/posts/54288/</a> </p>]]></content>
     
@@ -500,30 +524,6 @@
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
       <category term="Shadowsocks" scheme="http://www.codewoody.com/tags/Shadowsocks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自建图床: Lychee</title>
-    <link href="http://www.codewoody.com/posts/65048/"/>
-    <id>http://www.codewoody.com/posts/65048/</id>
-    <published>2018-11-13T07:07:47.000Z</published>
-    <updated>2018-11-13T10:37:32.730Z</updated>
-    
-    <content type="html"><![CDATA[<br>之前用的图床sm.ms的图片突然挂了。不知道为何，图片还是能够上传，但是访问图片的链接会出<code>ERR_SPDY_PROTOCOL_ERROR</code>的错误。</p><p><img src="https://imgs.codewoody.com/uploads/big/16c748b80a481535efeb2d271e14e4dd.png" alt="ERR_SPDY_PROTOCOL_ERROR错误示意图"></p><p>正好我自己的翻墙服务器的硬盘长期富余。虽然只有十几个G，搭建一个自己图床还是够用的。更重要的是，Dogital Ocean的服务器的流量非常多（我买的$5的服务器的流量有一个T）。我选择的开源图床框架是<a href="https://github.com/electerious/Lychee" target="_blank" rel="noopener">Lychee</a>。这个框架支持Docker安装，可以省很多事情。</p><h2 id="1-Docker安装Lychee"><a href="#1-Docker安装Lychee" class="headerlink" title="1. Docker安装Lychee"></a>1. Docker安装Lychee</h2><p>常规的安装方法可以参考<a href="https://github.com/electerious/Lychee/blob/master/docs/Installation.md" target="_blank" rel="noopener">官方文档</a>。我这里只介绍Docker方式。如果你没有什么特别的需求，Docker方式应该是非常适合你的。</p><blockquote><p>注：这篇教程只是对于我的操作过程的一个记录，因此对于一些依赖环境的安装没有面面俱到。这些问题，都可以面向google进行解决。</p></blockquote><h3 id="1-1-Docker环境准备"><a href="#1-1-Docker环境准备" class="headerlink" title="1.1 Docker环境准备"></a>1.1 Docker环境准备</h3><p>首先你要安装一个Docker环境。在Ubuntu上，安装非常简单：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install docker-io</span><br></pre></td></tr></table></figure><p>有时还需要将你当前用户加入到<code>docker</code>组中，这样每次执行<code>docker</code>命令不需要加<code>sudo</code>了。这个操作可能在安装过程中自动完成了，如果你发现<code>docker</code>命令执行时提示有权限相关的问题，可以运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser user docker</span><br></pre></td></tr></table></figure><p>注意确保一下<code>docker-compose</code>也安装完毕了。我们需要通过<code>docker-compose</code>来将Lychee和数据库组装在一起。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose -v</span><br><span class="line">docker-compose version 1.17.1, build 6d101fb</span><br></pre></td></tr></table></figure><h3 id="1-2-安装Lychee"><a href="#1-2-安装Lychee" class="headerlink" title="1.2 安装Lychee"></a>1.2 安装Lychee</h3><p>首先创建好目录树：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lychee</span><br><span class="line">|-- config</span><br><span class="line">|-- db</span><br><span class="line">|-- pictures</span><br><span class="line">|-- docker-compose.yml</span><br></pre></td></tr></table></figure><p>其中，<code>config</code>和<code>pictures</code>分别用来存储Lychee的设置和图片文件。<code>db</code>文件夹则是用于数据库，这三个文件夹需要你手动创建。<code>docker-compose.yml</code>文件内容如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  lychee:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">linuxserver/lychee</span></span><br><span class="line"><span class="attr">    links:</span></span><br><span class="line"><span class="attr">      - lychee-db:</span><span class="string">lychee-db</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/path/to/lychee/config:/config</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/path/to/lychee/pictures:/pictures</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">8000</span><span class="string">:80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  lychee-db:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">mariadb:10</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/path/to/lychee/db:/var/lib/mysql</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_ROOT_PASSWORD=&lt;choose</span> <span class="string">root</span> <span class="string">password&gt;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_DATABASE=&lt;db</span> <span class="string">name&gt;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_USER=&lt;username&gt;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_PASSWORD=&lt;username&gt;</span></span><br></pre></td></tr></table></figure><blockquote><p>目前我没发现lychee的这个镜像支持用环境变量来配置数据库信息。所以上面对应的数据库信息后续需要在网页端手动输入。</p></blockquote><p>然后在这个文件夹下运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose up -d</span><br></pre></td></tr></table></figure><p>然后访问<code>http://yourdoman.com:8000</code>就可以访问了。</p><h3 id="1-3-Lychee配置"><a href="#1-3-Lychee配置" class="headerlink" title="1.3 Lychee配置"></a>1.3 Lychee配置</h3><p>在访问上述网页之后，Lychee会提示我们输入数据库信息。</p><p><img src="https://imgs.codewoody.com/uploads/big/257d81510bc5d03dfac4948844222f46.png" alt="Lychee 配置"></p><p>注意这里的Database Host要填写<code>lychee-db</code>。其他的设置与上面的<code>docker-compose.yml</code>文件中的一致即可。</p><p>而后按照提示创建登录账户：</p><p><img src="https://imgs.codewoody.com/uploads/big/2ac1ded0feb822e54fad9838655f1bdb.png" alt="创建账户"></p><h2 id="2-Lychee-Advanced"><a href="#2-Lychee-Advanced" class="headerlink" title="2. Lychee Advanced"></a>2. Lychee Advanced</h2><h3 id="2-1-使用Nginx进行反向代理"><a href="#2-1-使用Nginx进行反向代理" class="headerlink" title="2.1 使用Nginx进行反向代理"></a>2.1 使用Nginx进行反向代理</h3><p>Nginx配置文件如下：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line"><span class="attribute">server_name</span> imgs.codewoody.com;</span><br><span class="line"><span class="attribute">client_max_body_size</span> <span class="number">50M</span>;</span><br><span class="line"></span><br><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line"></span><br><span class="line"><span class="attribute">proxy_pass</span> http://localhost:8000;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="2-2-启用HTTPS"><a href="#2-2-启用HTTPS" class="headerlink" title="2.2 启用HTTPS"></a>2.2 启用HTTPS</h3><p>目前来看，<a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let’s encrypt</a>仍然是个人建站启用HTTPS的不二之选。其使用教程可以说是非常简明了，具体参考<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>。</p><p>文章链接 <a href="http://www.codewoody.com/posts/65048/">http://www.codewoody.com/posts/65048/</a> </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/4c50d020f4346ef8aab039fdd6c09527.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with everything you need and all your photos are stored securely.&lt;br&gt;
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="折腾" scheme="http://www.codewoody.com/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
