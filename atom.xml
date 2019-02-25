@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-02-25T05:50:36.133Z</updated>
+  <updated>2019-02-25T05:53:17.032Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://www.codewoody.com/posts/54288/"/>
     <id>http://www.codewoody.com/posts/54288/</id>
     <published>2019-02-25T05:26:40.000Z</published>
-    <updated>2019-02-25T05:50:36.133Z</updated>
+    <updated>2019-02-25T05:53:17.032Z</updated>
     
-    <content type="html"><![CDATA[</p><h2 id="从IPv4到IPv6"><a href="#从IPv4到IPv6" class="headerlink" title="从IPv4到IPv6"></a>从IPv4到IPv6</h2><p>这是最重要的一步。你首先需要一个支持IPv6的VPS。国内目前支持IPv6的好像只有阿里云？，即便支持，国内的IPv6 VPS又贵又难用（需要申请）。因此最好的方案是采用海外的VPS。听起来用海外的VPS会很慢？其实海外的VPS主要是延时高，其实速度还是挺快的，而且P2P传输业务受到延时的影响挺小的，实测利用我的VPS可以达到5MB/s的P2P下载速度（在服务器上看上下行都是5MB/s，基本跑满了100M的带宽）。我用的VPS是<a href="www.digitalocean.com">Digital Ocean</a>的旧金山节点。价格是$5一个月。平均下来每天一块钱吧。注意创建Droplet的时候要自己勾选IPv6（添加IPv6是免费的）。</p><p><img src="https://imgs.codewoody.com/uploads/big/c052a17e4f29aea937edaec279b366e9.png" alt="选择IPv6"></p><p>在服务器上我部署了Shadowsocks服务。SS服务器可以直接无痛支持IPv4到IPv6的转换。关于如何部署Shadowsocks，这方面的教程文章网上汗牛充栋，我这里就不提供了。</p><h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>首先需要将北邮人的网址bt.byr.cn添加到Shadowsocks客户端的代理列表。</p><p><img src="https://imgs.codewoody.com/uploads/big/e9cf5e6db36fbdccf7fc9c4f330ce8b0.png" alt="Shadowsocks选项"></p><p>点击Shadowsocks小飞机，选择“编辑PAC用户自定规则”。在弹出的框中输入<code>||bt.byr.cn</code>：</p><p><img src="https://imgs.codewoody.com/uploads/big/b2e5cef758cd665368a3ecb56e139a32.png" alt="编辑PAC用户自定规则"></p><p>然后你就能在IPv4网络环境下打开北邮人的网页啦。</p><p>接下来是设置下载客户端uTorrent的网络设置。打开uTorrent的设置(Preferences)，进入到Network。进行如下设置：</p><p><img src="https://imgs.codewoody.com/uploads/big/6281a4baa6ef2e535ce877dbf455ac6a.png" alt="uTorrent设置"></p><blockquote><p>注意：上面的Socks5设置中，端口会与你的Shadowsocks设置有关。如果你没有动过相关设置的话，应该就是1086端口。<br>查看你的Shadowsocks客户端Sock5代理端口设置的方式是单击Shadowsocks小飞机，选择偏好设置，在弹出的窗口中点击“高级”，其中“本地Socks5监听端口”即为应该填写到uTorrent设置中的代理端口。</p></blockquote><p>大功告成！_(:з」∠)_</p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    <content type="html"><![CDATA[<p>在学校里看剧、电影，下载破解游戏基本都靠<a href="bt.byr.cn">北邮人</a>。一方面资源比较全，另一方面是走IPv6，不需要走计费的校园网IPv4流量。不过由于北邮人只支持IPv6，而国内IPv6基本只有校园网有。问题来了，怎么在校外的纯IPv4环境下使用IPv6 Only的北邮人呢？<br><img src="https://imgs.codewoody.com/uploads/big/1b99a38129580435479cfa72b086b3b5.jpg" alt="IPv6"><br><a id="more"></a></p><h2 id="从IPv4到IPv6"><a href="#从IPv4到IPv6" class="headerlink" title="从IPv4到IPv6"></a>从IPv4到IPv6</h2><p>这是最重要的一步。你首先需要一个支持IPv6的VPS。国内目前支持IPv6的好像只有阿里云？，即便支持，国内的IPv6 VPS又贵又难用（需要申请）。因此最好的方案是采用海外的VPS。听起来用海外的VPS会很慢？其实海外的VPS主要是延时高，其实速度还是挺快的，而且P2P传输业务受到延时的影响挺小的，实测利用我的VPS可以达到5MB/s的P2P下载速度（在服务器上看上下行都是5MB/s，基本跑满了100M的带宽）。我用的VPS是<a href="www.digitalocean.com">Digital Ocean</a>的旧金山节点。价格是$5一个月。平均下来每天一块钱吧。注意创建Droplet的时候要自己勾选IPv6（添加IPv6是免费的）。</p><p><img src="https://imgs.codewoody.com/uploads/big/c052a17e4f29aea937edaec279b366e9.png" alt="选择IPv6"></p><p>在服务器上我部署了Shadowsocks服务。SS服务器可以直接无痛支持IPv4到IPv6的转换。关于如何部署Shadowsocks，这方面的教程文章网上汗牛充栋，我这里就不提供了。</p><h2 id="设置"><a href="#设置" class="headerlink" title="设置"></a>设置</h2><p>首先需要将北邮人的网址bt.byr.cn添加到Shadowsocks客户端的代理列表。</p><p><img src="https://imgs.codewoody.com/uploads/big/e9cf5e6db36fbdccf7fc9c4f330ce8b0.png" alt="Shadowsocks选项"></p><p>点击Shadowsocks小飞机，选择“编辑PAC用户自定规则”。在弹出的框中输入<code>||bt.byr.cn</code>：</p><p><img src="https://imgs.codewoody.com/uploads/big/b2e5cef758cd665368a3ecb56e139a32.png" alt="编辑PAC用户自定规则"></p><p>然后你就能在IPv4网络环境下打开北邮人的网页啦。</p><p>接下来是设置下载客户端uTorrent的网络设置。打开uTorrent的设置(Preferences)，进入到Network。进行如下设置：</p><p><img src="https://imgs.codewoody.com/uploads/big/6281a4baa6ef2e535ce877dbf455ac6a.png" alt="uTorrent设置"></p><blockquote><p>注意：上面的Socks5设置中，端口会与你的Shadowsocks设置有关。如果你没有动过相关设置的话，应该就是1086端口。<br>查看你的Shadowsocks客户端Sock5代理端口设置的方式是单击Shadowsocks小飞机，选择偏好设置，在弹出的窗口中点击“高级”，其中“本地Socks5监听端口”即为应该填写到uTorrent设置中的代理端口。</p></blockquote><p>大功告成！_(:з」∠)_</p><p>文章链接 <a href="http://www.codewoody.com/posts/54288/">http://www.codewoody.com/posts/54288/</a> </p>]]></content>
     
     <summary type="html">
     
@@ -214,9 +214,9 @@
       <category term="形而上" scheme="http://www.codewoody.com/categories/%E5%BD%A2%E8%80%8C%E4%B8%8A/"/>
     
     
-      <category term="nodejs" scheme="http://www.codewoody.com/tags/nodejs/"/>
-    
       <category term="翻译" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="nodejs" scheme="http://www.codewoody.com/tags/nodejs/"/>
     
   </entry>
   
@@ -240,9 +240,9 @@
       <category term="形而上" scheme="http://www.codewoody.com/categories/%E5%BD%A2%E8%80%8C%E4%B8%8A/"/>
     
     
-      <category term="nodejs" scheme="http://www.codewoody.com/tags/nodejs/"/>
-    
       <category term="翻译" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="nodejs" scheme="http://www.codewoody.com/tags/nodejs/"/>
     
   </entry>
   
