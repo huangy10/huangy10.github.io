@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-03-01T03:29:37.396Z</updated>
+  <updated>2019-03-01T03:29:47.407Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://www.codewoody.com/posts/62609/"/>
     <id>http://www.codewoody.com/posts/62609/</id>
     <published>2019-03-01T03:24:45.000Z</published>
-    <updated>2019-03-01T03:29:37.396Z</updated>
+    <updated>2019-03-01T03:29:47.407Z</updated>
     
-    <content type="html"><![CDATA[<ol><li>创建一个新的文件夹，将APP放到这个新文件夹中</li><li>打开Disk Utility &gt; File &gt; New Image &gt; Image from Folder.（中文的话，是磁盘工具 &gt; 文件 &gt; 新建映像 &gt; 来自文件夹的映像…）<br><img src="https://imgs.codewoody.com/uploads/big/3f29adf12997da9b969067c013879676.png" alt="磁盘工具操作"></li><li>在弹出的窗口中，选择在第一步中新建的文件夹</li><li>选择输出dmg文件的存储位置，然后点击保存按钮<br><img src="https://imgs.codewoody.com/uploads/big/8f7ca60b7031464feb4027f14d1c528b.png" alt="保存页面"></li></ol><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    <content type="html"><![CDATA[<ol><li>创建一个新的文件夹，将APP放到这个新文件夹中</li><li>打开Disk Utility &gt; File &gt; New Image &gt; Image from Folder.（中文的话，是磁盘工具 &gt; 文件 &gt; 新建映像 &gt; 来自文件夹的映像…）<br><img src="https://imgs.codewoody.com/uploads/big/3f29adf12997da9b969067c013879676.png" alt="磁盘工具操作"></li><li>在弹出的窗口中，选择在第一步中新建的文件夹</li><li>选择输出dmg文件的存储位置，然后点击保存按钮<br><img src="https://imgs.codewoody.com/uploads/big/8f7ca60b7031464feb4027f14d1c528b.png" alt="保存页面"></li></ol><p>文章链接 <a href="http://www.codewoody.com/posts/62609/">http://www.codewoody.com/posts/62609/</a> </p>]]></content>
     
     <summary type="html">
     
