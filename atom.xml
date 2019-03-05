@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-03-01T03:29:47.407Z</updated>
+  <updated>2019-03-05T04:10:30.229Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【转载】IOS的一些设计规范</title>
+    <link href="http://www.codewoody.com/posts/23804/"/>
+    <id>http://www.codewoody.com/posts/23804/</id>
+    <published>2019-03-05T04:09:27.000Z</published>
+    <updated>2019-03-05T04:10:30.229Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/73da26e439c2fe4f88b0346301c87036.jpg" alt="如图"></p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/73da26e439c2fe4f88b0346301c87036.jpg&quot; alt=&quot;如图&quot;&gt;&lt;/p&gt;
+&lt;p&gt;文章链接 &lt;a href=&quot;http://www.codewood
+      
+    
+    </summary>
+    
+      <category term="其他" scheme="http://www.codewoody.com/categories/%E5%85%B6%E4%BB%96/"/>
+    
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
+    
+  </entry>
   
   <entry>
     <title>Mac: 将APP打包成dmg</title>
@@ -50,7 +78,7 @@
     <link href="http://www.codewoody.com/posts/5827/"/>
     <id>http://www.codewoody.com/posts/5827/</id>
     <published>2019-02-25T06:41:32.000Z</published>
-    <updated>2019-02-26T03:18:05.772Z</updated>
+    <updated>2019-03-05T04:09:48.235Z</updated>
     
     <content type="html"><![CDATA[</p><p>使用小米电视和小米盒子看YouTube上的视频，是很多中国电视用户很想做的事情，下面，我就介绍一种很简单的方法，不用ROOT小米电视或小米盒子，不用重装系统，几分钟的设置就可以在小米电视和小米盒子上看YouTube的方法。</p><p>首先需要下载两个APK应用，第一个是<a href="https://smartyoutubetv.github.io/" target="_blank" rel="noopener">SmartYouTubeTV</a>，点击这里下载最新版SmartYouTubeTV，将其复制到U盘。第二个是Shadowsocks，访问<a href="https://www.apkmirror.com/" target="_blank" rel="noopener">apkmirror</a>网站，搜索Shadowsocks，找到最新版后，下载universal的apk到U盘即可。</p><p>之后，打开小米电视或小米盒子，在“设置-账户与安全”里，选择“允许安装未知来源的应用”。插入U盘，将上述两个apk文件安装到电视上。</p><p>最后，在Shadowsocks上设置好服务器地址，打开SmartYouTubeTV，选择第一个，然后可以选择登陆Google账号，登陆的时候，会让用户在手机上访问 youtube.com/activate 来登陆激活，登陆好了后，电视即可和电脑浏览器的YouTube同步了。</p><p>Smart YouTube TV里登陆Google账号后，你会发现，YouTube里的订阅、上传、历史什么的功能全部可以正常使用了，完美支持小米遥控器控制，观看视频体验极佳，完全不亚于官方的应用。</p><p>当然，用户也可以选择安装官方的YouTube应用，但必须安装Google框架等一堆东西，使用体验可能还未必好。</p><p>文章链接 <a href="http://www.codewoody.com/posts/5827/">http://www.codewoody.com/posts/5827/</a> </p>]]></content>
     
@@ -64,6 +92,8 @@
     
     
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="翻墙" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E5%A2%99/"/>
     
@@ -150,7 +180,7 @@
     <link href="http://www.codewoody.com/posts/48586/"/>
     <id>http://www.codewoody.com/posts/48586/</id>
     <published>2019-02-17T09:29:29.000Z</published>
-    <updated>2019-02-17T09:33:48.189Z</updated>
+    <updated>2019-03-05T04:09:38.494Z</updated>
     
     <content type="html"><![CDATA[<p>我是一个无人机集群技术的研究者，从最近开始我打算集中整理发布一些无人机，尤其是无人机集群技术的新进展以及评论文章。<a id="more"></a></p><p>原文链接：<a href="https://www.technologyreview.com/s/612656/its-only-a-matter-of-time-before-a-drone-takes-down-a-passenger-plane/" target="_blank" rel="noopener">It’s only a matter of time before a drone takes down a passenger plane</a></p><p><img src="https://imgs.codewoody.com/uploads/big/0166e9fa673aa5ee62aa118a58836f7f.jpg" alt="Cover"></p><p>2018年12月，英国第二大机场盖特威克机场，发现有一架无人机飞过机场，不得不关闭一天，几十万旅客受到影响。目前还不知道这架无人机是谁操作，为什么要飞入机场。</p><p>这个事件表明，无人机对商业航空已经构成威胁。更严重的是，”反无人机”技术起不了多大作用。无人机已经变得太便宜，太强大，客机将不可避免地受到影响。无论是开枪、无线电干扰、或者其他措施，都无法可靠地保护客机。这可能听起来危言耸听，但我们对无人机真的缺乏办法。</p><p>现在，消费者可以买到的最便宜无人机，只需要25美元。这些产品接受遥控器的无线信号，相对容易防范，只要干扰它们的无线电信号，就可以了。稍微昂贵的无人机有 GPS 芯片，这种无人机可以编程设置一个”地理围栏”，防止它们飞入指定的地理坐标范围内。</p><p>但是，上面的这些措施，只能防住普通消费者从正规渠道买到的无人机。对于具有中等技术水平的人来说，制造一架无人机很容易，自制无人机也不需要 GPS 芯片。它们也不一定需要与操作员通信，才能保持飞行，这使得无线电干扰无效。而且，强度太大的干扰信号，反而可能会影响到本来要保护的客机。</p><p>可以肯定的是，一架无人机攻击一架客机，成功机会不大。这是因为在起飞和着陆时（最容易遭遇无人机的阶段），客机的移动速度非常快，通常在每小时150到200英里之间，很少有无人机能够以50~70英里/小时的速度飞行，所以客机应该可以避开无人机。此外，飞机的设计可以承受鸟撞，如果一架无人机意外撞到客机，客机可能只会受到轻微损坏，很可能还是能够安全降落。</p><p>但是，如果无人机成群飞行，事情就会发生变化。虽然单个无人机很难攻击飞机，但是在客机的飞行路径上放置30架无人机，就可能会发生变化。考虑到无人机的价格，多架无人机群体攻击是很容易的。如果通过编程，找出客机的引擎（通过红外传感或通过图像），然后无人机携带少量爆炸物，撞击可能会致命。</p><p>总之，对于那些蓄意攻击客机的半自动或全自动无人机集群，根本就没有好的技术对策。</p><p>文章链接 <a href="http://www.codewoody.com/posts/48586/">http://www.codewoody.com/posts/48586/</a> </p>]]></content>
     
@@ -166,6 +196,8 @@
       <category term="无人机" scheme="http://www.codewoody.com/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/"/>
     
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -505,30 +537,6 @@
       <category term="Minio" scheme="http://www.codewoody.com/tags/Minio/"/>
     
       <category term="OSS" scheme="http://www.codewoody.com/tags/OSS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Shadowsocks持续优化</title>
-    <link href="http://www.codewoody.com/posts/35429/"/>
-    <id>http://www.codewoody.com/posts/35429/</id>
-    <published>2018-11-16T06:39:01.000Z</published>
-    <updated>2018-11-16T06:39:09.344Z</updated>
-    
-    <content type="html"><![CDATA[</p><h2 id="Fast-TCP开启"><a href="#Fast-TCP开启" class="headerlink" title="Fast TCP开启"></a>Fast TCP开启</h2><p>如果双端都支持FastTCP，那么可以通过开启FastTCP来降低延时。服务端设置方法有两种，要门在<code>config.json</code>中添加<code>fast_open</code>为<code>true</code>，要么在执行<code>ssserver</code>带上<code>--fast-open</code>。然后在命令行中运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</span><br></pre></td></tr></table></figure><h2 id="进一步优化"><a href="#进一步优化" class="headerlink" title="进一步优化"></a>进一步优化</h2><p>这个优化方法适合所有的shadowsocks版本，具体方法如下。创建文件<code>/etc/sysctl.d/local.conf</code>，并在文件中添加如下内容：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># max open files</span></span><br><span class="line">fs.file-max = 51200</span><br><span class="line"><span class="comment"># max read buffer</span></span><br><span class="line">net.core.rmem_max = 67108864</span><br><span class="line"><span class="comment"># max write buffer</span></span><br><span class="line">net.core.wmem_max = 67108864</span><br><span class="line"><span class="comment"># default read buffer</span></span><br><span class="line">net.core.rmem_default = 65536</span><br><span class="line"><span class="comment"># default write buffer</span></span><br><span class="line">net.core.wmem_default = 65536</span><br><span class="line"><span class="comment"># max processor input queue</span></span><br><span class="line">net.core.netdev_max_backlog = 4096</span><br><span class="line"><span class="comment"># max backlog</span></span><br><span class="line">net.core.somaxconn = 4096</span><br><span class="line"></span><br><span class="line"><span class="comment"># resist SYN flood attacks</span></span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line"><span class="comment"># reuse timewait sockets when safe</span></span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line"><span class="comment"># turn off fast timewait sockets recycling</span></span><br><span class="line">net.ipv4.tcp_tw_recycle = 0</span><br><span class="line"><span class="comment"># short FIN timeout</span></span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"><span class="comment"># short keepalive time</span></span><br><span class="line">net.ipv4.tcp_keepalive_time = 1200</span><br><span class="line"><span class="comment"># outbound port range</span></span><br><span class="line">net.ipv4.ip_local_port_range = 10000 65000</span><br><span class="line"><span class="comment"># max SYN backlog</span></span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 4096</span><br><span class="line"><span class="comment"># max timewait sockets held by system simultaneously</span></span><br><span class="line">net.ipv4.tcp_max_tw_buckets = 5000</span><br><span class="line"><span class="comment"># turn on TCP Fast Open on both client and server side</span></span><br><span class="line">net.ipv4.tcp_fastopen = 3</span><br><span class="line"><span class="comment"># TCP receive buffer</span></span><br><span class="line">net.ipv4.tcp_rmem = 4096 87380 67108864</span><br><span class="line"><span class="comment"># TCP write buffer</span></span><br><span class="line">net.ipv4.tcp_wmem = 4096 65536 67108864</span><br><span class="line"><span class="comment"># turn on path MTU discovery</span></span><br><span class="line">net.ipv4.tcp_mtu_probing = 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># for high-latency network</span></span><br><span class="line">net.ipv4.tcp_congestion_control = hybla</span><br><span class="line"></span><br><span class="line"><span class="comment"># for low-latency network, use cubic instead</span></span><br><span class="line"><span class="comment"># net.ipv4.tcp_congestion_control = cubic</span></span><br></pre></td></tr></table></figure><p>然后运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure><p>应用上述设置。最后在启动脚本中，于<code>ssserver</code>前添加</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">ulimit</span> -n 51200</span><br></pre></td></tr></table></figure><p>这个设置方法，会消耗比较多的内存，但是会换来速度的大幅上升。</p><p>文章链接 <a href="http://www.codewoody.com/posts/35429/">http://www.codewoody.com/posts/35429/</a> </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这篇教程提供了优化Shadowsocks性能的一些方法。
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="Shadowsocks" scheme="http://www.codewoody.com/tags/Shadowsocks/"/>
     
   </entry>
   
