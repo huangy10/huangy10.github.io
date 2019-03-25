@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-03-13T06:00:25.806Z</updated>
+  <updated>2019-03-25T04:18:04.138Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>时局图：论扛着红旗反红旗</title>
+    <link href="http://www.codewoody.com/posts/8446/"/>
+    <id>http://www.codewoody.com/posts/8446/</id>
+    <published>2019-03-25T04:16:40.000Z</published>
+    <updated>2019-03-25T04:18:04.138Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/465c7e96d5c79b75283b8bc144e5cf73.jpeg" alt="论扛着红旗反红旗"><br><a id="more"></a></p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/465c7e96d5c79b75283b8bc144e5cf73.jpeg&quot; alt=&quot;论扛着红旗反红旗&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="政治" scheme="http://www.codewoody.com/tags/%E6%94%BF%E6%B2%BB/"/>
+    
+  </entry>
   
   <entry>
     <title>JS:图像截取部分(Image Cropping)</title>
@@ -505,30 +529,6 @@
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
       <category term="macOS" scheme="http://www.codewoody.com/tags/macOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Shadowsocks上手配置</title>
-    <link href="http://www.codewoody.com/posts/37347/"/>
-    <id>http://www.codewoody.com/posts/37347/</id>
-    <published>2018-11-20T08:00:57.000Z</published>
-    <updated>2018-12-02T15:36:31.600Z</updated>
-    
-    <content type="html"><![CDATA[<p>Shadowsocks配置的一个非常便利之处在于，Shadowsocks支持将配置信息导出成二维码再在其他机器上导入。这节约了很多沟通成本。所以在开始这篇教程之前，你需要有一个Shadowsocks的配置信息。可以是具体参数，或者是一个配置二维码。<a id="more"></a></p><h2 id="1-客户端准备"><a href="#1-客户端准备" class="headerlink" title="1. 客户端准备"></a>1. 客户端准备</h2><p>Shadowsocks提供了绝大多数平台的客户端支持，甚至包括智能路由器。我们这里介绍最为常见桌面端的平台上的配置。 这里我提供了mac和win这两个主要平台截止到目前为止最新版本的客户端下载：</p><ol><li><p>macOS客户端<a href="https://query.codewoody.com/query?bucket=default&amp;resname=ShadowsocksX-NG.app.1.8.2.zip" target="_blank" rel="noopener">下载</a>;</p></li><li><p>win客户端<a href="https://query.codewoody.com/query?bucket=default&amp;resname=Shadowsocks-4.1.2.zip" target="_blank" rel="noopener">下载</a>.</p></li></ol><p>其中，mac文件下载下来解压缩后，直接拖拽进入<code>Application</code>文件夹（应用文件夹），然后双击打开使用就可以了。win端的文件解压缩后是一个可以直接运行的绿色版（不需要安装）。将解压缩文件移动到一个稳妥的位置，然后双击打开<code>Shadowsocks.exe</code>文件就可以了（此时右下角会出现一个小飞机图标）</p><blockquote><p>更加丰富的客户端下载：<a href="https://shadowsocks.org/en/download/clients.html" target="_blank" rel="noopener">https://shadowsocks.org/en/download/clients.html</a></p></blockquote><h2 id="2-导入配置"><a href="#2-导入配置" class="headerlink" title="2. 导入配置"></a>2. 导入配置</h2><p>写这篇文章的时候我使用的是mac，因此后面的配置方法过程都以mac为例。mac和win上客户端的使用都是相通的。不同的是小飞机图标在mac中位于顶部，而在win中位于底部。</p><p><img src="https://imgs.codewoody.com/uploads/big/4a786c9b2480fd09923f5a591e5ce51a.png" alt="ShadowsocksX-NG右键菜单截图"></p><p>右键点击小飞机图标可以看到如上图所示的菜单。其中</p><ol><li><p>第一个section中，负责控制Shadowsock的开启和关闭，我这里显示的是已经开启了Shadowsocks，如果你的客户端代理还没有启动，点击一下”打开 Shadowsocks”</p></li><li><p>第二个section中，可以设置Shadowsocks的代理模式。其中PAC模式是最为常用模式。在这种模式下，Shadowsocks会根据一张预先订好的表，来判断你当前访问的网址是否被墙了。如果是就会通过代理访问这个网站，否则照常直接连接网站就可以了。与之相对的，全局模式是让所有的网站都通过代理进行访问。</p></li><li><p>第三个section中，可以进行服务器的配置。</p><ol><li><p>如果你是使用二维码进行配置，那么，将二维码用预览打开，确保这个预览窗口位于最上层可见，然后点击菜单中的“扫描屏幕上的二维码”就可以导入服务器配置了。</p></li><li><p>如果你是使用详细配置信息进行配置，那么需要进入服务器 -&gt; 服务器设置，手动填写各个参数进行添加。</p></li></ol></li><li><p>第四个section是用来配置本地代理和PAC的，对于这部分的详细讨论超出了这篇文章的范畴，我们会在后续的文章中进行讨论。</p></li></ol><h2 id="3-手机端配置"><a href="#3-手机端配置" class="headerlink" title="3. 手机端配置"></a>3. 手机端配置</h2><p>由于政策原因，手机端APP，尤其是iOS的手机端APP的审查情况非常严重，基本上很少有APP能够长期屹立不倒。因此手机端APP的选择要实时来看。我自己使用的SuperWingy这个应用已经下架了（不过从已购里面还是可以下载的）。因此，大家发现还有什么可以用的手机端应用，就更新在评论里把。</p><p>文章链接 <a href="http://www.codewoody.com/posts/37347/">http://www.codewoody.com/posts/37347/</a> </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Shadowsocks配置的一个非常便利之处在于，Shadowsocks支持将配置信息导出成二维码再在其他机器上导入。这节约了很多沟通成本。所以在开始这篇教程之前，你需要有一个Shadowsocks的配置信息。可以是具体参数，或者是一个配置二维码。
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="Shadowsocks" scheme="http://www.codewoody.com/tags/Shadowsocks/"/>
     
   </entry>
   
