@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-03-25T04:18:04.138Z</updated>
+  <updated>2019-04-03T05:59:24.552Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -17,13 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Universal(Fat) Framework for Swift Projects</title>
+    <link href="http://www.codewoody.com/posts/28461/"/>
+    <id>http://www.codewoody.com/posts/28461/</id>
+    <published>2019-04-03T03:41:42.000Z</published>
+    <updated>2019-04-03T05:59:24.552Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg" alt="Cocoa Touch Framework"></p><p>最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过<a href="https://medium.com/@Rageeni16/create-cocoa-touch-framework-and-publish-it-be9ad6535f33" target="_blank" rel="noopener">Cocoa Touch Framework</a>实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编译出同时支持模拟器和真机的Framework，即Universal(Fat) Framework。这一需求还需要进一步地利用一些系统脚本来实现。<br><a id="more"></a></p><p>这里假设你已经有了一个能够正常工作，编译的包含Cocoa Touch Framework的工程。我这里实现时使用的是Xcode10.2。</p><blockquote><p>事实上我在调研中发现了很多不同的实现编译Universal Framework的教程，但是他们并不总是有用，我这里只遴选了我自己测试通过没有问题的思路。这一思路通过Archive过程来打包输出framework</p></blockquote><p>首先从Xcode左上角选择Cocoa Touch Framework的默认scheme，然后点击Edit Scheme</p><p><img src="https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png" alt="Edit Scheme"></p><p>在Archive的post-action中添加一个运行脚本(New Run Script Action)</p><p><img src="https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png" alt="New Run Script Action"></p><p>脚本内容如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> &gt; /tmp/<span class="variable">$&#123;PROJECT_NAME&#125;</span>_archive.log 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">UNIVERSAL_OUTPUTFOLDER=<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-universal</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"true"</span> == <span class="variable">$&#123;ALREADYINVOKED:-false&#125;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"RECURSION: Detected, stopping"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">export</span> ALREADYINVOKED=<span class="string">"true"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># make sure the output directory exists</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Building for iPhoneSimulator"</span></span><br><span class="line">xcodebuild -workspace <span class="string">"<span class="variable">$&#123;WORKSPACE_PATH&#125;</span>"</span> -scheme <span class="string">"<span class="variable">$&#123;TARGET_NAME&#125;</span>"</span> -configuration <span class="variable">$&#123;CONFIGURATION&#125;</span> -sdk iphonesimulator -destination <span class="string">'platform=iOS Simulator,name=iPhone 6'</span> ONLY_ACTIVE_ARCH=NO ARCHS=<span class="string">'i386 x86_64'</span> BUILD_DIR=<span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>"</span> BUILD_ROOT=<span class="string">"<span class="variable">$&#123;BUILD_ROOT&#125;</span>"</span> ENABLE_BITCODE=YES OTHER_CFLAGS=<span class="string">"-fembed-bitcode"</span> BITCODE_GENERATION_MODE=bitcode clean build</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 1. Copy the framework structure (from iphoneos build) to the universal folder</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Copying to output folder"</span></span><br><span class="line"><span class="comment"># 这行是在我参考的脚本的基础上添加进去的。脚本在运行过程中有一个问题：在试图将</span></span><br><span class="line"><span class="comment"># archive过程中生成的device framework拷贝进来时，总是拷贝的framework文件夹</span></span><br><span class="line"><span class="comment"># 的内容，而非整个文件夹，所以我们这里手动创建这个文件夹</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span></span><br><span class="line">cp -R <span class="string">"<span class="variable">$&#123;ARCHIVE_PRODUCTS_PATH&#125;</span><span class="variable">$&#123;INSTALL_PATH&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 2. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory</span></span><br><span class="line">SIMULATOR_SWIFT_MODULES_DIR=<span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-iphonesimulator/<span class="variable">$&#123;TARGET_NAME&#125;</span>.framework/Modules/<span class="variable">$&#123;TARGET_NAME&#125;</span>.swiftmodule/."</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"SIMULATOR_SWIFT_MODULES_DIR: <span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="string">"<span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">cp -R <span class="string">"<span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;TARGET_NAME&#125;</span>.framework/Modules/<span class="variable">$&#123;TARGET_NAME&#125;</span>.swiftmodule"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 3. Create universal binary file using lipo and place the combined executable in the copied framework directory</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Combining executables"</span></span><br><span class="line">lipo -create -output <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-iphonesimulator/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;ARCHIVE_PRODUCTS_PATH&#125;</span><span class="variable">$&#123;INSTALL_PATH&#125;</span>/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 4. Create universal binaries for embedded frameworks</span></span><br><span class="line"><span class="comment">#for SUB_FRAMEWORK in $( ls "$&#123;UNIVERSAL_OUTPUTFOLDER&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks" ); do</span></span><br><span class="line"><span class="comment">#BINARY_NAME="$&#123;SUB_FRAMEWORK%.*&#125;"</span></span><br><span class="line"><span class="comment">#lipo -create -output "$&#123;UNIVERSAL_OUTPUTFOLDER&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;" "$&#123;BUILD_DIR&#125;/$&#123;CONFIGURATION&#125;-iphonesimulator/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;" "$&#123;ARCHIVE_PRODUCTS_PATH&#125;$&#123;INSTALL_PATH&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;"</span></span><br><span class="line"><span class="comment">#done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 5. Convenience step to copy the framework to the project's directory</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Copying to project dir"</span></span><br><span class="line">yes | cp -Rf <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;PROJECT_DIR&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">open <span class="string">"<span class="variable">$&#123;PROJECT_DIR&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure><blockquote><p>上述脚本的内容主要来自于<a href="https://gist.github.com/eladnava/0824d08da8f99419ef2c7b7fb6d4cc78" target="_blank" rel="noopener">export-fat-swift-dynamic-framework</a>，我在这里根据实际情况进行了更改</p></blockquote><p>此时执行archive操作(Product-&gt;Archive)完成后会自动弹出Finder窗口显示新生成的framework的位置（应当就是位于项目根目录下）。</p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg&quot; alt=&quot;Cocoa Touch Framework&quot;&gt;&lt;/p&gt;
+&lt;p&gt;最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过&lt;a href=&quot;https://medium.com/@Rageeni16/create-cocoa-touch-framework-and-publish-it-be9ad6535f33&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Cocoa Touch Framework&lt;/a&gt;实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编译出同时支持模拟器和真机的Framework，即Universal(Fat) Framework。这一需求还需要进一步地利用一些系统脚本来实现。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
+    
+      <category term="swift" scheme="http://www.codewoody.com/tags/swift/"/>
+    
+  </entry>
+  
+  <entry>
     <title>时局图：论扛着红旗反红旗</title>
     <link href="http://www.codewoody.com/posts/8446/"/>
     <id>http://www.codewoody.com/posts/8446/</id>
     <published>2019-03-25T04:16:40.000Z</published>
-    <updated>2019-03-25T04:18:04.138Z</updated>
+    <updated>2019-03-25T04:18:12.799Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/465c7e96d5c79b75283b8bc144e5cf73.jpeg" alt="论扛着红旗反红旗"><br><a id="more"></a></p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/465c7e96d5c79b75283b8bc144e5cf73.jpeg" alt="论扛着红旗反红旗"><br><a id="more"></a></p><p>文章链接 <a href="http://www.codewoody.com/posts/8446/">http://www.codewoody.com/posts/8446/</a> </p>]]></content>
     
     <summary type="html">
     
@@ -142,9 +169,9 @@
     
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="翻墙" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E5%A2%99/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -242,11 +269,11 @@
       <category term="科技新闻" scheme="http://www.codewoody.com/categories/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
     
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
       <category term="无人机" scheme="http://www.codewoody.com/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/"/>
     
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   
@@ -348,9 +375,9 @@
       <category term="形而上" scheme="http://www.codewoody.com/categories/%E5%BD%A2%E8%80%8C%E4%B8%8A/"/>
     
     
-      <category term="翻译" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="nodejs" scheme="http://www.codewoody.com/tags/nodejs/"/>
+    
+      <category term="翻译" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -374,9 +401,9 @@
       <category term="形而上" scheme="http://www.codewoody.com/categories/%E5%BD%A2%E8%80%8C%E4%B8%8A/"/>
     
     
-      <category term="翻译" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E8%AF%91/"/>
-    
       <category term="nodejs" scheme="http://www.codewoody.com/tags/nodejs/"/>
+    
+      <category term="翻译" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E8%AF%91/"/>
     
   </entry>
   
@@ -505,30 +532,6 @@
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
       <category term="智商税" scheme="http://www.codewoody.com/tags/%E6%99%BA%E5%95%86%E7%A8%8E/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>macOS绕过SIP安全机制限制的一种办法</title>
-    <link href="http://www.codewoody.com/posts/36948/"/>
-    <id>http://www.codewoody.com/posts/36948/</id>
-    <published>2018-11-21T06:08:18.000Z</published>
-    <updated>2018-11-22T03:42:27.376Z</updated>
-    
-    <content type="html"><![CDATA[<br><a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="noopener">SIP(System Security Protection)</a>是苹果在OSX EI Capitan及其后版本的操作系统中引入了一种新的安全机制。望文生义就可以看出，这个安全机制是用来维持系统的完整性，保护系统免收恶意软件的篡改。具体来说，SIP限制了root账户的权限范围，限制了root用户在对一些系统保护目录即其中文件的操作能力。</p><p>SIP的保护范围包括下列路径：</p><ul><li>/System</li><li>/usr</li><li>/bin</li><li>/sbin</li><li>OSX的预装应用</li></ul><p>第三方应用可以继续操作的目录包括：</p><ul><li>/Applications</li><li>/Library</li><li>/usr/local</li></ul><p>但是<strong>任何对于安全性加强都意味着对灵活性的削弱</strong>。例如，在SIP保护下，类似<a href="https://github.com/rofl0r/proxychains-ng" target="_blank" rel="noopener">proxychains-ng</a>的程序无法再给受保护的目录下的程序添加网络钩子(hook)。</p><blockquote><p>proxychains ng (new generation) - a preloader which hooks calls to sockets in dynamically linked programs and redirects it through one or more socks/http proxies.</p></blockquote><p>一般来说，很多解决方案都建议关闭SIP功能（例如proxychains-ng的issue中给出的方法：<a href="https://github.com/rofl0r/proxychains-ng/issues/78" target="_blank" rel="noopener"># issue78</a>）。不过这样也意味着丧失了SIP提供的保护功能。<a href="https://www.tcdw.net/post/proxychains-with-sip/" target="_blank" rel="noopener">这篇文章</a>给出了一个妥协的做法。在保留SIP的保护的同时，为保护目录下的程序应用proxychains-ng（其他类似的应用场景也可以使用这个办法）。这个解决方案的思路其实很简单：既然保护目录下的程序我们不能动，那么我们把保护目录下的程序复制一份到其他目录下运行就可以。</p><p>首先创建一个新的文件夹：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.unprotected_apps</span><br></pre></td></tr></table></figure><p>然后将这个路径添加到<code>PATH</code>环境变量的头部：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 可以添加到shell的配置文件中，如~/.bashrc或者~/.zshrc</span></span><br><span class="line">export PATH="~/.unprotected_apps:$PATH"</span><br></pre></td></tr></table></figure><p>然后将需要添加钩子的应用复制到这个目录下就可以了，例如：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp $(which ssh) ~/usr/bin/ssh</span><br><span class="line">cp $(which curl) ~/usr/bin/curl</span><br></pre></td></tr></table></figure><p>文章链接 <a href="http://www.codewoody.com/posts/36948/">http://www.codewoody.com/posts/36948/</a> </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;a href=&quot;https://support.apple.com/en-us/HT204899&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SIP(System Security Protection)&lt;/a&gt;是苹果在OSX EI Capitan及其后版本的操作系统中引入了一种新的安全机制。望文生义就可以看出，这个安全机制是用来维持系统的完整性，保护系统免收恶意软件的篡改。具体来说，SIP限制了root账户的权限范围，限制了root用户在对一些系统保护目录即其中文件的操作能力。但是&lt;strong&gt;任何对于安全性加强都意味着对灵活性的削弱&lt;/strong&gt;。&lt;br&gt;
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="macOS" scheme="http://www.codewoody.com/tags/macOS/"/>
     
   </entry>
   
