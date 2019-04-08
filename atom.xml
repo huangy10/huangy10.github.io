@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-04-04T06:29:31.297Z</updated>
+  <updated>2019-04-08T02:09:18.767Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -17,13 +17,35 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>996 License 1.0</title>
+    <link href="http://www.codewoody.com/posts/12613/"/>
+    <id>http://www.codewoody.com/posts/12613/</id>
+    <published>2019-04-08T02:07:49.000Z</published>
+    <updated>2019-04-08T02:09:18.767Z</updated>
+    
+    <content type="html"><![CDATA[</p><p>Copyright (c) <year> <copyright holders=""></copyright></year></p><p>996 License Version 1.0 (Draft)</p><p>Permission is hereby granted to any individual or legal entity obtaining a copy<br>of this licensed work (including the source code, documentation and/or related<br>items, hereinafter collectively referred to as the “licensed work”), free of<br>charge, to deal with the licensed work for any purpose, including without<br>limitation, the rights to use, reproduce, modify, prepare derivative works of, publish,<br>distribute and sublicense the licensed work, subject to the following<br>conditions:</p><ol><li><p>The individual or the legal entity must conspicuously display, without<br>modification, this License on each redistributed or derivative copy of the<br>Licensed Work.</p></li><li><p>The individual or the legal entity must strictly comply with all applicable<br>laws, regulations, rules and standards of the jurisdiction relating to labor and<br>employment where the individual is physically located or where the individual<br>was born or naturalized; or where the legal entity is registered or is operating<br>(whichever is stricter). In case that the jurisdiction has no such laws,<br>regulations, rules and standards or its laws, regulations, rules and standards<br>are unenforceable, the individual or the legal entity are required to comply<br>with Core International Labor Standards.</p></li><li><p>The individual or the legal entity shall not induce or force its employee(s),<br>whether full-time or part-time, or its independent contractor(s), in any<br>methods, to agree in oral or written form, to directly or indirectly restrict,<br>weaken or relinquish his or her rights or remedies under such laws, regulations,<br>rules and standards relating to labor and employment as mentioned above, no<br>matter whether such written or oral agreement are enforceable under the laws of<br>the said jurisdiction, nor shall such individual or the legal entity limit, in<br>any methods, the rights of its employee(s) or independent contractor(s) from<br>reporting or complaining to the copyright holder or relevant authorities<br>monitoring the compliance of the license about its violation(s) of the said<br>license.</p></li></ol><p>THE LICENSED WORK IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<br>IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS<br>FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT<br>HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION<br>OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN ANY WAY CONNECTION<br>WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN THE LICENSED WORK.</p><p>版权所有（c）&lt;年份&gt;&lt;版权持有人&gt;</p><p>反996许可证版本1.0</p><p>在符合下列条件的情况下，特此免费向任何得到本授权作品的副本（包括源代码、文件和/或相关内容，以下统称为“授权作品”）的个人和法人实体授权：被授权个人或法人实体有权以任何目的处置授权作品，包括但不限于使用、复制，修改，衍生利用、散布，发布和再许可：</p><ol><li>个人或法人实体必须在许可作品的每个再散布或衍生副本上包含以上版权声明和本许可证，不得自行修改。</li><li>个人或法人实体必须严格遵守与个人实际所在地或个人出生地或归化地、或法人实体注册地或经营地（以较严格者为准）的司法管辖区所有适用的与劳动和就业相关法律、法规、规则和标准。如果该司法管辖区没有此类法律、法规、规章和标准或其法律、法规、规章和标准不可执行，则个人或法人实体必须遵守国际劳工标准的核心公约。</li><li>个人或法人不得以任何方式诱导或强迫其全职或兼职员工或其独立承包人以口头或书面形式同意直接或间接限制、削弱或放弃其所拥有的，受相关与劳动和就业有关的法律、法规、规则和标准保护的权利或补救措施，无论该等书面或口头协议是否被该司法管辖区的法律所承认，该等个人或法人实体也不得以任何方法限制其雇员或独立承包人向版权持有人或监督许可证合规情况的有关当局报告或投诉上述违反许可证的行为的权利。</li></ol><p>该授权作品是”按原样”提供，不做任何明示或暗示的保证，包括但不限于对适销性、特定用途适用性和非侵权性的保证。在任何情况下，无论是在合同诉讼、侵权诉讼或其他诉讼中，版权持有人均不承担因本软件或本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。</p><p><a href="https://link.zhihu.com/?target=https%3A//github.com/kattgu7/996-License-Draft/" target="_blank" rel="noopener">https://link.zhihu.com/?target=https%3A//github.com/kattgu7/996-License-Draft/</a></p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Developer’s Life Matters&lt;br&gt;
+    
+    </summary>
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
     <title>OC和Swift混编Frameowork优雅指南</title>
     <link href="http://www.codewoody.com/posts/56606/"/>
     <id>http://www.codewoody.com/posts/56606/</id>
     <published>2019-04-04T06:09:04.000Z</published>
-    <updated>2019-04-04T06:29:31.297Z</updated>
+    <updated>2019-04-04T06:29:41.111Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/b5d15c27a9f2a989d35696f515aec8d6.jpeg" alt="cover"><br><a href="https://github.com/LeoMobileDeveloper/Blogs/blob/master/Swift/%20%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%80%E5%8F%91Swift%E5%92%8CObjective%20C%E6%B7%B7%E7%BC%96%E7%9A%84Framework.md" target="_blank" rel="noopener">本文主要参考了优雅地开发Swift和Object C混编的Framework</a>。不过实际发现，完全按照文章里面”优雅的解决方案“里面的说法操作，还是没法成功。我这里根据实际情况作出了调整。<br><a id="more"></a></p><ol><li>参考的文章中在“优雅的解决方案”这个section之前的内容都是好用的，你可以用用来创建一个兼容OC和Swift的Cooca Touch Framework。</li><li>这里说的“优雅”，指的是控制OC部分接口保留的问题（详情可以参考原文部分）</li></ol><p>原文里面只说了具体的操作步骤，没有高屋建瓴地说出这种方法的实际思路：事实上，采用<code>module.modulemap</code>的方法是将OC部分打包成一个可以使用Swfit语句进行导入(import)的模块。以这个视角，我们再来梳理一下操作步骤：</p><h4 id="新建一个module-modulemap文件"><a href="#新建一个module-modulemap文件" class="headerlink" title="新建一个module.modulemap文件"></a>新建一个<code>module.modulemap</code>文件</h4><p>文件里的内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module OCSource [system] &#123;</span><br><span class="line">    //由于module.modulemap和OCSource.h是在同一个文件夹的，如果不是同一个，路径要写全</span><br><span class="line">    header &quot;OCSource.h&quot;</span><br><span class="line">    export *</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>有一个容易犯错的问题是将这里的模块名字, OCSource命名为了Cocoa Touch Framework的名字。这样会导致编译出错，错误信息会提示你Module名字重复定义。这里的名字要区别的Framework的名字，具体是什么可以自己自由选择。不过推荐和头文件的名字一致</p></blockquote><p>后一步操作是把<code>module.modulemap</code>的路径添加到Build Settings的<code>Import Paths</code>中，这是为了让我们在Swift里面<code>import</code>这个module的时候能够找到目标.</p><p><img src="https://imgs.codewoody.com/uploads/big/f9b81bd3d7c4bff9b05b4548ed039922.png" alt="Import Paths in Build Settings"></p><p>那么，这里的<code>$(SRCROOT)/MixFramework</code>其实就是指的<code>module.modulemap</code>的路径。</p><h4 id="将OCSouce-h文件的权限改为project"><a href="#将OCSouce-h文件的权限改为project" class="headerlink" title="将OCSouce.h文件的权限改为project"></a>将<code>OCSouce.h</code>文件的权限改为project</h4><p><img src="https://imgs.codewoody.com/uploads/big/7d7b91d9291919efb1de5b5c3543655d.png" alt="Header Visibility Settings"></p><p>这可以让<code>OCSource.h</code>不再对外可见。<br>然后，删除MixFramework.h(umbrella header)中#import 的OC header。</p><hr><p>原文的内容到此结束，但是其实还是不够的。这时候如果编译，会发现你在Framework内部的Swift使用OCSource的地方都会报错说OCSource不存在。因为将<code>OCSource.h</code>从umbrella header中删除之后Swift就无法看到这个文件了。然而，通过<code>module.modulemap</code>文件我们将<code>OCSource.h</code>及相关的OC文件打包成了了一个Swift模块，因此我们可以在Swift代码中import进来：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> OCSource</span><br></pre></td></tr></table></figure><p>在报错的Swift文件中添加这个导入，就可以解决这个问题了.</p><p>文章链接 <a href="http://www.codewoody.com/posts/undefined/">http://www.codewoody.com/posts/undefined/</a> </p>]]></content>
+    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/b5d15c27a9f2a989d35696f515aec8d6.jpeg" alt="cover"><br><a href="https://github.com/LeoMobileDeveloper/Blogs/blob/master/Swift/%20%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%80%E5%8F%91Swift%E5%92%8CObjective%20C%E6%B7%B7%E7%BC%96%E7%9A%84Framework.md" target="_blank" rel="noopener">本文主要参考了优雅地开发Swift和Object C混编的Framework</a>。不过实际发现，完全按照文章里面”优雅的解决方案“里面的说法操作，还是没法成功。我这里根据实际情况作出了调整。<br><a id="more"></a></p><ol><li>参考的文章中在“优雅的解决方案”这个section之前的内容都是好用的，你可以用用来创建一个兼容OC和Swift的Cooca Touch Framework。</li><li>这里说的“优雅”，指的是控制OC部分接口保留的问题（详情可以参考原文部分）</li></ol><p>原文里面只说了具体的操作步骤，没有高屋建瓴地说出这种方法的实际思路：事实上，采用<code>module.modulemap</code>的方法是将OC部分打包成一个可以使用Swfit语句进行导入(import)的模块。以这个视角，我们再来梳理一下操作步骤：</p><h4 id="新建一个module-modulemap文件"><a href="#新建一个module-modulemap文件" class="headerlink" title="新建一个module.modulemap文件"></a>新建一个<code>module.modulemap</code>文件</h4><p>文件里的内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module OCSource [system] &#123;</span><br><span class="line">    //由于module.modulemap和OCSource.h是在同一个文件夹的，如果不是同一个，路径要写全</span><br><span class="line">    header &quot;OCSource.h&quot;</span><br><span class="line">    export *</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>有一个容易犯错的问题是将这里的模块名字, OCSource命名为了Cocoa Touch Framework的名字。这样会导致编译出错，错误信息会提示你Module名字重复定义。这里的名字要区别的Framework的名字，具体是什么可以自己自由选择。不过推荐和头文件的名字一致</p></blockquote><p>后一步操作是把<code>module.modulemap</code>的路径添加到Build Settings的<code>Import Paths</code>中，这是为了让我们在Swift里面<code>import</code>这个module的时候能够找到目标.</p><p><img src="https://imgs.codewoody.com/uploads/big/f9b81bd3d7c4bff9b05b4548ed039922.png" alt="Import Paths in Build Settings"></p><p>那么，这里的<code>$(SRCROOT)/MixFramework</code>其实就是指的<code>module.modulemap</code>的路径。</p><h4 id="将OCSouce-h文件的权限改为project"><a href="#将OCSouce-h文件的权限改为project" class="headerlink" title="将OCSouce.h文件的权限改为project"></a>将<code>OCSouce.h</code>文件的权限改为project</h4><p><img src="https://imgs.codewoody.com/uploads/big/7d7b91d9291919efb1de5b5c3543655d.png" alt="Header Visibility Settings"></p><p>这可以让<code>OCSource.h</code>不再对外可见。<br>然后，删除MixFramework.h(umbrella header)中#import 的OC header。</p><hr><p>原文的内容到此结束，但是其实还是不够的。这时候如果编译，会发现你在Framework内部的Swift使用OCSource的地方都会报错说OCSource不存在。因为将<code>OCSource.h</code>从umbrella header中删除之后Swift就无法看到这个文件了。然而，通过<code>module.modulemap</code>文件我们将<code>OCSource.h</code>及相关的OC文件打包成了了一个Swift模块，因此我们可以在Swift代码中import进来：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> OCSource</span><br></pre></td></tr></table></figure><p>在报错的Swift文件中添加这个导入，就可以解决这个问题了.</p><p>文章链接 <a href="http://www.codewoody.com/posts/56606/">http://www.codewoody.com/posts/56606/</a> </p>]]></content>
     
     <summary type="html">
     
@@ -510,30 +532,6 @@
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
       <category term="make" scheme="http://www.codewoody.com/tags/make/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于无神论者的笑话两则</title>
-    <link href="http://www.codewoody.com/posts/39480/"/>
-    <id>http://www.codewoody.com/posts/39480/</id>
-    <published>2018-11-29T06:37:50.000Z</published>
-    <updated>2019-02-26T03:17:35.448Z</updated>
-    
-    <content type="html"><![CDATA[</p><h2 id="一"><a href="#一" class="headerlink" title="一"></a>一</h2><p>一个坚定的无神论者去世了，突然发现自己在一个昏暗的过道里。过道里有一个牌子，上写“通向地狱”。没办法，那就进地狱吧。他开门进去，几乎不敢相信自己的眼睛：阳光明媚，暖风宜人，白沙滩，棕榈树，每一百米一个酒吧，到处都是欢快的人们。他沿着沙滩漫步，突然发现一个长着马脚和尾巴的家伙坐在一个沙滩躺椅里。他走上前去问，你是魔鬼吗？魔鬼回答说是，并热烈欢迎新人到地狱。不久，想了解一下地狱的无神论者，两个沙包之间看到一个很大很深的坑，便好奇地往里看，结果吓坏了：坑底烧着熊熊大火，到处是哭天喊地的人，撒了疯的怪物披头盖脸地往人身上打。 无神论者疑惑地跑回魔鬼身边，痛心地问：后边沙包那里那个坑是怎么回事？魔鬼说：噢，他们哪，都是基督徒。他们非要这样，我也没什么办法……</p><h2 id="二"><a href="#二" class="headerlink" title="二"></a>二</h2><p>一个忠诚的共产党员死了，上帝不愿意在天堂接受无神论者的灵魂，于是把他送到地狱。一个月后，魔鬼大汗淋漓跑来说“你赶紧把那人带走吧，他差不多把我所有小鬼都发展成了少先队员！” 上帝就接受了。</p><p>又过了一月，魔鬼幸灾乐祸地问上帝“那共产党员怎样了？”上帝说：“首先请叫我同志”</p><hr><p>非常惭愧，只讲了两个微小的笑话，谢谢大家</p><p>来源：<a href="https://www.zhihu.com/question/27030419/answer/121040045" target="_blank" rel="noopener">https://www.zhihu.com/question/27030419/answer/121040045</a></p><h2 id="续"><a href="#续" class="headerlink" title="续"></a>续</h2><p><img src="https://imgs.codewoody.com/uploads/big/ff8db693edf5544cdbe89a8b18541833.jpg" alt="宗教逻辑"></p><p>文章链接 <a href="http://www.codewoody.com/posts/39480/">http://www.codewoody.com/posts/39480/</a> </p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/1cdc9cba5755c5d3658d280a46b7f01a.png&quot; alt=&quot;cover&quot;&gt;
-    
-    </summary>
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
-    
-      <category term="宗教" scheme="http://www.codewoody.com/tags/%E5%AE%97%E6%95%99/"/>
     
   </entry>
   
