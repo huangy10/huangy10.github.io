@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.codewoody.com/posts/12489/</loc>
+    <loc>http://www.codewoody.com/categories/index.html</loc>
     
-    <lastmod>2019-04-19T08:15:59.988Z</lastmod>
+    <lastmod>2019-04-23T14:50:46.343Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/tags/index.html</loc>
+    
+    <lastmod>2019-04-23T14:39:24.054Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.codewoody.com/posts/34235/</loc>
     
-    <lastmod>2019-04-16T06:57:54.854Z</lastmod>
+    <lastmod>2019-04-23T08:55:08.071Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/posts/12489/</loc>
+    
+    <lastmod>2019-04-23T08:52:45.712Z</lastmod>
     
   </url>
   
