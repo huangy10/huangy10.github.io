@@ -552,6 +552,7 @@
 <p>原文的内容到此结束，但是其实还是不够的。这时候如果编译，会发现你在Framework内部的Swift使用OCSource的地方都会报错说OCSource不存在。因为将<code>OCSource.h</code>从umbrella header中删除之后Swift就无法看到这个文件了。然而，通过<code>module.modulemap</code>文件我们将<code>OCSource.h</code>及相关的OC文件打包成了了一个Swift模块，因此我们可以在Swift代码中import进来：</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> OCSource</span><br></pre></td></tr></table></figure>
 <p>在报错的Swift文件中添加这个导入，就可以解决这个问题了.</p>
+<p>文章链接 <a href="http://www.codewoody.com/posts/56606/">http://www.codewoody.com/posts/56606/</a></p>
 
       
     </div>

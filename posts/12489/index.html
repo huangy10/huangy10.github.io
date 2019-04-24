@@ -129,7 +129,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了，很">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T08:52:45.712Z">
+<meta property="og:updated_time" content="2019-04-24T00:45:28.135Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Haproxy支持Ipv6">
 <meta name="twitter:description" content="Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了，很">
@@ -462,7 +462,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-04-23 16:52:45" itemprop="dateModified" datetime="2019-04-23T16:52:45+08:00">2019-04-23</time>
+                <time title="Modified: 2019-04-24 08:45:28" itemprop="dateModified" datetime="2019-04-24T08:45:28+08:00">2019-04-24</time>
               
             
           </span>
@@ -544,9 +544,10 @@
 <p>不过，问题是通过apt安装的haproxy是<a href="https://github.com/Entware/Entware-ng/issues/426" target="_blank" rel="noopener">不支持IPv6的</a>！</p>
 <p>我们只能自己动手从源码编译了：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.haproxy.org/download/1.7/src/haproxy-1.7.2.tar.gz</span><br><span class="line">tar -xzf haproxy-1.7.2.tar.gz</span><br><span class="line">cd haproxy-1.7.2</span><br><span class="line">make TARGET=linux2626 USE_GETADDRINFO=1</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p><span class="math display">\[\begin{equation}
-$x = \sum_{i=1}^{N}x^2$
-\end{equation}\]</span></p>
+<!-- \begin{equation*}
+x = \sum_{i=1}^{N}x^2
+\end{equation*} -->
+<p>文章链接 <a href="http://www.codewoody.com/posts/12489/">http://www.codewoody.com/posts/12489/</a></p>
 
       
     </div>
