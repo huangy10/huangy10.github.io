@@ -129,7 +129,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了_config.yml文件的配置以及pandoc依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-24T14:59:49.053Z">
+<meta property="og:updated_time" content="2019-04-25T05:27:15.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Next: 使用Latex公式">
 <meta name="twitter:description" content="这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了_config.yml文件的配置以及pandoc依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。">
@@ -445,12 +445,24 @@
                 
               
 
-              <time title="Created: 2019-04-24 12:55:54 / Modified: 22:59:49" itemprop="dateCreated datePublished" datetime="2019-04-24T12:55:54+08:00">2019-04-24</time>
+              <time title="Created: 2019-04-24 12:55:54" itemprop="dateCreated datePublished" datetime="2019-04-24T12:55:54+08:00">2019-04-24</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-04-25 13:27:15" itemprop="dateModified" datetime="2019-04-25T13:27:15+08:00">2019-04-25</time>
               
             
           </span>
@@ -538,7 +550,7 @@
 <p>这里以<code>pandoc</code>为例：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 需要先卸载默认的渲染引擎</span></span><br><span class="line">npm un hexo-renderer-marked --save</span><br><span class="line">npm i hexo-renderer-pandoc --save</span><br></pre></td></tr></table></figure>
 <div class="note danger">
-            <p>替换渲染器之后会导致NexT note功能出现问题，note内的元素内容无法渲染，会输出markdown源代码。</p>
+            <p>替换渲染器之后会导致NexT note功能出现问题，note内的元素内容无法渲染，会输出markdown源代码。 这个问题我在<code>hexo-render-pandoc</code>上提了一个<a href="https://github.com/wzpan/hexo-renderer-pandoc/issues/33" target="_blank" rel="noopener">Issue</a>，看原作者什么时候能够更新解决吧。</p>
           </div>
 <h2 id="configuration">2. Configuration</h2>
 <p>配置NexT主题的<code>_config.yml</code>文件</p>

@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Hexo+Next: 使用Latex公式]]></title>
     <url>%2Fposts%2F20215%2F</url>
-    <content type="text"><![CDATA[这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了_config.yml文件的配置以及pandoc依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。 0. Reference 英语好的话，其实可以尝试直接阅读官方文档。 1. Install Dependencies Next支持mathjax和katex两种渲染方式，其中katex的速度更快，但是对于Latex的支持有一定的限制。所以除非你的博客数量实在是过于庞大，不然就可以直接使用mathjax。 mathjax可以选用下面两种渲染引擎的中的任一一种 hexo-renderer-kramed hexo-render-pandoc 使用hexo-render-pandoc还需要安装pandoc渲染引擎。其安装方法可以参考 pandoc官网。如果在macOS上可以使用 Homebrew安装. 这里以pandoc为例： 123# 需要先卸载默认的渲染引擎npm un hexo-renderer-marked --savenpm i hexo-renderer-pandoc --save 替换渲染器之后会导致NexT note功能出现问题，note内的元素内容无法渲染，会输出markdown源代码。 2. Configuration 配置NexT主题的_config.yml文件 12345math: enable: true ... engine: mathjax #engine: katex 很多文章都漏掉了在配置中一个重要的信息：在主题配置math下有一个名为per_page的选项，其值为true或者false。这个选项用来控制是否对每个篇文章都渲染数学公式。默认情况下是true，这意味只对Front Matter中含有mathjax: true的文章进行公式渲染。将per_page设置为false，则会对每一篇文章都尝试进行公式渲染。 由于公式渲染时一个很费时的操作，因此还是保持默认配置，通过Front Matter进行渲染控制. 3. How to use 3.1 行内嵌套公式 如：质能方程\(e=mc^2\) 1如：质能方程$e=mc^2$ 3.2 独占一行的公式 如： \[ 1=\sum_{i=0}^{m}\sum_{k=0}^{W_i-1}b_{i,k}=\sum_{i=0}^{m}b_{i,0}\sum_{k=0}^{W_i-1}\frac{W_i-k}{W_i}=\sum_{i=0}^{m}b_{i,0}\frac{W_i+1}{2}\\ =\frac{b_{0,0}}{2}\left[W\left(\sum_{i=0}^{m-1}(2p)^i+\frac{(2p)^m}{1-p}\right) + \frac{1}{1-p}\right] \] 12345如：$$1=\sum_&#123;i=0&#125;^&#123;m&#125;\sum_&#123;k=0&#125;^&#123;W_i-1&#125;b_&#123;i,k&#125;=\sum_&#123;i=0&#125;^&#123;m&#125;b_&#123;i,0&#125;\sum_&#123;k=0&#125;^&#123;W_i-1&#125;\frac&#123;W_i-k&#125;&#123;W_i&#125;=\sum_&#123;i=0&#125;^&#123;m&#125;b_&#123;i,0&#125;\frac&#123;W_i+1&#125;&#123;2&#125;\\=\frac&#123;b_&#123;0,0&#125;&#125;&#123;2&#125;\left[W\left(\sum_&#123;i=0&#125;^&#123;m-1&#125;(2p)^i+\frac&#123;(2p)^m&#125;&#123;1-p&#125;\right) + \frac&#123;1&#125;&#123;1-p&#125;\right]$$ 更多latex的使用方法，请参考官方文档]]></content>
+    <content type="text"><![CDATA[这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了_config.yml文件的配置以及pandoc依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。 0. Reference 英语好的话，其实可以尝试直接阅读官方文档。 1. Install Dependencies Next支持mathjax和katex两种渲染方式，其中katex的速度更快，但是对于Latex的支持有一定的限制。所以除非你的博客数量实在是过于庞大，不然就可以直接使用mathjax。 mathjax可以选用下面两种渲染引擎的中的任一一种 hexo-renderer-kramed hexo-render-pandoc 使用hexo-render-pandoc还需要安装pandoc渲染引擎。其安装方法可以参考 pandoc官网。如果在macOS上可以使用 Homebrew安装. 这里以pandoc为例： 123# 需要先卸载默认的渲染引擎npm un hexo-renderer-marked --savenpm i hexo-renderer-pandoc --save 替换渲染器之后会导致NexT note功能出现问题，note内的元素内容无法渲染，会输出markdown源代码。 这个问题我在hexo-render-pandoc上提了一个Issue，看原作者什么时候能够更新解决吧。 2. Configuration 配置NexT主题的_config.yml文件 12345math: enable: true ... engine: mathjax #engine: katex 很多文章都漏掉了在配置中一个重要的信息：在主题配置math下有一个名为per_page的选项，其值为true或者false。这个选项用来控制是否对每个篇文章都渲染数学公式。默认情况下是true，这意味只对Front Matter中含有mathjax: true的文章进行公式渲染。将per_page设置为false，则会对每一篇文章都尝试进行公式渲染。 由于公式渲染时一个很费时的操作，因此还是保持默认配置，通过Front Matter进行渲染控制. 3. How to use 3.1 行内嵌套公式 如：质能方程\(e=mc^2\) 1如：质能方程$e=mc^2$ 3.2 独占一行的公式 如： \[ 1=\sum_{i=0}^{m}\sum_{k=0}^{W_i-1}b_{i,k}=\sum_{i=0}^{m}b_{i,0}\sum_{k=0}^{W_i-1}\frac{W_i-k}{W_i}=\sum_{i=0}^{m}b_{i,0}\frac{W_i+1}{2}\\ =\frac{b_{0,0}}{2}\left[W\left(\sum_{i=0}^{m-1}(2p)^i+\frac{(2p)^m}{1-p}\right) + \frac{1}{1-p}\right] \] 12345如：$$1=\sum_&#123;i=0&#125;^&#123;m&#125;\sum_&#123;k=0&#125;^&#123;W_i-1&#125;b_&#123;i,k&#125;=\sum_&#123;i=0&#125;^&#123;m&#125;b_&#123;i,0&#125;\sum_&#123;k=0&#125;^&#123;W_i-1&#125;\frac&#123;W_i-k&#125;&#123;W_i&#125;=\sum_&#123;i=0&#125;^&#123;m&#125;b_&#123;i,0&#125;\frac&#123;W_i+1&#125;&#123;2&#125;\\=\frac&#123;b_&#123;0,0&#125;&#125;&#123;2&#125;\left[W\left(\sum_&#123;i=0&#125;^&#123;m-1&#125;(2p)^i+\frac&#123;(2p)^m&#125;&#123;1-p&#125;\right) + \frac&#123;1&#125;&#123;1-p&#125;\right]$$ 更多latex的使用方法，请参考官方文档]]></content>
       <categories>
         <category>教程</category>
       </categories>
@@ -240,8 +240,8 @@
         <category>形而上</category>
       </categories>
       <tags>
-        <tag>翻译</tag>
         <tag>nodejs</tag>
+        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
@@ -252,8 +252,8 @@
         <category>形而上</category>
       </categories>
       <tags>
-        <tag>翻译</tag>
         <tag>nodejs</tag>
+        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
