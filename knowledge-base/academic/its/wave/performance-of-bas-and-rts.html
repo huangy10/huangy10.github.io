@@ -121,14 +121,21 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://www.codewoody.com/tags/index.html">
+  <meta name="description" content="在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对于Basic Ac">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IEEE802.11 DCF中Basic Access和RTS&#x2F;CTS机制的理论饱和吞吐率性能差异分析">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts.html">
 <meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对于Basic Ac">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T14:39:24.054Z">
+<meta property="og:image" content="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/48c01d167935b42f5daa3cbb1d0b6145.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5f61dfa0ca56be6f035a7800a5be35d2.gif">
+<meta property="og:updated_time" content="2019-05-02T15:47:46.898Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="IEEE802.11 DCF中Basic Access和RTS&#x2F;CTS机制的理论饱和吞吐率性能差异分析">
+<meta name="twitter:description" content="在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对于Basic Ac">
+<meta name="twitter:image" content="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png">
 
 
 
@@ -138,7 +145,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/tags/">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts">
 
 
 
@@ -148,7 +155,7 @@
   };
 </script>
 
-  <title>tags | 治部少辅</title>
+  <title>IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析 | 治部少辅</title>
   
 
 
@@ -266,7 +273,7 @@
         
         
           
-          <li class="menu-item menu-item-knowledge">
+          <li class="menu-item menu-item-knowledge menu-item-active">
 
     
     
@@ -388,7 +395,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">tags
+<h2 class="post-title" itemprop="name headline">IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析
 
 </h2>
 
@@ -396,6 +403,72 @@
   
   
 
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>PERFORMANCE-OF-BAS-AND-RTS</li>
+          
+        
+      
+    
+  </ul>
 
 
 </div>
@@ -408,164 +481,25 @@
       <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-              
-                
-                  
-                
-              
-              36 tags in total
-            </div>
-            <div class="tag-cloud-tags">
-              
-                <a href="/tags/Github/" style="font-size: 12px; color: #ccc">Github</a> <a href="/tags/Hexo/" style="font-size: 15.6px; color: #a7a7a7">Hexo</a> <a href="/tags/MacOS/" style="font-size: 12px; color: #ccc">MacOS</a> <a href="/tags/Minio/" style="font-size: 12px; color: #ccc">Minio</a> <a href="/tags/OSS/" style="font-size: 12px; color: #ccc">OSS</a> <a href="/tags/Shadowsocks/" style="font-size: 22.8px; color: #5c5c5c">Shadowsocks</a> <a href="/tags/TCP-IP/" style="font-size: 12px; color: #ccc">TCP/IP</a> <a href="/tags/debug/" style="font-size: 12px; color: #ccc">debug</a> <a href="/tags/git/" style="font-size: 12px; color: #ccc">git</a> <a href="/tags/gitlab/" style="font-size: 12px; color: #ccc">gitlab</a> <a href="/tags/hexo/" style="font-size: 15.6px; color: #a7a7a7">hexo</a> <a href="/tags/ios/" style="font-size: 19.2px; color: #818181">ios</a> <a href="/tags/iptables/" style="font-size: 12px; color: #ccc">iptables</a> <a href="/tags/java/" style="font-size: 12px; color: #ccc">java</a> <a href="/tags/js/" style="font-size: 12px; color: #ccc">js</a> <a href="/tags/kernel/" style="font-size: 12px; color: #ccc">kernel</a> <a href="/tags/linux/" style="font-size: 15.6px; color: #a7a7a7">linux</a> <a href="/tags/macOS/" style="font-size: 12px; color: #ccc">macOS</a> <a href="/tags/make/" style="font-size: 12px; color: #ccc">make</a> <a href="/tags/nodejs/" style="font-size: 15.6px; color: #a7a7a7">nodejs</a> <a href="/tags/processing/" style="font-size: 12px; color: #ccc">processing</a> <a href="/tags/ss/" style="font-size: 12px; color: #ccc">ss</a> <a href="/tags/swift/" style="font-size: 15.6px; color: #a7a7a7">swift</a> <a href="/tags/宗教/" style="font-size: 12px; color: #ccc">宗教</a> <a href="/tags/折腾/" style="font-size: 15.6px; color: #a7a7a7">折腾</a> <a href="/tags/政治/" style="font-size: 15.6px; color: #a7a7a7">政治</a> <a href="/tags/教程/" style="font-size: 30px; color: #111">教程</a> <a href="/tags/无人机/" style="font-size: 12px; color: #ccc">无人机</a> <a href="/tags/智商税/" style="font-size: 12px; color: #ccc">智商税</a> <a href="/tags/杂谈/" style="font-size: 26.4px; color: #363636">杂谈</a> <a href="/tags/树莓派/" style="font-size: 12px; color: #ccc">树莓派</a> <a href="/tags/科技新闻/" style="font-size: 12px; color: #ccc">科技新闻</a> <a href="/tags/网络/" style="font-size: 12px; color: #ccc">网络</a> <a href="/tags/翻墙/" style="font-size: 12px; color: #ccc">翻墙</a> <a href="/tags/翻译/" style="font-size: 19.2px; color: #818181">翻译</a> <a href="/tags/转载/" style="font-size: 19.2px; color: #818181">转载</a>
-              
-            </div>
+          <p>在<a href="./">Wireless Access in Vehicular Environments (WAVE)</a>文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：</p>
+<figure>
+<img src="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png" alt="饱和吞吐率与节点数量的关系"><figcaption>饱和吞吐率与节点数量的关系</figcaption>
+</figure>
+<p>注意到在<a href="/knowledge-base/academic/its/wave/#%E5%90%9E%E5%90%90%E7%8E%87%E8%AE%A1%E7%AE%97">3.4.4</a>中给出的一般形式的饱和吞吐率对于Basic Access以及RTS/CTS机制是一样。两种机制的主要区别在于<span class="math inline">\(T_c\)</span>和<span class="math inline">\(T_s\)</span>的区别，如下图所示：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/48c01d167935b42f5daa3cbb1d0b6145.png" alt="T_c和T_s"><figcaption><span class="math inline">\(T_c\)</span>和<span class="math inline">\(T_s\)</span></figcaption>
+</figure>
+<p>考虑到ACK, RTS, CTS这些包的体积非常小，因此Basic Access和RTS/CTS机制的区别在于<span class="math inline">\(T_s\)</span>和<span class="math inline">\(T_c\)</span>的相对大小不同。在Basic Access中两个值非常接近，而在RTS/CTS中两个值的差别非常大。</p>
+<p><span class="math display">\[
+S=\frac{P_sP_{tr}E[P]}{(1-P_{tr})\sigma+P_{tr}P_sT_s+P_{tr}(1-P_s)T_c}
+\]</span></p>
+<p>上面的式子中，<span class="math inline">\(P_{tr}P_s=n\tau (1-\tau)^{n-1}\)</span>随着<span class="math inline">\(n\)</span>增加而递减。<span class="math inline">\(P_{tr}\)</span>随着<span class="math inline">\(n\)</span>增加而趋向于1，则分母项中，随着<span class="math inline">\(n\)</span>升高，前两项都趋向于0，后一个趋向于<span class="math inline">\(T_c\)</span>。可见<span class="math inline">\(T_c\)</span>的值决定了最后下降的速度。</p>
+<p>分母的形式其实很类似于两级<a href="https://learn.unity.com/tutorial/linear-interpolation?projectId=5c8920b4edbc2a113b6bc26a" target="_blank" rel="noopener">lerp function</a>，即从形状上来看，分母的取值从<span class="math inline">\(\sigma\)</span>出发，逐渐靠近<span class="math inline">\(T_s\)</span>，最终收拢到<span class="math inline">\(T_c\)</span>。下图有助于理解：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/5f61dfa0ca56be6f035a7800a5be35d2.gif"></p>
+<div class="note info">
+            <p>上图其实是bezier曲线的原理示意图，出处是<a href="https://www.cnblogs.com/hnfxs/p/3148483.html" target="_blank" rel="noopener">贝塞尔曲线原理（简单阐述）</a></p>
           </div>
+
         
       </div>
       
@@ -574,6 +508,72 @@
     </div>
     
 
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>PERFORMANCE-OF-BAS-AND-RTS</li>
+          
+        
+      
+    
+  </ul>
 
 
     
@@ -1007,9 +1007,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/tags/index.html";
-    this.page.identifier = "tags/index.html";
-    this.page.title = 'tags';
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts.html";
+    this.page.identifier = "knowledge-base/academic/its/wave/performance-of-bas-and-rts.html";
+    this.page.title = 'IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');
@@ -1364,6 +1364,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
