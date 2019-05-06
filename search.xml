@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[读书破万卷,下笔如有神]]></title>
+    <url>%2Fposts%2F60435%2F</url>
+    <content type="text"><![CDATA[能够获得暴利的职业，都有一个共同特点：可扩展性（scaling），一次劳动可以服务成千上万的人。 软件、电影、游戏行业都具有可扩展性，作品的生产成本是固定的，但可以被消费无数次，所以有巨大的获利空间，创造出许许多多的富豪。另一方面，理发师、厨师、出租车司机一次劳动，只能服务少数几个人，就不具有可扩展性，很难获得暴利，生存得很辛苦。 最近，我读到美国一个风险投资家的文章。他说了一句发人深思的话： &quot;写作是最具可扩展性的活动。你呆在家里，不去参加活动/会议，只是在网上写下自己的想法，然后你就具有了最好的可扩展性。&quot; 我想了一下，还真是这样。你写了一篇文章，想让其他人看到，只要到处张贴就行了。每次转贴，就是扩展了一次。这比其他产品的扩展容易多了。面包师傅想要更多的人尝到自己的面包，只能多开面包店；网站要扩展，只能购买更多的服务器。相比之下，文字的扩展简直是零成本。 大公司每年花费数十亿美元用于广告，以求人们关注他们的产品。但是，一个好的作家可以免费获得这种扩展性。这就是为什么你应该把自己的想法写下来的原因，这么好的免费传播渠道，为什么不用呢？你以为，写下来不会有人看。错，其实是有人会看到的，如果他们觉得有价值，就会帮你传播出去。 这篇文章转载自阮一峰的博客。这篇文章其实说了一个非常简洁明了却价值巨大的道理，也给我们启示：我们应该如何规划自己的职业道路。只是靠出售自己的时间，即便是清北的同学，也只是能做到一个尚算富裕，但是辛苦中产阶级。要更上一层楼，还是需要手握资本。而怎么获得资本呢？启示就是靠文章里说的“可扩展性的工作”。]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>杂谈</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Pandoc渲染引擎导致Hexo Tag渲染失败的临时解决办法]]></title>
     <url>%2Fposts%2F62502%2F</url>
     <content type="text"><![CDATA[在Hexo+Next: 使用Latex公式这篇文章中我发现在使用Pandoc作为Hexo的渲染引擎时，Hexo的标签功能会有问题，具体表现为Hexo的标签内部的内容会输出markdown源码，而非渲染后的html。 问题研究 经过我的研究，这是因为hexo-render-pandoc在注册自己的renderer时，只注册了异步渲染的renderer，而没有注册同步渲染的renderer，而Hexo的标签中主要是用同步renderer。以当时我使用的NexT的note标签为例。其实现代码为： 12345678910'use strict';function postNote(args, content) &#123; return `&lt;div class="note $&#123;args.join(' ')&#125;"&gt; $&#123;hexo.render.renderSync(&#123;text: content, engine: 'markdown'&#125;).split('\n').join('')&#125; &lt;/div&gt;`;&#125;hexo.extend.tag.register('note', postNote, &#123;ends: true, async: true&#125;);hexo.extend.tag.register('subnote', postNote, &#123;ends: true, async: true&#125;); 由于没有注册同步渲染器，这里的hexo.render.renderSync渲染会失败，从而返回的是content中的原本内容，也即Markdown形式的源码。 解决办法 彻底的解决办法，自然是在hexo-render-pandoc中同时注册同步渲染器。不过我自己尝试之后发现作为同步渲染器，pandoc和Hexo使用模板引擎貌似有冲突。更细致深入的修改最好还是由原作者来进行（我已经提交了Issue）。 这里我给出一个临时的解决办法：既然hexo-render-pandoc只注册了异步渲染代码，那么我们在Tag的实现代码中调用异步渲染的接口就可以了。仍然以NexT主题的note标签为例，可以将代码修改成： 12345678910111213141516'use strict';function postNote(args, content) &#123; return hexo.render.render(&#123;text: content, engine: 'markdown'&#125;) .then(function (res) &#123; return `&lt;div class="note $&#123;args.join(' ')&#125;"&gt; $&#123;res.split('\n').join('')&#125; &lt;/div&gt;` &#125;) // return `&lt;div class="note $&#123;args.join(' ')&#125;"&gt; // $&#123;hexo.render.renderSync(&#123;text: content, engine: 'markdown'&#125;).split('\n').join('')&#125; // &lt;/div&gt;`;&#125;hexo.extend.tag.register('note', postNote, &#123;ends: true, async: true&#125;);hexo.extend.tag.register('subnote', postNote, &#123;ends: true, async: true&#125;); 经过这样修改就可以了。不过这种方法仍然只是权宜之计，要是去修改每个Tag的实现，就太繁琐了。]]></content>
