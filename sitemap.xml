@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/knowledge-base/index.html</loc>
+    
+    <lastmod>2019-05-06T02:53:17.612Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/resources/index.html</loc>
+    
+    <lastmod>2019-05-06T02:52:54.354Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts.html</loc>
     
     <lastmod>2019-05-02T15:47:46.898Z</lastmod>
@@ -33,13 +47,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/index.html</loc>
     
     <lastmod>2019-04-29T03:26:54.189Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/index.html</loc>
-    
-    <lastmod>2019-04-29T03:25:57.909Z</lastmod>
     
   </url>
   
