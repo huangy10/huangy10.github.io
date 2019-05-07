@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/knowledge-base/index.html</loc>
+    
+    <lastmod>2019-05-07T05:18:07.259Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/knowledge-base/science/index.html</loc>
     
     <lastmod>2019-05-07T05:17:04.195Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://www.codewoody.com/knowledge-base/history/%E4%B8%AD%E5%9B%BD%E5%8F%B2/%E4%B8%AD%E5%8F%A4%E5%8F%B2/index.html</loc>
     
     <lastmod>2019-05-07T05:07:36.318Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/index.html</loc>
-    
-    <lastmod>2019-05-07T05:06:19.423Z</lastmod>
     
   </url>
   
