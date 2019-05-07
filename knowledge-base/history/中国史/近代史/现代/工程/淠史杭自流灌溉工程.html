@@ -135,7 +135,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a6cd2db3352d28f261db559f83665253.jpg">
 <meta property="og:image" content="https://pic4.zhimg.com/80/1c3a48a3b9d5b88a57b8ee02f9f98f99_hd.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/23fa227c8cf7c8bfb1dac3c754fdee9a.jpg">
-<meta property="og:updated_time" content="2019-05-07T04:25:52.030Z">
+<meta property="og:updated_time" content="2019-05-07T05:01:12.750Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="淠史杭自流灌溉工程">
 <meta name="twitter:description" content="原文出处（来自知乎-马前卒的回答） 淠【pì】史杭自流灌溉工程。是1958年大跃进时想出来的疯狂项目。61年曾被点名要求下马停工，但当地的干部和民工最终咬牙坚持到底，在大别山外围建出了一个超级丰产区。 在毛主席 “一定要把淮河修好” 的伟大号召下，安徽人民先后在大别山区修建了佛子岭、梅山、响洪甸、磨子潭、龙河口五大水库，拦蓄大别山区上游来水，减轻淮河干流防洪压力。五大水库的修建，拓展了安徽省委、省">
@@ -1432,6 +1432,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
