@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-05-06T06:16:16.744Z</updated>
+  <updated>2019-05-08T07:39:33.954Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker Volume的权限问题</title>
+    <link href="http://www.codewoody.com/posts/25188/"/>
+    <id>http://www.codewoody.com/posts/25188/</id>
+    <published>2019-05-08T06:38:09.000Z</published>
+    <updated>2019-05-08T07:39:33.954Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用<code>-v</code>将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。</p><a id="more"></a><h2 id="why">Why</h2><p>当我们绑定宿主目录到镜像时，如果该目录不存在，Docker也会自动创建该目录。这种方式创建出来的目录的拥有者是root用户。如果该目录已经存在，那么其拥有者就取决于宿主配置的情况了。</p><p>由于Docker内部的用户空间和宿主的用户空间是独立的，如果镜像内运行进程的用户和宿主目录的拥有者不符合，就会出现权限问题。</p><h2 id="how-to-solve-it">How to solve it</h2><p>由于镜像内和宿主的用户名空间是不同的，所以通过用户名的方式来变更宿主目录的所有权会失效。然而，事实上用户系统是通过uid来标识不同的用户的，我们只需要将宿主的路径的拥护者改为镜像内用户相通的uid即可。镜像内用户的uid可以通过如下方式查看，例如：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jovyan@8fed6b266a3c:~$ id</span><br><span class="line">uid=1000(jovyan) gid=100(users) groups=100(users)</span><br></pre></td></tr></table></figure><p>继而再修改宿主机上对应目录的拥有者：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R 1000 /path/to/volume</span><br></pre></td></tr></table></figure><h2 id="further-research">Further Research</h2><p>上面的方法可以解决Volume访问权限的问题，不过会产生潜在的漏洞。从镜像内获得的uid在宿主上可能表示的是不同的用户，在宿主机上修改目录的拥有者会导致数据被同一服务器上的其他用户访问，带来安全性上的问题。</p><p>另一方面，如果有多个镜像需要共享一个Volume，而他们内部的运行用户的uid不同的话，就需要在宿主上进行更加复杂的用户以及组的配置。</p><p>更优雅的执行方法有下面两种：</p><h3 id="use-named-volume">Use Named Volume</h3><p>Named Volumes</p><h3 id="由容器自行配置权限问题">由容器自行配置权限问题</h3><h2 id="reference">Reference</h2><ol type="1"><li><a href="https://yq.aliyun.com/articles/53990" target="_blank" rel="noopener">谈谈 Docker Volume 之权限管理（一）</a></li><li><a href="https://stackoverflow.com/questions/23544282/what-is-the-best-way-to-manage-permissions-for-docker-shared-volumes?spm=a2c4e.11153940.blogcont53990.8.3421149142aS92" target="_blank" rel="noopener">What is the (best) way to manage permissions for Docker shared volumes?</a></li><li><a href="https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e" target="_blank" rel="noopener">Why Docker Data Containers (Volumes!) are Good</a></li><li><a href="https://docs.docker.com/storage/volumes/" target="_blank" rel="noopener">Use volumes</a></li><li><a href="https://success.docker.com/article/different-types-of-volumes" target="_blank" rel="noopener">Different Types of Volumes</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用&lt;code&gt;-v&lt;/code&gt;将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="debug" scheme="http://www.codewoody.com/tags/debug/"/>
+    
+      <category term="docker" scheme="http://www.codewoody.com/tags/docker/"/>
+    
+  </entry>
   
   <entry>
     <title>读书破万卷,下笔如有神</title>
@@ -516,33 +540,6 @@ svg {
       <category term="linux" scheme="http://www.codewoody.com/tags/linux/"/>
     
       <category term="kernel" scheme="http://www.codewoody.com/tags/kernel/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用iptables和route来建立起Linux的网关设置</title>
-    <link href="http://www.codewoody.com/posts/32824/"/>
-    <id>http://www.codewoody.com/posts/32824/</id>
-    <published>2019-01-22T08:00:49.000Z</published>
-    <updated>2019-01-22T08:06:21.104Z</updated>
-    
-    <content type="html"><![CDATA[本文翻译自：<a href="https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on-linux/" target="_blank" rel="noopener">Setting Up Gateway Using iptables and route on Linux</a>。 网络资源的分享是非常重要的，而建立起一个网关来进行网络分享是一个比较好的解决方案。在Linux系统中创建和设置网关非常简单，成本低廉，而且性能可靠。</p><h1 id="linux网络设置">1 Linux网络设置</h1><p>假定我们要处理的Linux有如下的配置：</p><ul><li>NIC1: eth0, ip: 192.168.0.1，连接到局域网(LAN)</li><li>NIC2: eth1, ip: 1.2.3.4, 连接到公网</li></ul><figure><img src="https://imgs.codewoody.com/uploads/big/6f341c57eb221eab557015034a7c4c0e.png" alt="网络拓扑图"><figcaption>网络拓扑图</figcaption></figure><p>现在我们希望将分享这台机器的网络连接给LAN网络上的其他电脑(ip: 192.168.0.0/16)</p><h1 id="设置网关">2 设置网关</h1><p>下面提到的所有操作都需要root权限来执行。</p><h2 id="操作ip路由表">2.1 操作IP路由表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route add 192.168.0.0/16 dev eth0</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="comment"># route add -net 192.168.0.0/16 dev eth0</span></span><br></pre></td></tr></table></figure><h2 id="启用linux-ip-转发ip-forwarding">2.2 启用Linux IP 转发(IP Forwarding)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.ip.forward=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="comment"># echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span></span><br></pre></td></tr></table></figure><p>你也可以直接编辑<code>/etc/sysctl.conf</code>来持久化这一设置：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure><h2 id="通过iptables设置源地址映射snat">2.3 通过iptables设置源地址映射(SNAT)</h2><p>将（其他电脑发送的）包的源地址修改为网关的源地址。iptables会自动将响应包的目的地址替换成正确的IP地址。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth1 -j SNAT --to-source 1.2.3.4</span><br></pre></td></tr></table></figure><p>除了使用SNAT，也可以使用MASQUERADE:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth1 -j MASQUERADE</span><br></pre></td></tr></table></figure><p>注意，对于静态IP而言，SNAT的方式要更好一些。根据iptables man page:</p><blockquote><p>This target is only valid in the nat table, in the POSTROUTING chain. It should only be used with dynamically assigned IP (dialup) connections: if you have a static IP address, you should use the SNAT target. Masquerading is equivalent to specifying a mapping to the IP address of the interface the packet is going out, but also has the effect that connections are forgotten when the interface goes down. This is the correct behavior when the next dialup is unlikely to have the same interface address (and hence any established connections are lost anyway).</p></blockquote><p>你还需要确保其他iptables不会阻拦对应的连接。如果你有这方面的问题，可以尝试：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">iptables -t nat -F</span><br><span class="line">iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth1 -j SNAT --to-source 1.2.3.4</span><br></pre></td></tr></table></figure><p>上面的代码可以允许所有的接入连接。不过这会存在一些安全性问题。</p><h1 id="客户端配置">3 客户端配置</h1><p>客户端配置主要是把网关设置成192.168.0.1。例如如下命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route add default via 192.168.0.1 dev eth0</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="comment"># route add default gw 192.168.0.1 eth0</span></span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;网络资源的分享是非常重要的，而建立起一个网关来进行网络分享是一个比较好的解决方案。在Linux系统中创建和设置网关非常简单，成本低廉，而且性能可靠。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/6f341c57eb221eab557015034a7c4c0e.png&quot; alt=&quot;网络拓扑图&quot;&gt;
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="linux" scheme="http://www.codewoody.com/tags/linux/"/>
-    
-      <category term="iptables" scheme="http://www.codewoody.com/tags/iptables/"/>
     
   </entry>
   
