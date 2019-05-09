@@ -2,16 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/history/%E6%9C%9D%E9%9F%A9/%E4%BA%8C%E6%88%98%E5%90%8E%E6%9C%9D%E9%B2%9C/1996%E5%B9%B4%E6%9C%9D%E9%B2%9C%E6%BD%9C%E8%89%87%E6%B8%97%E9%80%8F%E4%BA%8B%E4%BB%B6.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/%E9%80%9A%E4%BF%A1%E8%8C%83%E5%9B%B4%E6%A8%A1%E5%9E%8B%E6%8E%A2%E8%AE%A8.html</loc>
     
-    <lastmod>2019-05-09T05:09:57.916Z</lastmod>
+    <lastmod>2019-05-09T13:29:45.824Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/sch.html</loc>
+    
+    <lastmod>2019-05-09T08:11:30.589Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/performance-analysis-of-beacon.html</loc>
     
-    <lastmod>2019-05-09T04:33:35.948Z</lastmod>
+    <lastmod>2019-05-09T08:11:30.587Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts.html</loc>
+    
+    <lastmod>2019-05-09T08:11:30.587Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/index.html</loc>
+    
+    <lastmod>2019-05-09T08:11:30.586Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/history/%E6%9C%9D%E9%9F%A9/%E4%BA%8C%E6%88%98%E5%90%8E%E6%9C%9D%E9%B2%9C/1996%E5%B9%B4%E6%9C%9D%E9%B2%9C%E6%BD%9C%E8%89%87%E6%B8%97%E9%80%8F%E4%BA%8B%E4%BB%B6.html</loc>
+    
+    <lastmod>2019-05-09T05:09:57.916Z</lastmod>
     
   </url>
   
@@ -51,13 +79,6 @@
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/%E9%80%9A%E4%BF%A1%E8%8C%83%E5%9B%B4%E6%A8%A1%E5%9E%8B%E6%8E%A2%E8%AE%A8.html</loc>
-    
-    <lastmod>2019-05-07T14:13:39.391Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/its/index.html</loc>
     
     <lastmod>2019-05-07T14:00:59.500Z</lastmod>
@@ -68,13 +89,6 @@
     <loc>http://www.codewoody.com/update/index.html</loc>
     
     <lastmod>2019-05-07T13:52:26.049Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/index.html</loc>
-    
-    <lastmod>2019-05-07T09:06:42.746Z</lastmod>
     
   </url>
   
@@ -138,20 +152,6 @@
     <loc>http://www.codewoody.com/knowledge-base/resources/index.html</loc>
     
     <lastmod>2019-05-06T02:52:54.354Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts.html</loc>
-    
-    <lastmod>2019-05-02T15:47:46.898Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/sch.html</loc>
-    
-    <lastmod>2019-04-30T06:48:38.554Z</lastmod>
     
   </url>
   
