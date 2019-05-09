@@ -129,7 +129,7 @@
 <meta property="og:description" content="前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所有参考文">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png">
-<meta property="og:updated_time" content="2019-05-09T13:29:45.824Z">
+<meta property="og:updated_time" content="2019-05-09T13:39:17.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通信范围模型探讨">
 <meta name="twitter:description" content="前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所有参考文">
@@ -525,21 +525,29 @@ F_{R}(r)=1-\frac{1}{\Gamma(m)} \int_{\frac{m P_{\mathrm{th}}}{P_{r}}}^{\infty} u
 \end{equation}\]</span></p>
 <p>使用下面的积分变换：</p>
 <p><span class="math display">\[\begin{equation}
+
 \int x^{n} e^{c x} d x=\left(\frac{d}{d c}\right)^{n} \frac{e^{c x}}{c}
+
 \end{equation}\]</span></p>
 <p>CDF可以写成：</p>
 <p><span class="math display">\[\begin{equation}
+
 \label{5}
 F_{R}(r)=1-\frac{1}{\Gamma(m)} \sum_{i=0}^{m-1} \frac{(m-1) !}{(m-1-i) !}\left(\frac{m P_{\mathrm{th}}}{P_{r}}\right)^{m-1-i} e^{-\frac{m P_{\mathrm{th}}}{P_{r}}}
+
 \end{equation}\]</span></p>
 <p>有了CDF以后，我们就可以计算通信范围的平均值<span class="math inline">\(E[R]\)</span>了：</p>
 <p><span class="math display">\[\begin{equation}
+\begin{aligned}
+E[R]=\frac{1}{\alpha \Gamma(m)} \sum_{i=0}^{m-1} &amp; \frac{(m-1) !}{(m-1-i) !} \\ &amp; \times \Gamma\left(m-1-i+\frac{1}{\alpha}\right)\left(\frac{m P_{\mathrm{th}}}{P_{t} K}\right)^{-\frac{1}{\alpha}}
+\end{aligned}
 \label{6}
-\begin{aligned} E[R]=\frac{1}{\alpha \Gamma(m)} \sum_{i=0}^{m-1} &amp; \frac{(m-1) !}{(m-1-i) !} \\ &amp; \times \Gamma\left(m-1-i+\frac{1}{\alpha}\right)\left(\frac{m P_{\mathrm{th}}}{P_{t} K}\right)^{-\frac{1}{\alpha}} \end{aligned}
 \end{equation}\]</span></p>
 <p>上面推导的是能够成功通讯的范围。对于载波侦听的范围<span class="math inline">\(E[L_{CS}]\)</span>可以通过<span class="math inline">\(\eqref{6}\)</span>类似的过程进行推导。这里载波侦听范围指的是节点可以感知到包（但是未必能够成功收到此包）的范围。我们认为当接收功率达到阈值<span class="math inline">\(P_{CS}\)</span>时即可。记<span class="math inline">\(P_{CS}=\rho P_{th}\)</span>，其中<span class="math inline">\(\rho \in (0, 1]\)</span>。则有下面的关系：</p>
 <p><span class="math display">\[\begin{equation}
+
 E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
+
 \end{equation}\]</span></p>
 <h1 id="reference" class="unnumbered">Reference</h1>
 <div id="refs" class="references">
