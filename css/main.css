@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #5ff;
+  background: #e3faff;
 }
 .feed-link,
 .chat {
@@ -2889,4 +2889,7 @@ div#refs {
 }
 div#refs p {
   margin: 0;
+}
+figcaption {
+  text-align: center;
 }
