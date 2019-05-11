@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ns3 wscript: 自动寻找需编译的源文件]]></title>
+    <url>%2Fposts%2F3426%2F</url>
+    <content type="text"><![CDATA[在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过create-module.py创建的module中的wscript为 12345678910111213141516171819202122232425262728293031# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-# def options(opt):# pass# def configure(conf):# conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')def build(bld): module = bld.create_ns3_module('example-module', ['core']) module.source = [ 'model/example-module.cc', 'helper/example-module-helper.cc', ] module_test = bld.create_ns3_module_test_library('example-module') module_test.source = [ 'test/example-module-test-suite.cc', ] headers = bld(features='ns3header') headers.module = 'example-module' headers.source = [ 'model/example-module.h', 'helper/example-module-helper.h', ] if bld.env.ENABLE_EXAMPLES: bld.recurse('examples') # bld.ns3_python_bindings() 其中，module.source中包含需要编译的.cc源文件，而headers.source中包含对应的头文件。每次新建C++源代码文件时，都需要手动添加到这里的列表中。下面我给出一个自动从module的model, helper目录下搜索源文件的方法： 123456789101112131415161718192021222324252627282930313233343536373839404142# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-import os# def options(opt):# pass# def configure(conf):# conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')def _list_sources(bld, suffix): root_dir = bld.path.abspath() res = [ x for x in [os.path.join("model", y) for y in os.listdir(os.path.join(root_dir, "model"))] if x.endswith(suffix) ] res += [ x for x in [os.path.join("helper", y) for y in os.listdir(os.path.join(root_dir, "helper"))] if x.endswith(suffix) ] return resdef build(bld): module = bld.create_ns3_module('example-module', ["core"]) module.source = _list_sources(bld, ".cc") module_test = bld.create_ns3_module_test_library('example-module') module_test.source = [ 'test/mix-autonomy-test-suite.cc', ] headers = bld(features='ns3header') headers.module = 'example-module' headers.source = _list_sources(bld, ".h") if bld.env.ENABLE_EXAMPLES: bld.recurse('examples') # bld.ns3_python_bindings() 注意不要直接套用上面的范例文件，需要将&quot;example-module&quot;的名字改为你的module的名字]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>ns3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[贝塞尔曲线原理]]></title>
     <url>%2Fposts%2F50553%2F</url>
     <content type="text"><![CDATA[这是一篇转载文章。Bézier curve(贝塞尔曲线)是应用于二维图形应用程序的数学曲线。 曲线定义：起始点、终止点（也称锚点）、控制点。通过调整控制点，贝塞尔曲线的形状会发生变化。 1962年，法国数学家Pierre Bézier第一个研究了这种矢量绘制曲线的方法，并给出了详细的计算公式，因此按照这样的公式绘制出来的曲线就用他的姓氏来命名，称为贝塞尔曲线。 抛物线三切线定理 设\(P_0\)，\(P_0^2\)，\(P_2\)是一跳抛物线上顺序不同的三个点。过\(P_0\)和\(P2\)的切线交于\(P_1\)。过\(P_0^2\)的切线交\(P_0 P_1\)和\(P_2 P_1\)相交于\(P_0^1\)和\(P_1^1\)，则有如下比例成立： \[\begin{equation} \frac{P_{0} P_{0}^{1}}{P_{0}^{1} P_{1}}=\frac{P_{1} P_{1}^{1}}{P_{1}^{1} P_{2}}=\frac{P_{0}^{1} P_{0}^{2}}{P_{0}^{2} P_{1}^{1}} \end{equation}\] 抛物线三切线定理示意图 此即为抛物线的三切线定理。 二次贝塞尔曲线 当\(P_0\)，\(P_2\)固定时，引入参数\(t\)，令上述比例值为\(t:(1-t)\)，即有： \[\begin{equation} \begin{array}{l}{P_{0}^{1}=(1-t) P_{0}+t P_{1}} \\ {P_{1}^{1}=(1-t) P_{1}+t P_{2}} \\ {P_{0}^{2}=(1-t) P_{0}^{1}+t P_{1}^{1}}\end{array} \end{equation}\] 将第一，二个式子代入第三个有： \[\begin{equation} P_{0}^{2}=(1-t)^{2} P_{0}+2 t(1-t) P_{1}+t^{2} P_{2} \end{equation}\] 当\(t\)从0变到1时，\(P_0^2\)点经过的轨迹即为上图中的抛物线，也即为由三顶点\(P_0\), \(P_1\), \(P_2\)决定的一条二次贝塞尔曲线。也可以认为这条二次贝塞尔曲线是由两个前顶点\((P_0, P_1)\)以及两个后顶点\((P_1, P_2)\)决定的。 更高阶的贝塞尔曲线 类似于二次贝塞尔曲线的推导过程，我们可以推广到更高阶的贝塞尔曲线。 由四个控制点定义的三次Bezier曲线\(P_0^3\)可被定义为分别由\((P_0,P_1,P_2)\)和\((P_1,P_2,P_3)\)确定的二条二次Bezier曲线的线性组合，由\((n+1)\)个控制点\(P_i(i=0,1,...,n)\)定义的n次Bezier曲线\(P_0^n\)可被定义为分别由前、后\(n\)个控制点定义的两条\((n-1)\)次Bezier曲线\(P_0^{n-1}\)与\(P+0^{n-1}\)的线性组合： \[\begin{equation} P_{0}^{n}=(1-t) P_{0}^{n-1}+t P_{1}^{n-1} \quad t \in[0,1] \end{equation}\] 由此可以得到Bezier曲线的踢腿计算公式 \[\begin{equation} P_{i}^{k}=\left\{\begin{array}{c}{P_{i}} &amp; {k=0} \\ {(1-t) P_{i}^{k-1}+t P_{i+1}^{k-1}} &amp; {k=1,2, \cdots, n, i=0,1, \cdots, n-k}\end{array}\right. \end{equation}\] 这就是de Castelijau算法。 贝塞尔曲线原理动图 一阶贝塞尔曲线 二阶贝塞尔曲线 三阶贝塞尔曲线 四阶贝塞尔曲线 五阶贝塞尔曲线]]></content>
@@ -80,7 +92,7 @@
       </categories>
       <tags>
         <tag>教程</tag>
-        <tag>ss</tag>
+        <tag>Shadowsocks</tag>
       </tags>
   </entry>
   <entry>

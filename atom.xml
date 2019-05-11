@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-05-10T03:03:53.812Z</updated>
+  <updated>2019-05-11T08:36:24.865Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ns3 wscript: 自动寻找需编译的源文件</title>
+    <link href="http://www.codewoody.com/posts/3426/"/>
+    <id>http://www.codewoody.com/posts/3426/</id>
+    <published>2019-05-11T08:19:17.000Z</published>
+    <updated>2019-05-11T08:36:24.865Z</updated>
+    
+    <content type="html"><![CDATA[<p>在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过<code>create-module.py</code>创建的module中的wscript为</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def options(opt):</span></span><br><span class="line"><span class="comment">#     pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def configure(conf):</span></span><br><span class="line"><span class="comment">#     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(bld)</span>:</span></span><br><span class="line">    module = bld.create_ns3_module(<span class="string">'example-module'</span>, [<span class="string">'core'</span>])</span><br><span class="line">    module.source = [</span><br><span class="line">        <span class="string">'model/example-module.cc'</span>,</span><br><span class="line">        <span class="string">'helper/example-module-helper.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    module_test = bld.create_ns3_module_test_library(<span class="string">'example-module'</span>)</span><br><span class="line">    module_test.source = [</span><br><span class="line">        <span class="string">'test/example-module-test-suite.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    headers = bld(features=<span class="string">'ns3header'</span>)</span><br><span class="line">    headers.module = <span class="string">'example-module'</span></span><br><span class="line">    headers.source = [</span><br><span class="line">        <span class="string">'model/example-module.h'</span>,</span><br><span class="line">        <span class="string">'helper/example-module-helper.h'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bld.env.ENABLE_EXAMPLES:</span><br><span class="line">        bld.recurse(<span class="string">'examples'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bld.ns3_python_bindings()</span></span><br></pre></td></tr></table></figure><p>其中，<code>module.source</code>中包含需要编译的<code>.cc</code>源文件，而<code>headers.source</code>中包含对应的头文件。每次新建C++源代码文件时，都需要手动添加到这里的列表中。下面我给出一个自动从<code>module</code>的<code>model</code>, <code>helper</code>目录下搜索源文件的方法：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># def options(opt):</span></span><br><span class="line"><span class="comment">#     pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def configure(conf):</span></span><br><span class="line"><span class="comment">#     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_list_sources</span><span class="params">(bld, suffix)</span>:</span></span><br><span class="line">    root_dir = bld.path.abspath()</span><br><span class="line">    res = [</span><br><span class="line">        x <span class="keyword">for</span> x <span class="keyword">in</span> </span><br><span class="line">            [os.path.join(<span class="string">"model"</span>, y) <span class="keyword">for</span> y <span class="keyword">in</span> os.listdir(os.path.join(root_dir, <span class="string">"model"</span>))]</span><br><span class="line">        <span class="keyword">if</span> x.endswith(suffix)</span><br><span class="line">    ]</span><br><span class="line">    res += [</span><br><span class="line">        x <span class="keyword">for</span> x <span class="keyword">in</span> </span><br><span class="line">            [os.path.join(<span class="string">"helper"</span>, y) <span class="keyword">for</span> y <span class="keyword">in</span> os.listdir(os.path.join(root_dir, <span class="string">"helper"</span>))]</span><br><span class="line">        <span class="keyword">if</span> x.endswith(suffix)</span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(bld)</span>:</span></span><br><span class="line">    module = bld.create_ns3_module(<span class="string">'example-module'</span>, [<span class="string">"core"</span>])</span><br><span class="line">    module.source = _list_sources(bld, <span class="string">".cc"</span>)</span><br><span class="line"></span><br><span class="line">    module_test = bld.create_ns3_module_test_library(<span class="string">'example-module'</span>)</span><br><span class="line">    module_test.source = [</span><br><span class="line">        <span class="string">'test/mix-autonomy-test-suite.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    headers = bld(features=<span class="string">'ns3header'</span>)</span><br><span class="line">    headers.module = <span class="string">'example-module'</span></span><br><span class="line">    headers.source = _list_sources(bld, <span class="string">".h"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bld.env.ENABLE_EXAMPLES:</span><br><span class="line">        bld.recurse(<span class="string">'examples'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bld.ns3_python_bindings()</span></span><br></pre></td></tr></table></figure><blockquote><p>注意不要直接套用上面的范例文件，需要将&quot;example-module&quot;的名字改为你的module的名字</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过&lt;code&gt;create-module.py&lt;/code&gt;创建的module中的wscript为&lt;/p&gt;
+&lt;figure class=&quot;highlight py
+      
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="ns3" scheme="http://www.codewoody.com/tags/ns3/"/>
+    
+  </entry>
   
   <entry>
     <title>贝塞尔曲线原理</title>
@@ -167,7 +195,7 @@
     <link href="http://www.codewoody.com/posts/12489/"/>
     <id>http://www.codewoody.com/posts/12489/</id>
     <published>2019-04-13T08:47:20.000Z</published>
-    <updated>2019-04-24T00:45:28.135Z</updated>
+    <updated>2019-05-10T03:06:06.896Z</updated>
     
     <content type="html"><![CDATA[<a id="more"></a><h2 id="haproxy">Haproxy</h2><p><a href="http://www.haproxy.org/" target="_blank" rel="noopener">Haproxy is a reliable, high performance TCP/HTTP Load Balancer</a></p><p>这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。</p><p>前一段时间，GFW的墙好像又加高了，很多时候在教育网外连接服务器不是很可靠。所以我考虑干脆在教育网环境下做一个跳板服务器，这样在外面可以先跳到教育网，然后再从教育网过墙。</p><p>教育网的另一个好处是有IPv6。貌似IPv6上面的拦截比较弱，而且，绝大多数的高校对于IPv6都是免流量费的。因此，我们可以从IPv4公口进，然后走IPv6出。</p><h2 id="how-to">How to</h2><p>不过，问题是通过apt安装的haproxy是<a href="https://github.com/Entware/Entware-ng/issues/426" target="_blank" rel="noopener">不支持IPv6的</a>！</p><p>我们只能自己动手从源码编译了：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.haproxy.org/download/1.7/src/haproxy-1.7.2.tar.gz</span><br><span class="line">tar -xzf haproxy-1.7.2.tar.gz</span><br><span class="line">cd haproxy-1.7.2</span><br><span class="line">make TARGET=linux2626 USE_GETADDRINFO=1</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure><!-- \begin{equation*}x = \sum_{i=1}^{N}x^2\end{equation*} -->]]></content>
     
@@ -187,7 +215,7 @@
     
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-      <category term="ss" scheme="http://www.codewoody.com/tags/ss/"/>
+      <category term="Shadowsocks" scheme="http://www.codewoody.com/tags/Shadowsocks/"/>
     
   </entry>
   
@@ -513,32 +541,6 @@ svg {
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
       <category term="Shadowsocks" scheme="http://www.codewoody.com/tags/Shadowsocks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【转载】无人机击落客机只是时间问题</title>
-    <link href="http://www.codewoody.com/posts/48586/"/>
-    <id>http://www.codewoody.com/posts/48586/</id>
-    <published>2019-02-17T09:29:29.000Z</published>
-    <updated>2019-03-05T04:09:38.494Z</updated>
-    
-    <content type="html"><![CDATA[<p>我是一个无人机集群技术的研究者，从最近开始我打算集中整理发布一些无人机，尤其是无人机集群技术的新进展以及评论文章。<a id="more"></a></p><p>原文链接：<a href="https://www.technologyreview.com/s/612656/its-only-a-matter-of-time-before-a-drone-takes-down-a-passenger-plane/" target="_blank" rel="noopener">It’s only a matter of time before a drone takes down a passenger plane</a></p><figure><img src="https://imgs.codewoody.com/uploads/big/0166e9fa673aa5ee62aa118a58836f7f.jpg" alt="Cover"><figcaption>Cover</figcaption></figure><p>2018年12月，英国第二大机场盖特威克机场，发现有一架无人机飞过机场，不得不关闭一天，几十万旅客受到影响。目前还不知道这架无人机是谁操作，为什么要飞入机场。</p><p>这个事件表明，无人机对商业航空已经构成威胁。更严重的是，&quot;反无人机&quot;技术起不了多大作用。无人机已经变得太便宜，太强大，客机将不可避免地受到影响。无论是开枪、无线电干扰、或者其他措施，都无法可靠地保护客机。这可能听起来危言耸听，但我们对无人机真的缺乏办法。</p><p>现在，消费者可以买到的最便宜无人机，只需要25美元。这些产品接受遥控器的无线信号，相对容易防范，只要干扰它们的无线电信号，就可以了。稍微昂贵的无人机有 GPS 芯片，这种无人机可以编程设置一个&quot;地理围栏&quot;，防止它们飞入指定的地理坐标范围内。</p><p>但是，上面的这些措施，只能防住普通消费者从正规渠道买到的无人机。对于具有中等技术水平的人来说，制造一架无人机很容易，自制无人机也不需要 GPS 芯片。它们也不一定需要与操作员通信，才能保持飞行，这使得无线电干扰无效。而且，强度太大的干扰信号，反而可能会影响到本来要保护的客机。</p><p>可以肯定的是，一架无人机攻击一架客机，成功机会不大。这是因为在起飞和着陆时（最容易遭遇无人机的阶段），客机的移动速度非常快，通常在每小时150到200英里之间，很少有无人机能够以50~70英里/小时的速度飞行，所以客机应该可以避开无人机。此外，飞机的设计可以承受鸟撞，如果一架无人机意外撞到客机，客机可能只会受到轻微损坏，很可能还是能够安全降落。</p><p>但是，如果无人机成群飞行，事情就会发生变化。虽然单个无人机很难攻击飞机，但是在客机的飞行路径上放置30架无人机，就可能会发生变化。考虑到无人机的价格，多架无人机群体攻击是很容易的。如果通过编程，找出客机的引擎（通过红外传感或通过图像），然后无人机携带少量爆炸物，撞击可能会致命。</p><p>总之，对于那些蓄意攻击客机的半自动或全自动无人机集群，根本就没有好的技术对策。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我是一个无人机集群技术的研究者，从最近开始我打算集中整理发布一些无人机，尤其是无人机集群技术的新进展以及评论文章。
-    
-    </summary>
-    
-      <category term="科技新闻" scheme="http://www.codewoody.com/categories/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
-    
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="无人机" scheme="http://www.codewoody.com/tags/%E6%97%A0%E4%BA%BA%E6%9C%BA/"/>
-    
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
   </entry>
   

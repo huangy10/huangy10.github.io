@@ -121,16 +121,19 @@
 
 
 
-  <meta name="description" content="晚来天雨雪，能饮一杯无？">
+  <meta name="description" content="编队内通信机制 为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即Beacon message dissemination。目前车联网通信的标准是WAVE。这里我们简要叙述一下WAVE的核心特点。 我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，">
 <meta property="og:type" content="website">
-<meta property="og:title" content="治部少辅">
-<meta property="og:url" content="http://www.codewoody.com/tags/杂谈/index.html">
+<meta property="og:title" content="基于Platoon的车间通信(V2V)机制设计">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/platoon/platoon-v2v.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="晚来天雨雪，能饮一杯无？">
+<meta property="og:description" content="编队内通信机制 为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即Beacon message dissemination。目前车联网通信的标准是WAVE。这里我们简要叙述一下WAVE的核心特点。 我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/387cd26c88bb25ea6c931f80bbf9a6a4.png">
+<meta property="og:updated_time" content="2019-05-10T09:05:38.585Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="治部少辅">
-<meta name="twitter:description" content="晚来天雨雪，能饮一杯无？">
+<meta name="twitter:title" content="基于Platoon的车间通信(V2V)机制设计">
+<meta name="twitter:description" content="编队内通信机制 为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即Beacon message dissemination。目前车联网通信的标准是WAVE。这里我们简要叙述一下WAVE的核心特点。 我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/387cd26c88bb25ea6c931f80bbf9a6a4.png">
 
 
 
@@ -140,7 +143,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/tags/杂谈/">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/platoon/platoon-v2v">
 
 
 
@@ -150,7 +153,7 @@
   };
 </script>
 
-  <title>Tag: 杂谈 | 治部少辅</title>
+  <title>基于Platoon的车间通信(V2V)机制设计 | 治部少辅</title>
   
 
 
@@ -209,7 +212,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -268,7 +271,7 @@
         
         
           
-          <li class="menu-item menu-item-knowledge">
+          <li class="menu-item menu-item-knowledge menu-item-active">
 
     
     
@@ -383,213 +386,249 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">基于Platoon的车间通信(V2V)机制设计
+
+</h2>
+
+<div class="post-meta">
   
   
+
+
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>杂谈<small>Tag</small>
-        </h2>
-      </div>
-
+  
+  <ul class="breadcrumb">
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/60435/" itemprop="url">
+          
             
-              <span itemprop="name">读书破万卷,下笔如有神</span>
-            
-          </a>
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
         
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-05-06T11:00:06+08:00" content="2019-05-06">
-          05-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/34235/" itemprop="url">
+          
             
-              <span itemprop="name">清华GPA事件备份:2019.04.16</span>
-            
-          </a>
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
         
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-16T14:42:27+08:00" content="2019-04-16">
-          04-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/10462/" itemprop="url">
+          
             
-              <span itemprop="name">政史:珍珠港事件前日方决策过程梳理</span>
-            
-          </a>
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
         
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-08T22:05:57+08:00" content="2019-04-08">
-          04-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/12613/" itemprop="url">
+          
             
-              <span itemprop="name">996 License 1.0</span>
-            
-          </a>
+          
+          
+            <li><a href="/knowledge-base/academic/its/platoon/">PLATOON</a></li>
+          
         
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-08T10:07:49+08:00" content="2019-04-08">
-          04-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/8446/" itemprop="url">
+          
             
-              <span itemprop="name">时局图：论扛着红旗反红旗</span>
-            
-          </a>
+          
+          
+            <li>PLATOON-V2V</li>
+          
         
-      </h3>
+      
+    
+  </ul>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-03-25T12:16:40+08:00" content="2019-03-25">
-          03-25
-        </time>
-      </div>
 
-    </header>
-  </article>
+</div>
 
+</header>
 
       
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/39480/" itemprop="url">
-            
-              <span itemprop="name">关于无神论者的笑话两则</span>
-            
-          </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-29T14:37:50+08:00" content="2018-11-29">
-          11-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
       
+      
+      <div class="post-body">
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
         
-          <a class="post-title-link" href="/posts/25658/" itemprop="url">
-            
-              <span itemprop="name">酵素</span>
-            
-          </a>
-        
-      </h3>
+          <h2 id="编队内通信机制">编队内通信机制</h2>
+<p>为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即<em>Beacon message dissemination</em>。目前车联网通信的标准是<a href="/knowledge-base/academic/its/wave/wave.html">WAVE</a>。这里我们简要叙述一下WAVE的核心特点。</p>
+<p>我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，包括一个控制信道CCH和六个服务信道SCH。CCH上不能用于发送IP包。一般而言，控制帧和安全相关的重要信息在CCH上传输，而SCH用于传输非安全信息。依照IEEE1609.4的规定，信道访问时间被切分为100ms长的同步间隔SI，SI内部又分为50ms的CCH访问时间和50ms的SCH访问时间。</p>
+<p>由于通信资源有限，当车流密度增大时，信道会出现拥堵，导致通信的可靠性(广播效率，丢包率)下降，进而威胁到行程安全。由于CCH信道只有一个且用于传输重要的控制和安全信息，所以研究者一般关注CCH上的通信性能可靠性。</p>
+<p>另一方面，当车流密度很低时，CCH信道的资源会限制，不利用充分的信道利用。</p>
+<p>以下是解决这些问题的常见策略：</p>
+<ol type="1">
+<li>引入非竞争协议（如TDMA）来保证Beacon性能</li>
+<li>调节网络参数来优化性能（如调整Beacon间隔，竞争窗口大小等）</li>
+</ol>
+<h3 id="引入竞争协议">引入竞争协议</h3>
+<p>引入非竞争协议后，汽车一般会被分簇，在簇内由簇头来进行同步和通信资源分配，从而确保消息在发送时，发送者对于信道的独占，这样可以最大程度地保证消息发送的可靠性。不过，这种机制的缺陷还是很明显的：</p>
+<ol type="1">
+<li>协同和资源分配的机制一般比较复杂</li>
+<li>引入了额外的Overhead开销</li>
+<li>在大规模网络环境下难以使用，例如涉及到多跳问题时，TDMA的同步和资源分配机制的实现复杂度会远远高于单跳场景。很多文章都是假定簇的大小不会超过单跳范围来规避这个问题。</li>
+<li>在大规模网络环境下，另一个问题是时隙资源不够划分之后采用如何策略来保持性能和网络公平性</li>
+</ol>
+<h3 id="动态调节网络参数">动态调节网络参数</h3>
+<p>这类方法通常不需要对WAVE原有的协议作出大的修改，也不需要同步和协同，可以进行本地决策。不过其缺点在于为了得到网络环境与待调节的网络参数的关系，需要使用非常复杂的数学模型工具。</p>
+<h3 id="基于具体业务形态的设计">基于具体业务形态的设计</h3>
+<p>很多研究都是着眼于提升网络的整体性能，而非聚焦到具体的业务场景。例如在编队场景中，为了改善网络的性能，可以考虑编队的拓扑结构。这一方面的研究还比价少，不过这类研究也比较困难，因为车联网中的具体业务还很少，如何构合理地构建业务场景其实是缺乏一个坚定的共识的。</p>
+<h2 id="编队间通信机制">编队间通信机制</h2>
+<p>车里编队间的通信问题是一个更加宏观的问题。在编队内部我们可以拥有一个非常稳定的拓扑结构，因而可是实现一些需要很高的协同性支持的机制。而在编队间通信问题上，我们就需要处理一些传统车联网场景关注的问题，如VANET connectivity以及链路质量。同时，数据分发过程中的路由问题也需要考虑。</p>
+<h3 id="vanet-connectivity">VANET connectivity</h3>
+<p>目前对于车联网中车间通信的网络连接性的问题还是主要围绕着自由车辆（即非编队车辆）进行。</p>
+<h3 id="相邻编队的时隙重叠问题">相邻编队的时隙重叠问题</h3>
+<p>若编队内采用了TDMA的方式进行通信，那么相邻的编队之间的时隙可能发生重叠。在<span class="citation" data-cites="liu2017joint">[1]</span>中，作者提出了一种解决这一问题的方法，流程如下：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/387cd26c88bb25ea6c931f80bbf9a6a4.png" alt="相邻编队的时隙分配机制设计"><figcaption>相邻编队的时隙分配机制设计</figcaption>
+</figure>
+<p>在<span class="citation" data-cites="liu2017joint">[1]</span>中，作者考虑了编队和自由车辆同时出现的场景，其中编队内发送Beacon时采用TDMA的方式，编队时隙位于CCHI的头部，自由车辆在这一段时间内不允许发送。如果相邻的编队的距离靠的太近（如上图(a)所示)，那么就可能发生时隙碰撞。在这个场景下，如上图(b)中显示，编队A和编队B的时隙分配发生了重叠。重叠时隙内的汽车发送时，会由于CSMA的退避机制导致延时增长以及碰撞。</p>
+<p>另一个潜在的问题是隐藏终端问题。即便两辆车彼此之间不会感知到对方，但是在两者通信范围的重叠区域，两者的包会发生冲突，从而无法被重叠区域内的车辆收到。如同上图(c)中的情形，尽管A0和B0两两者互相无法感知对方，如果两者同时发包，中间重叠区域的A1 ~ A4都无法收到。</p>
+<p>为了解决这两个问题，作者提出了一种Self-Configuring的时隙分配方式。编队的Leader需要首先确定是否在相邻的编队间出现了时隙重叠，这个确认过程如下：在每个CCHI，编队的Leader会广播一个包含了时隙分配信息的包。如果编队成员正确地收到了此包，那么他们遵循Leader的安排在对应的时隙发包。此时，在正常情况下，Leader应该受到所有成员发送的Beacon。反之，如果Leader在连续若干个CCHI（至少两个）内都发生了Beacon丢包，Leader就会推定这种丢包现象是由于时隙重叠导致的。</p>
+<p>在Leader确认发生了时隙重叠以后，Leader会自适应地重新安排TDMA时隙，暂时选择重叠的时隙的下一个时隙。当没有重叠的时隙安排时，Leader会重置到最初的时隙安排。</p>
+<blockquote>
+<p>上一段话中描述的重新安排重叠时隙的方式翻译自原文，不过我觉得这里有点问题：</p>
+<ol type="1">
+<li>时隙重叠是对称的，即A编队和B编队的时隙分配发生重叠时，双方的Leader都能检测到冲突，双方同时开始调整，反而使得原来的重叠时隙空出来。</li>
+<li>“选择重叠的时隙的下一个时隙”这个做法也含糊。按照情况分析，应该是将时隙序列整体往后移动一个时隙的长度，但是发生重叠的时隙可能不止一个，而且重叠的时隙并不一定连续，那如何处理呢？</li>
+</ol>
+<p>我对这里的这个机制持怀疑态度，作者在文章中也并未从理论和仿真的角度验证这个机制的有效性。出于严谨，读者最好参阅原文中的Section V-C</p>
+</blockquote>
+<p>我们还需要考虑下面的两个问题：</p>
+<p>当两个编队A和B同向行驶且距离较近时，前方的编队A保持其时隙结构不变，后面的编队B将其时隙延迟到A的时隙之后（如上图(e))来避免碰撞和隐藏中断问题。<strong>这是因为在前车数据的重要性要比后车的重要性高</strong>。另一个原因是后方编队的Leader检测时隙重叠的速度更快（例如前方编队的Leader不会受到隐藏终端问题的影响）。</p>
+<p>当编队A和B是反向行驶交会时，当两个Leader的间距小于通信距离，Leader发送的包会发生冲突。根据文章中的机制设计，在CCH信道上编队的TDMA时隙结束后的CSMA通信过程中，Leader还有一个机会发送Beacon包。此时，哪方先收到了对方的Beacon，哪方延后其时隙安排。</p>
+<h3 id="用混合协议解决编队间通信">用混合协议解决编队间通信</h3>
+<p>这里的混合协议是指TDMA和CSMA的混合协议。</p>
+<h2 id="reference" class="unnumbered">Reference</h2>
+<div id="refs" class="references">
+<div id="ref-liu2017joint">
+<p>[1] B. Liu, D. Jia, K. Lu, D. Ngoduy, J. Wang, and L. Wu, “A joint control–communication design for reliable vehicle platooning in hybrid traffic,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 66, no. 10, pp. 9394–9409, 2017.</p>
+</div>
+</div>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-22T12:08:40+08:00" content="2018-11-22">
-          11-22
-        </time>
+        
       </div>
-
-    </header>
-  </article>
-
-
+      
+      
       
     </div>
+    
 
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/platoon/">PLATOON</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>PLATOON-V2V</li>
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -609,8 +648,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -829,6 +877,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编队内通信机制"><span class="nav-number">1.</span> <span class="nav-text">编队内通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入竞争协议"><span class="nav-number">1.1.</span> <span class="nav-text">引入竞争协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态调节网络参数"><span class="nav-number">1.2.</span> <span class="nav-text">动态调节网络参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于具体业务形态的设计"><span class="nav-number">1.3.</span> <span class="nav-text">基于具体业务形态的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编队间通信机制"><span class="nav-number">2.</span> <span class="nav-text">编队间通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vanet-connectivity"><span class="nav-number">2.1.</span> <span class="nav-text">VANET connectivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相邻编队的时隙重叠问题"><span class="nav-number">2.2.</span> <span class="nav-text">相邻编队的时隙重叠问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用混合协议解决编队间通信"><span class="nav-number">2.3.</span> <span class="nav-text">用混合协议解决编队间通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -984,6 +1049,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -1002,9 +1071,28 @@
   <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
 
 
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/platoon/platoon-v2v.html";
+    this.page.identifier = "knowledge-base/academic/its/platoon/platoon-v2v.html";
+    this.page.title = '基于Platoon的车间通信(V2V)机制设计';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
 
 
 
+
+
+  
 
 
   
@@ -1342,6 +1430,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
