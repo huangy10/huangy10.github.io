@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[ns3 在模块中使用第三方库]]></title>
+    <url>%2Fposts%2F53831%2F</url>
+    <content type="text"><![CDATA[ns3使用了waf编译系统，因此在ns3中尝试引入第三方模块时，就没有make那么直接了。 其实思路的核心还是想办法最终为编译器提供-L和-I的设置。这个过程我们通过wscript中的configure函数来实现。这里我们假设模块使用的库的位置放在模块源码目录下的libs子目录。库的名字为example-lib。目录结构如下: 1234libs└── example-lib ├── include └── libexample-lib.a 其中，include文件夹内为头文件，libexample-lib.a为静态库文件。 修改wscript文件中的configure函数，如下 12345678def configure(conf): root_dir = conf.path.abspath() example_lib_dir = os.path.join(root_dir, "libs/example-lib") conf.env.append_value("LINKFLAGS", ["-L%s/" % example_lib_dir]) conf.env.append_value("LIB", ["example-lib"]) conf.env.append_value("CPPFLAGS", ["-I%s/include" % example_lib_dir, ]) 修改configure函数之后要重新运行./waf configure命令来让设置生效。]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+        <tag>ns3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[ns3 wscript: 自动寻找需编译的源文件]]></title>
     <url>%2Fposts%2F3426%2F</url>
     <content type="text"><![CDATA[在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过create-module.py创建的module中的wscript为 12345678910111213141516171819202122232425262728293031# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-# def options(opt):# pass# def configure(conf):# conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')def build(bld): module = bld.create_ns3_module('example-module', ['core']) module.source = [ 'model/example-module.cc', 'helper/example-module-helper.cc', ] module_test = bld.create_ns3_module_test_library('example-module') module_test.source = [ 'test/example-module-test-suite.cc', ] headers = bld(features='ns3header') headers.module = 'example-module' headers.source = [ 'model/example-module.h', 'helper/example-module-helper.h', ] if bld.env.ENABLE_EXAMPLES: bld.recurse('examples') # bld.ns3_python_bindings() 其中，module.source中包含需要编译的.cc源文件，而headers.source中包含对应的头文件。每次新建C++源代码文件时，都需要手动添加到这里的列表中。下面我给出一个自动从module的model, helper目录下搜索源文件的方法： 123456789101112131415161718192021222324252627282930313233343536373839404142# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-import os# def options(opt):# pass# def configure(conf):# conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')def _list_sources(bld, suffix): root_dir = bld.path.abspath() res = [ x for x in [os.path.join("model", y) for y in os.listdir(os.path.join(root_dir, "model"))] if x.endswith(suffix) ] res += [ x for x in [os.path.join("helper", y) for y in os.listdir(os.path.join(root_dir, "helper"))] if x.endswith(suffix) ] return resdef build(bld): module = bld.create_ns3_module('example-module', ["core"]) module.source = _list_sources(bld, ".cc") module_test = bld.create_ns3_module_test_library('example-module') module_test.source = [ 'test/mix-autonomy-test-suite.cc', ] headers = bld(features='ns3header') headers.module = 'example-module' headers.source = _list_sources(bld, ".h") if bld.env.ENABLE_EXAMPLES: bld.recurse('examples') # bld.ns3_python_bindings() 注意不要直接套用上面的范例文件，需要将&quot;example-module&quot;的名字改为你的module的名字]]></content>
