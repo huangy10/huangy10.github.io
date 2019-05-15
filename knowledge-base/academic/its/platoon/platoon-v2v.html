@@ -128,12 +128,18 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="编队内通信机制 为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即Beacon message dissemination。目前车联网通信的标准是WAVE。这里我们简要叙述一下WAVE的核心特点。 我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6b45350aea124c2d6e3842d015018f5c.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ae3a361d691fbb9238c779deb00ae9c3.gif">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fe2bb3e3290e17cf239a96cda68b1e02.jpg">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/40079670a4895ff90a892de719e29c50.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8db4c581ed033b4e7fdd5a0039e96798.jpg">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/591cf32adb37163950de0f450dfd99ed.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/387cd26c88bb25ea6c931f80bbf9a6a4.png">
-<meta property="og:updated_time" content="2019-05-10T09:05:38.585Z">
+<meta property="og:updated_time" content="2019-05-15T14:57:40.244Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于Platoon的车间通信(V2V)机制设计">
 <meta name="twitter:description" content="编队内通信机制 为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即Beacon message dissemination。目前车联网通信的标准是WAVE。这里我们简要叙述一下WAVE的核心特点。 我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/387cd26c88bb25ea6c931f80bbf9a6a4.png">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/6b45350aea124c2d6e3842d015018f5c.png">
 
 
 
@@ -504,13 +510,122 @@
 <h2 id="编队间通信机制">编队间通信机制</h2>
 <p>车里编队间的通信问题是一个更加宏观的问题。在编队内部我们可以拥有一个非常稳定的拓扑结构，因而可是实现一些需要很高的协同性支持的机制。而在编队间通信问题上，我们就需要处理一些传统车联网场景关注的问题，如VANET connectivity以及链路质量。同时，数据分发过程中的路由问题也需要考虑。</p>
 <h3 id="vanet-connectivity">VANET connectivity</h3>
-<p>目前对于车联网中车间通信的网络连接性的问题还是主要围绕着自由车辆（即非编队车辆）进行。</p>
+<p>目前对于车联网中车间通信的网络连接性的问题还是主要围绕着自由车辆（即非编队车辆）进行<span class="citation" data-cites="yousefi2008analytical">[1]</span>，一般的结论是随着车流量的增加VANET的连通性能够得到改善。<span class="citation" data-cites="jia2014network">[2]</span>中讨论了基于编队系统的车联网连通性问题。作者从<a href="/knowledge-base/academic/its/platoon/#platoon-as-vcps">VCPS</a>的角度来讨论这个场景下的问题，这意味着对于运动和网络性能的联合分析。这也是分析网络连通性的通常做法。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/6b45350aea124c2d6e3842d015018f5c.png" alt="双向道路上的多编队系统示意图"><figcaption>双向道路上的多编队系统示意图</figcaption>
+</figure>
+<h4 id="platoon-dynamics">Platoon Dynamics</h4>
+<p>在<span class="citation" data-cites="seiler2004disturbance">[3]</span>中发现，在采用<em>predeccessor-following</em>的控制策略，即每辆车只知道前方车辆的运动参数的情况下，越接近编队尾部的车辆的运动扰动就会越大。因此，编队内的车辆除了需要知道前方车辆的运动参数以外，还需要了解编队Leader的状态l，即<em>predeccessor-leader</em>策略<span class="citation" data-cites="rajamani1998design">[4]</span>，方能维持一个比较稳定的车间距。Leader的状态可以通过VANET通信来获取。这一思路延续下来的产物是CACC<span class="citation" data-cites="fernandes2012platooning">[5]</span>。</p>
+<h4 id="architecture">Architecture</h4>
+<p>这里介绍的是<span class="citation" data-cites="jia2014network">[2]</span>中提出的架构。</p>
+<p>基于platoon-based VCPS的角度，我们可以将问题拆解成下面两个过程：</p>
+<ol type="1">
+<li>networking/communication process;</li>
+<li>the platoon mobility process.</li>
+</ol>
+<p>这里要讨论的架构的主要作用，就是描述这两个过程的运作，及两者的相互作用。这里提到的<strong>相互作用</strong>可以通过下面两个例子来说明：</p>
+<ol type="1">
+<li>考虑碰撞预警应用，其中每辆车周期性的发送自己的运动信息，提醒周围的车辆避免碰撞。当编队规模小，编队间距大的时候，通信过程中的冲突和碰撞少，因此延时和丢包率性能好。反之，如果编队规模大，编队间距小，则通信情况会恶化。</li>
+<li>考虑CACC系统，CACC依赖VANET来交换周围车辆的运动信息。这里CACC可以建模成网络控制的控制系统。当丢包率提升时，控制系统的可靠性也会下降<span class="citation" data-cites="lei2011impact">[6]</span>。</li>
+</ol>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/ae3a361d691fbb9238c779deb00ae9c3.gif" alt="Architecture for platoon-based VCPSs"><figcaption>Architecture for platoon-based VCPSs</figcaption>
+</figure>
+<h4 id="mobility-specification">Mobility Specification</h4>
+<h5 id="自由车辆">自由车辆</h5>
+<p>我们考虑双向一车道的场景，即不存在超车的场景。编队系统由自由随机运动的交通流(<em>Individual Random Trafic Flow</em>)构建而来。为了建模这个自由随机运动的场景，我们选择Time Headway这个统计量来作为描述车流分布的基础统计量。</p>
+<p>Time Headway定义为同向行驶的两辆相邻的车通过同一个观察点的时间差。一般认为Time Headway是独立同分布的随机变量。对于Time Headway的研究非常早了，也有非常多的模型可以使用。其中比较经典的是指数分布模型，正则分布模型，Gama分布，Log-normal分布。<span class="citation" data-cites="ha2012time">[7]</span>中提出，在车流量大约在700到1700 (vph)之间时，Log-normal模型的比较适用。并且，在<a href="https://catalog.data.gov/dataset/next-generation-simulation-ngsim-vehicle-trajectories" target="_blank" rel="noopener">NGSIM Trajectory Data</a>数据集中，Time Headway也是服从Log-normal分布的。因此在这里我们采用Log-normal分布来描述Time Headway:</p>
+<p><span class="math display">\[\begin{equation}
+f\left(t_{h} ; \mu, \sigma, \tau\right)=\frac{1}{\sqrt{2 \pi} \sigma\left(t_{h}-\tau\right)} \exp \left(-\frac{\left(\log \left(t_{h}-\tau\right)-\mu\right)^{2}}{2 \sigma^{2}}\right), \quad t_{h}&gt;\tau
+\end{equation}\]</span></p>
+<p>其中，<span class="math inline">\(t_h\)</span>是Time Headway，<span class="math inline">\(\tau\)</span>为Time Headway的最小值，<span class="math inline">\(\mu\)</span>为规模参数(Scale Parameter)，<span class="math inline">\(\sigma\)</span>为形状参数(Shape Parameter)。根据这个分布可以得到均值和方差：</p>
+<p><span class="math display">\[\begin{equation}
+\mu\left(T_{h}\right)=\tau+e^{\mu+\frac{1}{2} \sigma^{2}}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\sigma^{2}\left(T_{h}\right)=e^{2 \mu+\sigma^{2}}\left(e^{\sigma^{2}}-1\right)
+\end{equation}\]</span></p>
+<p>在交通流的稳定状态下，假设车辆速度大致相等且为常数<span class="math inline">\(V_{stb}\)</span>，那么可以得到Distance Headway:</p>
+<p><span class="math display">\[\begin{equation}
+s_{h} \approx v_{s t b} t_{h}
+\end{equation}\]</span></p>
+<p>显然，<span class="math inline">\(s_{h}\)</span>也是服从Log-normal分布的。另外，我们假设结成编队以后，在一个编队内部的车辆的速度是相同的，为<span class="math inline">\(v_{stb}\)</span>。</p>
+<h5 id="编队内运动">编队内运动</h5>
+<p>上面考虑的是自由车辆模型，考虑车辆组合成编队的情况。首先作如下的符号定义：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/fe2bb3e3290e17cf239a96cda68b1e02.jpg" alt="符号定义"><figcaption>符号定义</figcaption>
+</figure>
+<p>其中：</p>
+<ul>
+<li><span class="math inline">\(P^i\)</span>表示第i个编队</li>
+<li><span class="math inline">\(C_j^i\)</span>表示在第i个编队中第j辆车。</li>
+<li><span class="math inline">\(s_j^i\)</span>为编队内的车辆<span class="math inline">\(C_{j-1}^{i}\)</span>和<span class="math inline">\(C_{j}^{i}\)</span>的间距</li>
+<li><span class="math inline">\(S_i\)</span>为编队<span class="math inline">\(P^{i-1}\)</span>和<span class="math inline">\(P_i\)</span>之间的距离。</li>
+</ul>
+<p>为了简便，在后面的讨论中只涉及单编队时我们隐去<span class="math inline">\(i\)</span>上标。完整的符号表如下：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/40079670a4895ff90a892de719e29c50.png" alt="变量查询表"><figcaption>变量查询表</figcaption>
+</figure>
+<p>编队内部的运动模型最常用的是<em>car-following model</em>，可以有效地描述ACC-equipped编队运动<span class="citation" data-cites="kesting2010enhanced">[8]</span>。在这里我们认为除了Leader之外所有的车辆都遵从<em>car-following model</em>。具体的，我们选择<em>Intelligent Driver model(IDM)</em><span class="citation" data-cites="treiber2000congested">[9]</span>:</p>
+<p><span class="math display">\[\begin{equation}
+\label{5}
+s_{j}^{*}(t)=s_{0}+v_{j}(t) T_{0}+\frac{v_{j}(t) \Delta v_{j}(t)}{2 \sqrt{a b}}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+\label{6}
+a_{j}(t)=a\left[1-\left(\frac{v_{j}(t)}{v_{0}}\right)^{4}-\left(\frac{s_{j}^{*}(t)}{s_{j}(t)}\right)^{2}\right]
+\end{equation}\]</span></p>
+<p>其中<span class="math inline">\(s^*_j(t)\)</span>为与前车的目标间距。根据<span class="math inline">\(\eqref{5}\eqref{6}\)</span>，可以推导出稳定状态（即<span class="math inline">\(a_j(t)\)</span>为0）的车间距:</p>
+<p><span class="math display">\[\begin{equation}
+s_{s t b}=\frac{s_{s t b}^{*}}{\sqrt{1-\left(\frac{v_{s t b}}{v_{0}}\right)^{4}}}=\frac{s_{0}+v_{s t b} T_{0}}{\sqrt{1-\left(\frac{v_{s t b}}{v_{0}}\right)^{4}}}
+\end{equation}\]</span></p>
+<p>对于编队的Leader，我们则假定他们的行驶速度处于稳定状态，即速度为恒定为<span class="math inline">\(v_{std}\)</span>。</p>
+<h4 id="networking-specification">Networking specification</h4>
+<p>假设所有车辆的通信距离相通，为<span class="math inline">\(R\)</span>。在网络连通性问题上，只考虑通信距离这一最主要因素。只要辆车间距小于<span class="math inline">\(R\)</span>，两者之间的通信就被认为是是可靠的。</p>
+<p>在<span class="citation" data-cites="jia2014network">[2]</span>中，作者还进一步修改了MAC层的行为：</p>
+<ol type="1">
+<li>对于单播包(Unicast)，当发送尝试访问信道时，若信道繁忙，将发送过程推迟一段时间，这段时间由竞争窗口决定（即一轮backoff）。如果没有收到ACK，那么将竞争窗口加倍；</li>
+<li>对于广播报，不进行重传，只进行一轮backoff。</li>
+</ol>
+<p><strong>网络拓扑方面做出如下假设</strong>：编队内的车辆可以直接进行通信，Leader负责管理编队，同时扮演网关的功能（接收前方编队的消息并转发给编队成员）。编队的Leader可能被选为Message Carrier来转发来自对向行驶的车辆信息。编队尾部的车负责和后方的编队通信。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/8db4c581ed033b4e7fdd5a0039e96798.jpg" alt="拓扑结构"><figcaption>拓扑结构</figcaption>
+</figure>
+<p>基于上述拓扑，设定对应的车辆通信行为规则：</p>
+<ol type="1">
+<li>编队内：所有消息可以直达</li>
+<li>编队间：如果编队之间可以进行通信（即前一个编队的尾部车辆可以和后一个编队的头部车辆通信），那么直接由尾部车辆向后方广播消息即可。如果编队之间不能直接通信，那么尾部车辆会先从对向车道中选择距离后方编队最近的车辆来转发信息。如果这样的转发者也无法直接和目的节点通信，那么他会继续向其前方边度转发消息。直到无法继续转发或者被最终目的节点收到为止。这个过程如下图所示：</li>
+</ol>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/591cf32adb37163950de0f450dfd99ed.jpg" alt="编队间信息传递过程示意图"><figcaption>编队间信息传递过程示意图</figcaption>
+</figure>
+<h4 id="connectivity-analysis">Connectivity Analysis</h4>
+<p>连通性分析的核心在于得到编队间距离的分布。</p>
+<h5 id="编队间距离分布">编队间距离分布</h5>
+<p>为了简化分析，假设所有编队的组成都是一样的。即拥有相同的编队大小和IDM参数（此时我们可以再次略去编队上标号）。基于“符号定义”那张图，编队间距可以表示为：</p>
+<p><span class="math display">\[\begin{equation}
+S=S_{L}-L
+\end{equation}\]</span></p>
+<p>进而有如下引理：</p>
+<blockquote>
+<p><strong>Lemma1:</strong> Assume all platoons are formed uniformly and controlled by IDM, inter-platoon spacing is lognormal distributed in the traffic steady state with all platoon leaders driving at the same velocity <span class="math inline">\(v_{stb}\)</span>.</p>
+<p>(证明过程略)</p>
+</blockquote>
+<p>基于这个定理即证明过程的推导可以得到下面的关系：</p>
+<p><span class="math display">\[\begin{equation}
+f_{S_{L}}(x)=\frac{1}{\sqrt{2 \pi} \sigma_{D}(x-L)} \exp \left(-\frac{\left(\log (x-L)-\mu_{D}\right)^{2}}{2 \sigma_{D}^{2}}\right), \quad x&gt;L
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+f_{S}(x)=\frac{1}{\sqrt{2 \pi} \sigma_{D} x} \exp \left(-\frac{\left(\log (x)-\mu_{D}\right)^{2}}{2 \sigma_{D}^{2}}\right), \quad x&gt;0
+\end{equation}\]</span></p>
+<h5 id="编队间通信延时">编队间通信延时</h5>
+<p><暂略></暂略></p>
 <h3 id="相邻编队的时隙重叠问题">相邻编队的时隙重叠问题</h3>
-<p>若编队内采用了TDMA的方式进行通信，那么相邻的编队之间的时隙可能发生重叠。在<span class="citation" data-cites="liu2017joint">[1]</span>中，作者提出了一种解决这一问题的方法，流程如下：</p>
+<p>若编队内采用了TDMA的方式进行通信，那么相邻的编队之间的时隙可能发生重叠。在<span class="citation" data-cites="liu2017joint">[10]</span>中，作者提出了一种解决这一问题的方法，流程如下：</p>
 <figure>
 <img src="https://imgs.codewoody.com/uploads/big/387cd26c88bb25ea6c931f80bbf9a6a4.png" alt="相邻编队的时隙分配机制设计"><figcaption>相邻编队的时隙分配机制设计</figcaption>
 </figure>
-<p>在<span class="citation" data-cites="liu2017joint">[1]</span>中，作者考虑了编队和自由车辆同时出现的场景，其中编队内发送Beacon时采用TDMA的方式，编队时隙位于CCHI的头部，自由车辆在这一段时间内不允许发送。如果相邻的编队的距离靠的太近（如上图(a)所示)，那么就可能发生时隙碰撞。在这个场景下，如上图(b)中显示，编队A和编队B的时隙分配发生了重叠。重叠时隙内的汽车发送时，会由于CSMA的退避机制导致延时增长以及碰撞。</p>
+<p>在<span class="citation" data-cites="liu2017joint">[10]</span>中，作者考虑了编队和自由车辆同时出现的场景，其中编队内发送Beacon时采用TDMA的方式，编队时隙位于CCHI的头部，自由车辆在这一段时间内不允许发送。如果相邻的编队的距离靠的太近（如上图(a)所示)，那么就可能发生时隙碰撞。在这个场景下，如上图(b)中显示，编队A和编队B的时隙分配发生了重叠。重叠时隙内的汽车发送时，会由于CSMA的退避机制导致延时增长以及碰撞。</p>
 <p>另一个潜在的问题是隐藏终端问题。即便两辆车彼此之间不会感知到对方，但是在两者通信范围的重叠区域，两者的包会发生冲突，从而无法被重叠区域内的车辆收到。如同上图(c)中的情形，尽管A0和B0两两者互相无法感知对方，如果两者同时发包，中间重叠区域的A1 ~ A4都无法收到。</p>
 <p>为了解决这两个问题，作者提出了一种Self-Configuring的时隙分配方式。编队的Leader需要首先确定是否在相邻的编队间出现了时隙重叠，这个确认过程如下：在每个CCHI，编队的Leader会广播一个包含了时隙分配信息的包。如果编队成员正确地收到了此包，那么他们遵循Leader的安排在对应的时隙发包。此时，在正常情况下，Leader应该受到所有成员发送的Beacon。反之，如果Leader在连续若干个CCHI（至少两个）内都发生了Beacon丢包，Leader就会推定这种丢包现象是由于时隙重叠导致的。</p>
 <p>在Leader确认发生了时隙重叠以后，Leader会自适应地重新安排TDMA时隙，暂时选择重叠的时隙的下一个时隙。当没有重叠的时隙安排时，Leader会重置到最初的时隙安排。</p>
@@ -529,8 +644,35 @@
 <p>这里的混合协议是指TDMA和CSMA的混合协议。</p>
 <h2 id="reference" class="unnumbered">Reference</h2>
 <div id="refs" class="references">
+<div id="ref-yousefi2008analytical">
+<p>[1] S. Yousefi, E. Altman, R. El-Azouzi, and M. Fathy, “Analytical model for connectivity in vehicular ad hoc networks,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 57, no. 6, pp. 3341–3356, 2008.</p>
+</div>
+<div id="ref-jia2014network">
+<p>[2] D. Jia, K. Lu, and J. Wang, “On the network connectivity of platoon-based vehicular cyber-physical systems,” <em>Transportation Research Part C: Emerging Technologies</em>, vol. 40, pp. 215–230, 2014.</p>
+</div>
+<div id="ref-seiler2004disturbance">
+<p>[3] P. Seiler, A. Pant, and K. Hedrick, “Disturbance propagation in vehicle strings,” <em>IEEE Transactions on automatic control</em>, vol. 49, no. 10, pp. 1835–1842, 2004.</p>
+</div>
+<div id="ref-rajamani1998design">
+<p>[4] R. Rajamani, S. Choi, J. K. Hedrick, and B. Law, “Design and experimental implementation of control for a platoon of automated vehicles,” in <em>Proceedings of the asme dynamic systems and control division (1998)</em>, 1998.</p>
+</div>
+<div id="ref-fernandes2012platooning">
+<p>[5] P. Fernandes and U. Nunes, “Platooning with ivc-enabled autonomous vehicles: Strategies to mitigate communication delays, improve safety and traffic flow,” <em>IEEE Transactions on Intelligent Transportation Systems</em>, vol. 13, no. 1, pp. 91–106, 2012.</p>
+</div>
+<div id="ref-lei2011impact">
+<p>[6] C. Lei, Van EenennaamE., W. K. Wolterink, G. Karagiannis, G. Heijenk, and J. Ploeg, “Impact of packet loss on cacc string stability performance,” in <em>2011 11th international conference on its telecommunications</em>, 2011, pp. 381–386.</p>
+</div>
+<div id="ref-ha2012time">
+<p>[7] D.-H. Ha, M. Aron, and S. Cohen, “Time headway variable and probabilistic modeling,” <em>Transportation Research Part C: Emerging Technologies</em>, vol. 25, pp. 181–201, 2012.</p>
+</div>
+<div id="ref-kesting2010enhanced">
+<p>[8] A. Kesting, M. Treiber, and D. Helbing, “Enhanced intelligent driver model to access the impact of driving strategies on traffic capacity,” <em>Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences</em>, vol. 368, no. 1928, pp. 4585–4605, 2010.</p>
+</div>
+<div id="ref-treiber2000congested">
+<p>[9] M. Treiber, A. Hennecke, and D. Helbing, “Congested traffic states in empirical observations and microscopic simulations,” <em>Physical review E</em>, vol. 62, no. 2, p. 1805, 2000.</p>
+</div>
 <div id="ref-liu2017joint">
-<p>[1] B. Liu, D. Jia, K. Lu, D. Ngoduy, J. Wang, and L. Wu, “A joint control–communication design for reliable vehicle platooning in hybrid traffic,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 66, no. 10, pp. 9394–9409, 2017.</p>
+<p>[10] B. Liu, D. Jia, K. Lu, D. Ngoduy, J. Wang, and L. Wu, “A joint control–communication design for reliable vehicle platooning in hybrid traffic,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 66, no. 10, pp. 9394–9409, 2017.</p>
 </div>
 </div>
 
@@ -887,7 +1029,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编队内通信机制"><span class="nav-number">1.</span> <span class="nav-text">编队内通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入竞争协议"><span class="nav-number">1.1.</span> <span class="nav-text">引入竞争协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态调节网络参数"><span class="nav-number">1.2.</span> <span class="nav-text">动态调节网络参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于具体业务形态的设计"><span class="nav-number">1.3.</span> <span class="nav-text">基于具体业务形态的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编队间通信机制"><span class="nav-number">2.</span> <span class="nav-text">编队间通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vanet-connectivity"><span class="nav-number">2.1.</span> <span class="nav-text">VANET connectivity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相邻编队的时隙重叠问题"><span class="nav-number">2.2.</span> <span class="nav-text">相邻编队的时隙重叠问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用混合协议解决编队间通信"><span class="nav-number">2.3.</span> <span class="nav-text">用混合协议解决编队间通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编队内通信机制"><span class="nav-number">1.</span> <span class="nav-text">编队内通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引入竞争协议"><span class="nav-number">1.1.</span> <span class="nav-text">引入竞争协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态调节网络参数"><span class="nav-number">1.2.</span> <span class="nav-text">动态调节网络参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于具体业务形态的设计"><span class="nav-number">1.3.</span> <span class="nav-text">基于具体业务形态的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编队间通信机制"><span class="nav-number">2.</span> <span class="nav-text">编队间通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vanet-connectivity"><span class="nav-number">2.1.</span> <span class="nav-text">VANET connectivity</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#platoon-dynamics"><span class="nav-number">2.1.1.</span> <span class="nav-text">Platoon Dynamics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#architecture"><span class="nav-number">2.1.2.</span> <span class="nav-text">Architecture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mobility-specification"><span class="nav-number">2.1.3.</span> <span class="nav-text">Mobility Specification</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#自由车辆"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">自由车辆</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编队内运动"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">编队内运动</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#networking-specification"><span class="nav-number">2.1.4.</span> <span class="nav-text">Networking specification</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#connectivity-analysis"><span class="nav-number">2.1.5.</span> <span class="nav-text">Connectivity Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#编队间距离分布"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">编队间距离分布</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编队间通信延时"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">编队间通信延时</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相邻编队的时隙重叠问题"><span class="nav-number">2.2.</span> <span class="nav-text">相邻编队的时隙重叠问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用混合协议解决编队间通信"><span class="nav-number">2.3.</span> <span class="nav-text">用混合协议解决编队间通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
