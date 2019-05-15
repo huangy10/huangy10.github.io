@@ -99,13 +99,13 @@
     <link href="http://www.codewoody.com/posts/25188/"/>
     <id>http://www.codewoody.com/posts/25188/</id>
     <published>2019-05-08T06:38:09.000Z</published>
-    <updated>2019-05-08T07:39:33.954Z</updated>
+    <updated>2019-05-15T05:08:48.691Z</updated>
     
     <content type="html"><![CDATA[<p>这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用<code>-v</code>将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。</p><a id="more"></a><h2 id="why">Why</h2><p>当我们绑定宿主目录到镜像时，如果该目录不存在，Docker也会自动创建该目录。这种方式创建出来的目录的拥有者是root用户。如果该目录已经存在，那么其拥有者就取决于宿主配置的情况了。</p><p>由于Docker内部的用户空间和宿主的用户空间是独立的，如果镜像内运行进程的用户和宿主目录的拥有者不符合，就会出现权限问题。</p><h2 id="how-to-solve-it">How to solve it</h2><p>由于镜像内和宿主的用户名空间是不同的，所以通过用户名的方式来变更宿主目录的所有权会失效。然而，事实上用户系统是通过uid来标识不同的用户的，我们只需要将宿主的路径的拥护者改为镜像内用户相通的uid即可。镜像内用户的uid可以通过如下方式查看，例如：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jovyan@8fed6b266a3c:~$ id</span><br><span class="line">uid=1000(jovyan) gid=100(users) groups=100(users)</span><br></pre></td></tr></table></figure><p>继而再修改宿主机上对应目录的拥有者：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R 1000 /path/to/volume</span><br></pre></td></tr></table></figure><h2 id="further-research">Further Research</h2><p>上面的方法可以解决Volume访问权限的问题，不过会产生潜在的漏洞。从镜像内获得的uid在宿主上可能表示的是不同的用户，在宿主机上修改目录的拥有者会导致数据被同一服务器上的其他用户访问，带来安全性上的问题。</p><p>另一方面，如果有多个镜像需要共享一个Volume，而他们内部的运行用户的uid不同的话，就需要在宿主上进行更加复杂的用户以及组的配置。</p><p>更优雅的执行方法有下面两种：</p><h3 id="use-named-volume">Use Named Volume</h3><p>Named Volumes</p><h3 id="由容器自行配置权限问题">由容器自行配置权限问题</h3><h2 id="reference">Reference</h2><ol type="1"><li><a href="https://yq.aliyun.com/articles/53990" target="_blank" rel="noopener">谈谈 Docker Volume 之权限管理（一）</a></li><li><a href="https://stackoverflow.com/questions/23544282/what-is-the-best-way-to-manage-permissions-for-docker-shared-volumes?spm=a2c4e.11153940.blogcont53990.8.3421149142aS92" target="_blank" rel="noopener">What is the (best) way to manage permissions for Docker shared volumes?</a></li><li><a href="https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e" target="_blank" rel="noopener">Why Docker Data Containers (Volumes!) are Good</a></li><li><a href="https://docs.docker.com/storage/volumes/" target="_blank" rel="noopener">Use volumes</a></li><li><a href="https://success.docker.com/article/different-types-of-volumes" target="_blank" rel="noopener">Different Types of Volumes</a></li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用&lt;code&gt;-v&lt;/code&gt;将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。&lt;/p&gt;
+      &lt;p&gt;这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用&lt;code&gt;-v&lt;/code&gt;将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。&lt;/p&gt;
     
     </summary>
     
