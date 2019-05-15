@@ -129,7 +129,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="SIP(System Security Protection)是苹果在OSX EI Capitan及其后版本的操作系统中引入了一种新的安全机制。望文生义就可以看出，这个安全机制是用来维持系统的完整性，保护系统免收恶意软件的篡改。具体来说，SIP限制了root账户的权限范围，限制了root用户在对一些系统保护目录即其中文件的操作能力。但是任何对于安全性加强都意味着对灵活性的削弱。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-22T03:42:27.376Z">
+<meta property="og:updated_time" content="2019-05-15T05:33:51.485Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="macOS绕过SIP安全机制限制的一种办法">
 <meta name="twitter:description" content="SIP(System Security Protection)是苹果在OSX EI Capitan及其后版本的操作系统中引入了一种新的安全机制。望文生义就可以看出，这个安全机制是用来维持系统的完整性，保护系统免收恶意软件的篡改。具体来说，SIP限制了root账户的权限范围，限制了root用户在对一些系统保护目录即其中文件的操作能力。但是任何对于安全性加强都意味着对灵活性的削弱。">
@@ -445,7 +445,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-22 11:42:27" itemprop="dateModified" datetime="2018-11-22T11:42:27+08:00">2018-11-22</time>
+                <time title="Modified: 2019-05-15 13:33:51" itemprop="dateModified" datetime="2019-05-15T13:33:51+08:00">2019-05-15</time>
               
             
           </span>
@@ -536,7 +536,7 @@
 <blockquote>
 <p>proxychains ng (new generation) - a preloader which hooks calls to sockets in dynamically linked programs and redirects it through one or more socks/http proxies.</p>
 </blockquote>
-<p>一般来说，很多解决方案都建议关闭SIP功能（例如proxychains-ng的issue中给出的方法：<a href="https://github.com/rofl0r/proxychains-ng/issues/78" target="_blank" rel="noopener"># issue78</a>）。不过这样也意味着丧失了SIP提供的保护功能。<a href="https://www.tcdw.net/post/proxychains-with-sip/" target="_blank" rel="noopener">这篇文章</a>给出了一个妥协的做法。在保留SIP的保护的同时，为保护目录下的程序应用proxychains-ng（其他类似的应用场景也可以使用这个办法）。这个解决方案的思路其实很简单：既然保护目录下的程序我们不能动，那么我们把保护目录下的程序复制一份到其他目录下运行就可以。</p>
+<p>一般来说，很多解决方案都建议关闭SIP功能（例如proxychains-ng的issue中给出的方法：<a href="https://github.com/rofl0r/proxychains-ng/issues/78" target="_blank" rel="noopener"># issue78</a>）。不过这样也意味着丧失了SIP提供的保护功能。<a href="https://www.tcdw.net/post/proxychains-with-sip/" target="_blank" rel="noopener">这篇文章</a>给出了一个妥协的做法。在保留SIP的保护的同时，为保护目录下的程序应用proxychains-ng（其他类似的应用场景也可以使用这个办法）。这个解决方案的思路其实很简单：既然保护目录下的程序我们不能动，那么我们把保护目录下的程序复制一份到其他目录下运行就可以。</p>
 <p>首先创建一个新的文件夹：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.unprotected_apps</span><br></pre></td></tr></table></figure>
 <p>然后将这个路径添加到<code>PATH</code>环境变量的头部：</p>

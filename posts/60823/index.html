@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/41a5dc5f5cc16669201e09c56522c2e6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3f08678913f4a2d53eebcbc0d9f483b2.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5e69012dbb6b7ebb8e7d137e0d70bf61.png">
-<meta property="og:updated_time" content="2018-12-06T04:08:40.318Z">
+<meta property="og:updated_time" content="2019-05-15T05:43:29.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP:拥堵控制">
 <meta name="twitter:description" content="网络数据包如果一次发送太多，就会造成网络拥堵；如果发送太少，就浪费了带宽，延长了通信时间。TCP 协议有一个拥堵窗口机制，负责动态调整每次发送数据包的数量。本文通俗地解释了这种算法的细节。 本文翻译自Intro to Congestion Control">
@@ -450,7 +450,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-06 12:08:40" itemprop="dateModified" datetime="2018-12-06T12:08:40+08:00">2018-12-06</time>
+                <time title="Modified: 2019-05-15 13:43:29" itemprop="dateModified" datetime="2019-05-15T13:43:29+08:00">2019-05-15</time>
               
             
           </span>
@@ -558,8 +558,8 @@
 <h2 id="方法">方法</h2>
 <p>在给出方法之前，我们要思考一个问题：发送者如何知道产生了拥塞呢？如同我们之前提到的，因特网是一个分布式的系统，故而并没有一个位于中央的协调者来在下游链接产生拥塞的时候提醒发送者要减慢发送速度。</p>
 <p>主要有两个指标：<strong>丢包率</strong>和<strong>传输往返时间</strong>。在拥塞发生时，链接的队列逐渐填满，开始发生丢包。如果一个发送者注意到了丢包现象，这就很可能意味着发生了丢包。另一个队列满负荷的现象是数据包在队列中等待的时间增加了，这会导致传输往返时间，即发送包到收到ACK的时间增加。</p>
-<p>今天的一些拥塞控制机制考虑了上面两个指标，不过在一些比较早期的设计中，只使用到了丢包率这一个指标。</p>
-<p>还需要注意的是，发送者可能并不提前知道传输链接的特性参数。例如，如果你访问&quot;<a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a>&quot;，那么你发送的数据包可能要经过很多不同性质的链接才能到达Google的服务器，而你的传输速率是收到其中最慢的链接的制约的。</p>
+<p>今天的一些拥塞控制机制考虑了上面两个指标，不过在一些比较早期的设计中，只使用到了丢包率这一个指标。</p>
+<p>还需要注意的是，发送者可能并不提前知道传输链接的特性参数。例如，如果你访问&quot;<a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a>&quot;，那么你发送的数据包可能要经过很多不同性质的链接才能到达Google的服务器，而你的传输速率是收到其中最慢的链接的制约的。</p>
 <p>因此，出了规避网络拥塞的能力，拥塞控制机制还需要能够探索可用带宽的具体大小。</p>
 <h2 id="拥塞窗口congestion-window">拥塞窗口（Congestion Window）</h2>
 <p>理解任何拥塞控制机制的关键在于理解拥塞窗口的概念。拥塞窗口指的是在收到一个ACK前发送者能发送的包的数量。如果一个发送者的拥塞窗口被设置为2，这意味着在发送了两个包之后，它必须等到接收端回复的ACK之后才能继续发送。</p>
@@ -567,8 +567,8 @@
 <p>不过当然，提升拥塞窗口的大小，也会提高发生拥塞的概率。拥塞控制算法的目标，就是计算出合适的拥塞窗口大小。</p>
 <p>从理论角度来看，拥塞窗口的大小应当就是链接的BDP。</p>
 <h2 id="tcp-tahoe">TCP Tahoe</h2>
-<p>TCP Tahoe是在80年代设计出来的拥塞控制算法。那是拥塞问题才刚刚在因特网上出现。算法本身非常简单。增加拥塞窗口分为两个阶段：</p>
-<p><strong>第一阶段： Slow Start</strong>：算法的开始状态是Slow Start。在这个阶段拥塞窗口在每收到一个ACK就增加1。这种机制有效地在每轮往返传输成功后，将拥塞窗口的大小翻倍。如果拥塞窗口的大小是4，那么在同时会有4个包在传输路途中。当每个包的ACK返回时，拥塞窗口加一，即当这四个包的ACK都收到后，拥塞窗口会翻倍成为8。这个过程会一直持续到拥塞窗口达到阈值，<code>ssthresh</code>。</p>
+<p>TCP Tahoe是在80年代设计出来的拥塞控制算法。那是拥塞问题才刚刚在因特网上出现。算法本身非常简单。增加拥塞窗口分为两个阶段：</p>
+<p><strong>第一阶段： Slow Start</strong>：算法的开始状态是Slow Start。在这个阶段拥塞窗口在每收到一个ACK就增加1。这种机制有效地在每轮往返传输成功后，将拥塞窗口的大小翻倍。如果拥塞窗口的大小是4，那么在同时会有4个包在传输路途中。当每个包的ACK返回时，拥塞窗口加一，即当这四个包的ACK都收到后，拥塞窗口会翻倍成为8。这个过程会一直持续到拥塞窗口达到阈值，<code>ssthresh</code>。</p>
 <p><strong>第二阶段：Congestion Avoidance</strong>：当拥塞窗口达到阈值<code>ssthresh</code>时，进入Congestion Avoidance阶段。在这一阶段，每轮往返传输后拥塞窗口加一。也就是说，在上面的例子中，当所有4个包的ACK收到后，拥塞窗口只会加1. 在这个阶段拥塞窗口的大小会大大减小。</p>
 <p>当Tahoe检测到丢包后，会把<code>ssthresh</code>设置为当前拥塞窗口的一半，然后将拥塞窗口设置为1，算法重新回到Slow Start阶段。</p>
 <h3 id="丢包检测与快速重传">丢包检测与快速重传</h3>
