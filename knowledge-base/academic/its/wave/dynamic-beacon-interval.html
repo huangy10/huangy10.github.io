@@ -130,7 +130,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/81a2f775053cb02c3fbd961122653dea.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c2dc02b1b250bdf88a9e65a5f984ab08.png">
-<meta property="og:updated_time" content="2019-05-19T07:56:33.937Z">
+<meta property="og:updated_time" content="2019-05-19T11:46:33.161Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="动态控制发包频率">
 <meta name="twitter:description" content="在基于Platoon的车间通信(V2V)机制设计:动态调节网络参数我们也提到了这种控制理念：即根据网络的情况，动态的调整网络参数。对于Beacon包传输来说，在高负载的情况下，与其所有人仍然按照原来的发送速度，进而导致严重的冲突拖慢整体性能，不如整体所有人适当调低发送速度。 这篇文章研读总结自[1]。这篇文章主要是依据车流密度情况动态调整BSM(Basic Safety Message)的发送速率">
@@ -530,7 +530,7 @@ L_{x}=\sum_{i=j-d+1}^{j} L_{x}[i] / d, x = 1, 2
 <h2 id="决定最佳bsm广播频率">决定最佳BSM广播频率</h2>
 <p>记<span class="math inline">\(f_{\max}\)</span>为BSM的最大允许发送速率。当车流密度比较稀疏的时候，<span class="math inline">\(f_{\max}\)</span>为限制BSM发送速度的唯一限制。此时Epochs大部分都是空闲的。当车流密度上升时，会有多辆车在同一个Epoch进行发送，这导致冲突，BSM发送失败。为了降低冲突的概率，车辆需要降低广播的频率。</p>
 <p>记最佳的广播频率为<span class="math inline">\(f_{\mathrm{opt}}\)</span>，在这个发送频率下的<span class="math inline">\(L_1\)</span>能够达到最大值。为了决定<span class="math inline">\(f_{\mathrm{opt}}\)</span>，我们需要开率MAC特点，Epoch选择以及发送频率调控。</p>
-<p>我们假设Epoch的的总是是<span class="math inline">\(E\)</span>，车辆数量为<span class="math inline">\(V\)</span>，每辆车每个周期还惨胜一个BSM包。<span class="math inline">\(V \ge E\)</span>。如果每辆车选择Epoch是完全随机的，那么<span class="math inline">\(k \ge 0\)</span>辆车选择了同一个Epoch的概率是<span class="math inline">\(A_{k}=e^{-\alpha} \alpha^{k} / k !\)</span>, 其中<span class="math inline">\(\alpha = V / E\)</span>为其平均值。我们希望<span class="math inline">\(k=1\)</span>时对应的概率尽可能的大。即最大化<span class="math inline">\(E_{1}=A_{1} \cdot E=V e^{-V / E}\)</span>。对其微分并令其等于0得到</p>
+<p>我们假设Epoch的的总是是<span class="math inline">\(E\)</span>，车辆数量为<span class="math inline">\(V\)</span>，每辆车每个周期还惨胜一个BSM包。<span class="math inline">\(V \ge E\)</span>。如果每辆车选择Epoch是完全随机的，那么<span class="math inline">\(k \ge 0\)</span>辆车选择了同一个Epoch的概率是<span class="math inline">\(A_{k}=e^{-\alpha} \alpha^{k} / k !\)</span>, 其中<span class="math inline">\(\alpha = V / E\)</span>为其平均值。我们希望<span class="math inline">\(k=1\)</span>时对应的概率尽可能的大。即最大化<span class="math inline">\(E_{1}=A_{1} \cdot E=V e^{-V / E}\)</span>。对其微分并令其等于0得到</p>
 <p><span class="math display">\[\begin{equation}
 E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
 \end{equation}\]</span></p>
