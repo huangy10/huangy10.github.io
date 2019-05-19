@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-05-16T06:19:13.484Z</updated>
+  <updated>2019-05-17T03:21:20.760Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux下OpenVPN客户端配置</title>
+    <link href="http://www.codewoody.com/posts/38823/"/>
+    <id>http://www.codewoody.com/posts/38823/</id>
+    <published>2019-05-17T02:46:41.000Z</published>
+    <updated>2019-05-17T03:21:20.760Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/cb54becbed976afbcd2d21733fcf85c6.png" alt="OpenVPN"> <a id="more"></a></p><h2 id="环境配置">环境配置</h2><p>安装OpenVPN的方法很简单：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install openvpn</span><br></pre></td></tr></table></figure><h2 id="使用方法">使用方法</h2><p>首先你需要从OpenVPN服务提供商那里得到<code>*.ovpn</code>配置文件，然后在服务器上运行</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo openvpn --config your.ovpn</span><br></pre></td></tr></table></figure><p>不过这个命令会在前台运行，当我们退出SSH之后就会终止。为了让OpenVPN能够在后台运行，且能够自动开机启动，我们需要借助于Systemctl的帮助。首先我们将ovpn文件复制到<code>/etc/openvpn/client/</code>下，<strong>将后缀直接修改为<code>.conf</code></strong>。如果配置文件需要我们手动输入密码，我们需要将密码以配置文件的形式固定下来，不然自动启动会失败。在<code>/etc/openvpn/client/</code>新建一个<code>account.txt</code>文件，在其中输入：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">username</span><br><span class="line">password</span><br></pre></td></tr></table></figure><blockquote><p>有些OpenVPN服务端工具只会生成密码（例如Pritunl），在这里username可以随意输入一个，然后在下面一行添加密码。</p></blockquote><p>然后进入配置文件，找到<code>auth-user-pass</code>。默认情况下这个配置条目后面是空的，我们将其修改为：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth-user-pass /etc/openvpn/client/account.txt</span><br></pre></td></tr></table></figure><p>假设前面我们复制过来的配置文件的名字为<code>default.conf</code>。输入下面的命令以启用这个vpn：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable openvpn-client@default</span><br></pre></td></tr></table></figure><p>要启动这个vpn，使用下面的命令：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start openvpn-client@default</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/cb54becbed976afbcd2d21733fcf85c6.png&quot; alt=&quot;OpenVPN&quot;&gt;
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="linux" scheme="http://www.codewoody.com/tags/linux/"/>
+    
+      <category term="vpn" scheme="http://www.codewoody.com/tags/vpn/"/>
+    
+  </entry>
   
   <entry>
     <title>Matplotlib in Virtualenv</title>
@@ -513,31 +539,9 @@ svg {
     
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="翻墙" scheme="http://www.codewoody.com/tags/%E7%BF%BB%E5%A2%99/"/>
     
-  </entry>
-  
-  <entry>
-    <title>如何在普通网络环境下上北邮人</title>
-    <link href="http://www.codewoody.com/posts/54288/"/>
-    <id>http://www.codewoody.com/posts/54288/</id>
-    <published>2019-02-25T05:26:40.000Z</published>
-    <updated>2019-05-15T05:21:15.124Z</updated>
-    
-    <content type="html"><![CDATA[<p>在学校里看剧、电影，下载破解游戏基本都靠<a href="bt.byr.cn">北邮人</a>。一方面资源比较全，另一方面是走IPv6，不需要走计费的校园网IPv4流量。不过由于北邮人只支持IPv6，而国内IPv6基本只有校园网有。问题来了，怎么在校外的纯IPv4环境下使用IPv6 Only的北邮人呢？ <img src="https://imgs.codewoody.com/uploads/big/1b99a38129580435479cfa72b086b3b5.jpg" alt="IPv6"> <a id="more"></a></p><h2 id="从ipv4到ipv6">从IPv4到IPv6</h2><p>这是最重要的一步。你首先需要一个支持IPv6的VPS。国内目前支持IPv6的好像只有阿里云？，即便支持，国内的IPv6 VPS又贵又难用（需要申请）。因此最好的方案是采用海外的VPS。听起来用海外的VPS会很慢？其实海外的VPS主要是延时高，其实速度还是挺快的，而且P2P传输业务受到延时的影响挺小的，实测利用我的VPS可以达到5MB/s的P2P下载速度（在服务器上看上下行都是5MB/s，基本跑满了100M的带宽）。我用的VPS是<a href="www.digitalocean.com">Digital Ocean</a>的旧金山节点。价格是$5一个月。平均下来每天一块钱吧。注意创建Droplet的时候要自己勾选IPv6（添加IPv6是免费的）。</p><figure><img src="https://imgs.codewoody.com/uploads/big/c052a17e4f29aea937edaec279b366e9.png" alt="选择IPv6"><figcaption>选择IPv6</figcaption></figure><p>在服务器上我部署了Shadowsocks服务。SS服务器可以直接无痛支持IPv4到IPv6的转换。关于如何部署Shadowsocks，这方面的教程文章网上汗牛充栋，我这里就不提供了。</p><h2 id="设置">设置</h2><p>首先需要将北邮人的网址bt.byr.cn添加到Shadowsocks客户端的代理列表。</p><figure><img src="https://imgs.codewoody.com/uploads/big/e9cf5e6db36fbdccf7fc9c4f330ce8b0.png" alt="Shadowsocks选项"><figcaption>Shadowsocks选项</figcaption></figure><p>点击Shadowsocks小飞机，选择“编辑PAC用户自定规则”。在弹出的框中输入<code>||bt.byr.cn</code>：</p><figure><img src="https://imgs.codewoody.com/uploads/big/b2e5cef758cd665368a3ecb56e139a32.png" alt="编辑PAC用户自定规则"><figcaption>编辑PAC用户自定规则</figcaption></figure><p>然后你就能在IPv4网络环境下打开北邮人的网页啦。</p><p>接下来是设置下载客户端uTorrent的网络设置。打开uTorrent的设置(Preferences)，进入到Network。进行如下设置：</p><figure><img src="https://imgs.codewoody.com/uploads/big/6281a4baa6ef2e535ce877dbf455ac6a.png" alt="uTorrent设置"><figcaption>uTorrent设置</figcaption></figure><blockquote><p>注意：上面的Socks5设置中，端口会与你的Shadowsocks设置有关。如果你没有动过相关设置的话，应该就是1086端口。 查看你的Shadowsocks客户端Sock5代理端口设置的方式是单击Shadowsocks小飞机，选择偏好设置，在弹出的窗口中点击“高级”，其中“本地Socks5监听端口”即为应该填写到uTorrent设置中的代理端口。</p></blockquote><p>大功告成！_(:з」∠)_</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在学校里看剧、电影，下载破解游戏基本都靠&lt;a href=&quot;bt.byr.cn&quot;&gt;北邮人&lt;/a&gt;。一方面资源比较全，另一方面是走IPv6，不需要走计费的校园网IPv4流量。不过由于北邮人只支持IPv6，而国内IPv6基本只有校园网有。问题来了，怎么在校外的纯IPv4环境下使用IPv6 Only的北邮人呢？ &lt;img src=&quot;https://imgs.codewoody.com/uploads/big/1b99a38129580435479cfa72b086b3b5.jpg&quot; alt=&quot;IPv6&quot;&gt;
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
   </entry>
   

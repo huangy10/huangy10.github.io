@@ -128,7 +128,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避，因此，可以令其简化为只进行一轮退避，从而略过退避窗口指数增长的过程。此时Beacon的发送过程简化为一维马尔科夫过程。 非马尔科夫链方法 不使用马尔科夫链的方式整理自[1]. 这篇文章主要的贡献是设计了长度可变的CCHI。 System M">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-09T13:33:42.955Z">
+<meta property="og:updated_time" content="2019-05-17T06:38:25.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WAVE标准中的Beacon性能简化分析">
 <meta name="twitter:description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避，因此，可以令其简化为只进行一轮退避，从而略过退避窗口指数增长的过程。此时Beacon的发送过程简化为一维马尔科夫过程。 非马尔科夫链方法 不使用马尔科夫链的方式整理自[1]. 这篇文章主要的贡献是设计了长度可变的CCHI。 System M">
@@ -498,12 +498,12 @@
 <h3 id="cch完全传输时间">CCH完全传输时间</h3>
 <p>假设各车退避过程独立，网络内任意节点之间的的距离不超过两跳<sup title="Assume there are N vehicles within the two-hop transmission range of each other so that messages are irretrievably corrupted if their transmissions overlap in time">?</sup>。 考虑概率<span class="math inline">\(P(l, n, w, k)\)</span>表示<span class="math inline">\(n\)</span>个车辆在CCHI开头产生了Beacon包，竞争窗口大小为<span class="math inline">\(w\)</span>，第一次发送尝试为<span class="math inline">\(l-1\)</span>，<span class="math inline">\(k\)</span>辆车在第<span class="math inline">\(l\)</span>个时隙尝试传输（<span class="math inline">\(k\leq n\)</span>），此概率值为：</p>
 <p><span class="math display">\[\begin{equation}
-\label{P}
 \begin{aligned}
 P(l, n, w, k)&amp;=\left(1-\frac{l-1}{w}\right)^{n} \cdot \left( \begin{array}{c}{n} \\ {k}\end{array}\right)\left(\frac{1}{w-l+1}\right)^{k}\left(1-\frac{1}{w-l+1}\right)^{n-k} \\
 &amp;= \left( \begin{array}{c}{n} \\ {k}\end{array}\right) \cdot \frac{(w-l)^{n-k}}{w^n} \\
 &amp;= \left( \begin{array}{c}{n} \\ {k}\end{array}\right) \cdot \left(1 - \frac{l}{w}\right)^{n-k} \cdot \frac{1}{w^{k}}.
 \end{aligned}
+\label{P}
 \end{equation}\]</span></p>
 <p>考虑到Backoff Counter的最大值是<span class="math inline">\(w\)</span>，完成所有Beacon包传输需要的平均时间为</p>
 <p><span class="math display">\[\begin{equation}
@@ -684,7 +684,7 @@ P(W, N)=\frac{L(W, N)}{N}
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -816,7 +816,9 @@ P(W, N)=\frac{L(W, N)}{N}
                     
                       
                     
-                    <span class="site-state-item-count">39</span>
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
