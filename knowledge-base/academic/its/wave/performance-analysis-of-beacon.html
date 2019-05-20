@@ -121,17 +121,19 @@
 
 
 
-  <meta name="description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避，因此，可以令其简化为只进行一轮退避，从而略过退避窗口指数增长的过程。此时Beacon的发送过程简化为一维马尔科夫过程。 非马尔科夫链方法 不使用马尔科夫链的方式整理自[1]. 这篇文章主要的贡献是设计了长度可变的CCHI。 System M">
+  <meta name="description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避。在IEEE802.11 DCF中，在一轮退避完成后节点会尝试发包，如果发包失败，则会将其竞争窗口加倍。由于发送失败需要经过ACK来确认.因此广播包只能进行一轮退避。此时Beacon的发送过程可以简化为一维马尔科夫过程。  广播包的一维马尔科">
 <meta property="og:type" content="website">
 <meta property="og:title" content="WAVE标准中的Beacon性能简化分析">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/performance-analysis-of-beacon.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避，因此，可以令其简化为只进行一轮退避，从而略过退避窗口指数增长的过程。此时Beacon的发送过程简化为一维马尔科夫过程。 非马尔科夫链方法 不使用马尔科夫链的方式整理自[1]. 这篇文章主要的贡献是设计了长度可变的CCHI。 System M">
+<meta property="og:description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避。在IEEE802.11 DCF中，在一轮退避完成后节点会尝试发包，如果发包失败，则会将其竞争窗口加倍。由于发送失败需要经过ACK来确认.因此广播包只能进行一轮退避。此时Beacon的发送过程可以简化为一维马尔科夫过程。  广播包的一维马尔科">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-17T06:38:25.859Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a4e7b85649818f46469ffdf0fccd0b47.png">
+<meta property="og:updated_time" content="2019-05-20T04:08:08.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WAVE标准中的Beacon性能简化分析">
-<meta name="twitter:description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避，因此，可以令其简化为只进行一轮退避，从而略过退避窗口指数增长的过程。此时Beacon的发送过程简化为一维马尔科夫过程。 非马尔科夫链方法 不使用马尔科夫链的方式整理自[1]. 这篇文章主要的贡献是设计了长度可变的CCHI。 System M">
+<meta name="twitter:description" content="在很多使用WAVE作为车联网通信标准的文献研究中[1] [2]，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避。在IEEE802.11 DCF中，在一轮退避完成后节点会尝试发包，如果发包失败，则会将其竞争窗口加倍。由于发送失败需要经过ACK来确认.因此广播包只能进行一轮退避。此时Beacon的发送过程可以简化为一维马尔科夫过程。  广播包的一维马尔科">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/a4e7b85649818f46469ffdf0fccd0b47.png">
 
 
 
@@ -477,7 +479,10 @@
       <div class="post-body">
         
         
-          <p>在很多使用WAVE作为车联网通信标准的文献研究中<span class="citation" data-cites="zhang2014scalable">[1]</span> <span class="citation" data-cites="hafeez2013performance">[2]</span>，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避，因此，可以令其简化为只进行一轮退避，从而略过退避窗口指数增长的过程。此时Beacon的发送过程简化为一维马尔科夫过程。</p>
+          <p><del>在很多使用WAVE作为车联网通信标准的文献研究中<span class="citation" data-cites="zhang2014scalable">[1]</span> <span class="citation" data-cites="hafeez2013performance">[2]</span>，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避</del>。在IEEE802.11 DCF中，在一轮退避完成后节点会尝试发包，如果发包失败，则会将其竞争窗口加倍。由于发送失败需要经过ACK来确认.因此广播包只能进行一轮退避。此时Beacon的发送过程可以简化为一维马尔科夫过程。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/a4e7b85649818f46469ffdf0fccd0b47.png" alt="广播包的一维马尔科夫链 [3]"><figcaption>广播包的一维马尔科夫链 <span class="citation" data-cites="nguyen2018survey">[3]</span></figcaption>
+</figure>
 <h2 id="非马尔科夫链方法">非马尔科夫链方法</h2>
 <p>不使用马尔科夫链的方式整理自<span class="citation" data-cites="zhang2014scalable">[1]</span>. 这篇文章主要的贡献是设计了长度可变的CCHI。</p>
 <h3 id="system-model">System Model</h3>
@@ -540,6 +545,9 @@ P(W, N)=\frac{L(W, N)}{N}
 </div>
 <div id="ref-hafeez2013performance">
 <p>[2] K. A. Hafeez, L. Zhao, B. Ma, and J. W. Mark, “Performance analysis and enhancement of the dsrc for vanet’s safety applications,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 62, no. 7, pp. 3069–3083, 2013.</p>
+</div>
+<div id="ref-nguyen2018survey">
+<p>[3] V. Nguyen, O. T. T. Kim, C. Pham, T. Z. Oo, N. H. Tran, C. S. Hong, and E. Huh, “A survey on adaptive multi-channel mac protocols in vanets using markov models,” <em>IEEE Access</em>, vol. 6, pp. 16493–16514, 2018.</p>
 </div>
 </div>
 

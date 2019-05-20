@@ -121,17 +121,17 @@
 
 
 
-  <meta name="description" content="2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search.xml的格式出错 替换了字体服务器的CDN，从//fonts.googleapis.com修改为//fonts.css.network  20190507 2 修改了Reference的样式。方法是在themes/next/source/css/_custom/custom.styl文件中">
+  <meta name="description" content="2019.05.20 困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过“Remove backspace control character”这个插件解决。在VS Code的设置中将editor.formatOnSave设置为true来自动处理文件。 2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search">
 <meta property="og:type" content="website">
 <meta property="og:title" content="博客更新">
 <meta property="og:url" content="http://www.codewoody.com/update/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search.xml的格式出错 替换了字体服务器的CDN，从//fonts.googleapis.com修改为//fonts.css.network  20190507 2 修改了Reference的样式。方法是在themes/next/source/css/_custom/custom.styl文件中">
+<meta property="og:description" content="2019.05.20 困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过“Remove backspace control character”这个插件解决。在VS Code的设置中将editor.formatOnSave设置为true来自动处理文件。 2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-15T08:37:13.582Z">
+<meta property="og:updated_time" content="2019-05-20T07:55:52.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客更新">
-<meta name="twitter:description" content="2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search.xml的格式出错 替换了字体服务器的CDN，从//fonts.googleapis.com修改为//fonts.css.network  20190507 2 修改了Reference的样式。方法是在themes/next/source/css/_custom/custom.styl文件中">
+<meta name="twitter:description" content="2019.05.20 困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过“Remove backspace control character”这个插件解决。在VS Code的设置中将editor.formatOnSave设置为true来自动处理文件。 2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search">
 
 
 
@@ -411,16 +411,18 @@
       <div class="post-body">
         
         
-          <h2 id="section">2019.05.15</h2>
+          <h2 id="section">2019.05.20</h2>
+<p>困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过<a href="https://marketplace.visualstudio.com/items?itemName=satokaz.vscode-bs-ctrlchar-remover" target="_blank" rel="noopener">“Remove backspace control character”</a>这个插件解决。在VS Code的设置中将<code>editor.formatOnSave</code>设置为true来自动处理文件。</p>
+<h2 id="section-1">2019.05.15</h2>
 <ol type="1">
 <li>修复了搜索和Feed的问题：文章中存在不可见字符，导致<code>atom.xml</code>和<code>search.xml</code>的格式出错</li>
 <li>替换了字体服务器的CDN，从<code>//fonts.googleapis.com</code>修改为<code>//fonts.css.network</code></li>
 </ol>
-<h2 id="section-1">20190507</h2>
-<h3 id="section-2">2</h3>
+<h2 id="section-2">20190507</h2>
+<h3 id="section-3">2</h3>
 <p>修改了Reference的样式。方法是在<code>themes/next/source/css/_custom/custom.styl</code>文件中添加如下内容：</p>
 <figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div<span class="selector-id">#refs</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div<span class="selector-id">#refs</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="section-3">1</h3>
+<h3 id="section-4">1</h3>
 <p>通过上标提供短的参考信息的方法：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sup</span> <span class="attr">title</span>=<span class="string">"Hover Text"</span>&gt;</span>?<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -715,7 +717,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-2"><span class="nav-number">2.1.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section-3"><span class="nav-number">2.2.</span> <span class="nav-text">1</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.05.20</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">3.</span> <span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-3"><span class="nav-number">3.1.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section-4"><span class="nav-number">3.2.</span> <span class="nav-text">1</span></a></li></ol></li></ol></div>
             
 
           </div>
