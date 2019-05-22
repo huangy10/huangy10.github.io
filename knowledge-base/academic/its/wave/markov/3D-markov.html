@@ -121,14 +121,22 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="http://www.codewoody.com/tags/index.html">
+  <meta name="description" content="参考文章及其系统模型 在马尔科夫链在WAVE链路层网络性能分析中的应用中我们提到了三维马尔科夫链的使用。相比于经典的[1]中提出的二维马尔科夫链，三维马尔科夫链新增的一维主要是为了解决EDCA机制下不同优先级的队列并存的问题。 Contribution 下面的内容以[2]为基干进行讨论。这篇文章的主要贡献是讨论网络连通性与饱和吞吐率性能之间的关系。具体贡献是如下三个方面：  作者提出了一种Conn">
+<meta property="og:type" content="website">
+<meta property="og:title" content="三维马尔科夫链的详细调研">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/3D-markov.html">
 <meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="参考文章及其系统模型 在马尔科夫链在WAVE链路层网络性能分析中的应用中我们提到了三维马尔科夫链的使用。相比于经典的[1]中提出的二维马尔科夫链，三维马尔科夫链新增的一维主要是为了解决EDCA机制下不同优先级的队列并存的问题。 Contribution 下面的内容以[2]为基干进行讨论。这篇文章的主要贡献是讨论网络连通性与饱和吞吐率性能之间的关系。具体贡献是如下三个方面：  作者提出了一种Conn">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-23T14:39:24.054Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fcd207caecc95e09093822f17db0486c.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a4021aaa90913f45c2fd208880177763.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6a2fc6a29dcb5b5098e986bdf9548936.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8be389a5bb7856e06ab230120b5d81e4.png">
+<meta property="og:updated_time" content="2019-05-22T08:17:32.787Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
+<meta name="twitter:title" content="三维马尔科夫链的详细调研">
+<meta name="twitter:description" content="参考文章及其系统模型 在马尔科夫链在WAVE链路层网络性能分析中的应用中我们提到了三维马尔科夫链的使用。相比于经典的[1]中提出的二维马尔科夫链，三维马尔科夫链新增的一维主要是为了解决EDCA机制下不同优先级的队列并存的问题。 Contribution 下面的内容以[2]为基干进行讨论。这篇文章的主要贡献是讨论网络连通性与饱和吞吐率性能之间的关系。具体贡献是如下三个方面：  作者提出了一种Conn">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/fcd207caecc95e09093822f17db0486c.png">
 
 
 
@@ -138,7 +146,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/tags/">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/3D-markov">
 
 
 
@@ -148,7 +156,7 @@
   };
 </script>
 
-  <title>tags | 治部少辅</title>
+  <title>三维马尔科夫链的详细调研 | 治部少辅</title>
   
 
 
@@ -266,7 +274,7 @@
         
         
           
-          <li class="menu-item menu-item-knowledge">
+          <li class="menu-item menu-item-knowledge menu-item-active">
 
     
     
@@ -388,7 +396,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">tags
+<h2 class="post-title" itemprop="name headline">三维马尔科夫链的详细调研
 
 </h2>
 
@@ -396,6 +404,84 @@
   
   
 
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/markov/">MARKOV</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>3D-MARKOV</li>
+          
+        
+      
+    
+  </ul>
 
 
 </div>
@@ -408,180 +494,170 @@
       <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-              
-                
-                  
-                
-              
-              40 tags in total
-            </div>
-            <div class="tag-cloud-tags">
-              
-                <a href="/tags/Github/" style="font-size: 12px; color: #ccc">Github</a> <a href="/tags/Hexo/" style="font-size: 15px; color: #adadad">Hexo</a> <a href="/tags/MacOS/" style="font-size: 12px; color: #ccc">MacOS</a> <a href="/tags/Minio/" style="font-size: 12px; color: #ccc">Minio</a> <a href="/tags/OSS/" style="font-size: 12px; color: #ccc">OSS</a> <a href="/tags/Shadowsocks/" style="font-size: 24px; color: #4f4f4f">Shadowsocks</a> <a href="/tags/TCP-IP/" style="font-size: 12px; color: #ccc">TCP/IP</a> <a href="/tags/debug/" style="font-size: 18px; color: #8e8e8e">debug</a> <a href="/tags/docker/" style="font-size: 12px; color: #ccc">docker</a> <a href="/tags/git/" style="font-size: 12px; color: #ccc">git</a> <a href="/tags/gitlab/" style="font-size: 12px; color: #ccc">gitlab</a> <a href="/tags/hexo/" style="font-size: 15px; color: #adadad">hexo</a> <a href="/tags/ios/" style="font-size: 18px; color: #8e8e8e">ios</a> <a href="/tags/iptables/" style="font-size: 12px; color: #ccc">iptables</a> <a href="/tags/java/" style="font-size: 12px; color: #ccc">java</a> <a href="/tags/js/" style="font-size: 12px; color: #ccc">js</a> <a href="/tags/kernel/" style="font-size: 12px; color: #ccc">kernel</a> <a href="/tags/linux/" style="font-size: 18px; color: #8e8e8e">linux</a> <a href="/tags/macOS/" style="font-size: 12px; color: #ccc">macOS</a> <a href="/tags/make/" style="font-size: 12px; color: #ccc">make</a> <a href="/tags/nodejs/" style="font-size: 15px; color: #adadad">nodejs</a> <a href="/tags/ns3/" style="font-size: 15px; color: #adadad">ns3</a> <a href="/tags/processing/" style="font-size: 15px; color: #adadad">processing</a> <a href="/tags/python/" style="font-size: 12px; color: #ccc">python</a> <a href="/tags/swift/" style="font-size: 15px; color: #adadad">swift</a> <a href="/tags/vpn/" style="font-size: 12px; color: #ccc">vpn</a> <a href="/tags/宗教/" style="font-size: 12px; color: #ccc">宗教</a> <a href="/tags/折腾/" style="font-size: 15px; color: #adadad">折腾</a> <a href="/tags/政治/" style="font-size: 15px; color: #adadad">政治</a> <a href="/tags/教程/" style="font-size: 30px; color: #111">教程</a> <a href="/tags/数学/" style="font-size: 12px; color: #ccc">数学</a> <a href="/tags/无人机/" style="font-size: 12px; color: #ccc">无人机</a> <a href="/tags/智商税/" style="font-size: 12px; color: #ccc">智商税</a> <a href="/tags/杂谈/" style="font-size: 27px; color: #303030">杂谈</a> <a href="/tags/树莓派/" style="font-size: 12px; color: #ccc">树莓派</a> <a href="/tags/科技新闻/" style="font-size: 12px; color: #ccc">科技新闻</a> <a href="/tags/网络/" style="font-size: 12px; color: #ccc">网络</a> <a href="/tags/翻墙/" style="font-size: 12px; color: #ccc">翻墙</a> <a href="/tags/翻译/" style="font-size: 18px; color: #8e8e8e">翻译</a> <a href="/tags/转载/" style="font-size: 21px; color: #6f6f6f">转载</a>
-              
-            </div>
-          </div>
+          <h2 id="参考文章及其系统模型">参考文章及其系统模型</h2>
+<p>在<a href="./">马尔科夫链在WAVE链路层网络性能分析中的应用</a>中我们提到了三维马尔科夫链的使用。相比于经典的<span class="citation" data-cites="bianchi2000performance">[1]</span>中提出的二维马尔科夫链，三维马尔科夫链新增的一维主要是为了解决EDCA机制下不同优先级的队列并存的问题。</p>
+<h3 id="contribution">Contribution</h3>
+<p>下面的内容以<span class="citation" data-cites="shao2015connectivity">[2]</span>为基干进行讨论。这篇文章的主要贡献是讨论网络连通性与饱和吞吐率性能之间的关系。具体贡献是如下三个方面：</p>
+<ol type="1">
+<li>作者提出了一种Connectivity-aware MAC protocol，支持多信道标准（1609.4），为编队场景设计；</li>
+<li>使用了多优先级的马尔科夫模型来研究网络连通概率与饱和吞吐率之间的关系；</li>
+<li>提出一种多信道的资源调度策略，可以动态的调整CCHI和SCHI的长度来改善系统吞吐性能。</li>
+</ol>
+<h3 id="system-model">System Model</h3>
+<p>文章使用的System Model是比较简单和经典的场景：无干扰情况下的单向高速公路交通流，单车道，从而避免超车这种复杂行为。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/fcd207caecc95e09093822f17db0486c.png" alt="System Model"><figcaption>System Model</figcaption>
+</figure>
+<p>道路上车辆总数为<span class="math inline">\(N\)</span>，在高速公路上随机分布。道路总长为2000m。假设存在<span class="math inline">\(K\)</span>辆普通车辆，<span class="math inline">\(M\)</span>个编队。每个编队被视为一个单独的车辆。在编队内部，编队成员直接连接，所有的成员可以直接同编队的Leader通信。编队成员将自己的安全和非安全消息发送给编队Leader，然后Leader代表整个编队去竞争CCH的使用。记<span class="math inline">\(p\)</span>为网络中编队的比例，即任何一个通信单位是一个编队的概率为：</p>
+<p><span class="math display">\[\begin{equation}
+p=M / N=M /(K+M)
+\label{1}
+\end{equation}\]</span></p>
+<p>即<span class="math inline">\(R_1\)</span>和<span class="math inline">\(R_2\)</span>分别为普通车辆与编队Leader的通信范围，且<span class="math inline">\(R_1 &lt; R_2\)</span>。假设<span class="math inline">\(R_2\)</span>足够大到可以覆盖整个编队，且编队的长度小于<span class="math inline">\(R_2 - R_1\)</span>。这一假设其实就是阻止了编队内部成员和外部普通车辆的直接通信。</p>
+<p>车辆在高速公路上的分布服从泊松分布，所有车辆都在RSU的通信范围内。记<span class="math inline">\(\rho\)</span>为交通密度，那么在<span class="math inline">\(x\)</span>米长度的道路上出现的车辆的数目为<span class="math inline">\(k\)</span>的概率为：</p>
+<p><span class="math display">\[\begin{equation}
+f(k, x)=\frac{(\rho x)^{k} e^{-\rho x}}{k !}, k \geq 0
+\end{equation}\]</span></p>
+<p>令<span class="math inline">\(X\)</span>为表示车间距的随机变量。则其分布可以表示成：</p>
+<p><span class="math display">\[\begin{equation}
+\operatorname{Pr}\{X \leq x\}=h(x)=1-e^{-\rho x}
+\end{equation}\]</span></p>
+<h3 id="连通概率分析">连通概率分析</h3>
+<p>记<span class="math inline">\(X_{i} \quad(i=1,2, \ldots, N-1)\)</span>代表相邻两辆车的车间距分布。当车间距不超过通信范围时，即<span class="math inline">\(X_i \le R\)</span>时，认为两辆车连通。记<span class="math inline">\(P_c\)</span>为VANET的整体连通概率，即：</p>
+<p><span class="math display">\[\begin{equation}
+P_{c}=\operatorname{Pr}\left\{X_{1} \leq R, X_{2} \leq R, \ldots, X_{N-1} \leq R\right\}
+\end{equation}\]</span></p>
+<p>这里<span class="math inline">\(X_i\)</span>是独立同分布的。所以</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned} P_{c} &amp;=\prod_{i=1}^{N-1} P_{r}\left\{X_{i} \leq R\right\} \\ &amp;=\prod_{i=1}^{N-1}\left[(1-p) * P_{r}\left\{X_{i} \leq R_{1}\right\}+p * P_{r}\left\{X_{i} \leq R_{2}\right\}\right] \end{aligned}
+\end{equation}\]</span></p>
+<p>代入System Model中的泊松分布模型，有</p>
+<p><span class="math display">\[\begin{equation}
+P_{c}=\left[(1-p)\left(1-e^{-\rho R_{1}}\right)+p\left(1-e^{-\rho R_{2}}\right)\right]^{N-1}
+\label{6}
+\end{equation}\]</span></p>
+<p>根据<span class="math inline">\(\eqref{6}\)</span>，</p>
+<p><span class="math display">\[\begin{equation}
+p=\frac{1-e^{-\rho R_{1}}-P_{c}^{\frac{1}{N-1}}}{e^{-\rho R_{2}}-e^{-\rho R_{1}}}
+\end{equation}\]</span></p>
+<h3 id="mac-protocol">MAC Protocol</h3>
+<p>在作者提出的MAC协议中，CCHI被进一步划分成SAFety Interval (SAFI), WSA Interval (WSAI)和ACK Interval (ACKI)。如下图：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/a4021aaa90913f45c2fd208880177763.png" alt="The framework of the connectivity-aware MAC protocol"><figcaption>The framework of the connectivity-aware MAC protocol</figcaption>
+</figure>
+<p>首先，在CCHI的开头，所有车辆在SAFI广播优先级最高的安全信息。在WSAI阶段，所有提供服务的车辆竞争式地访问信道以广播WSA包。WSAI被划分为若干时隙，在每个时隙的开头，如果信道是空闲的，则服务提供者尝试发送WSA包。在ACKI阶段，收到了安全消息的车辆，以及对WSA中包含的服务感兴趣的车辆，会发送ACK。为了避免重复发送，当之前已经有节点响应了对特定安全消息或WSA服务的ACK的话，后续的车辆不会再次进行响应。为了维护网络公平性，在每个ACKI内节点发送ACK的顺序会随机分配。</p>
+<p>WSA与对应的ACK，构成了一套SCH资源预留机制。在CCHI结束时，已经成功预留了SCH资源的车辆切换到对应的SCH信道，进行无冲突的信息传输。</p>
+<p>前面我们提到，对于编队系统，编队的Leader需要代表整个编队进行CCH竞争。因此，考虑到网络公平性，来自编队的WSA消息（WSAP）相比于普通车辆的WSA消息（WSAO）应当拥有更高的优先级。</p>
+<p>在上图描绘的MAC协议中，SAFI的长度和ACKI的长度与车辆数量成正比。而WSAI的长度，需要通过对应的多优先级马尔科夫模型来计算。</p>
+<h3 id="马尔科夫模型分析">马尔科夫模型分析</h3>
+<p>在上一个部分我们提到，处于网络公平性的考虑，来自编队的WSA消息要拥有更高的优先级。这里的优先级控制通过EDCA机制来完成。在EDCA中，不同的优先级体现在不同长度的Aribitration Inter-Frame Space (AIFS)上。这里我们认为WSAP的AIFSN为2, WSAO的AIFSN为3。</p>
+<p>此处的马尔科夫链采用了典型的假设：</p>
+<ol type="1">
+<li>理想信道条件（no hidden terminal and capture);</li>
+<li>节点满载，即任何时候都有包等待发送</li>
+<li>包的传输概率和碰撞概率是独立的</li>
+</ol>
+<h4 id="状态变量与状态转移">状态变量与状态转移</h4>
+<p>马尔科夫链的状态变量被定为：</p>
+<ol type="1">
+<li><span class="math inline">\(s(i, t)\)</span>：backoff stage</li>
+<li><span class="math inline">\(b(i, t)\)</span>: value of backoff timer</li>
+<li><span class="math inline">\(v(i, t)\)</span>: active stat of the backoff procedure</li>
+</ol>
+<p>这里<span class="math inline">\(i\)</span>表示包的类别。1表示WSAP，2表示WSAO。令<span class="math inline">\(L_i\)</span>为类别<span class="math inline">\(i\)</span>的最大退避阶段，<span class="math inline">\(W_{i, m}\)</span>为类别<span class="math inline">\(i\)</span>在第<span class="math inline">\(m\)</span>个退避阶段的竞争窗口(CW)大小。那么有<span class="math inline">\(s(i, t) = m, (0 \le m \le L_i), b(i, t) \in (0, W_{i, m})\)</span>。当<span class="math inline">\(v(i, t) = 0\)</span>时，退避过程被冻结，即<span class="math inline">\(b(i, t)\)</span>的值保持不变。反之，当<span class="math inline">\(v(i, t) = -1\)</span>时，退避过程正常进行。在定义了上述状态变量之后<span class="math inline">\(\{s(i, t), b(i, t), v(i, t)\}\)</span>，我们可以画出状态转移图。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/6a2fc6a29dcb5b5098e986bdf9548936.png" alt="The Markov chain model of the WSAP transmission"><figcaption>The Markov chain model of the WSAP transmission</figcaption>
+</figure>
+<p>上图为WSAP的状态转移图。在这个优先级设置下，在每个时隙退避计数器都会减1，即<span class="math inline">\(v(i, t) = -1\)</span>。即<span class="math inline">\(p_1\)</span>为碰撞概率。则转移概率为：</p>
+<p><span class="math display">\[\begin{equation}
+\left\{
+  \begin{array}{ll}
+  \operatorname{Pr}\{(j+1, k,-1) |(j,-1,-1)\}=p_{1} / W_{1, j+1}+1, &amp; 0 \leq j \leq L_{1}-1,0 \leq k \leq W_{1, j+1} \\
+  \operatorname{Pr}\{(j, k-1,-1) |(j, k,-1)\} =1, &amp; 0 \leq j \leq L_{1}, 0 \leq k \leq W_{1, j} \\
+  \operatorname{Pr}\{(0, k,-1) |(j,-1,-1)\} =\left(1-p_{1}\right) /\left(W_{1,0}+1\right), &amp; 0 \leq j \leq L_{1}-1,0 \leq k \leq W_{1,0} \\
+  \operatorname{Pr}\left\{(0, k,-1) |\left(L_{1},-1,-1\right)\right\} =1 /\left(W_{1,0}+1\right), &amp; 0 \leq j \leq L_{1}, 0 \leq k \leq W_{1,0}
+  \end{array}
+\right.
+\label{8}
+\end{equation}\]</span></p>
+<blockquote>
+<p>从这个状态转移图和转移概率计算来看，这里的退避发送行为和我们在<a href="../wave.html">WAVE</a>里面提到的退避过程不太一样。这里在达到最大退避窗口后，会重置退避窗口大小，即为<a href="./#二维马尔科夫链">Reset backoff stage</a></p>
+</blockquote>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/8be389a5bb7856e06ab230120b5d81e4.png" alt="The Markov chain model of the WSAO transmission"><figcaption>The Markov chain model of the WSAO transmission</figcaption>
+</figure>
+<p>上图是WSAO的状态转移图。当<span class="math inline">\(v(i, t) = 0\)</span>时，退避计数器会停止递减。令<span class="math inline">\(p_2, p_{2, \text{idle}}\)</span>和<span class="math inline">\(p_{2, 0}\)</span>分别为WSAO传输失败，WSAO发送遇到空闲信道，遇到繁忙信道的概率。转移概率为：</p>
+<p><span class="math display">\[\begin{equation}
+\left\{
+\begin{array}{ll}
+  \operatorname{Pr}\{(j+1, k, 0) |(j, -1,-1 ) \}=p_{2} /\left(W_{2, j+1}+1\right), &amp; 0 \leq j \leq L_{2}-1,0 \leq k \leq W_{2, j+1} \\
+
+  \operatorname{Pr}\{(j, k-1,-1) |(j, k,-1)\} =p_{2, \text {idle}}, &amp; 0 \leq j \leq L_{2}, 0 \leq k \leq W_{2, j-1} \\
+
+  \operatorname{Pr}\{(j, k, 0) |(j, k,-1)\} =1-p_{2, \text {idle}}, &amp; 0 \leq j \leq L_{2}, 0 \leq k \leq W_{2, j-1} \\
+
+  \operatorname{Pr}\{(j, k, 0) |(j, k, 0)\} =p_{2,0}, &amp; 0 &lt; j \leq L_{2}, 0 \leq k \leq W_{2, j-1} \\
+
+  \operatorname{Pr}\{(j, k-1,-1) |(j, k, 0)\} =1-p_{2,0}, &amp; 0 \leq j \leq L_{2}, 0 \leq k \leq W_{2, j-1} \\
+
+  \operatorname{Pr}\{(0, k, 0) |(j,-1,-1 ) \}=\left(1-p_{2}\right) /\left(W_{2,0}+1\right), &amp; 0 \leq j \leq L_{2}-1,0 \leq k \leq W_{2,0} \\
+
+  \operatorname{Pr}\left\{(0, k,-1) |\left(L_{2},-1,-1\right)\right\} =1 /\left(W_{2,0}+1\right), &amp; 0 \leq j \leq L_{2}, 0 \leq k \leq W_{2,0}
+\end{array}
+\right.
+\label{9}
+\end{equation}\]</span></p>
+<h4 id="稳态分布">稳态分布</h4>
+<p>求解<span class="math inline">\(\eqref{8}\)</span>和<span class="math inline">\(\eqref{9}\)</span>，可以求得稳态分布。WSAP的传输概率<span class="math inline">\(p_i\)</span>和WSAO的传输概率<span class="math inline">\(p_j\)</span>为：</p>
+<p><span class="math display">\[\begin{equation}
+\left\{
+  \begin{array}{l}
+  {
+    p_{i}=\frac{1-p_{1}^{L_{1}+1}}{\sum_{j=0}^{L_{1}} w_{1, j} \  / 2 * p_{1}^{j}\left(1-p_{1}\right)+2\left(1-p_{1}^{L_{1}+1}\right)}
+  } \\
+  {
+    p_{j}=\frac{1-p_{1}^{L_2+1}}{\sum_{j=0}^{L_{2}} w_{2, j} \  / 2 * p_{2}^{j}\left(1-p_{2}\right)+1-p_{2}^{L_{2}+1}}
+  }
+  \end{array}
+\right.
+\label{10}
+\end{equation}\]</span></p>
+<p>根据<span class="citation" data-cites="mao2010performance">[3]</span>的结论，最大吞吐率可以在信道的空闲状态的平均持续时间和繁忙状态的平均持续时间相等时达到，即</p>
+<p><span class="math display">\[\begin{equation}
+\label{11}
+E[i d l e]=E[c o l l] \Rightarrow p_{i d l e} * T_{i d l e}=p_{c o l l} * T_{c o l l}
+\end{equation}\]</span></p>
+<p>其中:</p>
+<ol type="1">
+<li><span class="math inline">\(p_{i d l e}\)</span>为信道为信道空闲的概率；</li>
+<li><span class="math inline">\(p_{c o l l}\)</span>为信道发生碰撞的概率；</li>
+<li><span class="math inline">\(T_{i d l e}\)</span>为空闲时隙的长度</li>
+<li><span class="math inline">\(T_{c o l l}\)</span>为CCH上发生碰撞时持续的时间。</li>
+</ol>
+<p>进一步，记信道繁忙概率为<span class="math inline">\(p_{busy}\)</span>，包成功发生的概率为<span class="math inline">\(p_{succ}\)</span>，则<span class="math inline">\(p_{coll} = p_{busy} - p_{succ}\)</span>，然后我们有下面的方程组：</p>
+<p><span class="math display">\[\begin{equation}
+\left\{\begin{aligned} p_{1} &amp;=1-\left(1-p_{i}\right)^{M-1} *\left(1-p_{j}\right)^{K} \\ p_{2} &amp;=1-\left(1-p_{i}\right)^{M} *\left(1-p_{j}\right)^{K-1} \\ p_{i d l e} &amp;=\left(1-p_{i}\right)^{M-1} *\left(1-p_{j}\right)^{K-1} \\ p_{b u s y} &amp;=1-p_{i d l e}=1-\left(1-p_{i}\right)^{M-1} *\left(1-p_{j}\right)^{K-1} \\ p_{s u c c} &amp;=M * p_{i} *\left(1-p_{i}\right)^{M-1} *\left(1-p_{j}\right)^{K} \\ &amp;+K * p_{j} *\left(1-p_{i}\right)^{M} *\left(1-p_{j}\right)^{K-1} \end{aligned}\right.
+\label{12}
+\end{equation}\]</span></p>
+<p>记<span class="math inline">\(T_{SAF\_pkt}, T_{WSA\_pkt}, T_{ACK\_pkt}, T_{SIFS}\)</span>分别为发送安全消息，WSA消息，ACK消息的时间以及SIFS的长度。为了简化分析，我们令<span class="math inline">\(T_{coll}\)</span>为最大碰撞时间，即上一个WSA包的最后一个比特和下一个WSA包的第一个比特发生了碰撞。那么有：</p>
+<p><span class="math display">\[\begin{equation}
+\left\{\begin{aligned} T_{i d l e} &amp;=a S l o t T i m e \\ T_{c o l l} &amp;=2 * T_{W S A \_p k t}+T_{S I F S} \\ T_{s u c c} &amp;=T_{W S A_{-} p k t}+T_{S I F S} \end{aligned}\right.
+\label{13}
+\end{equation}\]</span></p>
+<p>根据公式<span class="math inline">\(\eqref{10}-\eqref{13}\)</span>，可以求解出<span class="math inline">\(p_i\)</span>和<span class="math inline">\(p_j\)</span>。</p>
+<h2 id="reference" class="unnumbered">Reference</h2>
+<div id="refs" class="references">
+<div id="ref-bianchi2000performance">
+<p>[1] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coordination function,” <em>IEEE Journal on Selected Areas in Communications</em>, vol. 18, no. 3, pp. 535–547, 2000.</p>
+</div>
+<div id="ref-shao2015connectivity">
+<p>[2] C. Shao, S. Leng, B. Fan, Y. Zhang, A. Vinel, and M. Jonsson, “Connectivity-aware medium access control in platoon-based vehicular ad hoc networks,” in <em>2015 ieee international conference on communications (icc)</em>, 2015, pp. 3305–3310.</p>
+</div>
+<div id="ref-mao2010performance">
+<p>[3] J. Mao, Y. Mao, S. Leng, and X. Bai, “Performance optimization for ieee 802.11 with qos differentiation supporting,” <em>Journal of Software</em>, vol. 21, no. 11, pp. 2866–2882, 2010.</p>
+</div>
+</div>
+
         
       </div>
       
@@ -590,6 +666,84 @@
     </div>
     
 
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/markov/">MARKOV</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>3D-MARKOV</li>
+          
+        
+      
+    
+  </ul>
 
 
     
@@ -630,8 +784,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -854,6 +1017,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文章及其系统模型"><span class="nav-number">1.</span> <span class="nav-text">参考文章及其系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#contribution"><span class="nav-number">1.1.</span> <span class="nav-text">Contribution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#system-model"><span class="nav-number">1.2.</span> <span class="nav-text">System Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连通概率分析"><span class="nav-number">1.3.</span> <span class="nav-text">连通概率分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac-protocol"><span class="nav-number">1.4.</span> <span class="nav-text">MAC Protocol</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#马尔科夫模型分析"><span class="nav-number">1.5.</span> <span class="nav-text">马尔科夫模型分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#状态变量与状态转移"><span class="nav-number">1.5.1.</span> <span class="nav-text">状态变量与状态转移</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#稳态分布"><span class="nav-number">1.5.2.</span> <span class="nav-text">稳态分布</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -1033,9 +1213,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/tags/index.html";
-    this.page.identifier = "tags/index.html";
-    this.page.title = 'tags';
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/markov/3D-markov.html";
+    this.page.identifier = "knowledge-base/academic/its/wave/markov/3D-markov.html";
+    this.page.title = '三维马尔科夫链的详细调研';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');
@@ -1390,6 +1570,46 @@
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
