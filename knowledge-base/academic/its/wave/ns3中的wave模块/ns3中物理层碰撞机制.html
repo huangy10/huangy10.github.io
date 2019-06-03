@@ -121,17 +121,17 @@
 
 
 
-  <meta name="description" content="WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。  WAVE协议内容及特点 WAVE标准中的Beacon性能简化分析 IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析 WAVE中的SCH调度机制研究状况 通信范围模型探讨 ns3中的wave模块  ns3中的Attribu">
+  <meta name="description" content="之前在仿真的过程中发现，同时发送的RTS可能被同时收到，这是不符合实际情况的。我们研究一下导致这一问题的原因。研究从MacLow::ForwardDown开始，这是MAC层向物理层过渡的地方。 MacLow::ForwardDown 这个函数里的一个重要的功能是帧聚合(AMDU相关)，一般来说在WAVE里面不会涉及到这一部分的代码。排除掉IsCfPoll, IsBeacon, IsCfEnd, I">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Wireless Access in Vehicular Environments (WAVE)">
-<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/index.html">
+<meta property="og:title" content="ns3中的物理层碰撞机制">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/ns3中的wave模块/ns3中物理层碰撞机制.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。  WAVE协议内容及特点 WAVE标准中的Beacon性能简化分析 IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析 WAVE中的SCH调度机制研究状况 通信范围模型探讨 ns3中的wave模块  ns3中的Attribu">
+<meta property="og:description" content="之前在仿真的过程中发现，同时发送的RTS可能被同时收到，这是不符合实际情况的。我们研究一下导致这一问题的原因。研究从MacLow::ForwardDown开始，这是MAC层向物理层过渡的地方。 MacLow::ForwardDown 这个函数里的一个重要的功能是帧聚合(AMDU相关)，一般来说在WAVE里面不会涉及到这一部分的代码。排除掉IsCfPoll, IsBeacon, IsCfEnd, I">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-03T05:05:03.851Z">
+<meta property="og:updated_time" content="2019-06-01T12:58:28.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Wireless Access in Vehicular Environments (WAVE)">
-<meta name="twitter:description" content="WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。  WAVE协议内容及特点 WAVE标准中的Beacon性能简化分析 IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析 WAVE中的SCH调度机制研究状况 通信范围模型探讨 ns3中的wave模块  ns3中的Attribu">
+<meta name="twitter:title" content="ns3中的物理层碰撞机制">
+<meta name="twitter:description" content="之前在仿真的过程中发现，同时发送的RTS可能被同时收到，这是不符合实际情况的。我们研究一下导致这一问题的原因。研究从MacLow::ForwardDown开始，这是MAC层向物理层过渡的地方。 MacLow::ForwardDown 这个函数里的一个重要的功能是帧聚合(AMDU相关)，一般来说在WAVE里面不会涉及到这一部分的代码。排除掉IsCfPoll, IsBeacon, IsCfEnd, I">
 
 
 
@@ -141,7 +141,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/wave/">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/wave/ns3中的wave模块/ns3中物理层碰撞机制">
 
 
 
@@ -151,7 +151,7 @@
   };
 </script>
 
-  <title>Wireless Access in Vehicular Environments (WAVE) | 治部少辅</title>
+  <title>ns3中的物理层碰撞机制 | 治部少辅</title>
   
 
 
@@ -391,7 +391,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">Wireless Access in Vehicular Environments (WAVE)
+<h2 class="post-title" itemprop="name headline">ns3中的物理层碰撞机制
 
 </h2>
 
@@ -443,11 +443,37 @@
       
       
         
-          <li>WAVE</li>
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
         
       
     
       
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/ns3中的wave模块/">NS3中的WAVE模块</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>NS3中物理层碰撞机制</li>
+          
+        
       
     
   </ul>
@@ -463,25 +489,33 @@
       <div class="post-body">
         
         
-          <p>WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。</p>
+          <p>之前在仿真的过程中发现，同时发送的RTS可能被同时收到，这是不符合实际情况的。我们研究一下导致这一问题的原因。研究从<code>MacLow::ForwardDown</code>开始，这是MAC层向物理层过渡的地方。</p>
+<h2 id="maclowforwarddown"><code>MacLow::ForwardDown</code></h2>
+<p>这个函数里的一个重要的功能是帧聚合(AMDU相关)，一般来说在WAVE里面不会涉及到这一部分的代码。排除掉<code>IsCfPoll</code>, <code>IsBeacon</code>, <code>IsCfEnd</code>, <code>IsCfPeriod</code>等判断检查之后，通过物理层发送数据包:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">m_phy-&gt;SendPacket (packet, txVector);</span><br></pre></td></tr></table></figure>
+<p><code>WaveHelper</code>中的初始化过程，在WAVE中<code>MacLow</code>使用的<code>m_phy</code>应该是<code>YansWifiPhy</code>。<code>YansWifiPhy</code>没有覆盖父类<code>WifiPhy</code>的<code>SendPacket</code>函数。</p>
+<h2 id="wifiphysendpacket"><code>WifiPhy::SendPacket</code></h2>
+<p>这个函数负责检查物理层的状态，是否处于Idle的状态。发送时间也在这个函数中进行计算.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Time txDuration = CalculateTxDuration (packet-&gt;GetSize (), txVector, GetFrequency (), mpdutype, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>然后将物理层状态切换成发送状态。最后调用<code>StartTx</code></p>
+<h2 id="yanswifiphystarttx"><code>YansWifiPhy::StartTx</code></h2>
+<p>在这个函数中直接调用了<code>m_channel-&gt;Send</code>。为此我们需要先弄清楚一下Channel和Phy之间的关系。</p>
+<p>回顾初<a href="/knowledge-base/academic/its/wave/ns3%E4%B8%AD%E7%9A%84wave%E6%A8%A1%E5%9D%97/#wave%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96">始化的过程</a>，我们可以发现在配置好<code>YansWifiChannelHelper</code>之后，创建一个信道对象复制给了<code>YansWavePhyHelper</code>，之后通过这个<code>YansWavePhyHelper</code>创建的物理层对象，其信道对象都是同一个！</p>
+<h2 id="yanswifichannelsend"><code>YansWifiChannel::Send</code></h2>
+<p>这个函数挺重要的，我们全文放在这里。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">YansWifiChannel::Send (Ptr&lt;YansWifiPhy&gt; sender, Ptr&lt;<span class="keyword">const</span> Packet&gt; packet, <span class="keyword">double</span> txPowerDbm, Time duration) <span class="keyword">const</span></span><br><span class="line">&#123;</span><br><span class="line">  NS_LOG_FUNCTION (<span class="keyword">this</span> &lt;&lt; sender &lt;&lt; packet &lt;&lt; txPowerDbm &lt;&lt; duration.GetSeconds ());</span><br><span class="line">  Ptr&lt;MobilityModel&gt; senderMobility = sender-&gt;GetMobility ();</span><br><span class="line">  NS_ASSERT (senderMobility != <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">for</span> (PhyList::const_iterator i = m_phyList.begin (); i != m_phyList.end (); i++)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> (sender != (*i))</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="comment">//For now don't account for inter channel interference nor channel bonding</span></span><br><span class="line">          <span class="keyword">if</span> ((*i)-&gt;GetChannelNumber () != sender-&gt;GetChannelNumber ())</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">          Ptr&lt;MobilityModel&gt; receiverMobility = (*i)-&gt;GetMobility ()-&gt;GetObject&lt;MobilityModel&gt; ();</span><br><span class="line">          Time delay = m_delay-&gt;GetDelay (senderMobility, receiverMobility);</span><br><span class="line">          <span class="keyword">double</span> rxPowerDbm = m_loss-&gt;CalcRxPower (txPowerDbm, senderMobility, receiverMobility);</span><br><span class="line">          NS_LOG_DEBUG (<span class="string">"propagation: txPower="</span> &lt;&lt; txPowerDbm &lt;&lt; <span class="string">"dbm, rxPower="</span> &lt;&lt; rxPowerDbm &lt;&lt; <span class="string">"dbm, "</span> &lt;&lt;</span><br><span class="line">                        <span class="string">"distance="</span> &lt;&lt; senderMobility-&gt;GetDistanceFrom (receiverMobility) &lt;&lt; <span class="string">"m, delay="</span> &lt;&lt; delay);</span><br><span class="line">          Ptr&lt;Packet&gt; copy = packet-&gt;Copy ();</span><br><span class="line">          Ptr&lt;NetDevice&gt; dstNetDevice = (*i)-&gt;GetDevice ();</span><br><span class="line">          <span class="keyword">uint32_t</span> dstNode;</span><br><span class="line">          <span class="keyword">if</span> (dstNetDevice == <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">              dstNode = <span class="number">0xffffffff</span>;</span><br><span class="line">            &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">              dstNode = dstNetDevice-&gt;GetNode ()-&gt;GetId ();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">          Simulator::ScheduleWithContext (dstNode,</span><br><span class="line">                                          delay, &amp;YansWifiChannel::Receive,</span><br><span class="line">                                          (*i), copy, rxPowerDbm, duration);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，这里Delay了纯电磁波传输延时来调度<code>Receive</code>函数，而且，所有同一信道的其他设备都会被调用<code>Receive</code>函数。传输数据需要的时间，作为参数传递给<code>Receive</code>函数。</p>
+<h2 id="wifiphystartreceivepreambleandheader"><code>WifiPhy::StartReceivePreambleAndHeader</code></h2>
+<p><code>YansWifiChannel::Receive</code>函数调用了<code>WifiPhy::StartReceivePreambleAndHeader</code>函数来接收数据包。</p>
+<p>这个函数开头有一个非常重要的调用：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Ptr&lt;Event&gt; event;</span><br><span class="line">event = m_interference.Add (packet,</span><br><span class="line">                            txVector,</span><br><span class="line">                            rxDuration,</span><br><span class="line">                            rxPowerW);</span><br></pre></td></tr></table></figure>
+<p>以及，在后面的<code>m_state-&gt;GetState ()</code>检查中，只有以下两种情况才能接收包（即调用<code>StartRx</code>）：</p>
 <ol type="1">
-<li><a href="./wave.html">WAVE协议内容及特点</a></li>
-<li><a href="./performance-analysis-of-beacon.html">WAVE标准中的Beacon性能简化分析</a></li>
-<li><a href="./performance-of-bas-and-rts.html">IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析</a></li>
-<li><a href="./sch.html">WAVE中的SCH调度机制研究状况</a></li>
-<li><a href="./通信范围模型探讨.html">通信范围模型探讨</a></li>
-<li><a href="./ns3中的wave模块">ns3中的wave模块</a>
-<ol type="1">
-<li><a href="./ns3中的wave模块/ns3中的Attribute系统使用.html">ns3中的Attribute系统的使用</a></li>
-<li><a href="https://zhuanlan.zhihu.com/dot11" target="_blank" rel="noopener">无线技术大讲堂</a>：这是一个知乎专栏的，里面涉及到了非常多的802.11协议内容分析</li>
-</ol></li>
-<li><a href="./delay-analysis.html">延时分析</a></li>
-<li><a href="./dynamic-beacon-interval.html">动态控制发送速率</a></li>
-<li><a href="./markov">马尔科夫链在WAVE网络性能分析中的应用</a>
-<ol type="1">
-<li><a href="./markov/3D-markov.html">三维马尔科夫链的详细调研</a></li>
-</ol></li>
+<li>物理层处于<code>IDLE</code>状态，</li>
+<li>物理层处于RX状态，但是<code>m_frameCaptureModel != 0 &amp;&amp; m_frameCaptureModel-&gt;CaptureNewFrame (m_currentEvent, event)</code>判断返回了<code>true</code>。</li>
 </ol>
+<h2 id="interferencehelper实现研究"><code>InterferenceHelper</code>实现研究</h2>
+<p>这个类涉及到干扰处理的核心。</p>
 
         
       </div>
@@ -535,11 +569,37 @@
       
       
         
-          <li>WAVE</li>
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
         
       
     
       
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/ns3中的wave模块/">NS3中的WAVE模块</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>NS3中物理层碰撞机制</li>
+          
+        
       
     
   </ul>
@@ -583,8 +643,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -807,6 +876,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#maclowforwarddown"><span class="nav-number">1.</span> <span class="nav-text">MacLow::ForwardDown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wifiphysendpacket"><span class="nav-number">2.</span> <span class="nav-text">WifiPhy::SendPacket</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yanswifiphystarttx"><span class="nav-number">3.</span> <span class="nav-text">YansWifiPhy::StartTx</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yanswifichannelsend"><span class="nav-number">4.</span> <span class="nav-text">YansWifiChannel::Send</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wifiphystartreceivepreambleandheader"><span class="nav-number">5.</span> <span class="nav-text">WifiPhy::StartReceivePreambleAndHeader</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interferencehelper实现研究"><span class="nav-number">6.</span> <span class="nav-text">InterferenceHelper实现研究</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -986,9 +1072,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/index.html";
-    this.page.identifier = "knowledge-base/academic/its/wave/index.html";
-    this.page.title = 'Wireless Access in Vehicular Environments (WAVE)';
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/ns3中的wave模块/ns3中物理层碰撞机制.html";
+    this.page.identifier = "knowledge-base/academic/its/wave/ns3中的wave模块/ns3中物理层碰撞机制.html";
+    this.page.title = 'ns3中的物理层碰撞机制';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');
@@ -1343,46 +1429,6 @@
   
   
 
-  
-    
-      <script type="text/x-mathjax-config">
-  
-
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-      
-      equationNumbers: {
-        autoNumber: 'AMS'
-      }
-    }
-  });
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
-        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
-      }
-    });
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
-    }
-  });
-</script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-    
   
 
 
