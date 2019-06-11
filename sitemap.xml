@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/linux-shell/awk.html</loc>
+    
+    <lastmod>2019-06-11T02:53:06.408Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/index.html</loc>
+    
+    <lastmod>2019-06-11T02:39:22.231Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/linux-shell/index.html</loc>
+    
+    <lastmod>2019-06-11T02:38:33.427Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/index.html</loc>
     
-    <lastmod>2019-06-03T05:05:03.851Z</lastmod>
+    <lastmod>2019-06-04T07:20:01.534Z</lastmod>
     
   </url>
   
@@ -96,13 +117,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/its/platoon/platoon-v2v.html</loc>
     
     <lastmod>2019-05-15T14:57:40.244Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/index.html</loc>
-    
-    <lastmod>2019-05-15T05:52:17.687Z</lastmod>
     
   </url>
   
