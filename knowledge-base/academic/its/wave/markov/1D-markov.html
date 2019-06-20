@@ -121,16 +121,19 @@
 
 
 
-  <meta name="description" content="晚来天雨雪，能饮一杯无？">
+  <meta name="description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
 <meta property="og:type" content="website">
-<meta property="og:title" content="治部少辅">
-<meta property="og:url" content="http://www.codewoody.com/tags/hexo/index.html">
+<meta property="og:title" content="一维马尔科夫过程的使用">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/1D-markov.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="晚来天雨雪，能饮一杯无？">
+<meta property="og:description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
+<meta property="og:updated_time" content="2019-06-20T05:45:04.052Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="治部少辅">
-<meta name="twitter:description" content="晚来天雨雪，能饮一杯无？">
+<meta name="twitter:title" content="一维马尔科夫过程的使用">
+<meta name="twitter:description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
 
 
 
@@ -140,7 +143,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/tags/hexo/">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/1D-markov">
 
 
 
@@ -150,7 +153,7 @@
   };
 </script>
 
-  <title>Tag: hexo | 治部少辅</title>
+  <title>一维马尔科夫过程的使用 | 治部少辅</title>
   
 
 
@@ -209,7 +212,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -268,7 +271,7 @@
         
         
           
-          <li class="menu-item menu-item-knowledge">
+          <li class="menu-item menu-item-knowledge menu-item-active">
 
     
     
@@ -383,83 +386,281 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>hexo<small>Tag</small>
-        </h2>
-      </div>
+<h2 class="post-title" itemprop="name headline">一维马尔科夫过程的使用
 
+</h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/62502/" itemprop="url">
+          
             
-              <span itemprop="name">Pandoc渲染引擎导致Hexo Tag渲染失败的临时解决办法</span>
-            
-          </a>
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
         
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-25T14:06:21+08:00" content="2019-04-25">
-          04-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+    
+      
       
         
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-          <a class="post-title-link" href="/posts/20215/" itemprop="url">
+          
             
-              <span itemprop="name">Hexo+Next: 使用Latex公式</span>
-            
-          </a>
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
         
-      </h3>
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/markov/">MARKOV</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>1D-MARKOV</li>
+          
+        
+      
+    
+  </ul>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-04-24T12:55:54+08:00" content="2019-04-24">
-          04-24
-        </time>
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <h2 id="前言">前言</h2>
+<p>一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的<a href="../wave.html">二维马尔科夫链</a>中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。</p>
+<p>这里整理的一维马尔科夫过程的研究主要来自于<span class="citation" data-cites="wang2009characterising">[1]</span>，同时包含饱和以及不饱和场景的性能分析。</p>
+<h2 id="一维马尔科夫链">一维马尔科夫链</h2>
+<p>网络结构为的单跳Adhoc网络，节点总数为<span class="math inline">\(n\)</span>。传输环境为：a two-ray propagation model with no hidden terminal or capture effects，即所有的包丢失都是由于碰撞(Collision)导致的。假设每个节点每次只能缓存一个数据包，且包的到达过程为到达率为<span class="math inline">\(\lambda\)</span>的Poisson过程，</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png" alt="非饱和状态下的一维马尔科夫链状态转移图"><figcaption>非饱和状态下的一维马尔科夫链状态转移图</figcaption>
+</figure>
+<p>如上图所示，退避窗口为<span class="math inline">\(W\)</span>，意味着退避状态一共有<span class="math inline">\(W\)</span>个，以及一个额外的Idle状态（记为<span class="math inline">\(I\)</span>）。同时记包的到达概率为<span class="math inline">\(q\)</span>，信道繁忙的概率为<span class="math inline">\(q_b\)</span>，则有下面的概率转移矩阵：</p>
+<p><span class="math display">\[\begin{equation}
+\left\{\begin{array}{l}{P\{I | I\}=1-q} \\ {P\{k | I\}=q / W} \\ {P\{k | I+1\}=1-p_{b}} \\ {P\{k | k\}=p_{b}} \\ {P\{I | 0\}=1}\end{array}\right.
+\end{equation}\]</span></p>
+<p>下面求解稳态分布<span class="math inline">\(b_k (k \in [0, W - 1])\)</span>（Idle状态的稳态概率为<span class="math inline">\(b_I\)</span>），我们通过转移概率可以得到如下的方程：</p>
+<p><span class="math display">\[\begin{equation}
+b_I = \frac{1}{q}b_0
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+b_{k}=\frac{(W-k) q}{W\left(1-P_{b}\right)} b_{I}=\frac{(W-k)}{W\left(1-P_{b}\right)} b_{0} \quad k \in[1, W-1]
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+b_{I}+b_{0}+\sum_{k=1}^{W-1} b_{k}=1
+\end{equation}\]</span></p>
+<p>当backoff counter为0时节点开发发送，则<span class="math inline">\(b_0\)</span>为传输概率(transmission probability) <span class="math inline">\(\tau\)</span>。通过上面的三个公式组成的方程，我们可以得到：</p>
+<p><span class="math display">\[\begin{equation}
+\label{tau}
+\tau=b_{0}=\left(\frac{1}{q}+1+\frac{(W-1)}{2\left(1-P_{b}\right)}\right)^{-1}
+\end{equation}\]</span></p>
+<p>在得到传输概率以后，通过经典文章<span class="citation" data-cites="bianchi2000performance">[2]</span>我们可以计算吞吐率性能。不过我们在这里的模型中增加了Idle状态，因此分析会有一点不同。</p>
+<p>记<span class="math inline">\(P_b\)</span>为信道繁忙的概率，<span class="math inline">\(P_s\)</span>为传输成功的概率，则：</p>
+<p><span class="math display">\[\begin{equation}
+\label{Pb}
+\begin{aligned} P_{b} &amp;=1-(1-\tau)^{n-1} \\ P_{s} &amp;=n \tau(1-\tau)^{n-1} \end{aligned}
+\end{equation}\]</span></p>
+<p>按照<span class="citation" data-cites="bianchi2000performance">[2]</span>的方法，将两次backoff状态之间的间隔定义为一个slot（virtual slot），则virtual slot可能包含一个空的slot，一次冲突，或者一次成功的发送。那么有：</p>
+<p><span class="math display">\[\begin{equation}
+\text {SlotTime}=(1-\tau)^{n} \sigma+\left(1-(1-\tau)^{n}\right) T
+\end{equation}\]</span></p>
+<p>由于在广播中，没有RTS/CTS，也没有ACK，那么一次冲突和一次成功发送占用信道的时间是一样的：</p>
+<p><span class="math display">\[\begin{equation}
+T=\frac{H+E[P]}{R}+D I F S+\delta
+\end{equation}\]</span></p>
+<p>这里<span class="math inline">\(H\)</span>为物理层帧头和MAC层帧头的大小，<span class="math inline">\(R\)</span>为发送速率。由于我们假定包的生成过程是Poisson过程，则</p>
+<p><span class="math display">\[\begin{equation}
+\label{q}
+q=1-e^{-\lambda S l o t T i m e}
+\end{equation}\]</span></p>
+<p>通过联立求解<span class="math inline">\(\eqref{tau}, \eqref{Pb}, \eqref{q}\)</span>非线性方程组，我们可以得到归一化吞吐率性能</p>
+<p><span class="math display">\[\begin{equation}
+S=\frac{P_{s} E[P]}{S l o t T i m e}
+\end{equation}\]</span></p>
+<blockquote>
+<p>上面描述的是非饱和状态下的性能计算过程，但是当<span class="math inline">\(\lambda\)</span>趋近于无穷大，即<span class="math inline">\(q\)</span>趋向于1时，即可以得到饱和场景下的通信性能。</p>
+</blockquote>
+<h2 id="reference" class="unnumbered">Reference</h2>
+<div id="refs" class="references">
+<div id="ref-wang2009characterising">
+<p>[1] J.-P. Wang, M. Abolhasan, D. R. Franklin, and F. Safaei, “Characterising the behaviour of ieee 802.11 broadcast transmissions in ad hoc wireless lans,” in <em>2009 ieee international conference on communications</em>, 2009, pp. 1–5.</p>
+</div>
+<div id="ref-bianchi2000performance">
+<p>[2] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coordination function,” <em>IEEE Journal on Selected Areas in Communications</em>, vol. 18, no. 3, pp. 535–547, 2000.</p>
+</div>
+</div>
+
+        
       </div>
-
-    </header>
-  </article>
-
-
+      
+      
       
     </div>
+    
 
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/its/wave/markov/">MARKOV</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>1D-MARKOV</li>
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -479,8 +680,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -703,6 +913,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一维马尔科夫链"><span class="nav-number">2.</span> <span class="nav-text">一维马尔科夫链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -858,6 +1085,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
 
   
 
@@ -876,9 +1107,28 @@
   <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
 
 
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/markov/1D-markov.html";
+    this.page.identifier = "knowledge-base/academic/its/wave/markov/1D-markov.html";
+    this.page.title = '一维马尔科夫过程的使用';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
 
 
 
+
+
+  
 
 
   
@@ -1217,6 +1467,46 @@
   
 
   
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
 
 
   
@@ -1292,4 +1582,3 @@
 
 </body>
 </html>
-l>
