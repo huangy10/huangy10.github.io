@@ -121,18 +121,21 @@
 
 
 
-  <meta name="description" content="这篇教程提供了优化Shadowsocks性能的一些方法。">
-<meta name="keywords" content="教程,Shadowsocks">
+  <meta name="description" content="Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。">
+<meta name="keywords" content="教程,latex">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shadowsocks持续优化">
-<meta property="og:url" content="http://www.codewoody.com/posts/35429/index.html">
+<meta property="og:title" content="Latex中各种各样的箭头">
+<meta property="og:url" content="http://www.codewoody.com/posts/13297/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这篇教程提供了优化Shadowsocks性能的一些方法。">
+<meta property="og:description" content="Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-16T06:39:09.344Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png">
+<meta property="og:updated_time" content="2019-06-24T02:19:58.271Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Shadowsocks持续优化">
-<meta name="twitter:description" content="这篇教程提供了优化Shadowsocks性能的一些方法。">
+<meta name="twitter:title" content="Latex中各种各样的箭头">
+<meta name="twitter:description" content="Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png">
 
 
 
@@ -142,7 +145,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/posts/35429/">
+  <link rel="canonical" href="http://www.codewoody.com/posts/13297/">
 
 
 
@@ -152,7 +155,7 @@
   };
 </script>
 
-  <title>Shadowsocks持续优化 | 治部少辅</title>
+  <title>Latex中各种各样的箭头 | 治部少辅</title>
   
 
 
@@ -385,7 +388,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/35429/">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/13297/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Woody Huang">
@@ -402,7 +405,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Shadowsocks持续优化
+          <h2 class="post-title" itemprop="name headline">Latex中各种各样的箭头
 
               
             
@@ -428,7 +431,7 @@
                 
               
 
-              <time title="Created: 2018-11-16 14:39:01 / Modified: 14:39:09" itemprop="dateCreated datePublished" datetime="2018-11-16T14:39:01+08:00">2018-11-16</time>
+              <time title="Created: 2019-06-24 09:52:42 / Modified: 10:19:58" itemprop="dateCreated datePublished" datetime="2019-06-24T09:52:42+08:00">2019-06-24</time>
             
 
             
@@ -469,8 +472,8 @@
                 </span>
             
                 <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/35429/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/35429/" itemprop="commentCount"></span>
+                <a href="/posts/13297/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/13297/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,17 +508,24 @@
       
 
       
-        ## Fast TCP开启<p></p>
-<p>如果双端都支持FastTCP，那么可以通过开启FastTCP来降低延时。服务端设置方法有两种，要门在<code>config.json</code>中添加<code>fast_open</code>为<code>true</code>，要么在执行<code>ssserver</code>带上<code>--fast-open</code>。然后在命令行中运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/net/ipv4/tcp_fastopen</span><br></pre></td></tr></table></figure>
-<h2 id="进一步优化">进一步优化</h2>
-<p>这个优化方法适合所有的shadowsocks版本，具体方法如下。创建文件<code>/etc/sysctl.d/local.conf</code>，并在文件中添加如下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># max open files</span></span><br><span class="line">fs.file-max = 51200</span><br><span class="line"><span class="comment"># max read buffer</span></span><br><span class="line">net.core.rmem_max = 67108864</span><br><span class="line"><span class="comment"># max write buffer</span></span><br><span class="line">net.core.wmem_max = 67108864</span><br><span class="line"><span class="comment"># default read buffer</span></span><br><span class="line">net.core.rmem_default = 65536</span><br><span class="line"><span class="comment"># default write buffer</span></span><br><span class="line">net.core.wmem_default = 65536</span><br><span class="line"><span class="comment"># max processor input queue</span></span><br><span class="line">net.core.netdev_max_backlog = 4096</span><br><span class="line"><span class="comment"># max backlog</span></span><br><span class="line">net.core.somaxconn = 4096</span><br><span class="line"></span><br><span class="line"><span class="comment"># resist SYN flood attacks</span></span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line"><span class="comment"># reuse timewait sockets when safe</span></span><br><span class="line">net.ipv4.tcp_tw_reuse = 1</span><br><span class="line"><span class="comment"># turn off fast timewait sockets recycling</span></span><br><span class="line">net.ipv4.tcp_tw_recycle = 0</span><br><span class="line"><span class="comment"># short FIN timeout</span></span><br><span class="line">net.ipv4.tcp_fin_timeout = 30</span><br><span class="line"><span class="comment"># short keepalive time</span></span><br><span class="line">net.ipv4.tcp_keepalive_time = 1200</span><br><span class="line"><span class="comment"># outbound port range</span></span><br><span class="line">net.ipv4.ip_local_port_range = 10000 65000</span><br><span class="line"><span class="comment"># max SYN backlog</span></span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 4096</span><br><span class="line"><span class="comment"># max timewait sockets held by system simultaneously</span></span><br><span class="line">net.ipv4.tcp_max_tw_buckets = 5000</span><br><span class="line"><span class="comment"># turn on TCP Fast Open on both client and server side</span></span><br><span class="line">net.ipv4.tcp_fastopen = 3</span><br><span class="line"><span class="comment"># TCP receive buffer</span></span><br><span class="line">net.ipv4.tcp_rmem = 4096 87380 67108864</span><br><span class="line"><span class="comment"># TCP write buffer</span></span><br><span class="line">net.ipv4.tcp_wmem = 4096 65536 67108864</span><br><span class="line"><span class="comment"># turn on path MTU discovery</span></span><br><span class="line">net.ipv4.tcp_mtu_probing = 1</span><br><span class="line"></span><br><span class="line"><span class="comment"># for high-latency network</span></span><br><span class="line">net.ipv4.tcp_congestion_control = hybla</span><br><span class="line"></span><br><span class="line"><span class="comment"># for low-latency network, use cubic instead</span></span><br><span class="line"><span class="comment"># net.ipv4.tcp_congestion_control = cubic</span></span><br></pre></td></tr></table></figure>
-<p>然后运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
-<p>应用上述设置。最后在启动脚本中，于<code>ssserver</code>前添加</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">ulimit</span> -n 51200</span><br></pre></td></tr></table></figure>
-<p>这个设置方法，会消耗比较多的内存，但是会换来速度的大幅上升。</p>
+        <p>Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。 <a id="more"></a></p>
+<h2 id="默认箭头">默认箭头</h2>
+<p>这里的默认指你不需要任何额外的<code>usepackage</code>就可以使用：</p>
+<!-- ![默认箭头](https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png) -->
+<img src="https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png" width="60%">
+<figcaption>
+默认箭头
+</figcaption>
+<h2 id="amssymb提供的箭头">amssymb提供的箭头</h2>
+<p>需要<code>\usepackage{amssymb}</code></p>
+<!-- ![amssymb箭头](https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png) -->
+<img src="https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png" width="60%">
+<figcaption>
+amssymb箭头
+</figcaption>
+<h2 id="further-reading">Further Reading</h2>
+<p><a href="http://www.sascha-frank.com/Arrow/latex-arrows.html" target="_blank" rel="noopener">LaTeX arrows</a></p>
+
       
     </div>
 
@@ -540,7 +550,7 @@
           
             <a href="/tags/教程/" rel="tag"># 教程</a>
           
-            <a href="/tags/Shadowsocks/" rel="tag"># Shadowsocks</a>
+            <a href="/tags/latex/" rel="tag"># latex</a>
           
         </div>
       
@@ -553,8 +563,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/posts/7835/" rel="next" title="Shadowsocks：多用户账号独立，并限制用户连接数">
-                <i class="fa fa-chevron-left"></i> Shadowsocks：多用户账号独立，并限制用户连接数
+              <a href="/posts/23676/" rel="next" title="部署Pritunl来使用OpenVPN">
+                <i class="fa fa-chevron-left"></i> 部署Pritunl来使用OpenVPN
               </a>
             
           </div>
@@ -562,10 +572,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/5440/" rel="prev" title="开源对象存储服务(OSS) Minio 及其在Hexo中的使用">
-                开源对象存储服务(OSS) Minio 及其在Hexo中的使用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -861,7 +867,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步优化"><span class="nav-number">1.</span> <span class="nav-text">进一步优化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#默认箭头"><span class="nav-number">1.</span> <span class="nav-text">默认箭头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amssymb提供的箭头"><span class="nav-number">2.</span> <span class="nav-text">amssymb提供的箭头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#further-reading"><span class="nav-number">3.</span> <span class="nav-text">Further Reading</span></a></li></ol></div>
             
 
           </div>
@@ -1047,9 +1053,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/posts/35429/";
-    this.page.identifier = "posts/35429/";
-    this.page.title = 'Shadowsocks持续优化';
+    this.page.url = "http://www.codewoody.com/posts/13297/";
+    this.page.identifier = "posts/13297/";
+    this.page.title = 'Latex中各种各样的箭头';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');

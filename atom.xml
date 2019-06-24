@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-06-13T07:04:39.437Z</updated>
+  <updated>2019-06-24T02:19:58.271Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Latex中各种各样的箭头</title>
+    <link href="http://www.codewoody.com/posts/13297/"/>
+    <id>http://www.codewoody.com/posts/13297/</id>
+    <published>2019-06-24T01:52:42.000Z</published>
+    <updated>2019-06-24T02:19:58.271Z</updated>
+    
+    <content type="html"><![CDATA[<p>Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。 <a id="more"></a></p><h2 id="默认箭头">默认箭头</h2><p>这里的默认指你不需要任何额外的<code>usepackage</code>就可以使用：</p><!-- ![默认箭头](https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png) --><img src="https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png" width="60%"><figcaption>默认箭头</figcaption><h2 id="amssymb提供的箭头">amssymb提供的箭头</h2><p>需要<code>\usepackage{amssymb}</code></p><!-- ![amssymb箭头](https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png) --><img src="https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png" width="60%"><figcaption>amssymb箭头</figcaption><h2 id="further-reading">Further Reading</h2><p><a href="http://www.sascha-frank.com/Arrow/latex-arrows.html" target="_blank" rel="noopener">LaTeX arrows</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="latex" scheme="http://www.codewoody.com/tags/latex/"/>
+    
+  </entry>
   
   <entry>
     <title>部署Pritunl来使用OpenVPN</title>
@@ -511,35 +535,6 @@ svg {
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mac: 将APP打包成dmg</title>
-    <link href="http://www.codewoody.com/posts/62609/"/>
-    <id>http://www.codewoody.com/posts/62609/</id>
-    <published>2019-03-01T03:24:45.000Z</published>
-    <updated>2019-03-01T03:29:47.407Z</updated>
-    
-    <content type="html"><![CDATA[<ol type="1"><li>创建一个新的文件夹，将APP放到这个新文件夹中</li><li>打开Disk Utility &gt; File &gt; New Image &gt; Image from Folder.（中文的话，是磁盘工具 &gt; 文件 &gt; 新建映像 &gt; 来自文件夹的映像...） <img src="https://imgs.codewoody.com/uploads/big/3f29adf12997da9b969067c013879676.png" alt="磁盘工具操作"></li><li>在弹出的窗口中，选择在第一步中新建的文件夹</li><li>选择输出dmg文件的存储位置，然后点击保存按钮 <img src="https://imgs.codewoody.com/uploads/big/8f7ca60b7031464feb4027f14d1c528b.png" alt="保存页面"></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;创建一个新的文件夹，将APP放到这个新文件夹中&lt;/li&gt;
-&lt;li&gt;打开Disk Utility &amp;gt; File &amp;gt; New Image &amp;gt; Image from Folder.（中文的话，是磁盘工具 &amp;gt; 文件 &amp;gt; 新
-      
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="MacOS" scheme="http://www.codewoody.com/tags/MacOS/"/>
     
   </entry>
   
