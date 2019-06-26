@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-06-24T02:19:58.271Z</updated>
+  <updated>2019-06-26T05:24:00.597Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python下的音频处理库librosa打开文件是显示NoBackendError的解决</title>
+    <link href="http://www.codewoody.com/posts/40199/"/>
+    <id>http://www.codewoody.com/posts/40199/</id>
+    <published>2019-06-26T04:56:10.000Z</published>
+    <updated>2019-06-26T05:24:00.597Z</updated>
+    
+    <content type="html"><![CDATA[<p>近日在django项目中采用了librosa来分析用户上传的音频，主要是对其做一定间隔的采样用于绘制波形图。在本地(MacOS)上工作正常，部署到Ubuntu服务器后，自己手动用python方式运行django的server时，工作都是正常的，然而当我用superviosr挂起之后就一直报NoBackendError的错误，反复检查了FFmpeg的安装，应该是没有问题的。网上搜了一下没有看到比较合适的解决办法，故不得不自己读源码来调试了。 <a id="more"></a></p><p>由于我的程序中只采用了<code>librosa.load</code>这个命令，通过源代码可以发现librosa实际上是用<code>audioread</code>这个库的<code>audioread.audio_open</code>来读取音频文件的。这个函数的源代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">audio_open</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="string">"""Open an audio file using a library that is available on this</span></span><br><span class="line"><span class="string">    system.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Standard-library WAV and AIFF readers.</span></span><br><span class="line">    <span class="keyword">from</span> . <span class="keyword">import</span> rawread</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> rawread.RawAudioFile(path)</span><br><span class="line">    <span class="keyword">except</span> DecodeError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Core Audio.</span></span><br><span class="line">    <span class="keyword">if</span> _ca_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> macca</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> macca.ExtAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># GStreamer.</span></span><br><span class="line">    <span class="keyword">if</span> _gst_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> gstdec</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> gstdec.GstAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># MAD.</span></span><br><span class="line">    <span class="keyword">if</span> _mad_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> maddec</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> maddec.MadAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># FFmpeg.</span></span><br><span class="line">    <span class="keyword">from</span> . <span class="keyword">import</span> ffdec</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> ffdec.FFmpegAudioFile(path)</span><br><span class="line">    <span class="keyword">except</span> DecodeError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># All backends failed!</span></span><br><span class="line">    <span class="keyword">raise</span> NoBackendError()</span><br></pre></td></tr></table></figure><p>可见之前我们遇到的NoBackendError就是这里的最后一行抛出的了，由于我安装的FFmpeg，进一步进入ffdec.py这个文件中。不难发现实际打开文件的是下面这个函数：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">popen_multiple</span><span class="params">(commands, command_args, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""Like `subprocess.Popen`, but can try multiple commands in case</span></span><br><span class="line"><span class="string">    some are not available.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    `commands` is an iterable of command names and `command_args` are</span></span><br><span class="line"><span class="string">    the rest of the arguments that, when appended to the command name,</span></span><br><span class="line"><span class="string">    make up the full first argument to `subprocess.Popen`. The</span></span><br><span class="line"><span class="string">    other positional and keyword arguments are passed through.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> i, command <span class="keyword">in</span> enumerate(commands):</span><br><span class="line">        cmd = [command] + command_args</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> subprocess.Popen(cmd, *args, **kwargs)</span><br><span class="line">        <span class="keyword">except</span> OSError:</span><br><span class="line">            <span class="keyword">if</span> i == len(commands) - <span class="number">1</span>:</span><br><span class="line">                <span class="comment"># No more commands to try.</span></span><br><span class="line">                <span class="keyword">raise</span></span><br></pre></td></tr></table></figure><p>这里的<code>commands</code>是直接传入的第33行的<code>COMMANDS</code>变量</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMANDS = (<span class="string">'ffmpeg'</span>, <span class="string">'avconv'</span>)</span><br></pre></td></tr></table></figure><p>我这里倒腾了好几下，最终发现实际是错误的原因是没有找到ffmpeg这个命令。我们在这里将ffmpeg替换成ffmpeg的绝对路径。你可以通过下面这行命令找到。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> ffmpeg</span><br></pre></td></tr></table></figure><p>最终我改成了</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMANDS = (<span class="string">'/usr/bin/ffmpeg'</span>, <span class="string">'avconv'</span>)</span><br></pre></td></tr></table></figure><p>Boom！一切就工作正常了。这么想起来应该是安装ffmpeg的时候的环境变量有问题，导致在command line方式下调用ffmpeg命令出错吧。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;近日在django项目中采用了librosa来分析用户上传的音频，主要是对其做一定间隔的采样用于绘制波形图。在本地(MacOS)上工作正常，部署到Ubuntu服务器后，自己手动用python方式运行django的server时，工作都是正常的，然而当我用superviosr挂起之后就一直报NoBackendError的错误，反复检查了FFmpeg的安装，应该是没有问题的。网上搜了一下没有看到比较合适的解决办法，故不得不自己读源码来调试了。
+    
+    </summary>
+    
+      <category term="debug" scheme="http://www.codewoody.com/categories/debug/"/>
+    
+    
+      <category term="debug" scheme="http://www.codewoody.com/tags/debug/"/>
+    
+      <category term="python" scheme="http://www.codewoody.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>Latex中各种各样的箭头</title>
@@ -511,30 +535,6 @@ svg {
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
       <category term="js" scheme="http://www.codewoody.com/tags/js/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【转载】IOS的一些设计规范</title>
-    <link href="http://www.codewoody.com/posts/23804/"/>
-    <id>http://www.codewoody.com/posts/23804/</id>
-    <published>2019-03-05T04:09:27.000Z</published>
-    <updated>2019-04-24T15:03:09.189Z</updated>
-    
-    <content type="html"><![CDATA[<p>转载自BIGD团队。 <a id="more"></a> <img src="https://imgs.codewoody.com/uploads/big/73da26e439c2fe4f88b0346301c87036.jpg" alt="如图"></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;转载自BIGD团队。
-    
-    </summary>
-    
-      <category term="其他" scheme="http://www.codewoody.com/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
     
   </entry>
   
