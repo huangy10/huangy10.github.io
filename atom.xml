@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-06-26T05:24:00.597Z</updated>
+  <updated>2019-06-26T15:02:26.589Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo文章置顶/置底方法研究</title>
+    <link href="http://www.codewoody.com/posts/42846/"/>
+    <id>http://www.codewoody.com/posts/42846/</id>
+    <published>2019-06-26T14:51:15.000Z</published>
+    <updated>2019-06-26T15:02:26.589Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章讨论如何在Hexo中方便地实现文章置顶功能。</p><p>最初我采用了<a href="https://blog.minhow.com/2017/08/20/hexo/article-top/" target="_blank" rel="noopener">Hexo文章置顶的方法</a>。这个方法还是非常简单有效，不过存在一个问题：即不支持使用负数的<code>top</code>值将文章放在末尾。因此我做了 一点修改。</p><a id="more"></a><h2 id="原始方法">原始方法</h2><p>原始方法的核心思想是在Front-Matter中添加一个自定义的<code>top</code>字段，然后在<code>hexo-generator-index</code>中使用这一字段来实现排序。具体操作为，修改文件<code>node_modules/hexo-generator-index/lib/generator.js</code>，添加 如下代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">posts.data = posts.data.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (first.top &amp;&amp; second.top) &#123; <span class="comment">// 两篇文章top都有定义</span></span><br><span class="line">        <span class="keyword">return</span> first.top == second.top ? second.date - first.date : second.top - first.top <span class="comment">//若top值一样则按照文章日期降序排, 否则按照top值降序排</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (first.top &amp;&amp; !second.top) &#123; <span class="comment">// 以下是只有一篇文章top有定义，将有top的排在前面</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!first.top &amp;&amp; second.top) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> second.date - first.date;  <span class="comment">// 都没定义top，按照文章日期降序排</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>更改后的完整代码如下：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="keyword">var</span> pagination = <span class="built_in">require</span>(<span class="string">'hexo-pagination'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">locals</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> config = <span class="keyword">this</span>.config;</span><br><span class="line">  <span class="keyword">var</span> posts = locals.posts.sort(config.index_generator.order_by);</span><br><span class="line">    posts.data = posts.data.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (first.top &amp;&amp; second.top) &#123; <span class="comment">// 两篇文章top都有定义</span></span><br><span class="line">            <span class="keyword">return</span> first.top == second.top ? second.date - first.date : second.top - first.top <span class="comment">//若top值一样则按照文章日期降序排, 否则按照top值降序排</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (first.top &amp;&amp; !second.top) &#123; <span class="comment">// 以下是只有一篇文章top有定义，将有top的排在前面</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!first.top &amp;&amp; second.top) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> second.date - first.date;  <span class="comment">// 都没定义top，按照文章日期降序排</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="keyword">var</span> paginationDir = config.pagination_dir || <span class="string">'page'</span>;</span><br><span class="line">  <span class="keyword">var</span> path = config.index_generator.path || <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">return</span> pagination(path, posts, &#123;</span><br><span class="line">    perPage: config.index_generator.per_page,</span><br><span class="line">    layout: [<span class="string">'index'</span>, <span class="string">'archive'</span>],</span><br><span class="line">    format: paginationDir + <span class="string">'/%d/'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">      __index: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>然后在需要置顶的文章的front-matter中添加top字段。top值越大，则文章越靠前。top值一样的文章则根据日期排序。front-matter设置的一个例子如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Hexo文章置顶方法研究</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="bullet">-06</span><span class="bullet">-26</span> <span class="number">22</span><span class="string">:51:15</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">教程</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">MinHow</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">博客</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">开源项目</span></span><br><span class="line"><span class="attr">cover_picture:</span> <span class="attr">https://cloud.minhow.com/images/miho/theme/github-second.jpg</span></span><br><span class="line"><span class="attr">top:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure><h2 id="解决置底的问题">解决“置底”的问题</h2><p>无法置底的原因很简单，即在上面的js代码修改中，没有设置top值的文章的top变量是未定义的，且规定未定义top的文章总是比定义了top值的文章要靠后。我们赋予未定义top值的文章一个默认的0值，即可解决这个问题的。具体的操作是将修改代码内容替换成</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">posts.data = posts.data.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = first.top || <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> b = second.top || <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> (a != b) &#123;</span><br><span class="line">      <span class="keyword">return</span> b - a</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> second.date - first.date</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章讨论如何在Hexo中方便地实现文章置顶功能。&lt;/p&gt;
+&lt;p&gt;最初我采用了&lt;a href=&quot;https://blog.minhow.com/2017/08/20/hexo/article-top/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo文章置顶的方法&lt;/a&gt;。这个方法还是非常简单有效，不过存在一个问题：即不支持使用负数的&lt;code&gt;top&lt;/code&gt;值将文章放在末尾。因此我做了 一点修改。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="hexo" scheme="http://www.codewoody.com/tags/hexo/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Weekly - 1</title>
+    <link href="http://www.codewoody.com/posts/25582/"/>
+    <id>http://www.codewoody.com/posts/25582/</id>
+    <published>2019-06-26T06:05:17.000Z</published>
+    <updated>2019-06-26T14:43:01.223Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="so-whats-this">So what's this</h2><p>每周我都会读阮一峰的每周分享，有时候也会在其他的博客平台上看见别的博主整理的这些每周资源分享文章，觉得比较有用，我也打算整理一下自己的List。</p><p>最近一年多以来，我尝试尽可能将自己的思考过程以文字的方式记录下来，这样过几天回头来看，便于我整理思路。更重要的是，这种累积会给自己带来沉甸甸的“积累感”，给自己一个强大正反馈。</p><p>这篇是这一系类的每周分享的第一篇，贵在坚持！</p><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;so-whats-this&quot;&gt;So what&#39;s this&lt;/h2&gt;
+&lt;p&gt;每周我都会读阮一峰的每周分享，有时候也会在其他的博客平台上看见别的博主整理的这些每周资源分享文章，觉得比较有用，我也打算整理一下自己的List。&lt;/p&gt;
+&lt;p&gt;最近一年多以来，我尝试尽可能将自己的思考过程以文字的方式记录下来，这样过几天回头来看，便于我整理思路。更重要的是，这种累积会给自己带来沉甸甸的“积累感”，给自己一个强大正反馈。&lt;/p&gt;
+&lt;p&gt;这篇是这一系类的每周分享的第一篇，贵在坚持！&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="weekly" scheme="http://www.codewoody.com/categories/weekly/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="weekly" scheme="http://www.codewoody.com/tags/weekly/"/>
+    
+  </entry>
   
   <entry>
     <title>Python下的音频处理库librosa打开文件是显示NoBackendError的解决</title>
@@ -484,57 +538,6 @@ svg {
       <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
     
       <category term="swift" scheme="http://www.codewoody.com/tags/swift/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>时局图：论扛着红旗反红旗</title>
-    <link href="http://www.codewoody.com/posts/8446/"/>
-    <id>http://www.codewoody.com/posts/8446/</id>
-    <published>2019-03-25T04:16:40.000Z</published>
-    <updated>2019-03-25T04:18:12.799Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/465c7e96d5c79b75283b8bc144e5cf73.jpeg" alt="论扛着红旗反红旗"> <a id="more"></a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/465c7e96d5c79b75283b8bc144e5cf73.jpeg&quot; alt=&quot;论扛着红旗反红旗&quot;&gt;
-    
-    </summary>
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
-    
-      <category term="政治" scheme="http://www.codewoody.com/tags/%E6%94%BF%E6%B2%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JS:图像截取部分(Image Cropping)</title>
-    <link href="http://www.codewoody.com/posts/2543/"/>
-    <id>http://www.codewoody.com/posts/2543/</id>
-    <published>2019-03-13T05:29:19.000Z</published>
-    <updated>2019-03-13T06:00:25.806Z</updated>
-    
-    <content type="html"><![CDATA[<figure><img src="https://imgs.codewoody.com/uploads/big/8cd3e0e5fe6f9051e2c67646cc1e7dbc.jpg" alt="Cover"><figcaption>Cover</figcaption></figure><p>这里我们讨论的图像截取部分是指从一个完整的大图中截取一小部分出来。当然，使用js实现。 <a id="more"></a></p><blockquote><p>这边文章基本整理自<a href="https://yellowpencil.com/blog/cropping-images-with-javascript/" target="_blank" rel="noopener">Cropping images with Javascript</a>， 添加了一些我的评论</p></blockquote><p>例如，我们要从这样的大图中：</p><figure><img src="https://imgs.codewoody.com/uploads/big/f6551d523ea8c642cd663a1b9b3e024d.jpeg" alt="大图"><figcaption>大图</figcaption></figure><p>截取出</p><figure><img src="https://imgs.codewoody.com/uploads/big/2208ad7dfbd59e73fa2ba244fcb41487.jpeg" alt="小图"><figcaption>小图</figcaption></figure><p>使用H5中的canvas可以简单地解决这个问题。</p><h2 id="载入原图像">1. 载入原图像</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> loadTimer;</span><br><span class="line"><span class="keyword">var</span> imgObject = <span class="keyword">new</span> Image();</span><br><span class="line">imgObject.src = <span class="string">'images/fozzie.jpg'</span>;</span><br><span class="line">imgObject.onLoad = onImgLoaded();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onImgLoaded</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (loadTimer != <span class="literal">null</span>) clearTimeout(loadTimer);</span><br><span class="line">  <span class="keyword">if</span> (!imgObject.complete) &#123;</span><br><span class="line">    loadTimer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      onImgLoaded();</span><br><span class="line">    &#125;, <span class="number">3</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    onPreloadComplete();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>注意这里我们为了演示是读取的图片文件内容，实际上除了图像文件，这里的“图像”还可以是其他形式，例如video元素，别的canvas等。</p></blockquote><h2 id="当图片完成载入以后重新绘制你要截取的那一部分">2. 当图片完成载入以后，重新绘制你要截取的那一部分</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onPreloadComplete</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//call the methods that will create a 64-bit version of thumbnail here.</span></span><br><span class="line">  <span class="keyword">var</span> newImg = getImagePortion(imgObject, <span class="number">120</span>, <span class="number">150</span>, <span class="number">150</span>, <span class="number">80</span>, <span class="number">2</span>);</span><br><span class="line">  <span class="comment">//place image in appropriate div</span></span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">"images"</span>).innerHTML = <span class="string">"&lt;img alt="</span><span class="string">" src="</span><span class="string">"+newImg+"</span><span class="string">" /&gt;"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这个<code>onPreloadComplete</code>函数会在图像载入完成以后调用。在这个函数中我们会调用实际完成图片截取的函数<code>getImagePortion</code></p><h2 id="图像截取">3. 图像截取</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">getImagePortion(imgObj, newWidth, newHeight, startX, startY, ratio)&#123;</span><br><span class="line"> <span class="comment">/* the parameters: - the image element - the new width - the new height - the x point we start taking pixels - the y point we start taking pixels - the ratio */</span></span><br><span class="line"> <span class="comment">//set up canvas for thumbnail</span></span><br><span class="line"> <span class="keyword">var</span> tnCanvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"> <span class="keyword">var</span> tnCanvasContext = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"> tnCanvas.width = newWidth; tnCanvas.height = newHeight;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">/* use the sourceCanvas to duplicate the entire image. This step was crucial for iOS4 and under devices. Follow the link at the end of this post to see what happens when you don’t do this */</span></span><br><span class="line"> <span class="keyword">var</span> bufferCanvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"> <span class="keyword">var</span> bufferContext = bufferCanvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"> bufferCanvas.width = imgObj.width;</span><br><span class="line"> bufferCanvas.height = imgObj.height;</span><br><span class="line"> bufferContext.drawImage(imgObj, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="comment">/* now we use the drawImage method to take the pixels from our bufferCanvas and draw them into our thumbnail canvas */</span></span><br><span class="line"> tnCanvasContext.drawImage(bufferCanvas, startX,startY,newWidth * ratio, newHeight * ratio,<span class="number">0</span>,<span class="number">0</span>,newWidth,newHeight);</span><br><span class="line"> <span class="keyword">return</span> tnCanvas.toDataURL();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>上面的函数时原作者给出的方法，他先将图像完整地画到一个canvas(<code>bufferCanvas</code>)上，再将这个canvas对应的目标区域画到<code>tnCanvas</code>上，根据注释来看，似乎是出于性能或者适配方面的考虑。不过就我在开发桌面端网页时，可以直接将<code>imgObj</code>画到<code>tnCanvas</code>上。</p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure&gt;
-&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/8cd3e0e5fe6f9051e2c67646cc1e7dbc.jpg&quot; alt=&quot;Cover&quot;&gt;&lt;figcaption&gt;Cover&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;这里我们讨论的图像截取部分是指从一个完整的大图中截取一小部分出来。当然，使用js实现。
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="js" scheme="http://www.codewoody.com/tags/js/"/>
     
   </entry>
   
