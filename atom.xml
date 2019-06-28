@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-06-28T03:00:55.912Z</updated>
+  <updated>2019-06-28T08:57:43.864Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C++中将结构体放置在std::vector容器内的操作风险</title>
+    <link href="http://www.codewoody.com/posts/35148/"/>
+    <id>http://www.codewoody.com/posts/35148/</id>
+    <published>2019-06-28T08:39:21.000Z</published>
+    <updated>2019-06-28T08:57:43.864Z</updated>
+    
+    <content type="html"><![CDATA[<p>有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个<code>std::vector</code>。例如</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct ExampleStruct&gt; data)</span></span>;</span><br></pre></td></tr></table></figure><p>由于C++是采用值传递的方式，每次对<code>std::vector</code>进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。</p><a id="more"></a><p>那么，折中的办法是在<code>std::vector</code>中存放指针。例如</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct ExampleStruct *&gt; data)</span></span>;</span><br></pre></td></tr></table></figure><p>不过，这就给指针的生命周期管理带来了很大的挑战，而且可能会引入非常多耦合性很强的代码。如果函数是state-less，即只对输入参数进行计算，而不更改其他的状态变量，问题倒不是很严重。反之，就会存在很多比较大的漏洞。</p><p>由于局部变量存在作用范围的限制</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">ExampleStruct</span> <span class="title">a</span>;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  data.push_back (&amp;a);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  f (data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>当离开调用<code>f</code>的函数的作用域时，<code>a</code>就会被释放，后续在其他地方访问<code>data</code>时，对应的指针指向的内存区域已经被释放掉了，对其进行访问会导致错误。使用<code>new</code>来讲结构体创建在堆内存上可以解决这个问题，但是这意味着后续这一数据已经利用完之后，要确保此处申请的内存被恰当地释放掉。随着业务逻辑的复杂化，要准确做到这一点会非常困难，强行实现也会带来很多强耦合的代码，扩大引入bug的风险。</p><p>我们剩下的选择，就是使用智能指针<code>std::shared_ptr</code>自动管理堆内存的声明周期。就是形式有点复杂了：</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::share_ptr&lt;struct ExampleStruct&gt;&gt; data)</span></span>;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个&lt;code&gt;std::vector&lt;/code&gt;。例如&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;(&lt;span class=&quot;built_in&quot;&gt;std&lt;/span&gt;::&lt;span class=&quot;built_in&quot;&gt;vector&lt;/span&gt;&amp;lt;struct ExampleStruct&amp;gt; data)&lt;/span&gt;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;由于C++是采用值传递的方式，每次对&lt;code&gt;std::vector&lt;/code&gt;进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="编程研究" scheme="http://www.codewoody.com/categories/%E7%BC%96%E7%A8%8B%E7%A0%94%E7%A9%B6/"/>
+    
+    
+      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
+    
+      <category term="ns3" scheme="http://www.codewoody.com/tags/ns3/"/>
+    
+      <category term="C++" scheme="http://www.codewoody.com/tags/C/"/>
+    
+  </entry>
   
   <entry>
     <title>如何自己搭建一个Time Machine服务器</title>
@@ -72,7 +100,7 @@
     <link href="http://www.codewoody.com/posts/21028/"/>
     <id>http://www.codewoody.com/posts/21028/</id>
     <published>2019-06-28T02:47:47.000Z</published>
-    <updated>2019-06-28T02:55:24.913Z</updated>
+    <updated>2019-06-28T08:40:45.737Z</updated>
     
     <content type="html"><![CDATA[<h2 id="problem">Problem</h2><p>这篇文章的缘由是我在尝试使用<a href="https://www.nsnam.org" target="_blank" rel="noopener">ns3</a>带的NetAnim程序时，显示了下面这个错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui</span><br><span class="line">  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim</span><br><span class="line">  Reason: image not found</span><br><span class="line">[1]    86663 abort      ./NetAnim</span><br></pre></td></tr></table></figure><a id="more"></a><p>这是一个动态链接的错误，所以没法通过编译的时候添加<code>LDFLAGS</code>来解决。不过错误里面的<code>@rpath</code>这个东西倒是挺有意思，显然并不是环境变量。我在网上查了很多，但是大多数是围绕xcode讨论的，不太适用于我面临的场景（命令行）。不过这些文章（如<a href="http://www.tanhao.me/pieces/1361.html/" target="_blank" rel="noopener">这篇</a>)能够大致阐明<code>@rpath</code>的用途。简而言之，<code>@rpath</code>是一个类似Shell中的<code>PATH</code>的变量，程序在执行时会从<code>@rpath</code>指定的路径中寻找动态链接库文件。那么剩下的问题就是我们如何操作这个变量了。</p><h2 id="solution">Solution</h2><p>通过<code>otool</code>我们可以查看一个程序的动态链接文件搜索地址，例如我要用的<code>NetAnim</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ otool -L ./NetAnim</span><br><span class="line">./NetAnim:</span><br><span class="line">@rpath/QtGui.framework/Versions/4/QtGui (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">@rpath/QtCore.framework/Versions/4/QtCore (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)</span><br><span class="line">/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)</span><br></pre></td></tr></table></figure><p>而我们可以通过<code>install_name_tool</code>来对这些地址进行操作。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ install_name_tool -h</span><br><span class="line">Usage: /Library/Developer/CommandLineTools/usr/bin/install_name_tool [-change old new] ... [-rpath old new] ... [-add_rpath new] ... [-delete_rpath old] ... [-id name] input</span><br></pre></td></tr></table></figure><p>对我而言，我需要将Qt4的动态链接库添加到<code>NetAdmin</code>的搜索路径中去，可以使用如下的命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install_name_tool -add_rpath /usr/<span class="built_in">local</span>/Cellar/qt@4/4.8.7_3/lib ./NetAnim</span><br></pre></td></tr></table></figure><p>大功告成。</p>]]></content>
     
@@ -84,14 +112,14 @@
     
     </summary>
     
-      <category term="debug" scheme="http://www.codewoody.com/categories/debug/"/>
+      <category term="Debug" scheme="http://www.codewoody.com/categories/Debug/"/>
     
     
       <category term="macOS" scheme="http://www.codewoody.com/tags/macOS/"/>
     
-      <category term="ns3" scheme="http://www.codewoody.com/tags/ns3/"/>
-    
       <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
+    
+      <category term="ns3" scheme="http://www.codewoody.com/tags/ns3/"/>
     
   </entry>
   
@@ -155,7 +183,7 @@
     <link href="http://www.codewoody.com/posts/40199/"/>
     <id>http://www.codewoody.com/posts/40199/</id>
     <published>2019-06-26T04:56:10.000Z</published>
-    <updated>2019-06-26T05:24:00.597Z</updated>
+    <updated>2019-06-28T08:40:42.899Z</updated>
     
     <content type="html"><![CDATA[<p>近日在django项目中采用了librosa来分析用户上传的音频，主要是对其做一定间隔的采样用于绘制波形图。在本地(MacOS)上工作正常，部署到Ubuntu服务器后，自己手动用python方式运行django的server时，工作都是正常的，然而当我用superviosr挂起之后就一直报NoBackendError的错误，反复检查了FFmpeg的安装，应该是没有问题的。网上搜了一下没有看到比较合适的解决办法，故不得不自己读源码来调试了。 <a id="more"></a></p><p>由于我的程序中只采用了<code>librosa.load</code>这个命令，通过源代码可以发现librosa实际上是用<code>audioread</code>这个库的<code>audioread.audio_open</code>来读取音频文件的。这个函数的源代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">audio_open</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="string">"""Open an audio file using a library that is available on this</span></span><br><span class="line"><span class="string">    system.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Standard-library WAV and AIFF readers.</span></span><br><span class="line">    <span class="keyword">from</span> . <span class="keyword">import</span> rawread</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> rawread.RawAudioFile(path)</span><br><span class="line">    <span class="keyword">except</span> DecodeError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Core Audio.</span></span><br><span class="line">    <span class="keyword">if</span> _ca_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> macca</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> macca.ExtAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># GStreamer.</span></span><br><span class="line">    <span class="keyword">if</span> _gst_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> gstdec</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> gstdec.GstAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># MAD.</span></span><br><span class="line">    <span class="keyword">if</span> _mad_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> maddec</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> maddec.MadAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># FFmpeg.</span></span><br><span class="line">    <span class="keyword">from</span> . <span class="keyword">import</span> ffdec</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> ffdec.FFmpegAudioFile(path)</span><br><span class="line">    <span class="keyword">except</span> DecodeError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># All backends failed!</span></span><br><span class="line">    <span class="keyword">raise</span> NoBackendError()</span><br></pre></td></tr></table></figure><p>可见之前我们遇到的NoBackendError就是这里的最后一行抛出的了，由于我安装的FFmpeg，进一步进入ffdec.py这个文件中。不难发现实际打开文件的是下面这个函数：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">popen_multiple</span><span class="params">(commands, command_args, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""Like `subprocess.Popen`, but can try multiple commands in case</span></span><br><span class="line"><span class="string">    some are not available.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    `commands` is an iterable of command names and `command_args` are</span></span><br><span class="line"><span class="string">    the rest of the arguments that, when appended to the command name,</span></span><br><span class="line"><span class="string">    make up the full first argument to `subprocess.Popen`. The</span></span><br><span class="line"><span class="string">    other positional and keyword arguments are passed through.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> i, command <span class="keyword">in</span> enumerate(commands):</span><br><span class="line">        cmd = [command] + command_args</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> subprocess.Popen(cmd, *args, **kwargs)</span><br><span class="line">        <span class="keyword">except</span> OSError:</span><br><span class="line">            <span class="keyword">if</span> i == len(commands) - <span class="number">1</span>:</span><br><span class="line">                <span class="comment"># No more commands to try.</span></span><br><span class="line">                <span class="keyword">raise</span></span><br></pre></td></tr></table></figure><p>这里的<code>commands</code>是直接传入的第33行的<code>COMMANDS</code>变量</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMANDS = (<span class="string">'ffmpeg'</span>, <span class="string">'avconv'</span>)</span><br></pre></td></tr></table></figure><p>我这里倒腾了好几下，最终发现实际是错误的原因是没有找到ffmpeg这个命令。我们在这里将ffmpeg替换成ffmpeg的绝对路径。你可以通过下面这行命令找到。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> ffmpeg</span><br></pre></td></tr></table></figure><p>最终我改成了</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMANDS = (<span class="string">'/usr/bin/ffmpeg'</span>, <span class="string">'avconv'</span>)</span><br></pre></td></tr></table></figure><p>Boom！一切就工作正常了。这么想起来应该是安装ffmpeg的时候的环境变量有问题，导致在command line方式下调用ffmpeg命令出错吧。</p>]]></content>
     
@@ -165,10 +193,10 @@
     
     </summary>
     
-      <category term="debug" scheme="http://www.codewoody.com/categories/debug/"/>
+      <category term="Debug" scheme="http://www.codewoody.com/categories/Debug/"/>
     
     
-      <category term="debug" scheme="http://www.codewoody.com/tags/debug/"/>
+      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
     
       <category term="python" scheme="http://www.codewoody.com/tags/python/"/>
     
@@ -253,7 +281,7 @@
     <link href="http://www.codewoody.com/posts/30912/"/>
     <id>http://www.codewoody.com/posts/30912/</id>
     <published>2019-05-16T05:56:36.000Z</published>
-    <updated>2019-05-16T06:19:13.484Z</updated>
+    <updated>2019-06-28T08:40:38.956Z</updated>
     
     <content type="html"><![CDATA[<p>我使用的是macOS系统。当在虚拟环境中尝试使用matplotlib时，会出现如下的报错：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ImportError: Python is not installed as a framework. The Mac OS X backend will not be able to function correctly if Python is not installed as a framework. See the Python documentation for more information on installing Python as a framework on Mac OS X. Please either reinstall Python as a framework, or try one of the other backends. If you are using (Ana)Conda please install python.app and replace the use of &apos;python&apos; with &apos;pythonw&apos;. See &apos;Working with Matplotlib on OSX&apos; in the Matplotlib FAQ for more informatio</span><br></pre></td></tr></table></figure><a id="more"></a><p>根据错误信息，要么我们使用Python as Framework，要么我们更换使用的后端（backend）。Matplot专门就matplotlib的后端问题有一个网页：<a href="https://matplotlib.org/faq/virtualenv_faq.html" target="_blank" rel="noopener">Working with Matplotlib in Virtual environments</a>。文章中提到，<code>Tk</code>这个框架（即<code>TkAgg</code>后端）一般来说总是可用的，不需要额外的外部依赖。（不过在特定的Linux发行版本中可能需要安装<code>python-tk</code>）。要使用<code>Tk</code>需要做如下配置过程：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">"TkAgg"</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pylab <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure><p>每次这么配置比较麻烦，我们可以通过<code>~/.matplotlib/matplitlibrc</code>文件来固化配置（如果这个文件不存在可以手动创建），文件中添加如下内容：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">backend: TkAgg</span><br></pre></td></tr></table></figure><p>不过我在使用过程中发现使用<code>TkAgg</code>时会出现系统级的错误，抛出了<code>Terminating app due to uncaught exception</code>的错误。因此我尝试替换成其他后端。我主要选择包括：</p><figure><img src="https://imgs.codewoody.com/uploads/big/bdd0f72aede5a20bf5378bc373287e55.png" alt="Matplotlib可用后端类型"><figcaption>Matplotlib可用后端类型</figcaption></figure><p>而又因为<code>PySide</code>只支持比较早的python版本，因此我选择了Qt5作为后端。在这之前，我们需要安装下面的依赖</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install qt</span><br><span class="line">pip install PySide2</span><br></pre></td></tr></table></figure><p>安装完成后配置过程和<code>TkAgg</code>的类似，后端的名字为<code>QT5Agg</code>。</p>]]></content>
     
@@ -269,7 +297,7 @@
     
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
-      <category term="debug" scheme="http://www.codewoody.com/tags/debug/"/>
+      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
     
       <category term="python" scheme="http://www.codewoody.com/tags/python/"/>
     
@@ -345,9 +373,9 @@
       <category term="数学" scheme="http://www.codewoody.com/categories/%E6%95%B0%E5%AD%A6/"/>
     
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="processing" scheme="http://www.codewoody.com/tags/processing/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="数学" scheme="http://www.codewoody.com/tags/%E6%95%B0%E5%AD%A6/"/>
     
@@ -358,7 +386,7 @@
     <link href="http://www.codewoody.com/posts/25188/"/>
     <id>http://www.codewoody.com/posts/25188/</id>
     <published>2019-05-08T06:38:09.000Z</published>
-    <updated>2019-05-15T05:08:48.691Z</updated>
+    <updated>2019-06-28T08:40:36.057Z</updated>
     
     <content type="html"><![CDATA[<p>这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用<code>-v</code>将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。</p><a id="more"></a><h2 id="why">Why</h2><p>当我们绑定宿主目录到镜像时，如果该目录不存在，Docker也会自动创建该目录。这种方式创建出来的目录的拥有者是root用户。如果该目录已经存在，那么其拥有者就取决于宿主配置的情况了。</p><p>由于Docker内部的用户空间和宿主的用户空间是独立的，如果镜像内运行进程的用户和宿主目录的拥有者不符合，就会出现权限问题。</p><h2 id="how-to-solve-it">How to solve it</h2><p>由于镜像内和宿主的用户名空间是不同的，所以通过用户名的方式来变更宿主目录的所有权会失效。然而，事实上用户系统是通过uid来标识不同的用户的，我们只需要将宿主的路径的拥护者改为镜像内用户相通的uid即可。镜像内用户的uid可以通过如下方式查看，例如：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jovyan@8fed6b266a3c:~$ id</span><br><span class="line">uid=1000(jovyan) gid=100(users) groups=100(users)</span><br></pre></td></tr></table></figure><p>继而再修改宿主机上对应目录的拥有者：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown -R 1000 /path/to/volume</span><br></pre></td></tr></table></figure><h2 id="further-research">Further Research</h2><p>上面的方法可以解决Volume访问权限的问题，不过会产生潜在的漏洞。从镜像内获得的uid在宿主上可能表示的是不同的用户，在宿主机上修改目录的拥有者会导致数据被同一服务器上的其他用户访问，带来安全性上的问题。</p><p>另一方面，如果有多个镜像需要共享一个Volume，而他们内部的运行用户的uid不同的话，就需要在宿主上进行更加复杂的用户以及组的配置。</p><p>更优雅的执行方法有下面两种：</p><h3 id="use-named-volume">Use Named Volume</h3><p>Named Volumes</p><h3 id="由容器自行配置权限问题">由容器自行配置权限问题</h3><h2 id="reference">Reference</h2><ol type="1"><li><a href="https://yq.aliyun.com/articles/53990" target="_blank" rel="noopener">谈谈 Docker Volume 之权限管理（一）</a></li><li><a href="https://stackoverflow.com/questions/23544282/what-is-the-best-way-to-manage-permissions-for-docker-shared-volumes?spm=a2c4e.11153940.blogcont53990.8.3421149142aS92" target="_blank" rel="noopener">What is the (best) way to manage permissions for Docker shared volumes?</a></li><li><a href="https://medium.com/@ramangupta/why-docker-data-containers-are-good-589b3c6c749e" target="_blank" rel="noopener">Why Docker Data Containers (Volumes!) are Good</a></li><li><a href="https://docs.docker.com/storage/volumes/" target="_blank" rel="noopener">Use volumes</a></li><li><a href="https://success.docker.com/article/different-types-of-volumes" target="_blank" rel="noopener">Different Types of Volumes</a></li></ol>]]></content>
     
@@ -371,7 +399,7 @@
       <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
     
     
-      <category term="debug" scheme="http://www.codewoody.com/tags/debug/"/>
+      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
     
       <category term="docker" scheme="http://www.codewoody.com/tags/docker/"/>
     
@@ -499,34 +527,6 @@
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
     
       <category term="Shadowsocks" scheme="http://www.codewoody.com/tags/Shadowsocks/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>政史:珍珠港事件前日方决策过程梳理</title>
-    <link href="http://www.codewoody.com/posts/10462/"/>
-    <id>http://www.codewoody.com/posts/10462/</id>
-    <published>2019-04-08T14:05:57.000Z</published>
-    <updated>2019-04-10T13:36:37.978Z</updated>
-    
-    <content type="html"><![CDATA[<p>在知乎上看到的比较好的回答，作为备份放在这里：</p><ol type="1"><li>原文链接：<a href="https://www.zhihu.com/question/306368870/answer/639051842" target="_blank" rel="noopener">https://www.zhihu.com/question/306368870/answer/639051842</a></li><li>archive.is上的备份网页：<a href="http://archive.is/4dOL3" target="_blank" rel="noopener">http://archive.is/4dOL3</a></li></ol><a id="more"></a><figure><img src="https://imgs.codewoody.com/uploads/big/b38e3bdd40d9c4234935f6853ff6d154.jpg" alt="珍珠港俯视图（1941年10月30日）"><figcaption>珍珠港俯视图（1941年10月30日）</figcaption></figure><p>以下是原文内容：</p><p>因为再不突袭，日本人这大东亚战争就算是白打了。</p><p>咱们这里需要补充一个小知识，在20世纪30年代末，日本的能源结构是这样的：80%的石油来自美国，10%的石油来自东印度群岛，只有7%左右的石油可以自给。那么问题来了，日本从918开始折腾到40年，找到能替代美国的石油生产地了么？</p><p>没有。不仅石油高度依赖美国，铁和各种军需物资都严重依赖美国，甚至可以这么说，要是没有美国人提供的这些物资，日本这侵华战争就根本打不起来。</p><blockquote><p>1937年美国对日出口总值为2.89亿美元,其中石油、精炼油、废钢铁、原棉这四项战略物资就达1,42亿美元,约占二分之一。以石油一项而论,日本所需石油来自美国的份额,1937年占80%,1939年占85%。——齐世荣.绥靖政策研究.,北京：首都师范大学出版社,1998：413 据统计，1937－1938年，日本从美国进口的军需品占其军需品总进口额的55%。1937年，美对日废钢铁的出口量是1931年的40倍之多。——杨玉圣.中国人的美国观.上海: 复旦大学出版社，1997：152 （1937、1938年日本）从美国输入铁合金为77.53%和82.71%,铜的比例高达95.18%和90.89%,煤油及其产品为6.271%和65.57%,汽车及零件为9.241%和64%,飞机及零件为70.19%和7.692%,金属工作母机为69.53%和67.09%。——沈庆林.中国抗战时期的国际援助.上海人民出版社,2000：53</p></blockquote><p>这就是二战中最讽刺的地方，美国人是日本人在二战前期最主要石油来源国，而且没有之一。日本人觉得不能任由老美这么掐着自己的脖子，于是1934年出台了《石油工业法》表示要加强本国石油产业建设，效果……一般吧；然后37年又搞了个《合成油法案》，表示要开动大日本帝国先进之科技手段以煤改油，效果……更一般。</p><p>考虑到1937年日本的财政收入才47亿日元，而以当时的汇率来看大概3日元可以折合1美元，大家可以感受一下每年日美之间几亿美元的进口额意味着什么。而更倒霉的是虽然侵华战争开始以后日军进展极其顺利，然而中国是个贫穷的农业国，重工业基础极其薄弱，而工业建设又是个耗时巨大、烧钱极多的活儿……所以日本人十分郁闷地发现自己这仗是越打越大，然而钱却都进了美国人的兜。</p><p>这就是为什么37年日本人在扬子江上炸了美国船，罗斯福把这事按下去的原因之一——顺便一提，日本人为了平事掏出来了2214007.36刀，1937年的两百万美元啊……日本人在占领区甚至搞了一次“抵制美货”的闹剧，然而美国人对此并不在意：有本事你抵制我的石油啊？</p><p>美国国内群众此时对日本人的反感情绪已经是十分强烈了，甚至有几百名学生代表参与了焚烧日本丝绸的行动。等到了1938年美国政府觉得实在不能再这么容忍日本人了！必须上点手段了！于是政府向上百家工厂写信：<strong>建议不要跟日本人做生意</strong>。</p><p>这就是赫赫有名的“道义禁运”</p><blockquote><p>6月11日,赫尔在记者招待上公开谴贵对和平居民的空袭轰炸,随后他写给美国148家注册出口飞机和飞机部件的厂家,表示:政府强烈反对把飞机和航空设备出售给世界上任何对和平居民进行轰炸的国家——赫尔回忆录·第一卷：569</p></blockquote><p>道义禁运的效果极其明显，立竿见影，日本人37年从美国进口的飞机及部件达到248.4万美元，38年为1745.4万美元，增长了7倍。 这么拖拖拖一直拖到39年重庆轰炸，美国人民一看艾玛这太惨了，咱们真的不能再卖给日本人石油了，罗斯福表示那不成啊，你不卖给他石油了他狗急跳墙去打英荷东印度群岛怎么办？为了避免战争扩大咱们还是继续做生意吧……</p><p>对日本人来讲，事情非常尴尬——你要是想继续从美国人手里拿到物资，就必须按照美国人的意思，控制战争规模；而你想控制战争规模又控制不下来，TG在敌后遍地开花，老蒋死活就不投降，你占领的地方地大物博可就是没有好用的石油，重工业基础又弱到不行。所以日本人思前想后，最后还是向东南亚伸出了魔爪。</p><p>1939年2月，日本占领海南岛；3月，日本人又搞定了距马尼拉700英里的南沙群岛；6月，派兵封锁天津英租界，7月强迫英国人跟自己一起建设“东亚新秩序”，正在欧洲被希特勒搞得焦头烂额的英国人几乎没怎么犹豫，就在7月24号跟日本人签订了“有田——克莱琪协定”，承认了日本在中国有“特殊需要”。</p><p>这下美国人终于坐不住了，7月26号美国政府正式通知日本没，咱们那个美日商约即将在六个月后废止——半年时间，你自己想想清楚，到底还要不要铁和石油了。日本人终于发现这自己扛不住啊！赶紧还是跟美国人谈谈吧，于是9月25日，海军稳健派、熟悉米英鬼畜内部动向之大将野村吉三郎任专职外相，开始跟美国进行谈判，美国人说这事好办，你们开放长江下游、尊重我们在华权利，有钱大伙一起赚嘛！只要你们肯把中国的利益让出来一点，咱们这个商约还是可以再签的。</p><p>未果。</p><p>这期间的态势十分有趣，日本人在诺门坎吃了大败仗，彻底打消了北进的念头；敌后大规模扫荡、扫荡、再扫荡，八路就是扫不干净；正面战场进入相持状态，长沙会战、随枣会战都没能达成预定的战略目标，日本国内的经济开始遭不住了。</p><p>美国人此时反而比较克制，由于罗斯福担心“再进一步就会激怒日本”，所以1940年1月日美商约失效之后两国的贸易竟然还在诡异的继续着，然而谁也不知道这样的日子会持续多久。</p><p>对日本来说，他们必须做出选择了。</p><p>1940年3月，日本拟定了军需物资自给自足计划，将更多的精力投入到了东南亚</p><blockquote><p>日本政府深切关怀足以改变荷属东印度群岛现状的任何事态——1940年4月15日,外相有田八郎讲话,太平洋战争史·第二卷：21</p></blockquote><p>日本人在东南亚的脚步越来越快，而美国人则在抓紧时间，卖出自己的最后一份石油。所以一方面是日趋紧张的局势，而另一方面则是不断攀升的石油贸易，美孚石油在7月18日向国务院报告，说日本人提出要买下他们的全部产量！美国政府内部已经吵到不可开交，罗斯福接到的报告说假如我们再不限制日本人购买航空汽油，我们自己军队就可能出现6到9个月的汽油供应不足！</p><p>在巨大的压力面前罗斯福终于决定对日本进行禁运，经过漫长的扯皮与大撕逼之后，政府官员们最终达成了一致，在7月26日宣布对航空发动机燃料及润滑油和第一号高熔度的废钢铁实行出口管制。先总统 蒋公激动地浑身颤抖，跟美国大使表示艾玛你们太够意思了！</p><blockquote><p>总统和国务卿的伟大而辉煌的举动，减轻了中国自卷入冲突以来面临的极严峻的危机。——先总统 蒋公</p></blockquote><p>在这个后来被无数人称颂的禁运限制里，国务院表示辛烷值87以上的航空汽油都必须禁运！ &gt; 日本人：解释解释，什么叫“辛烷值87以上的航空汽油都必须禁运”？ &gt; 国务院：难道你不懂什么叫禁运？ &gt; 日本人：我要你解释解释，什么叫他妈的“辛烷值87以上的航空汽油都必须禁运”？ &gt; 石油公司：87号以上禁运的意思，就是他妈的87号以下不！禁！运！，还有，往86号航空汽油里加铅可以他妈的提高辛烷值！你懂了没有！？ &gt; 日本人：哦大哥，原来这就是他妈的禁运啊！小弟明白了！</p><p>于是1940年7月到12月，日本从美国进口的86号航空汽油同比增加了550%。</p><p>此时日本的经济已经开始在崩溃的边缘上晃悠了，国家总动员法的条款几乎已经全都实施了，结果40年日本西部和朝鲜还遭遇了旱灾，粮食收成不好，好多人连吃大米都成了问题。关键是此时日本的外汇储备也接近枯竭，再这么拖下去用不了多久你想买都买不成了！最后高层达成一致，再不对东南亚下手咱们就得先完蛋了。于是1941年7月2日，御前会议最终制定了《适应形势变化的帝国国策纲要》，表示就算是跟米英鬼畜开战，咱们也得南进！7月24日，日本出兵印度支那南部。</p><p>然后罗斯福炸了：老子不禁运你石油就是为了不让你打那边，你自己心里没点数么？于是26号冻结了日本在美的全部资产；英国人表示弟儿你说的对，我们也禁运，然后切断了日本在婆罗洲的石油供给。27号荷兰人跟进，冻结日本资产。这下子事情再也没有回转的余地了。</p><p>日本人的精神一下子紧张了起来（……为什么才紧张！？），军方此前一直认为我把印度支那南部这么一占，你们这些米英鬼畜还不得乖乖坐下来跟我和谈么？咱们这和平近在眼前啊！</p><blockquote><p>……以此确保东亚的战略要地。由此或可使英美荷死心不再压迫日本,并给重庆政府以打击,以找到解决日中战争的突破口,进而或许有助于打开日荷谈判。所以只有尽快抓住时机实行“战略上先发制人之措施”,才能避免同英美作战,此即不战而胜之上策——信天清三郎,日本外交史·下册：668</p></blockquote><p>1941年11月，两艘日本油轮自洛杉矶附近海域空载而归。大怒的日本人……切断了英美使馆的取暖油供应。（……我是一直没搞懂日本人的脑回路）而在此之前，8月份美国人已经提出了自己的条件：日本从中国撤军、各国在中国机会均等以及日本改变三国同盟，这个条件被日本人毫不犹豫地拒绝了。9月6日，日本御前会议批准了《帝国国策施行要点》，指出10月上旬外交依然没有进展，则准备开战。</p><p>日本人最开始的计划是咱们先赶紧在东南亚占地盘，然后建立个防御圈——考虑到东南亚还有个美属菲律宾，那美国人妥妥是要来跟咱们打的，到时候咱们舰队决战，拼个你死我活！</p><p>然后联合舰队的指挥官山本五十六对此表示了不同意见——美国人啥工业能力？你什么工业能力？心里没点数么？既然已经料到要打，那为什么不趁着美国人还没有完全动员的时候直接先下手为强？要知道，海军要想重建，那难度可比陆军难多了。咱们一鼓作气消灭美国的太平洋海上力量，然后趁着美国人重建海军无暇的关口逼他就范，承认咱们大日本帝国在亚洲的霸权那是十分合理的！</p><p>11月20日，日本向美国提出最后一个谈判方案，日本人表示这绝对是自己最后的底线了</p><blockquote><p>1.日本政府和美国政府都保证,除了目前己驻有日军的法属印度支那以外,不向东南亚和南太平洋地区的任何地方进行任何武装进军。 2.一俟日本和中国之间恢复和平,或在太平洋地区建立了公正的和平,日本政府保证撤走目前驻扎在法属印度支那的军队。同时,日本政府宣布在本协议(以后将包含在最后协议中)订立时,准备把现驻法属印支南部的军队移驻该地区北部. 3.日美两国政府将进行合作,以保证两国在荷属东印度群岛取得所需要的货物和商品。 4.日本政府和美国相互保证把通商关系恢复到日方资金被冻结前的状态.美国政府将按日本所需的数量供应石油。 5.美国政府保证不采取任何措施和行动,不利于日本和中国之间为谋求全面和平所作的努力。——United States Department of State.Papers relating to the foreign relations of the United States, Japan, 1931–1941, Volume II</p></blockquote><p>美国人对此表示难以置信，并回复了一份由国务卿起草的备忘录，基本上重申了自己在8月份提出的要求。美国人所不知道的，是在自己做出这个回复以前，一支规模空前的舰队已经在单冠湾集结完毕了，那上面的飞行员此前曾反复地练习过如何低空投放鱼雷和炸弹。罗斯福此时还在犹豫要不要向日本示好，以挽回两国之间的关系，11月22日美国国务院远东司甚至接到命令，起草一份新的草案，有限度地恢复对日本的石油、食品及药物供应。然而由于中国及英国的强烈反对，这份草案最终也没能实施。</p><p>1941年12月1日，日本御前会议做出了决定：与美国开战。</p><p>1941年12月7日，珍珠港事件爆发，美国太平洋舰队遭到重创。</p><p>1942年，日本军队逼近东印度群岛的巴厘巴板炼油厂，1943年第一季度，日本的石油危机大大缓和。</p><blockquote><p>石油问题已经基本得到解决——东条英机·1943</p></blockquote><p>以上。</p><hr><p>后记：这篇文章的作者设置了禁止转载，不过我这博客也没什么人看，我放在这里也是为了备份，也许将来某天知乎挂了或者作者决定退出知乎了删除了这篇问答？另外，作者的这篇文章里面还是有一些戏谑口吻的地方，我打算围绕着作者写的主干，做一做考据，让这篇文章能够成为之后“键政”的有力资料。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在知乎上看到的比较好的回答，作为备份放在这里：&lt;/p&gt;
-&lt;ol type=&quot;1&quot;&gt;
-&lt;li&gt;原文链接：&lt;a href=&quot;https://www.zhihu.com/question/306368870/answer/639051842&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;https://www.zhihu.com/question/306368870/answer/639051842&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;archive.is上的备份网页：&lt;a href=&quot;http://archive.is/4dOL3&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://archive.is/4dOL3&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
-    
-      <category term="政治" scheme="http://www.codewoody.com/tags/%E6%94%BF%E6%B2%BB/"/>
     
   </entry>
   
