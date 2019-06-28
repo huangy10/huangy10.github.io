@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/update/index.html</loc>
+    
+    <lastmod>2019-06-28T07:31:36.152Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/posts/14680/</loc>
+    
+    <lastmod>2019-06-28T03:00:55.912Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/posts/20487/</loc>
     
     <lastmod>2019-06-28T02:55:34.098Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://www.codewoody.com/posts/21028/</loc>
     
     <lastmod>2019-06-28T02:55:24.913Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/posts/14680/</loc>
-    
-    <lastmod>2019-06-28T02:55:14.804Z</lastmod>
     
   </url>
   
@@ -159,13 +166,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/markov/index.html</loc>
     
     <lastmod>2019-05-21T08:46:38.195Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/update/index.html</loc>
-    
-    <lastmod>2019-05-20T07:55:52.508Z</lastmod>
     
   </url>
   

@@ -14,7 +14,10 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+  
+
+
+<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +28,11 @@
 
 
 
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
 
 
 
@@ -50,9 +58,6 @@
   
 
   
-    
-    
-  
 
   
 
@@ -63,12 +68,20 @@
   
 
   
-    
-    
-    <link rel="stylesheet" href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
 
 
+
+
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'qpn4asg',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
 
@@ -121,17 +134,19 @@
 
 
 
-  <meta name="description" content="2019.05.20 困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过“Remove backspace control character”这个插件解决。在VS Code的设置中将editor.formatOnSave设置为true来自动处理文件。 2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search">
+  <meta name="description" content="2019.06.28  修改了内容宽度  具体方法为修改文件themes/next/source/css/_variables/Pisces.styl 1234// $content-desktop-large        = 1160px$content-desktop-large        = 960px// $content-desktop-largest      = 73%$con">
 <meta property="og:type" content="website">
 <meta property="og:title" content="博客更新">
 <meta property="og:url" content="http://www.codewoody.com/update/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="2019.05.20 困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过“Remove backspace control character”这个插件解决。在VS Code的设置中将editor.formatOnSave设置为true来自动处理文件。 2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-20T07:55:52.508Z">
+<meta property="og:description" content="2019.06.28  修改了内容宽度  具体方法为修改文件themes/next/source/css/_variables/Pisces.styl 1234// $content-desktop-large        = 1160px$content-desktop-large        = 960px// $content-desktop-largest      = 73%$con">
+<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:image" content="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png">
+<meta property="og:updated_time" content="2019-06-28T07:31:36.152Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客更新">
-<meta name="twitter:description" content="2019.05.20 困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过“Remove backspace control character”这个插件解决。在VS Code的设置中将editor.formatOnSave设置为true来自动处理文件。 2019.05.15  修复了搜索和Feed的问题：文章中存在不可见字符，导致atom.xml和search">
+<meta name="twitter:description" content="2019.06.28  修改了内容宽度  具体方法为修改文件themes/next/source/css/_variables/Pisces.styl 1234// $content-desktop-large        = 1160px$content-desktop-large        = 960px// $content-desktop-largest      = 73%$con">
+<meta name="twitter:image" content="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png">
 
 
 
@@ -203,7 +218,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
 
   
   
@@ -299,6 +314,23 @@
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates menu-item-active">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
 
       
       
@@ -375,6 +407,9 @@
       
       
     
+      
+      
+    
     
 
   
@@ -408,21 +443,35 @@
       
       
       
-      <div class="post-body">
+      <div class="post-body han-init-context">
         
         
-          <h2 id="section">2019.05.20</h2>
+          <h2 id="section">2019.06.28</h2>
+<ol type="1">
+<li>修改了内容宽度</li>
+</ol>
+<p>具体方法为修改文件<code>themes/next/source/css/_variables/Pisces.styl</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// $content-desktop-large        = 1160px</span></span><br><span class="line">$content-desktop-large        = <span class="number">960</span>px</span><br><span class="line"><span class="comment">// $content-desktop-largest      = 73%</span></span><br><span class="line">$content-desktop-largest        = <span class="number">960</span>px</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>启用了Han Support</li>
+<li>在menu中添加update项目</li>
+<li>字体修改为思源宋体：<a href="https://imjad.cn/archives/lab/how-to-introduce-source-han-fonts-into-web-pages-through-typekit" target="_blank" rel="noopener">关于如何在网页中引入思源字体：漫谈Typekit</a></li>
+</ol>
+<figure>
+<img src="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png" alt="思源宋体"><figcaption>思源宋体</figcaption>
+</figure>
+<h2 id="section-1">2019.05.20</h2>
 <p>困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过<a href="https://marketplace.visualstudio.com/items?itemName=satokaz.vscode-bs-ctrlchar-remover" target="_blank" rel="noopener">“Remove backspace control character”</a>这个插件解决。在VS Code的设置中将<code>editor.formatOnSave</code>设置为true来自动处理文件。</p>
-<h2 id="section-1">2019.05.15</h2>
+<h2 id="section-2">2019.05.15</h2>
 <ol type="1">
 <li>修复了搜索和Feed的问题：文章中存在不可见字符，导致<code>atom.xml</code>和<code>search.xml</code>的格式出错</li>
 <li>替换了字体服务器的CDN，从<code>//fonts.googleapis.com</code>修改为<code>//fonts.css.network</code></li>
 </ol>
-<h2 id="section-2">20190507</h2>
-<h3 id="section-3">2</h3>
+<h2 id="section-3">20190507</h2>
+<h3 id="section-4">2</h3>
 <p>修改了Reference的样式。方法是在<code>themes/next/source/css/_custom/custom.styl</code>文件中添加如下内容：</p>
 <figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div<span class="selector-id">#refs</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div<span class="selector-id">#refs</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="section-4">1</h3>
+<h3 id="section-5">1</h3>
 <p>通过上标提供短的参考信息的方法：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sup</span> <span class="attr">title</span>=<span class="string">"Hover Text"</span>&gt;</span>?<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -725,7 +774,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.05.20</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">3.</span> <span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-3"><span class="nav-number">3.1.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section-4"><span class="nav-number">3.2.</span> <span class="nav-text">1</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.06.28</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">2019.05.20</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">3.</span> <span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-3"><span class="nav-number">4.</span> <span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-4"><span class="nav-number">4.1.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section-5"><span class="nav-number">4.2.</span> <span class="nav-text">1</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1318,7 +1367,15 @@
       }, 300);
     }).append(e);
   })
-</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</script>
+
+
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1336,11 +1393,5 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-  
-
-  
-
 </body>
 </html>

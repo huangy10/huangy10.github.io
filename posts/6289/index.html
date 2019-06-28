@@ -14,7 +14,10 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+  
+
+
+<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +28,11 @@
 
 
 
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
 
 
 
@@ -50,9 +58,6 @@
   
 
   
-    
-    
-  
 
   
 
@@ -63,12 +68,20 @@
   
 
   
-    
-    
-    <link rel="stylesheet" href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
 
 
+
+
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'qpn4asg',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
 
@@ -128,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/6289/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-cmn-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7a59f2881bd41ba1fabc7e1cbce460a4.png">
 <meta property="og:updated_time" content="2019-05-15T05:24:06.458Z">
 <meta name="twitter:card" content="summary">
@@ -206,7 +219,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
 
   
   
@@ -300,6 +313,23 @@
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
 
   </li>
 
@@ -513,7 +543,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body han-init-context" itemprop="articleBody">
 
       
       
@@ -1475,7 +1505,15 @@
       }, 300);
     }).append(e);
   })
-</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</script>
+
+
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1493,11 +1531,5 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-  
-
-  
-
 </body>
 </html>

@@ -14,7 +14,10 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+  
+
+
+<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +28,11 @@
 
 
 
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
 
 
 
@@ -50,9 +58,6 @@
   
 
   
-    
-    
-  
 
   
 
@@ -63,12 +68,20 @@
   
 
   
-    
-    
-    <link rel="stylesheet" href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
 
 
+
+
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'qpn4asg',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
 
@@ -128,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/60435/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="能够获得暴利的职业，都有一个共同特点：可扩展性（scaling），一次劳动可以服务成千上万的人。 软件、电影、游戏行业都具有可扩展性，作品的生产成本是固定的，但可以被消费无数次，所以有巨大的获利空间，创造出许许多多的富豪。另一方面，理发师、厨师、出租车司机一次劳动，只能服务少数几个人，就不具有可扩展性，很难获得暴利，生存得很辛苦。 最近，我读到美国一个风险投资家的文章。他说了一句发人深思的话： &amp;">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-cmn-Hans">
 <meta property="og:updated_time" content="2019-06-28T01:46:57.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读书破万卷,下笔如有神">
@@ -204,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
 
   
   
@@ -298,6 +311,23 @@
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
 
   </li>
 
@@ -511,7 +541,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body han-init-context" itemprop="articleBody">
 
       
       
@@ -1443,7 +1473,15 @@
       }, 300);
     }).append(e);
   })
-</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</script>
+
+
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1461,11 +1499,5 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-  
-
-  
-
 </body>
 </html>

@@ -153,7 +153,7 @@ template {
 }
 body {
   position: relative;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "source-han-serif-sc", "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
   font-size: 14px;
   line-height: 2;
   color: #555;
@@ -179,7 +179,7 @@ h6 {
   padding: 0;
   font-weight: bold;
   line-height: 1.5;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "source-han-serif-sc", "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
 }
 h1 {
   font-size: 22px;
@@ -452,12 +452,12 @@ body {
 }
 @media (min-width: 1200px) {
   .container .header-inner {
-    width: 1160px;
+    width: 960px;
   }
 }
 @media (min-width: 1600px) {
   .container .header-inner {
-    width: 73%;
+    width: 960px;
   }
 }
 .main-inner {
@@ -466,12 +466,12 @@ body {
 }
 @media (min-width: 1200px) {
   .container .main-inner {
-    width: 1160px;
+    width: 960px;
   }
 }
 @media (min-width: 1600px) {
   .container .main-inner {
-    width: 73%;
+    width: 960px;
   }
 }
 .footer {
@@ -484,12 +484,12 @@ body {
 }
 @media (min-width: 1200px) {
   .container .footer-inner {
-    width: 1160px;
+    width: 960px;
   }
 }
 @media (min-width: 1600px) {
   .container .footer-inner {
-    width: 73%;
+    width: 960px;
   }
 }
 pre,
@@ -504,7 +504,7 @@ pre,
 }
 pre,
 code {
-  font-family: consolas, Menlo, "PingFang SC", "Microsoft YaHei", monospace;
+  font-family: consolas, Menlo, "Biaodian Pro Sans GB", "source-han-serif-sc", "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", monospace;
 }
 code {
   overflow-wrap: break-word;
@@ -1126,7 +1126,7 @@ pre .javascript .function {
   line-height: 36px;
   font-size: 20px;
   font-weight: normal;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "source-han-serif-sc", "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
 }
 .site-subtitle {
   margin-top: 10px;
@@ -1286,7 +1286,7 @@ pre .javascript .function {
 .post-body {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "source-han-serif-sc", "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
 }
 .post-body span.exturl .fa {
   font-size: 14px;
@@ -1551,7 +1551,7 @@ pre .javascript .function {
 .posts-expand .post-meta {
   margin: 3px 0 60px 0;
   color: #999;
-  font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "source-han-serif-sc", "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
   font-size: 12px;
   text-align: center;
 }
@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #fc383b;
+  background: #d0ff65;
 }
 .feed-link,
 .chat {
@@ -2086,6 +2086,9 @@ pre .javascript .function {
   50%, 70% {
     transform: scale(1.1);
   }
+}
+i.fa {
+  font-family: FontAwesome !important;
 }
 .local-search-pop-overlay {
   position: fixed;
@@ -2469,12 +2472,12 @@ ul.breadcrumb li+li:last-child {
 }
 @media (min-width: 1200px) {
   .header {
-    width: 1160px;
+    width: 960px;
   }
 }
 @media (min-width: 1600px) {
   .header {
-    width: 73%;
+    width: 960px;
   }
 }
 @media (max-width: 991px) {
@@ -2895,11 +2898,4 @@ figcaption {
 }
 body {
   line-height: 1.7;
-}
-.post-body {
-  font-family: Georgia, Times New Roman, Times, Songti SC, serif;
-  font-size: 16px;
-}
-.post-title {
-  font-family: Georgia, Times New Roman, Times, Songti SC, serif;
 }

@@ -14,7 +14,10 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+  
+
+
+<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +28,11 @@
 
 
 
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
 
 
 
@@ -50,9 +58,6 @@
   
 
   
-    
-    
-  
 
   
 
@@ -63,12 +68,20 @@
   
 
   
-    
-    
-    <link rel="stylesheet" href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
 
 
+
+
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'qpn4asg',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
 
@@ -128,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/28461/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="Cocoa Touch Framework  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过Cocoa Touch Framework实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-cmn-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png">
@@ -208,7 +221,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
 
   
   
@@ -302,6 +315,23 @@
     
 
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
 
   </li>
 
@@ -503,7 +533,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body han-init-context" itemprop="articleBody">
 
       
       
@@ -1452,7 +1482,15 @@
       }, 300);
     }).append(e);
   })
-</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</script>
+
+
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1470,11 +1508,5 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-  
-
-  
-
 </body>
 </html>

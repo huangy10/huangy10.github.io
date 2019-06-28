@@ -14,7 +14,10 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+  
+
+
+<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,6 +28,11 @@
 
 
 
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
 
 
 
@@ -50,9 +58,6 @@
   
 
   
-    
-    
-  
 
   
 
@@ -63,12 +68,20 @@
   
 
   
-    
-    
-    <link rel="stylesheet" href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
 
 
+
+
+<script>
+  (function(d) {
+    var config = {
+      kitId: 'qpn4asg',
+      scriptTimeout: 3000,
+      async: true
+    },
+    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+  })(document);
+</script>
 
 
 
@@ -127,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/dynamic-beacon-interval.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="在基于Platoon的车间通信(V2V)机制设计:动态调节网络参数我们也提到了这种控制理念：即根据网络的情况，动态的调整网络参数。对于Beacon包传输来说，在高负载的情况下，与其所有人仍然按照原来的发送速度，进而导致严重的冲突拖慢整体性能，不如整体所有人适当调低发送速度。 这篇文章研读总结自[1]。这篇文章主要是依据车流密度情况动态调整BSM(Basic Safety Message)的发送速率">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-cmn-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/81a2f775053cb02c3fbd961122653dea.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c2dc02b1b250bdf88a9e65a5f984ab08.png">
 <meta property="og:updated_time" content="2019-05-19T11:46:33.161Z">
@@ -206,7 +219,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
 
   
   
@@ -302,6 +315,23 @@
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
 
       
       
@@ -368,6 +398,9 @@
             
 
     
+    
+      
+      
     
       
       
@@ -477,7 +510,7 @@
       
       
       
-      <div class="post-body">
+      <div class="post-body han-init-context">
         
         
           <p>在<a href="http://localhost:4000/knowledge-base/academic/its/platoon/platoon-v2v.html#%E5%8A%A8%E6%80%81%E8%B0%83%E8%8A%82%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0" target="_blank" rel="noopener">基于Platoon的车间通信(V2V)机制设计:动态调节网络参数</a>我们也提到了这种控制理念：即根据网络的情况，动态的调整网络参数。对于Beacon包传输来说，在高负载的情况下，与其所有人仍然按照原来的发送速度，进而导致严重的冲突拖慢整体性能，不如整体所有人适当调低发送速度。</p>
@@ -1556,7 +1589,15 @@ E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
       }, 300);
     }).append(e);
   })
-</script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+</script>
+
+
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1574,11 +1615,5 @@ E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-  
-
-  
-
 </body>
 </html>
