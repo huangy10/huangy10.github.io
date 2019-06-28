@@ -446,7 +446,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-06-28 10:37:37" itemprop="dateModified" datetime="2019-06-28T10:37:37+08:00">2019-06-28</time>
+                <time title="Modified: 2019-06-28 10:05:17" itemprop="dateModified" datetime="2019-06-28T10:05:17+08:00">2019-06-28</time>
               
             
           </span>
@@ -522,6 +522,559 @@
             </div>
           
           <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/14680/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/14680/" class="post-title-link" itemprop="url">如何自己搭建一个Time Machine服务器</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-28 10:52:05 / Modified: 10:53:02" itemprop="dateCreated datePublished" datetime="2019-06-28T10:52:05+08:00">2019-06-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/14680/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/14680/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如何在Ubuntu上搭建一个简洁的Time Machine服务器呢？网上找到的教程说的都比较杂，这里整理一个刚刚经过实践检验的方法来供大家参考。目标系统是<code>Ubuntu 16.04 LTS</code>。</p>
+<h3 id="安装需要的工具">1. 安装需要的工具</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install netatalk avahi-daemon</span><br></pre></td></tr></table></figure>
+<h3 id="创建一个用于专门用来运行time-machine进程的用户">2. 创建一个用于专门用来运行Time Machine进程的用户</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -c "Time machine" -m -s /bin/bash tm</span><br></pre></td></tr></table></figure>
+<p>我这里命名为<code>tm</code>，你可以替换为任何你定的名字，但是最好不要使用<code>root</code>用户。 接下来给新用户设定密码 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd tm</span><br></pre></td></tr></table></figure></p>
+<h3 id="准备文件夹">3. 准备文件夹</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -R /home/tm/TimeMachineFolder</span><br><span class="line">sudo chown -R tm /home/tm/TimeMachineFolder</span><br></pre></td></tr></table></figure>
+<h3 id="设置netatalk">4. 设置<code>netatalk</code></h3>
+<p>首先我们将原有的配置文件备份 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.old</span><br></pre></td></tr></table></figure></p>
+<p>然后创建一个新的配置文件 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/netatalk/AppleVolumes.default</span><br></pre></td></tr></table></figure></p>
+<p>使用你偏好的编辑器（vim，nano之类）向这个配置文件中加入如下内容 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:DEFAULT: options:upriv,usedots</span><br><span class="line">/home/tm/TimeMachineFolder "My Time Machine" options:tm volsizelimit:500000 allow:tm</span><br></pre></td></tr></table></figure></p>
+<p>注意将第二行的文件夹路径设定为你再第三步中创建的文件夹的路径。另外，第二行中的<code>volsizelimit</code>设定了Time Machine将会使用的最大硬盘空间，单位是MB。</p>
+<h3 id="重启netatalk服务来应用更改">5. 重启<code>netatalk</code>服务来应用更改</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service netatalk restart</span><br></pre></td></tr></table></figure>
+<h3 id="在mac上连接到time-machine">6. 在Mac上连接到Time Machine</h3>
+<p>首先直接尝试在Time Machine中选择这个服务器（会显示在可用磁盘下面，名字显示为第四步中你<code>netatalk</code>设置文件中指定的名字）。 如果你无法找到，那么打开Finder并按下⌘+K，在弹出来的窗口中，于服务器地址一栏输入<code>afp://IP.of.your.server/</code>，然后点连接。如果提示需要输入用户名和密码来登录，那就输入第二步中你设定的用户名密码即可。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/408d6956cd13b4c671b4519c1115d97c.png" alt="示意图"><figcaption>示意图</figcaption>
+</figure>
+<p>ref：<a href="http://dae.me/blog/1660/concisest-guide-to-setting-up-time-machine-server-on-ubuntu-server-12-04/" target="_blank" rel="noopener">Concisest guide to setting up Time Machine server on Ubuntu Server 12.04, 14.04 &amp; Debian | Dae’s blog</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/20487/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/20487/" class="post-title-link" itemprop="url">键盘上的符号的英文读法</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-28 10:49:04 / Modified: 10:49:47" itemprop="dateCreated datePublished" datetime="2019-06-28T10:49:04+08:00">2019-06-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/20487/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/20487/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">! 叹号 exclamation mark/bang </span><br><span class="line">? 问号 question mark </span><br><span class="line">, 逗号 comma </span><br><span class="line">. 点号 dot/period/point </span><br><span class="line">: 冒号 colon </span><br><span class="line">; 分号 semicolon </span><br><span class="line">” 双引号 quotation marks/double quote </span><br><span class="line">‘ 单引号/撇号 apostrophe/single quote </span><br><span class="line">` 重音号 backquote/grave accent </span><br><span class="line">* 星号 asterisk/star </span><br><span class="line">+ 加号 plus sign </span><br><span class="line">- 减号/横线 hyphen/dash/minus sign/ </span><br><span class="line">= 等号 equal sign </span><br><span class="line">/ 斜线 slash </span><br><span class="line">\ 反斜线 backslash/escape </span><br><span class="line">| 竖线 bar/pipe/vertical bar </span><br><span class="line">_ 下划线 underline/underscore </span><br><span class="line">$ 美元符号 dollar sign </span><br><span class="line">@ at at sign </span><br><span class="line"># 井号 crosshatch/sharp/hash </span><br><span class="line">% 百分号 percent sign/mod </span><br><span class="line">&amp; and/和/兼 and/ampersand </span><br><span class="line">^ 折音号 circumflex/caret </span><br><span class="line">~ 波浪号 tilde </span><br><span class="line">&#123;&#125; （左右）花括号/大括号 (left/right|open/close) braces </span><br><span class="line">[] （左右）方括号/中括号 (left/right|open/close) brackets </span><br><span class="line">() （左右）圆括号/小括号 (left/right|open/close) parentheses </span><br><span class="line">&lt;&gt; 尖括号 angle brackets </span><br><span class="line">&lt; 大于号 less than </span><br><span class="line">&gt; 小于号 greater than</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/21028/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/21028/" class="post-title-link" itemprop="url">MAC: @rpath的坑</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-28 10:47:47 / Modified: 10:50:58" itemprop="dateCreated datePublished" datetime="2019-06-28T10:47:47+08:00">2019-06-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/debug/" itemprop="url" rel="index"><span itemprop="name">debug</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/21028/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/21028/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="problem">Problem</h2>
+<p>这篇文章的缘由是我在尝试使用<a href="https://www.nsnam.org" target="_blank" rel="noopener">ns3</a>带的NetAnim程序时，显示了下面这个错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui</span><br><span class="line">  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim</span><br><span class="line">  Reason: image not found</span><br><span class="line">[1]    86663 abort      ./NetAnim</span><br></pre></td></tr></table></figure>
+<p>这是一个动态链接的错误，所以没法通过编译的时候添加<code>LDFLAGS</code>来解决。不过错误里面的<code>@rpath</code>这个东西倒是挺有意思，显然并不是环境变量。我在网上查了很多，但是大多数是围绕xcode讨论的，不太适用于我面临的场景（命令行）。不过这些文章（如<a href="http://www.tanhao.me/pieces/1361.html/" target="_blank" rel="noopener">这篇</a>)能够大致阐明<code>@rpath</code>的用途。简而言之，<code>@rpath</code>是一个类似Shell中的<code>PATH</code>的变量，程序在执行时会从<code>@rpath</code>指定的路径中寻找动态链接库文件。那么剩下的问题就是我们如何操作这个变量了。</p>
+<h2 id="solution">Solution</h2>
+<p>通过<code>otool</code>我们可以查看一个程序的动态链接文件搜索地址，例如我要用的<code>NetAnim</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ otool -L ./NetAnim</span><br><span class="line">./NetAnim:</span><br><span class="line">	@rpath/QtGui.framework/Versions/4/QtGui (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">	@rpath/QtCore.framework/Versions/4/QtCore (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)</span><br><span class="line">	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)</span><br></pre></td></tr></table></figure>
+<p>而我们可以通过<code>install_name_tool</code>来对这些地址进行操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ install_name_tool -h</span><br><span class="line">Usage: /Library/Developer/CommandLineTools/usr/bin/install_name_tool [-change old new] ... [-rpath old new] ... [-add_rpath new] ... [-delete_rpath old] ... [-id name] input</span><br></pre></td></tr></table></figure>
+<p>对我而言，我需要将Qt4的动态链接库添加到<code>NetAdmin</code>的搜索路径中去，可以使用如下的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install_name_tool -add_rpath /usr/<span class="built_in">local</span>/Cellar/qt@4/4.8.7_3/lib ./NetAnim</span><br></pre></td></tr></table></figure>
+<p>大功告成。</p>
+
+          
         
       
     </div>
@@ -1643,558 +2196,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/53831/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/53831/" class="post-title-link" itemprop="url">ns3 在模块中使用第三方库</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-12 20:47:21 / Modified: 21:31:18" itemprop="dateCreated datePublished" datetime="2019-05-12T20:47:21+08:00">2019-05-12</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/53831/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/53831/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>ns3使用了waf编译系统，因此在ns3中尝试引入第三方模块时，就没有make那么直接了。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/53831/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/3426/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/3426/" class="post-title-link" itemprop="url">ns3 wscript: 自动寻找需编译的源文件</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-11 16:19:17" itemprop="dateCreated datePublished" datetime="2019-05-11T16:19:17+08:00">2019-05-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-15 13:15:05" itemprop="dateModified" datetime="2019-05-15T13:15:05+08:00">2019-05-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/3426/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/3426/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过<code>create-module.py</code>创建的module中的wscript为</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def options(opt):</span></span><br><span class="line"><span class="comment">#     pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def configure(conf):</span></span><br><span class="line"><span class="comment">#     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(bld)</span>:</span></span><br><span class="line">    module = bld.create_ns3_module(<span class="string">'example-module'</span>, [<span class="string">'core'</span>])</span><br><span class="line">    module.source = [</span><br><span class="line">        <span class="string">'model/example-module.cc'</span>,</span><br><span class="line">        <span class="string">'helper/example-module-helper.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    module_test = bld.create_ns3_module_test_library(<span class="string">'example-module'</span>)</span><br><span class="line">    module_test.source = [</span><br><span class="line">        <span class="string">'test/example-module-test-suite.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    headers = bld(features=<span class="string">'ns3header'</span>)</span><br><span class="line">    headers.module = <span class="string">'example-module'</span></span><br><span class="line">    headers.source = [</span><br><span class="line">        <span class="string">'model/example-module.h'</span>,</span><br><span class="line">        <span class="string">'helper/example-module-helper.h'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bld.env.ENABLE_EXAMPLES:</span><br><span class="line">        bld.recurse(<span class="string">'examples'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bld.ns3_python_bindings()</span></span><br></pre></td></tr></table></figure>
-<p>其中，<code>module.source</code>中包含需要编译的<code>.cc</code>源文件，而<code>headers.source</code>中包含对应的头文件。每次新建C++源代码文件时，都需要手动添加到这里的列表中。下面我给出一个自动从<code>module</code>的<code>model</code>, <code>helper</code>目录下搜索源文件的方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># def options(opt):</span></span><br><span class="line"><span class="comment">#     pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def configure(conf):</span></span><br><span class="line"><span class="comment">#     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_list_sources</span><span class="params">(bld, suffix)</span>:</span></span><br><span class="line">    root_dir = bld.path.abspath()</span><br><span class="line">    res = [</span><br><span class="line">        x <span class="keyword">for</span> x <span class="keyword">in</span> </span><br><span class="line">            [os.path.join(<span class="string">"model"</span>, y) <span class="keyword">for</span> y <span class="keyword">in</span> os.listdir(os.path.join(root_dir, <span class="string">"model"</span>))]</span><br><span class="line">        <span class="keyword">if</span> x.endswith(suffix)</span><br><span class="line">    ]</span><br><span class="line">    res += [</span><br><span class="line">        x <span class="keyword">for</span> x <span class="keyword">in</span> </span><br><span class="line">            [os.path.join(<span class="string">"helper"</span>, y) <span class="keyword">for</span> y <span class="keyword">in</span> os.listdir(os.path.join(root_dir, <span class="string">"helper"</span>))]</span><br><span class="line">        <span class="keyword">if</span> x.endswith(suffix)</span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(bld)</span>:</span></span><br><span class="line">    module = bld.create_ns3_module(<span class="string">'example-module'</span>, [<span class="string">"core"</span>])</span><br><span class="line">    module.source = _list_sources(bld, <span class="string">".cc"</span>)</span><br><span class="line"></span><br><span class="line">    module_test = bld.create_ns3_module_test_library(<span class="string">'example-module'</span>)</span><br><span class="line">    module_test.source = [</span><br><span class="line">        <span class="string">'test/mix-autonomy-test-suite.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    headers = bld(features=<span class="string">'ns3header'</span>)</span><br><span class="line">    headers.module = <span class="string">'example-module'</span></span><br><span class="line">    headers.source = _list_sources(bld, <span class="string">".h"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bld.env.ENABLE_EXAMPLES:</span><br><span class="line">        bld.recurse(<span class="string">'examples'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bld.ns3_python_bindings()</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意不要直接套用上面的范例文件，需要将&quot;example-module&quot;的名字改为你的module的名字</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/50553/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/50553/" class="post-title-link" itemprop="url">贝塞尔曲线原理</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-05-10 10:38:26 / Modified: 11:03:53" itemprop="dateCreated datePublished" datetime="2019-05-10T10:38:26+08:00">2019-05-10</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/数学/" itemprop="url" rel="index"><span itemprop="name">数学</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/50553/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/50553/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/16bd24901ea98b88916dcbb0ead66cd7.gif" alt="五阶贝塞尔曲线">
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/50553/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2243,7 +2244,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">46</span>
+                    <span class="site-state-item-count">49</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2989,51 +2990,9 @@
       
     
       
-        
-      
     
   
 
-  
-    
-      <script type="text/x-mathjax-config">
-  
-
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-      
-      equationNumbers: {
-        autoNumber: 'AMS'
-      }
-    }
-  });
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
-        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
-      }
-    });
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
-    }
-  });
-</script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-    
   
 
 

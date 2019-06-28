@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-06-26T15:02:26.589Z</updated>
+  <updated>2019-06-28T02:53:02.446Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,89 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>如何自己搭建一个Time Machine服务器</title>
+    <link href="http://www.codewoody.com/posts/14680/"/>
+    <id>http://www.codewoody.com/posts/14680/</id>
+    <published>2019-06-28T02:52:05.000Z</published>
+    <updated>2019-06-28T02:53:02.446Z</updated>
+    
+    <content type="html"><![CDATA[<p>如何在Ubuntu上搭建一个简洁的Time Machine服务器呢？网上找到的教程说的都比较杂，这里整理一个刚刚经过实践检验的方法来供大家参考。目标系统是<code>Ubuntu 16.04 LTS</code>。</p><h3 id="安装需要的工具">1. 安装需要的工具</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install netatalk avahi-daemon</span><br></pre></td></tr></table></figure><h3 id="创建一个用于专门用来运行time-machine进程的用户">2. 创建一个用于专门用来运行Time Machine进程的用户</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -c "Time machine" -m -s /bin/bash tm</span><br></pre></td></tr></table></figure><p>我这里命名为<code>tm</code>，你可以替换为任何你定的名字，但是最好不要使用<code>root</code>用户。 接下来给新用户设定密码 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd tm</span><br></pre></td></tr></table></figure></p><h3 id="准备文件夹">3. 准备文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -R /home/tm/TimeMachineFolder</span><br><span class="line">sudo chown -R tm /home/tm/TimeMachineFolder</span><br></pre></td></tr></table></figure><h3 id="设置netatalk">4. 设置<code>netatalk</code></h3><p>首先我们将原有的配置文件备份 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.old</span><br></pre></td></tr></table></figure></p><p>然后创建一个新的配置文件 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/netatalk/AppleVolumes.default</span><br></pre></td></tr></table></figure></p><p>使用你偏好的编辑器（vim，nano之类）向这个配置文件中加入如下内容 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:DEFAULT: options:upriv,usedots</span><br><span class="line">/home/tm/TimeMachineFolder "My Time Machine" options:tm volsizelimit:500000 allow:tm</span><br></pre></td></tr></table></figure></p><p>注意将第二行的文件夹路径设定为你再第三步中创建的文件夹的路径。另外，第二行中的<code>volsizelimit</code>设定了Time Machine将会使用的最大硬盘空间，单位是MB。</p><h3 id="重启netatalk服务来应用更改">5. 重启<code>netatalk</code>服务来应用更改</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service netatalk restart</span><br></pre></td></tr></table></figure><h3 id="在mac上连接到time-machine">6. 在Mac上连接到Time Machine</h3><p>首先直接尝试在Time Machine中选择这个服务器（会显示在可用磁盘下面，名字显示为第四步中你<code>netatalk</code>设置文件中指定的名字）。 如果你无法找到，那么打开Finder并按下⌘+K，在弹出来的窗口中，于服务器地址一栏输入<code>afp://IP.of.your.server/</code>，然后点连接。如果提示需要输入用户名和密码来登录，那就输入第二步中你设定的用户名密码即可。</p><figure><img src="https://imgs.codewoody.com/uploads/big/408d6956cd13b4c671b4519c1115d97c.png" alt="示意图"><figcaption>示意图</figcaption></figure><p>ref：<a href="http://dae.me/blog/1660/concisest-guide-to-setting-up-time-machine-server-on-ubuntu-server-12-04/" target="_blank" rel="noopener">Concisest guide to setting up Time Machine server on Ubuntu Server 12.04, 14.04 &amp; Debian | Dae’s blog</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;如何在Ubuntu上搭建一个简洁的Time Machine服务器呢？网上找到的教程说的都比较杂，这里整理一个刚刚经过实践检验的方法来供大家参考。目标系统是&lt;code&gt;Ubuntu 16.04 LTS&lt;/code&gt;。&lt;/p&gt;
+&lt;h3 id=&quot;安装需要的工具&quot;&gt;1. 安装需要的
+      
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="macOS" scheme="http://www.codewoody.com/tags/macOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>键盘上的符号的英文读法</title>
+    <link href="http://www.codewoody.com/posts/20487/"/>
+    <id>http://www.codewoody.com/posts/20487/</id>
+    <published>2019-06-28T02:49:04.000Z</published>
+    <updated>2019-06-28T02:49:47.350Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">! 叹号 exclamation mark/bang </span><br><span class="line">? 问号 question mark </span><br><span class="line">, 逗号 comma </span><br><span class="line">. 点号 dot/period/point </span><br><span class="line">: 冒号 colon </span><br><span class="line">; 分号 semicolon </span><br><span class="line">” 双引号 quotation marks/double quote </span><br><span class="line">‘ 单引号/撇号 apostrophe/single quote </span><br><span class="line">` 重音号 backquote/grave accent </span><br><span class="line">* 星号 asterisk/star </span><br><span class="line">+ 加号 plus sign </span><br><span class="line">- 减号/横线 hyphen/dash/minus sign/ </span><br><span class="line">= 等号 equal sign </span><br><span class="line">/ 斜线 slash </span><br><span class="line">\ 反斜线 backslash/escape </span><br><span class="line">| 竖线 bar/pipe/vertical bar </span><br><span class="line">_ 下划线 underline/underscore </span><br><span class="line">$ 美元符号 dollar sign </span><br><span class="line">@ at at sign </span><br><span class="line"># 井号 crosshatch/sharp/hash </span><br><span class="line">% 百分号 percent sign/mod </span><br><span class="line">&amp; and/和/兼 and/ampersand </span><br><span class="line">^ 折音号 circumflex/caret </span><br><span class="line">~ 波浪号 tilde </span><br><span class="line">&#123;&#125; （左右）花括号/大括号 (left/right|open/close) braces </span><br><span class="line">[] （左右）方括号/中括号 (left/right|open/close) brackets </span><br><span class="line">() （左右）圆括号/小括号 (left/right|open/close) parentheses </span><br><span class="line">&lt;&gt; 尖括号 angle brackets </span><br><span class="line">&lt; 大于号 less than </span><br><span class="line">&gt; 小于号 greater than</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class
+      
+    
+    </summary>
+    
+      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MAC: @rpath的坑</title>
+    <link href="http://www.codewoody.com/posts/21028/"/>
+    <id>http://www.codewoody.com/posts/21028/</id>
+    <published>2019-06-28T02:47:47.000Z</published>
+    <updated>2019-06-28T02:50:58.101Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="problem">Problem</h2><p>这篇文章的缘由是我在尝试使用<a href="https://www.nsnam.org" target="_blank" rel="noopener">ns3</a>带的NetAnim程序时，显示了下面这个错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui</span><br><span class="line">  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim</span><br><span class="line">  Reason: image not found</span><br><span class="line">[1]    86663 abort      ./NetAnim</span><br></pre></td></tr></table></figure><p>这是一个动态链接的错误，所以没法通过编译的时候添加<code>LDFLAGS</code>来解决。不过错误里面的<code>@rpath</code>这个东西倒是挺有意思，显然并不是环境变量。我在网上查了很多，但是大多数是围绕xcode讨论的，不太适用于我面临的场景（命令行）。不过这些文章（如<a href="http://www.tanhao.me/pieces/1361.html/" target="_blank" rel="noopener">这篇</a>)能够大致阐明<code>@rpath</code>的用途。简而言之，<code>@rpath</code>是一个类似Shell中的<code>PATH</code>的变量，程序在执行时会从<code>@rpath</code>指定的路径中寻找动态链接库文件。那么剩下的问题就是我们如何操作这个变量了。</p><h2 id="solution">Solution</h2><p>通过<code>otool</code>我们可以查看一个程序的动态链接文件搜索地址，例如我要用的<code>NetAnim</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ otool -L ./NetAnim</span><br><span class="line">./NetAnim:</span><br><span class="line">@rpath/QtGui.framework/Versions/4/QtGui (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">@rpath/QtCore.framework/Versions/4/QtCore (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)</span><br><span class="line">/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)</span><br></pre></td></tr></table></figure><p>而我们可以通过<code>install_name_tool</code>来对这些地址进行操作。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ install_name_tool -h</span><br><span class="line">Usage: /Library/Developer/CommandLineTools/usr/bin/install_name_tool [-change old new] ... [-rpath old new] ... [-add_rpath new] ... [-delete_rpath old] ... [-id name] input</span><br></pre></td></tr></table></figure><p>对我而言，我需要将Qt4的动态链接库添加到<code>NetAdmin</code>的搜索路径中去，可以使用如下的命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install_name_tool -add_rpath /usr/<span class="built_in">local</span>/Cellar/qt@4/4.8.7_3/lib ./NetAnim</span><br></pre></td></tr></table></figure><p>大功告成。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;problem&quot;&gt;Problem&lt;/h2&gt;
+&lt;p&gt;这篇文章的缘由是我在尝试使用&lt;a href=&quot;https://www.nsnam.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ns3&lt;/a&gt;带的NetAnim程序时，显示了下面这个错误：
+      
+    
+    </summary>
+    
+      <category term="debug" scheme="http://www.codewoody.com/categories/debug/"/>
+    
+    
+      <category term="macOS" scheme="http://www.codewoody.com/tags/macOS/"/>
+    
+      <category term="ns3" scheme="http://www.codewoody.com/tags/ns3/"/>
+    
+      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo文章置顶/置底方法研究</title>
@@ -46,7 +129,7 @@
     <link href="http://www.codewoody.com/posts/25582/"/>
     <id>http://www.codewoody.com/posts/25582/</id>
     <published>2019-06-26T06:05:17.000Z</published>
-    <updated>2019-06-28T02:37:37.957Z</updated>
+    <updated>2019-06-28T02:05:17.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="so-whats-this">So what's this</h2><p>每周我都会读阮一峰的每周分享，有时候也会在其他的博客平台上看见别的博主整理的这些每周资源分享文章，觉得比较有用，我也打算整理一下自己的List。</p><p>最近一年多以来，我尝试尽可能将自己的思考过程以文字的方式记录下来，这样过几天回头来看，便于我整理思路。更重要的是，这种累积会给自己带来沉甸甸的“积累感”，给自己一个强大正反馈。</p><p>这篇是这一系类的每周分享的第一篇，贵在坚持！</p><a id="more"></a><h2 id="新闻">新闻</h2><h3 id="树莓派4发布"><a href="https://www.ifanr.com/1228499" target="_blank" rel="noopener">树莓派4发布</a></h3><figure><img src="https://imgs.codewoody.com/uploads/big/8d9f81cf9870dc648b9486ff54025a1a.jpg" alt="树莓派4"><figcaption>树莓派4</figcaption></figure><figure><img src="https://imgs.codewoody.com/uploads/big/8f4c25a7a87dd9c125bdf779b20c9861.png" alt="树莓派性能对比"><figcaption>树莓派性能对比</figcaption></figure><p>位于英国的教育慈善组织「Raspberry Pi 基金会」推出了它们的新一代产品：树莓派 4（Raspberry Pi 4），性能表现又上升了一个台阶，官方甚至称它「足以媲美一台入门级 x86 电脑」。树莓派的主要性能升级为：</p><ol type="1"><li>搭载了A72架构的BCM2711芯片，主频为1.5GHz</li><li>两个micro-HDMI</li><li>支持最高4GB LPDDR4内存</li><li>802.11ac 双频Wifi</li><li>千兆以太网</li><li>蓝牙5.0</li><li>5V/3A 的USB-C供电</li><li>USB2.0及USB3.0接口</li></ol><p>官方还承诺，会持续生产树莓派 4 至 2026 年 1 月.</p><h3 id="b站三体动画化">B站三体动画化</h3><p><a href="https://passport.weibo.com/visitor/visitor?entry=miniblog&amp;a=enter&amp;url=https%3A%2F%2Fweibo.com%2F1748075785%2FHAJ5ZiuBT&amp;domain=.weibo.com&amp;ua=php-sso_sdk_client-0.6.28&amp;_rand=1561603056.2875" target="_blank" rel="noopener">B站正式宣布《三体》动画化启动</a>: 作为重磅彩蛋，刘慈欣现身B站十周年活动现场。动画由B站出品、三体宇宙和制作方艺画开天联合出品。活动现场首播的概念版PV淋漓尽致地展现三体宇宙的宏大和黑暗森林法则的残酷。</p><blockquote><p>之前在B站上自己组团队做了三体动画（Minecraft版）的神游八方，也加入了动画化的主创团队。</p></blockquote><ul><li><a href="https://www.bilibili.com/3/" target="_blank" rel="noopener">专题页面</a></li></ul><h3 id="人民网联合腾讯网易等游戏公司发起游戏适龄提示倡议"><a href="https://finance.sina.com.cn/roll/2019-06-27/doc-ihytcitk8046473.shtml" target="_blank" rel="noopener">人民网联合腾讯、网易等游戏公司发起《游戏适龄提示倡议》</a></h3><p>6月26日，人民网联合腾讯、网易、完美世界等10家头部游戏公司发起《游戏适龄提示倡议》，把游戏玩家分成4个年龄层级，并提出了相应的提示体系，包括游戏内容、类型和运营等方面的标准。年龄分层方面，此次倡议把游戏玩家分为18+、16+、12+、6+四级。例如6+多是休闲益智类，18+则有大量竞技、策略、棋牌类游戏。</p><figure><img src="https://imgs.codewoody.com/uploads/big/9ecb92ae01cbca2fc5d9909793357417.jpg" alt="分级标准"><figcaption>分级标准</figcaption></figure><blockquote><p>之前听老梁说的好，文化审查领域重要的是“自由裁量权”，而并不是挂在口头上的细枝末节的审查细节。没有分级制度，那么我想让你过你就能过，不让你过，你就不能过，随心所欲，岂不快哉？</p><p>&quot;在国民党统治时期，制定了一个新闻法，我们共产党人仔细研究它的字句，抓它的辫子，钻它的空子。现在我们当权，我看还是不要新闻法好，免得人家钻我们空子。没有法，我们主动，想怎样控制就怎样控制。&quot; -- 陈云 （孙旭培教授曾在《新闻立法之路》一文中引述）</p></blockquote><p>Further Reading：<a href="http://www.midphoto.com/chinese/whatsnew/2016/lawofnews.htm" target="_blank" rel="noopener">为什么中国没有新闻法</a>(<a href="/knowledge-base/backups/为什么中国没有新闻法.md">Backup Link</a>)</p><h3 id="联邦快递起诉美国政府"><a href="https://about.van.fedex.com/newsroom/fedex-statement-on-department-of-commerce-litigation/" target="_blank" rel="noopener">联邦快递起诉美国政府</a></h3><p>6月24日，联邦快递在官网发布声明称，已向哥伦比亚地区的美国地区法院提起诉讼，要求禁止美国商务部对联邦快递执行“出口管理条例”中的禁令。联邦快递认为，《出口管制条例》违反公共承运人在美国宪法第五修正案下的正当权利，因为他们不合理地要求承运人为可能违反《出口管制条例》的运品承担严格责任。</p><blockquote><p>魔幻现实主义</p></blockquote><h2 id="典故与梗">典故与梗</h2><p><strong>不作安安饿殍，效尤奋臂螳螂</strong></p><p>这句话，我一直理解反了意思。开始我以为是指不愿意做饿死鬼，即便是螳臂当车也要起来反抗的意思。结果，其原意是完全相反的。</p><p><a href="https://www.zhihu.com/question/68212300" target="_blank" rel="noopener">这句话出自顾诚的《明末农民战争史》的注释中</a>:</p><blockquote><p>【22】谈迁：《北游录》，《纪闻上》，《榜购一词》条。按：此条首云“总督杨文岳嗣昌出师，榜辑剧寇张献忠”，杨嗣昌字文弱，谈迁误为文岳，又称之为总督，遂与明保定总督杨文岳混为一人。杨复吉《梦阑琐笔》载此事时更写成“保督杨文岳出师榜缉张献忠”，均误。又杨氏所载词中“兴安、平利走四方”一句作“兴安、平利走东乡”。李馥荣：《滟滪囊》卷一所载杨嗣昌榜刊《西江月》词句为：“<strong>不作安安饿殍，效尤奋臂螳螂</strong>。往来楚蜀肆猖狂，弄兵潢池无状。云屯雨骤师集，蛇豕奔突奚藏？许尔军民绑来降，爵赏酬功上上。”或系杨嗣昌所刊另一榜文。</p></blockquote><p>这句话的意思是，尔等不安安静静地做一个饿死鬼，却效仿螳臂当车，自不量力（抵抗朝廷的剿灭大军）。当然，这句话可能并非杨总督本人所说，只是文人调侃他所做。不过，这句话透出的想法，杨总督脑子里大抵是有的，只不过要脸，不好说出来。对于这些统治者来捉，有这样的想法，其实不足为奇。但是，偏偏就有一些明明遇到乱世就会沦为“饿殍”的人，摆不正自己的位置。</p><p>历代造反的贫民，从陈胜吴广，到李自成，洪秀全，诚然造成了巨大的破坏，但若是不造反，又有什么活路呢？难道，做安安饿殍么？</p><h2 id="情绪">情绪</h2><p><strong>Youtube博主Etika自杀</strong></p><figure><img src="https://imgs.codewoody.com/uploads/big/b05fd2ee2db8d5adb14afe276509fe43.jpg" alt="Etika"><figcaption>Etika</figcaption></figure><p>2019年6月19日，Etika上传了一段疑似自杀宣言的视频，他背起书包，离开了家门。至此以后，没有人再看到Etika的任何踪迹。</p><p>6月22日，警方发现了Etika被遗弃的个人物品，在高达340英尺的大桥之上。</p><p>6月25日，纽约警方在布鲁克林大桥水域发现一具未明身份的男性遗体。今日，警方发布正式公告，遗体确为Etika本人，死因是自杀。</p><figure><img src="https://imgs.codewoody.com/uploads/big/d136781dd7e96199bc4f3697a7ccf46a.jpg" alt="网友在Etika自杀地的悼念"><figcaption>网友在Etika自杀地的悼念</figcaption></figure><blockquote><p>有很多极度抑郁的人以至于要自杀的人，有时候看起来会很开心的样子。永远不要以为自己有多么了解一个人，尤其是一个你没有那么熟悉，甚至是陌生的人。</p></blockquote><h2 id="文章与言论">文章与言论</h2><ol type="1"><li><p><a href="http://ohshitgit.com/" target="_blank" rel="noopener">Oh shit, git!</a>：作者针对一些在使用git过程中的痛点给出了解决方法</p></li><li><p><a href="https://jarv.is/notes/how-to-backup-linux-server/" target="_blank" rel="noopener">How To: Automatically Backup a Linux VPS to a Separate Cloud Storage Service</a>：如何将VPS备份到一个云存储平台</p></li><li><p>安卓碎片化严重到什么地步？安卓本身有12个版本，如果每个版本有12个厂商，每个厂商有12个手机型号，因此安卓生态至少包含1,728种&quot;版本- 品牌 - 设备&quot;的组合。</p></li><li><p><a href="https://www.prnewswire.com/news-releases/prose-proximity-services-for-lte--5g-networks-2017-2030---opportunities-challenges-strategies--forecasts-300396915.html" target="_blank" rel="noopener">ProSe (Proximity Services) for LTE &amp; 5G Networks: 2017-2030 - Opportunities, Challenges, Strategies &amp; Forecasts</a>: 5G是近年来的热词了，也是这次美国对华为发难的一个重要因素。不过舆论对于5G的认识，一般是一个加强版的4G蜂窝网。其实5G中引入的Promxity Service技术，将为传统蜂窝网引入D2D的能力，这可能带来深远的影响。</p></li></ol>]]></content>
     
@@ -60,6 +143,8 @@
     
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="树莓派" scheme="http://www.codewoody.com/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
     
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
@@ -446,97 +531,6 @@
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
       <category term="政治" scheme="http://www.codewoody.com/tags/%E6%94%BF%E6%B2%BB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>996 License 1.0</title>
-    <link href="http://www.codewoody.com/posts/12613/"/>
-    <id>http://www.codewoody.com/posts/12613/</id>
-    <published>2019-04-08T02:07:49.000Z</published>
-    <updated>2019-04-08T02:56:18.458Z</updated>
-    
-    <content type="html"><![CDATA[<p>Copyright (c) <year> <copyright holders=""></copyright></year></p><p>996 License Version 1.0 (Draft)</p><p>Permission is hereby granted to any individual or legal entity obtaining a copy of this licensed work (including the source code, documentation and/or related items, hereinafter collectively referred to as the &quot;licensed work&quot;), free of charge, to deal with the licensed work for any purpose, including without limitation, the rights to use, reproduce, modify, prepare derivative works of, publish, distribute and sublicense the licensed work, subject to the following conditions:</p><ol type="1"><li><p>The individual or the legal entity must conspicuously display, without modification, this License on each redistributed or derivative copy of the Licensed Work.</p></li><li><p>The individual or the legal entity must strictly comply with all applicable laws, regulations, rules and standards of the jurisdiction relating to labor and employment where the individual is physically located or where the individual was born or naturalized; or where the legal entity is registered or is operating (whichever is stricter). In case that the jurisdiction has no such laws, regulations, rules and standards or its laws, regulations, rules and standards are unenforceable, the individual or the legal entity are required to comply with Core International Labor Standards.</p></li><li><p>The individual or the legal entity shall not induce or force its employee(s), whether full-time or part-time, or its independent contractor(s), in any methods, to agree in oral or written form, to directly or indirectly restrict, weaken or relinquish his or her rights or remedies under such laws, regulations, rules and standards relating to labor and employment as mentioned above, no matter whether such written or oral agreement are enforceable under the laws of the said jurisdiction, nor shall such individual or the legal entity limit, in any methods, the rights of its employee(s) or independent contractor(s) from reporting or complaining to the copyright holder or relevant authorities monitoring the compliance of the license about its violation(s) of the said license.</p></li></ol><p>THE LICENSED WORK IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN ANY WAY CONNECTION WITH THE LICENSED WORK OR THE USE OR OTHER DEALINGS IN THE LICENSED WORK.</p><p>版权所有（c）<年份><版权持有人></版权持有人></年份></p><p>反996许可证版本1.0</p><p>在符合下列条件的情况下，特此免费向任何得到本授权作品的副本（包括源代码、文件和/或相关内容，以下统称为“授权作品”）的个人和法人实体授权：被授权个人或法人实体有权以任何目的处置授权作品，包括但不限于使用、复制，修改，衍生利用、散布，发布和再许可：</p><ol type="1"><li>个人或法人实体必须在许可作品的每个再散布或衍生副本上包含以上版权声明和本许可证，不得自行修改。</li><li>个人或法人实体必须严格遵守与个人实际所在地或个人出生地或归化地、或法人实体注册地或经营地（以较严格者为准）的司法管辖区所有适用的与劳动和就业相关法律、法规、规则和标准。如果该司法管辖区没有此类法律、法规、规章和标准或其法律、法规、规章和标准不可执行，则个人或法人实体必须遵守国际劳工标准的核心公约。</li><li>个人或法人不得以任何方式诱导或强迫其全职或兼职员工或其独立承包人以口头或书面形式同意直接或间接限制、削弱或放弃其所拥有的，受相关与劳动和就业有关的法律、法规、规则和标准保护的权利或补救措施，无论该等书面或口头协议是否被该司法管辖区的法律所承认，该等个人或法人实体也不得以任何方法限制其雇员或独立承包人向版权持有人或监督许可证合规情况的有关当局报告或投诉上述违反许可证的行为的权利。</li></ol><p>该授权作品是&quot;按原样&quot;提供，不做任何明示或暗示的保证，包括但不限于对适销性、特定用途适用性和非侵权性的保证。在任何情况下，无论是在合同诉讼、侵权诉讼或其他诉讼中，版权持有人均不承担因本软件或本软件的使用或其他交易而产生、引起或与之相关的任何索赔、损害或其他责任。</p><p><a href="https://link.zhihu.com/?target=https%3A//github.com/kattgu7/996-License-Draft/" target="_blank" rel="noopener">https://link.zhihu.com/?target=https%3A//github.com/kattgu7/996-License-Draft/</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Developer&#39;s Life Matters&lt;/p&gt;
-&lt;style&gt;
-svg {
-  border: 3px solid #fff;
-  border-radius: 150px;
-  width: 150px;
-  height: 150px;
-  background: #de335e;
-  margin: auto !important;
-  display: block;
-}
-&lt;/style&gt;
-&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; height=&quot;512px&quot; viewbox=&quot;0 0 464 464&quot; width=&quot;512px&quot;&gt;
-&lt;g&gt;&lt;path d=&quot;m24 144c-4.414062 0-8 3.585938-8 8v120h16v-120c0-4.414062-3.585938-8-8-8zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m104 256h-32c-10.414062 0-19.214844 6.710938-22.527344 16h77.046875c-3.304687-9.289062-12.105469-16-22.519531-16zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m56 417.472656v-97.472656h-16v97.472656c-9.304688 3.304688-16 12.09375-16 22.527344 0 13.257812 10.742188 24 24 24s24-10.742188 24-24c0-10.433594-6.695312-19.222656-16-22.527344zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m0 288h464v16h-464zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m48 248.207031c.089844-.070312.160156-.144531.246094-.207031-.085938-.0625-.15625-.136719-.246094-.207031zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m101.121094 192h-29.121094c-13.230469 0-24 10.769531-24 24s10.769531 24 24 24h29.121094c13.230468 0 24-10.769531 24-24s-10.769532-24-24-24zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m143.191406 272h304.335938c-3.992188-35.945312-34.527344-64-71.527344-64h-192c-11.128906 0-22.257812 2.625-32.191406 7.601562l-11.214844 5.605469c-1.363281 10.3125-6.609375 19.320313-14.289062 25.609375 8.542968 5.769532 14.757812 14.742188 16.886718 25.183594zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m413.273438 80-29.882813-69.734375-33.503906 92.140625-9.605469-14.40625h-52.28125v-72c0-8.824219-7.175781-16-16-16h-80c-8.824219 0-16 7.175781-16 16v40h-69.273438l-18.117187 42.265625-30.488281-83.859375-22.402344 33.59375h-35.71875v16h44.28125l9.597656-14.40625 33.503906 92.140625 29.890626-69.734375h58.726562v40c0 8.824219 7.175781 16 16 16h16v24h16v40h16v-40h16v-24h16c8.824219 0 16-7.175781 16-16v-8h43.71875l22.402344 33.59375 30.496094-83.859375 18.109374 42.265625h61.273438v-16zm-157.273438-16h-16v16h-16v-16h-16v-16h16v-16h16v16h16zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;path d=&quot;m424 417.472656v-97.472656h-16v97.472656c-9.304688 3.304688-16 12.09375-16 22.527344 0 13.257812 10.742188 24 24 24s24-10.742188 24-24c0-10.433594-6.695312-19.222656-16-22.527344zm0 0&quot; data-original=&quot;#000000&quot; data-old_color=&quot;#ffffff&quot; fill=&quot;#ffffff&quot; class=&quot;active-path&quot;/&gt;&lt;/g&gt;
-&lt;/svg&gt;
-    
-    </summary>
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OC和Swift混编Frameowork优雅指南</title>
-    <link href="http://www.codewoody.com/posts/56606/"/>
-    <id>http://www.codewoody.com/posts/56606/</id>
-    <published>2019-04-04T06:09:04.000Z</published>
-    <updated>2019-04-04T06:29:41.111Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://imgs.codewoody.com/uploads/big/b5d15c27a9f2a989d35696f515aec8d6.jpeg" alt="cover"> <a href="https://github.com/LeoMobileDeveloper/Blogs/blob/master/Swift/%20%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%80%E5%8F%91Swift%E5%92%8CObjective%20C%E6%B7%B7%E7%BC%96%E7%9A%84Framework.md" target="_blank" rel="noopener">本文主要参考了优雅地开发Swift和Object C混编的Framework</a>。不过实际发现，完全按照文章里面”优雅的解决方案“里面的说法操作，还是没法成功。我这里根据实际情况作出了调整。 <a id="more"></a></p><ol type="1"><li>参考的文章中在“优雅的解决方案”这个section之前的内容都是好用的，你可以用用来创建一个兼容OC和Swift的Cooca Touch Framework。</li><li>这里说的“优雅”，指的是控制OC部分接口保留的问题（详情可以参考原文部分）</li></ol><p>原文里面只说了具体的操作步骤，没有高屋建瓴地说出这种方法的实际思路：事实上，采用<code>module.modulemap</code>的方法是将OC部分打包成一个可以使用Swfit语句进行导入(import)的模块。以这个视角，我们再来梳理一下操作步骤：</p><h4 id="新建一个module.modulemap文件">新建一个<code>module.modulemap</code>文件</h4><p>文件里的内容如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module OCSource [system] &#123;</span><br><span class="line">    //由于module.modulemap和OCSource.h是在同一个文件夹的，如果不是同一个，路径要写全</span><br><span class="line">    header &quot;OCSource.h&quot;</span><br><span class="line">    export *</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><blockquote><p>有一个容易犯错的问题是将这里的模块名字, OCSource命名为了Cocoa Touch Framework的名字。这样会导致编译出错，错误信息会提示你Module名字重复定义。这里的名字要区别的Framework的名字，具体是什么可以自己自由选择。不过推荐和头文件的名字一致</p></blockquote><p>后一步操作是把<code>module.modulemap</code>的路径添加到Build Settings的<code>Import Paths</code>中，这是为了让我们在Swift里面<code>import</code>这个module的时候能够找到目标.</p><figure><img src="https://imgs.codewoody.com/uploads/big/f9b81bd3d7c4bff9b05b4548ed039922.png" alt="Import Paths in Build Settings"><figcaption>Import Paths in Build Settings</figcaption></figure><p>那么，这里的<code>$(SRCROOT)/MixFramework</code>其实就是指的<code>module.modulemap</code>的路径。</p><h4 id="将ocsouce.h文件的权限改为project">将<code>OCSouce.h</code>文件的权限改为project</h4><figure><img src="https://imgs.codewoody.com/uploads/big/7d7b91d9291919efb1de5b5c3543655d.png" alt="Header Visibility Settings"><figcaption>Header Visibility Settings</figcaption></figure><p>这可以让<code>OCSource.h</code>不再对外可见。 然后，删除MixFramework.h(umbrella header)中#import 的OC header。</p><hr><p>原文的内容到此结束，但是其实还是不够的。这时候如果编译，会发现你在Framework内部的Swift使用OCSource的地方都会报错说OCSource不存在。因为将<code>OCSource.h</code>从umbrella header中删除之后Swift就无法看到这个文件了。然而，通过<code>module.modulemap</code>文件我们将<code>OCSource.h</code>及相关的OC文件打包成了了一个Swift模块，因此我们可以在Swift代码中import进来：</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> OCSource</span><br></pre></td></tr></table></figure><p>在报错的Swift文件中添加这个导入，就可以解决这个问题了.</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/b5d15c27a9f2a989d35696f515aec8d6.jpeg&quot; alt=&quot;cover&quot;&gt; &lt;a href=&quot;https://github.com/LeoMobileDeveloper/Blogs/blob/master/Swift/%20%E4%BC%98%E9%9B%85%E7%9A%84%E5%BC%80%E5%8F%91Swift%E5%92%8CObjective%20C%E6%B7%B7%E7%BC%96%E7%9A%84Framework.md&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;本文主要参考了优雅地开发Swift和Object C混编的Framework&lt;/a&gt;。不过实际发现，完全按照文章里面”优雅的解决方案“里面的说法操作，还是没法成功。我这里根据实际情况作出了调整。
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
-    
-      <category term="swift" scheme="http://www.codewoody.com/tags/swift/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Universal(Fat) Framework for Swift Projects</title>
-    <link href="http://www.codewoody.com/posts/28461/"/>
-    <id>http://www.codewoody.com/posts/28461/</id>
-    <published>2019-04-03T03:41:42.000Z</published>
-    <updated>2019-04-03T05:59:46.740Z</updated>
-    
-    <content type="html"><![CDATA[<figure><img src="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg" alt="Cocoa Touch Framework"><figcaption>Cocoa Touch Framework</figcaption></figure><p>最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过<a href="https://medium.com/@Rageeni16/create-cocoa-touch-framework-and-publish-it-be9ad6535f33" target="_blank" rel="noopener">Cocoa Touch Framework</a>实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编译出同时支持模拟器和真机的Framework，即Universal(Fat) Framework。这一需求还需要进一步地利用一些系统脚本来实现。 <a id="more"></a></p><p>这里假设你已经有了一个能够正常工作，编译的包含Cocoa Touch Framework的工程。我这里实现时使用的是Xcode10.2。</p><blockquote><p>事实上我在调研中发现了很多不同的实现编译Universal Framework的教程，但是他们并不总是有用，我这里只遴选了我自己测试通过没有问题的思路。这一思路通过Archive过程来打包输出framework</p></blockquote><p>首先从Xcode左上角选择Cocoa Touch Framework的默认scheme，然后点击Edit Scheme</p><figure><img src="https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png" alt="Edit Scheme"><figcaption>Edit Scheme</figcaption></figure><p>在Archive的post-action中添加一个运行脚本(New Run Script Action)</p><figure><img src="https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png" alt="New Run Script Action"><figcaption>New Run Script Action</figcaption></figure><p>脚本内容如下：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> &gt; /tmp/<span class="variable">$&#123;PROJECT_NAME&#125;</span>_archive.log 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">UNIVERSAL_OUTPUTFOLDER=<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-universal</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"true"</span> == <span class="variable">$&#123;ALREADYINVOKED:-false&#125;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"RECURSION: Detected, stopping"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">export</span> ALREADYINVOKED=<span class="string">"true"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># make sure the output directory exists</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Building for iPhoneSimulator"</span></span><br><span class="line">xcodebuild -workspace <span class="string">"<span class="variable">$&#123;WORKSPACE_PATH&#125;</span>"</span> -scheme <span class="string">"<span class="variable">$&#123;TARGET_NAME&#125;</span>"</span> -configuration <span class="variable">$&#123;CONFIGURATION&#125;</span> -sdk iphonesimulator -destination <span class="string">'platform=iOS Simulator,name=iPhone 6'</span> ONLY_ACTIVE_ARCH=NO ARCHS=<span class="string">'i386 x86_64'</span> BUILD_DIR=<span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>"</span> BUILD_ROOT=<span class="string">"<span class="variable">$&#123;BUILD_ROOT&#125;</span>"</span> ENABLE_BITCODE=YES OTHER_CFLAGS=<span class="string">"-fembed-bitcode"</span> BITCODE_GENERATION_MODE=bitcode clean build</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 1. Copy the framework structure (from iphoneos build) to the universal folder</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Copying to output folder"</span></span><br><span class="line"><span class="comment"># 这行是在我参考的脚本的基础上添加进去的。脚本在运行过程中有一个问题：在试图将</span></span><br><span class="line"><span class="comment"># archive过程中生成的device framework拷贝进来时，总是拷贝的framework文件夹</span></span><br><span class="line"><span class="comment"># 的内容，而非整个文件夹，所以我们这里手动创建这个文件夹</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span></span><br><span class="line">cp -R <span class="string">"<span class="variable">$&#123;ARCHIVE_PRODUCTS_PATH&#125;</span><span class="variable">$&#123;INSTALL_PATH&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 2. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory</span></span><br><span class="line">SIMULATOR_SWIFT_MODULES_DIR=<span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-iphonesimulator/<span class="variable">$&#123;TARGET_NAME&#125;</span>.framework/Modules/<span class="variable">$&#123;TARGET_NAME&#125;</span>.swiftmodule/."</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"SIMULATOR_SWIFT_MODULES_DIR: <span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="string">"<span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">cp -R <span class="string">"<span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;TARGET_NAME&#125;</span>.framework/Modules/<span class="variable">$&#123;TARGET_NAME&#125;</span>.swiftmodule"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 3. Create universal binary file using lipo and place the combined executable in the copied framework directory</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Combining executables"</span></span><br><span class="line">lipo -create -output <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-iphonesimulator/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;ARCHIVE_PRODUCTS_PATH&#125;</span><span class="variable">$&#123;INSTALL_PATH&#125;</span>/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 4. Create universal binaries for embedded frameworks</span></span><br><span class="line"><span class="comment">#for SUB_FRAMEWORK in $( ls "$&#123;UNIVERSAL_OUTPUTFOLDER&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks" ); do</span></span><br><span class="line"><span class="comment">#BINARY_NAME="$&#123;SUB_FRAMEWORK%.*&#125;"</span></span><br><span class="line"><span class="comment">#lipo -create -output "$&#123;UNIVERSAL_OUTPUTFOLDER&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;" "$&#123;BUILD_DIR&#125;/$&#123;CONFIGURATION&#125;-iphonesimulator/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;" "$&#123;ARCHIVE_PRODUCTS_PATH&#125;$&#123;INSTALL_PATH&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;"</span></span><br><span class="line"><span class="comment">#done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 5. Convenience step to copy the framework to the project's directory</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Copying to project dir"</span></span><br><span class="line">yes | cp -Rf <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;PROJECT_DIR&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">open <span class="string">"<span class="variable">$&#123;PROJECT_DIR&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure><blockquote><p>上述脚本的内容主要来自于<a href="https://gist.github.com/eladnava/0824d08da8f99419ef2c7b7fb6d4cc78" target="_blank" rel="noopener">export-fat-swift-dynamic-framework</a>，我在这里根据实际情况进行了更改</p></blockquote><p>此时执行archive操作(Product-&gt;Archive)完成后会自动弹出Finder窗口显示新生成的framework的位置（应当就是位于项目根目录下）。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;figure&gt;
-&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg&quot; alt=&quot;Cocoa Touch Framework&quot;&gt;&lt;figcaption&gt;Cocoa Touch Framework&lt;/figcaption&gt;
-&lt;/figure&gt;
-&lt;p&gt;最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过&lt;a href=&quot;https://medium.com/@Rageeni16/create-cocoa-touch-framework-and-publish-it-be9ad6535f33&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Cocoa Touch Framework&lt;/a&gt;实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编译出同时支持模拟器和真机的Framework，即Universal(Fat) Framework。这一需求还需要进一步地利用一些系统脚本来实现。
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="ios" scheme="http://www.codewoody.com/tags/ios/"/>
-    
-      <category term="swift" scheme="http://www.codewoody.com/tags/swift/"/>
     
   </entry>
   
