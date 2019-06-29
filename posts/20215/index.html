@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/20215/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了_config.yml文件的配置以及pandoc依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-04-25T05:27:15.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo+Next: 使用Latex公式">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -711,7 +711,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -727,8 +727,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -768,8 +766,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1578,7 +1574,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

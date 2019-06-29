@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/linux-shell/awk.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="这篇文章转载自Linux三剑客老大 awk  概述 awk同sed命令类似，只不过sed擅长取行，awk命令擅长取列。（根据了解awk是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel） 原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理 用法: 1awk [可选的命令行选项] &apos;BEGIN&amp;#123;命令 &amp;#125; pattern&amp;#123; 命令">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ee482b07210cb8a084e47bac43f443be.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d69ae9c3151c623014bc9b558db9d8c2.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e2c04dd8198326358eae142bdfc5ee81.jpg">
@@ -221,7 +221,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -704,7 +704,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -720,8 +720,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -761,8 +759,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1531,7 +1527,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

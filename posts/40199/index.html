@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/40199/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="近日在django项目中采用了librosa来分析用户上传的音频，主要是对其做一定间隔的采样用于绘制波形图。在本地(MacOS)上工作正常，部署到Ubuntu服务器后，自己手动用python方式运行django的server时，工作都是正常的，然而当我用superviosr挂起之后就一直报NoBackendError的错误，反复检查了FFmpeg的安装，应该是没有问题的。网上搜了一下没有看到比较合">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-06-28T08:40:42.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python下的音频处理库librosa打开文件是显示NoBackendError的解决">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -678,7 +678,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -694,8 +694,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -735,8 +733,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1488,7 +1484,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

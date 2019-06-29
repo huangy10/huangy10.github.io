@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/3D-markov.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="参考文章及其系统模型 在马尔科夫链在WAVE链路层网络性能分析中的应用中我们提到了三维马尔科夫链的使用。相比于经典的[1]中提出的二维马尔科夫链，三维马尔科夫链新增的一维主要是为了解决EDCA机制下不同优先级的队列并存的问题。 Contribution 下面的内容以[2]为基干进行讨论。这篇文章的主要贡献是讨论网络连通性与饱和吞吐率性能之间的关系。具体贡献是如下三个方面：  作者提出了一种Conn">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fcd207caecc95e09093822f17db0486c.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a4021aaa90913f45c2fd208880177763.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6a2fc6a29dcb5b5098e986bdf9548936.png">
@@ -221,7 +221,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -844,7 +844,7 @@ E[i d l e]=E[c o l l] \Rightarrow p_{i d l e} * T_{i d l e}=p_{c o l l} * T_{c o
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -860,8 +860,6 @@ E[i d l e]=E[c o l l] \Rightarrow p_{i d l e} * T_{i d l e}=p_{c o l l} * T_{c o
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -901,8 +899,6 @@ E[i d l e]=E[c o l l] \Rightarrow p_{i d l e} * T_{i d l e}=p_{c o l l} * T_{c o
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1711,7 +1707,20 @@ E[i d l e]=E[c o l l] \Rightarrow p_{i d l e} * T_{i d l e}=p_{c o l l} * T_{c o
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

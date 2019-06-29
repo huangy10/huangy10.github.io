@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/28461/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="Cocoa Touch Framework  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过Cocoa Touch Framework实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png">
@@ -221,7 +221,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -682,7 +682,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -698,8 +698,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -739,8 +737,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1492,7 +1488,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

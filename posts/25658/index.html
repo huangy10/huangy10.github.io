@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/25658/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="今天在朋友们的群里又看到有朋友在谈论吃酵素的事情。这让我想到了2017年二月，我去东京交流访问，参观了日本最大的酵素生产商之一：中原株式会社。有意思的是，这家公司虽然是日本的公司，却是中国人创立的。之所以公司的名字叫做中原，是因为创始人是郑州人。当时接待我们的人中，有一个负责做产品研发的生物博士，筑波大学毕业，也是中国人。他带我们参观了公司总部顶楼的一个小型的检测间。有一个随行的朋友很实诚地问道：">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/f25d396eef1857959956a7772a3c52b7.jpg">
 <meta property="og:updated_time" content="2019-05-15T05:45:06.045Z">
 <meta name="twitter:card" content="summary">
@@ -219,7 +219,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -674,7 +674,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -690,8 +690,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -731,8 +729,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1484,7 +1480,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/platoon/platoon-v2v.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="编队内通信机制 为了维持编队结构，编队内部的成员需要周期性的交换其运动参数，即Beacon message dissemination。目前车联网通信的标准是WAVE。这里我们简要叙述一下WAVE的核心特点。 我们需要关注的WAVE的最为核心的两个标准是IEEE802.11p和IEEE1609.4。其中，前者规定了MAC层和物理层的标准，后者提供了多信道仿真的规范。WAVE在物理层上拥有7个信道，">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6b45350aea124c2d6e3842d015018f5c.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ae3a361d691fbb9238c779deb00ae9c3.gif">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fe2bb3e3290e17cf239a96cda68b1e02.jpg">
@@ -224,7 +224,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -850,7 +850,7 @@ f_{S}(x)=\frac{1}{\sqrt{2 \pi} \sigma_{D} x} \exp \left(-\frac{\left(\log (x)-\m
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -866,8 +866,6 @@ f_{S}(x)=\frac{1}{\sqrt{2 \pi} \sigma_{D} x} \exp \left(-\frac{\left(\log (x)-\m
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -907,8 +905,6 @@ f_{S}(x)=\frac{1}{\sqrt{2 \pi} \sigma_{D} x} \exp \left(-\frac{\left(\log (x)-\m
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1717,7 +1713,20 @@ f_{S}(x)=\frac{1}{\sqrt{2 \pi} \sigma_{D} x} \exp \left(-\frac{\left(\log (x)-\m
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

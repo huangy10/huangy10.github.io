@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/delay-analysis.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[1]这篇文章。该文章内的马尔科夫链中的变量定义和[2]中的有点不同。我们先梳理一下[1]中马尔科夫链。 二维马尔科夫过程 对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马尔科夫链表示：  二维马尔科夫链表示  其中状态变量定义为\(\{s(t), b(t)\}\)，\(s(">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/84f08989447e4bc20711e7b76c0bb65a.png">
 <meta property="og:updated_time" content="2019-05-17T07:00:17.571Z">
 <meta name="twitter:card" content="summary">
@@ -218,7 +218,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -708,7 +708,7 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -724,8 +724,6 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -765,8 +763,6 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1575,7 +1571,20 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

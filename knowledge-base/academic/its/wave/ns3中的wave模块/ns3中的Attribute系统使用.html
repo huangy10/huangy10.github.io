@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/ns3中的wave模块/ns3中的Attribute系统使用.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="ns3中的Attribute及相关系统的设计非常有意思，其意义在于为仿真中的极其复杂的模块架构中，提供了一种非常方便的解耦的属性访问（读写）方法。例如，在一个复杂的设计WAVE的性能仿真中，若要修改某个节点的CSMA竞争窗口大小。没有Attriubute系统的情况下，想要通过层层指针获取底层对象再进行修改，会对代码的模块化设计和代码的复杂度带来灾难性的硬性。相反，在Attribute系统下，我们只">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-05-27T08:09:31.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ns3中的Attribute系统的使用">
@@ -216,7 +216,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -721,7 +721,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -737,8 +737,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -778,8 +776,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1548,7 +1544,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

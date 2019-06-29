@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/dynamic-beacon-interval.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="在基于Platoon的车间通信(V2V)机制设计:动态调节网络参数我们也提到了这种控制理念：即根据网络的情况，动态的调整网络参数。对于Beacon包传输来说，在高负载的情况下，与其所有人仍然按照原来的发送速度，进而导致严重的冲突拖慢整体性能，不如整体所有人适当调低发送速度。 这篇文章研读总结自[1]。这篇文章主要是依据车流密度情况动态调整BSM(Basic Safety Message)的发送速率">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/81a2f775053cb02c3fbd961122653dea.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c2dc02b1b250bdf88a9e65a5f984ab08.png">
 <meta property="og:updated_time" content="2019-05-19T11:46:33.161Z">
@@ -219,7 +219,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -732,7 +732,7 @@ E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -748,8 +748,6 @@ E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -789,8 +787,6 @@ E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1599,7 +1595,20 @@ E_{1}^{\prime}=e^{-V / E}(1-V / E)=0 \Rightarrow V= E.
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -135,13 +135,13 @@
 
 
   <meta name="description" content="Dependency Injection这个概念是我之前在实习的时候做Java开发的时候接触的。Dependency Injection可以大大降低模块之间的耦合度，提高系统的可扩展性和鲁棒性，不过这个概念对于新人来说理解起来还是存在比较大的障碍。由于当时实习的时间比较短，对于这个概念我并没有吃透。这次学习Node.js的时候，又在awilix这个库里面遇到了这个概念。以此为契机就来好好学习一些D">
-<meta name="keywords" content="翻译,nodejs">
+<meta name="keywords" content="nodejs,翻译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Node.js | Dependency Injection">
 <meta property="og:url" content="http://www.codewoody.com/posts/61013/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="Dependency Injection这个概念是我之前在实习的时候做Java开发的时候接触的。Dependency Injection可以大大降低模块之间的耦合度，提高系统的可扩展性和鲁棒性，不过这个概念对于新人来说理解起来还是存在比较大的障碍。由于当时实习的时间比较短，对于这个概念我并没有吃透。这次学习Node.js的时候，又在awilix这个库里面遇到了这个概念。以此为契机就来好好学习一些D">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-12T16:30:22.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js | Dependency Injection">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -616,9 +616,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/翻译/" rel="tag"># 翻译</a>
-          
             <a href="/tags/nodejs/" rel="tag"># nodejs</a>
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
           
         </div>
       
@@ -721,7 +721,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -737,8 +737,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -778,8 +776,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1548,7 +1544,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

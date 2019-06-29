@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/7835/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="自己搭建了一个SS服务器以后，自然而然的会同身边的朋友共享。自然，身边的朋友一起用，大部分服务器配置都可以毫无压力的支撑。但倘若一传十十传百，最后成百上千的人一起用一个服务器，那就撑不住了。 当然你可以隔一段时间换一次密码，但是后面的麻烦事也不少（要同步更新不同设备上的设置，身边的朋友来问你新设置）。 几天我研究了一下，为ss服务器增加了多用户即为每个用户设置独立的连接数限制的方法，这样能够比较完">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-11-13T14:27:05.898Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shadowsocks：多用户账号独立，并限制用户连接数">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -678,7 +678,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -694,8 +694,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -735,8 +733,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1505,7 +1501,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

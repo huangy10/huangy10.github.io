@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/wave.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。 WAVE与其他车联网通信中的技术/标准之间关联 在车联网研究中常见的其他技术关键词还包括:  DSRC IEEE802.11p IEEE1609.x  物理层特点 WAVE在物理层使用IEEE802.11p的标准。其物理层的一些关键信息如下。 信道划分 Slot Alloca">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3e60597c7c597cfedf8c5fe4dba44e90.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3e60597c7c597cfedf8c5fe4dba44e90.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/12010bd0f5e8197a68ff732bff9cdf87.png">
@@ -223,7 +223,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -887,7 +887,7 @@ T_c^{rts} = RTS + DIFS + \delta
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -903,8 +903,6 @@ T_c^{rts} = RTS + DIFS + \delta
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -944,8 +942,6 @@ T_c^{rts} = RTS + DIFS + \delta
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1754,7 +1750,20 @@ T_c^{rts} = RTS + DIFS + \delta
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

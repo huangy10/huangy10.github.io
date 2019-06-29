@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/通信范围模型探讨.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所有参考文">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png">
 <meta property="og:updated_time" content="2019-05-09T13:39:17.091Z">
 <meta name="twitter:card" content="summary">
@@ -218,7 +218,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -730,7 +730,7 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -746,8 +746,6 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -787,8 +785,6 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1597,7 +1593,20 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

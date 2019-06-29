@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/54288/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="在学校里看剧、电影，下载破解游戏基本都靠北邮人。一方面资源比较全，另一方面是走IPv6，不需要走计费的校园网IPv4流量。不过由于北邮人只支持IPv6，而国内IPv6基本只有校园网有。问题来了，怎么在校外的纯IPv4环境下使用IPv6 Only的北邮人呢？">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1b99a38129580435479cfa72b086b3b5.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c052a17e4f29aea937edaec279b366e9.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e9cf5e6db36fbdccf7fc9c4f330ce8b0.png">
@@ -223,7 +223,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -704,7 +704,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -720,8 +720,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -761,8 +759,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1531,7 +1527,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -140,7 +140,7 @@
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/1D-markov.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
 <meta property="og:updated_time" content="2019-06-20T05:45:04.052Z">
 <meta name="twitter:card" content="summary">
@@ -218,7 +218,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -740,7 +740,7 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -756,8 +756,6 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -797,8 +795,6 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1607,7 +1603,20 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

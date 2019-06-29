@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/35148/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个std::vector。例如 1void f(std::vector&amp;lt;struct ExampleStruct&amp;gt; data); 由于C++是采用值传递的方式，每次对std::vector进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-06-28T08:57:43.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中将结构体放置在std::vector容器内的操作风险">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -597,6 +597,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/posts/36496/" rel="prev" title="Hexo启用Han支持过程中发现的问题">
+                Hexo启用Han支持过程中发现的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -664,7 +668,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -680,8 +684,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -721,8 +723,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1474,7 +1474,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

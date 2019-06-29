@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/28769/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="最近实验需要在树莓派上搭建一个简单的视频服务，而且，希望画质一定的情况下，消耗的带宽越少越好。关于带宽的问题，其实开始并没有考虑太多，但是在尝试用uv4l工具创建mpeg流的时候发现，尽管分辨率很低（720p）不到，需要的数据率却达到了大约5MB/s。我们待测试的通信层不具备这样高的传输传输能力。因此需要想办法把数据率降下来。综上，我们需要产生一个编码后的视频流，如H264。">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-27T02:42:39.095Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派上搭建视频流服务的方法尝试">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -724,7 +724,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -740,8 +740,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -781,8 +779,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1551,7 +1547,20 @@
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>

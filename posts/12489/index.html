@@ -17,7 +17,7 @@
   
 
 
-<html class="theme-next pisces use-motion han-init han-js-rendered" lang="zh-cmn-Hans">
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
 <head><meta name="generator" content="Hexo 3.8.0">
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -141,7 +141,7 @@
 <meta property="og:url" content="http://www.codewoody.com/posts/12489/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了，很">
-<meta property="og:locale" content="zh-cmn-Hans">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-05-10T03:06:06.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Haproxy支持Ipv6">
@@ -217,7 +217,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cmn-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -688,7 +688,7 @@ x = \sum_{i=1}^{N}x^2
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -704,8 +704,6 @@ x = \sum_{i=1}^{N}x^2
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -745,8 +743,6 @@ x = \sum_{i=1}^{N}x^2
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1515,7 +1511,20 @@ x = \sum_{i=1}^{N}x^2
   
 
 
-  <script src="//cdnjs.cloudflare.com/ajax/libs/Han/3.2.7/han.min.js"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+  }()
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
