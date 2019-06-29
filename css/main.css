@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #e77fac;
+  background: #ff7cbe;
 }
 .feed-link,
 .chat {
@@ -2898,4 +2898,13 @@ figcaption {
 }
 body {
   line-height: 1.7;
+}
+h2::before {
+  content: "❖ ";
+}
+h3::before {
+  content: "◇ ";
+}
+h2.post-title::before {
+  content: "📚";
 }
