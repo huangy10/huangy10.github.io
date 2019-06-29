@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff2e01;
+  background: #75bb13;
 }
 .feed-link,
 .chat {
@@ -2899,10 +2899,10 @@ figcaption {
 body {
   line-height: 1.7;
 }
-h2::before {
+article.post h2::before {
   content: "❖ ";
 }
-h3::before {
+article.post h3::before {
   content: "◇ ";
 }
 h2.post-title::before {
