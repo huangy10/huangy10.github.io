@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-07-02T02:19:36.866Z</updated>
+  <updated>2019-07-07T07:50:40.901Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Weekly - 3</title>
+    <link href="http://www.codewoody.com/posts/41583/"/>
+    <id>http://www.codewoody.com/posts/41583/</id>
+    <published>2019-07-07T07:49:29.000Z</published>
+    <updated>2019-07-07T07:50:40.901Z</updated>
+    
+    <content type="html"><![CDATA[]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        
+
+      
+    
+    </summary>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/categories/Weekly/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
+    
+  </entry>
   
   <entry>
     <title>Struct in Vector: 进一步讨论</title>
@@ -76,7 +108,7 @@
     <published>2019-07-01T03:28:09.000Z</published>
     <updated>2019-07-07T07:46:09.000Z</updated>
     
-    <content type="html"><![CDATA[</p><h2 id="新闻">新闻</h2><h3 id="rick-and-morty-第四季将会在11月上映">Rick and Morty 第四季将会在11月上映</h3><figure><img src="https://imgs.codewoody.com/uploads/big/70077b2773d87db24e9407011d4830f9.jpeg" alt="Rick and Morty · Season 4"><figcaption>Rick and Morty · Season 4</figcaption></figure><h3 id="华为禁令取消"><a href="https://www.williamlong.info/archives/5750.html" target="_blank" rel="noopener">华为禁令「取消」</a></h3><p>6月29日，为期3天（6月27日至29日）的二十国集团领导人第十四次峰会刚刚在日本大阪落下帷幕。29日上午，中、美两国元首举行了约80分钟的会晤，此后两国共同宣布了两大成果：1）中美双方同意在平等和相互尊重的基础上重启经贸磋商。2）美方表示不再对中国出口产品加征新的关税。</p><p>在两国元首会谈之后，美国总统特朗普在记者会上表示，同意让美国公司继续销售产品给华为。</p><p>特朗普解释称，这些卖给华为的产品都是美国公司制造的，是很复杂很科学的产品，是只有美国拥有技术和在制造的产品。“实际上我们在硅谷做的事情令人难以执行，没有人能和我们竞争，所以我同意 -- 我很容易地就同意允许他们继续出售这些产品”，特朗普说，“我们让他们继续卖给华为。”</p><p>据华尔街日报报道，特朗普称将允许美企向华为供货，中国则将开始购买大量美国农产品。他强调了中国大宗采购美国农产品的意愿，将其归为允许向华为出售美国产品和推迟新关税的一大理由。据美国农业部，周五会谈前，中国采购了54.4万吨大豆。？</p><p>美国家经济委员会主席拉里·库德洛在电视采访中更加详细地解释了解禁一事。他表示解禁即将生效，美国商务部可能会考虑“授予一些临时许可证”，让美国公司与华为恢复业务。对于解禁范围，他强调华为仅可以购买“其它国家同样广泛销售的美国芯片产品”，否认这是“特赦”，表示国家安全仍然是最重要的考虑因素，只要不构成国家安全问题，华为可以恢复从美国企业采购产品。</p><h3 id="fuchsia官方开发者网站上线"><a href="https://www.phonearena.com/news/Google-launches-developer-site-for-Fuchsia_id117171" target="_blank" rel="noopener">Fuchsia官方开发者网站上线</a></h3><p>Fuchsia 是 Google 打造的下一代操作系统，它不基于 Linux 内核，运行方式也和 Android 完全不同，但可以通过相关工具让 Android 应用可以移植到新系统中。近日 Google 也正式上线了 Fuchsia 的 开发者网站，从这个网站中开发者可以了解到 Fuchsia 的系统开发进展及其采用的技术，为后续开发做好准备。</p><p>ps: Android的生态其实有点太过恶劣了：</p><blockquote><p>安卓碎片化严重到什么地步？安卓本身有12个版本，如果每个版本有12个厂商，每个厂商有12个手机型号，因此安卓生态至少包含1,728种&quot;版本- 品牌 - 设备&quot;的组合。</p></blockquote><h3 id="大兴机场竣工"><a href="https://www.ifanr.com/1230698?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">大兴机场竣工</a></h3><figure><img src="https://imgs.codewoody.com/uploads/big/e2e40d7ca813e5b6b63a3e9feae4efa0.jpg" alt="大兴机场"><figcaption>大兴机场</figcaption></figure><p>时 4 年半，北京大兴国际机场于 6 月 30 日正式竣工，9 月底将投入运营，各家航空公司也陆续公布了在新机场的航线投入计划。</p><p>各家航司的转场投运情况如下：</p><ul><li>国航系（国航、国货航、深航、山航、昆明航、国航内蒙、北京航、大连航）留守首都机场，但国航在大兴有 10% 航班时刻；</li><li>东航系（东航、上航、中联航、东航江苏、东航云南、东航武汉）转场大兴，但东航的京沪快线留守首都机场；</li><li>南航系（南航、厦航、河北航、江西航、重庆航、汕头航、珠海航、贵州航、南航河南）转场大兴；</li><li>海航、大新华航等留守首都机场；</li><li>首都航空转场大兴；</li><li>其他国内航司可选择首都机场或大兴机场任一机场运行，但不得两场运行；</li><li>允许外航及港澳台地区航空公司自行选择运行机场包括两场运行。</li></ul><h3 id="李彦宏演讲被砸场子"><a href="https://www.zhihu.com/question/333022816" target="_blank" rel="noopener">李彦宏演讲被砸场子</a></h3><p>只是为了这张图载一下这个新闻：</p><figure><img src="https://imgs.codewoody.com/uploads/big/94a887f5e808a756a8fded60d728edac.jpeg" alt="宏颜获水"><figcaption>宏颜获水</figcaption></figure><blockquote><p>7月3日，在2019年百度AI开发者大会上发生突发状况，百度董事长、CEO董事长李彦宏在展示完小度最新功能后，被台下观众泼水。由于事发突然，现场一度陷入沉默。面对这样的突发状态，现场观众集体给李彦宏加油打气，李彦宏也很快调整状态，并调侃道：发展AI的路上就是会遇到这种挫折。</p></blockquote><figure><img src="https://imgs.codewoody.com/uploads/big/adf636dd16a6ebf3dca5965471663920.gif" alt="事件现场"><figcaption>事件现场</figcaption></figure><h3 id="北京石景山发生枪战">北京石景山发生枪战</h3><p>应该与扫黑行动有关，据说肇事者已经被抓走了。具体情况不明，舆论被管控了。</p><h2 id="软件推荐">软件推荐</h2><p><a href="https://mathpix.com/" target="_blank" rel="noopener"><strong>Mathpix</strong></a>: 将图片转化成Latex公式，重点是这款软件是免费的！</p><p><img src="https://mathpix.com/images/snip-page/gif_2.gif"> <img src="https://mathpix.com/images/snip-page/gif_3.gif"></p><h2 id="文章与言论">文章与言论</h2><ul><li><p><a href="https://medium.com/swlh/why-defensive-programming-is-the-best-way-for-robust-coding-cfa790fe04cd" target="_blank" rel="noopener">Why defensive programming is the best way for robust coding</a></p></li><li><p><a href="https://www.zhihu.com/question/23979077/answer/730070106" target="_blank" rel="noopener">原生动物是如何演化成后生动物的？</a> <img src="https://imgs.codewoody.com/uploads/big/8aa938aa976af708b6f2a5496d68107b.jpg" alt="Nothing in biology makes sense except in the light of evolution. -- Dobzhansky"></p></li><li><p>日常劝退：<a href="https://www.sciencemag.org/careers/2019/06/it-s-ok-quit-your-phd" target="_blank" rel="noopener">It's ok to quit your Ph.D</a>，中文:<a href="https://zhuanlan.zhihu.com/p/71702212" target="_blank" rel="noopener">Science「劝退文」：读博压力山大，是时候退学了</a></p></li></ul><blockquote><p>读博无疑是一个痛苦的过程。甚至有人说，如今，读博已经变成了“赌博”。面对学业压力，很多博士生选择延期毕业。近日，《科学》杂志发表长文，提供了另一种选择：退学。美国研究生院理事会（Council of Graduate School）公布的数据显示，约1/4的美国科学与工程专业博士生在入学的头3年选择退学。《科学》杂志此次采访了9位博士阶段退学者，并总结了退学的3点理由：对研究失去兴趣，开始追寻其他事业，或是因在学术界的遭遇而心灰意冷。</p></blockquote><ul><li><a href="https://sspai.com/post/55433" target="_blank" rel="noopener">如何更快地读一本书</a></li></ul><figure><img src="https://imgs.codewoody.com/uploads/big/1bf513742dc4e3fe0aa2cd739cc6a1ee.jpeg" alt="呼吸读书法"><figcaption>呼吸读书法</figcaption></figure><ul><li><p>为什么<strong>供给能创造自己的需求</strong>呢？实际上，当生产者还没有生产或提供某种新的商品或消费品时，人们不能真正地看到或意识到这种东西带来的用处，因此很难想到对它的实际需求。就像是地铁，为什么10年前没有四通八达的地铁线路，人们也能按部就班地过日子，没有哭着喊着说没有地铁就不能活呢？这是因为当时人们还没有体会过地铁给他们带来的便捷，生活也并不依赖于它，因此并没有对于它有过于迫切的需求。相反，如果换成现在的我们失去了地铁，整个城市或许都会因此而崩溃。 -- <a href="https://www.toutiao.com/i6708094111167021572/?tt_from=weixin_moments&amp;utm_campaign=client_share&amp;wxshare_count=2&amp;from=timeline&amp;share_type=original&amp;timestamp=1562026117&amp;app=news_article&amp;utm_source=weixin_moments&amp;isappinstalled=0&amp;utm_medium=toutiao_android&amp;req_id=201907020808360100180692209643852&amp;group_id=6708094111167021572&amp;pbid=6677033007465252355" target="_blank" rel="noopener">地铁越修越多，交通反而拥挤</a></p></li><li><p>经济权力就是权力本身。-- <a href="https://www.zhihu.com/question/271847850/answer/726333668" target="_blank" rel="noopener">知乎 - 罗一觉</a></p></li><li><p>你问我宇宙大爆炸之前发生的事情，就像问我南极以南是什么地方。 -- 霍金</p></li></ul>]]></content>
+    <content type="html"><![CDATA[</p><h2 id="新闻">新闻</h2><h3 id="rick-and-morty-第四季将会在11月上映">Rick and Morty 第四季将会在11月上映</h3><figure><img src="https://imgs.codewoody.com/uploads/big/70077b2773d87db24e9407011d4830f9.jpeg" alt="Rick and Morty · Season 4"><figcaption>Rick and Morty · Season 4</figcaption></figure><h3 id="华为禁令取消"><a href="https://www.williamlong.info/archives/5750.html" target="_blank" rel="noopener">华为禁令「取消」</a></h3><p>6月29日，为期3天（6月27日至29日）的二十国集团领导人第十四次峰会刚刚在日本大阪落下帷幕。29日上午，中、美两国元首举行了约80分钟的会晤，此后两国共同宣布了两大成果：1）中美双方同意在平等和相互尊重的基础上重启经贸磋商。2）美方表示不再对中国出口产品加征新的关税。</p><p>在两国元首会谈之后，美国总统特朗普在记者会上表示，同意让美国公司继续销售产品给华为。</p><p>特朗普解释称，这些卖给华为的产品都是美国公司制造的，是很复杂很科学的产品，是只有美国拥有技术和在制造的产品。“实际上我们在硅谷做的事情令人难以执行，没有人能和我们竞争，所以我同意 -- 我很容易地就同意允许他们继续出售这些产品”，特朗普说，“我们让他们继续卖给华为。”</p><p>据华尔街日报报道，特朗普称将允许美企向华为供货，中国则将开始购买大量美国农产品。他强调了中国大宗采购美国农产品的意愿，将其归为允许向华为出售美国产品和推迟新关税的一大理由。据美国农业部，周五会谈前，中国采购了54.4万吨大豆。？</p><p>美国家经济委员会主席拉里·库德洛在电视采访中更加详细地解释了解禁一事。他表示解禁即将生效，美国商务部可能会考虑“授予一些临时许可证”，让美国公司与华为恢复业务。对于解禁范围，他强调华为仅可以购买“其它国家同样广泛销售的美国芯片产品”，否认这是“特赦”，表示国家安全仍然是最重要的考虑因素，只要不构成国家安全问题，华为可以恢复从美国企业采购产品。</p><h3 id="fuchsia官方开发者网站上线"><a href="https://www.phonearena.com/news/Google-launches-developer-site-for-Fuchsia_id117171" target="_blank" rel="noopener">Fuchsia官方开发者网站上线</a></h3><p>Fuchsia 是 Google 打造的下一代操作系统，它不基于 Linux 内核，运行方式也和 Android 完全不同，但可以通过相关工具让 Android 应用可以移植到新系统中。近日 Google 也正式上线了 Fuchsia 的 开发者网站，从这个网站中开发者可以了解到 Fuchsia 的系统开发进展及其采用的技术，为后续开发做好准备。</p><p>ps: Android的生态其实有点太过恶劣了：</p><blockquote><p>安卓碎片化严重到什么地步？安卓本身有12个版本，如果每个版本有12个厂商，每个厂商有12个手机型号，因此安卓生态至少包含1,728种&quot;版本- 品牌 - 设备&quot;的组合。</p></blockquote><h3 id="大兴机场竣工"><a href="https://www.ifanr.com/1230698?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener">大兴机场竣工</a></h3><figure><img src="https://imgs.codewoody.com/uploads/big/e2e40d7ca813e5b6b63a3e9feae4efa0.jpg" alt="大兴机场"><figcaption>大兴机场</figcaption></figure><p>时 4 年半，北京大兴国际机场于 6 月 30 日正式竣工，9 月底将投入运营，各家航空公司也陆续公布了在新机场的航线投入计划。</p><p>各家航司的转场投运情况如下：</p><ul><li>国航系（国航、国货航、深航、山航、昆明航、国航内蒙、北京航、大连航）留守首都机场，但国航在大兴有 10% 航班时刻；</li><li>东航系（东航、上航、中联航、东航江苏、东航云南、东航武汉）转场大兴，但东航的京沪快线留守首都机场；</li><li>南航系（南航、厦航、河北航、江西航、重庆航、汕头航、珠海航、贵州航、南航河南）转场大兴；</li><li>海航、大新华航等留守首都机场；</li><li>首都航空转场大兴；</li><li>其他国内航司可选择首都机场或大兴机场任一机场运行，但不得两场运行；</li><li>允许外航及港澳台地区航空公司自行选择运行机场包括两场运行。</li></ul><h3 id="李彦宏演讲被砸场子"><a href="https://www.zhihu.com/question/333022816" target="_blank" rel="noopener">李彦宏演讲被砸场子</a></h3><p>只是为了这张图载一下这个新闻：</p><figure><img src="https://imgs.codewoody.com/uploads/big/94a887f5e808a756a8fded60d728edac.jpeg" alt="宏颜获水"><figcaption>宏颜获水</figcaption></figure><blockquote><p>7月3日，在2019年百度AI开发者大会上发生突发状况，百度董事长、CEO董事长李彦宏在展示完小度最新功能后，被台下观众泼水。由于事发突然，现场一度陷入沉默。面对这样的突发状态，现场观众集体给李彦宏加油打气，李彦宏也很快调整状态，并调侃道：发展AI的路上就是会遇到这种挫折。</p></blockquote><figure><img src="https://imgs.codewoody.com/uploads/big/adf636dd16a6ebf3dca5965471663920.gif" alt="事件现场"><figcaption>事件现场</figcaption></figure><h3 id="北京石景山发生枪战">北京石景山发生枪战</h3><p>应该与扫黑行动有关，据说肇事者已经被抓走了。具体情况不明，舆论被管控了。</p><h3 id="新城控股董事长王振华涉嫌威胁女童"><a href="https://www.zhihu.com/question/333086645" target="_blank" rel="noopener">新城控股董事长王振华涉嫌威胁女童</a></h3><figure><img src="https://pic1.zhimg.com/80/v2-b5b135738ddac1a28ca23d62df772595_hd.jpg" alt="犯罪嫌疑人"><figcaption>犯罪嫌疑人</figcaption></figure><figure><img src="https://pic3.zhimg.com/v2-ad076d9b189c1e78d2dbbe5b72b73b56_b.png" alt="警情通报"><figcaption>警情通报</figcaption></figure><p>据悉，犯罪行为发生于6月29日下午，地点为大渡河路一家五星级酒店。被猥亵女童事后向在江苏的母亲打电话哭诉，母亲即来沪报警，王某随即被采取强制措施。目前女童已验伤情，阴道有撕裂伤，构成轻伤。</p><p>据最新消息，带女童入住酒店的女子周某也已到案。周某49岁，江苏徐州人。据其供述，事发当天，她带了两个女孩入住酒店，一个9岁，一个12岁。两个女孩的母亲为周某朋友。周某谎称带两女孩去上海迪斯尼玩，从江苏带至上海。当天王某对9岁女童实施犯罪，事后给付周某现金1万元。</p><figure><img src="https://pic1.zhimg.com/80/v2-aa9948e57fb3b647e4917e110ae7f11a_hd.jpg" alt="王振华身家3000亿的帝国"><figcaption>王振华身家3000亿的帝国</figcaption></figure><figure><img src="https://pic2.zhimg.com/80/v2-c21f01380449ea5eca5f6079b118dae7_hd.jpg" alt="王振华的更多背景资料"><figcaption>王振华的更多背景资料</figcaption></figure><h2 id="软件推荐">软件推荐</h2><p><a href="https://mathpix.com/" target="_blank" rel="noopener"><strong>Mathpix</strong></a>: 将图片转化成Latex公式，重点是这款软件是免费的！</p><p><img src="https://mathpix.com/images/snip-page/gif_2.gif"> <img src="https://mathpix.com/images/snip-page/gif_3.gif"></p><h2 id="文章与言论">文章与言论</h2><ul><li><p><a href="https://medium.com/swlh/why-defensive-programming-is-the-best-way-for-robust-coding-cfa790fe04cd" target="_blank" rel="noopener">Why defensive programming is the best way for robust coding</a></p></li><li><p><a href="https://www.zhihu.com/question/23979077/answer/730070106" target="_blank" rel="noopener">原生动物是如何演化成后生动物的？</a> <img src="https://imgs.codewoody.com/uploads/big/8aa938aa976af708b6f2a5496d68107b.jpg" alt="Nothing in biology makes sense except in the light of evolution. -- Dobzhansky"></p></li><li><p>日常劝退：<a href="https://www.sciencemag.org/careers/2019/06/it-s-ok-quit-your-phd" target="_blank" rel="noopener">It's ok to quit your Ph.D</a>，中文:<a href="https://zhuanlan.zhihu.com/p/71702212" target="_blank" rel="noopener">Science「劝退文」：读博压力山大，是时候退学了</a></p></li></ul><blockquote><p>读博无疑是一个痛苦的过程。甚至有人说，如今，读博已经变成了“赌博”。面对学业压力，很多博士生选择延期毕业。近日，《科学》杂志发表长文，提供了另一种选择：退学。美国研究生院理事会（Council of Graduate School）公布的数据显示，约1/4的美国科学与工程专业博士生在入学的头3年选择退学。《科学》杂志此次采访了9位博士阶段退学者，并总结了退学的3点理由：对研究失去兴趣，开始追寻其他事业，或是因在学术界的遭遇而心灰意冷。</p></blockquote><ul><li><a href="https://sspai.com/post/55433" target="_blank" rel="noopener">如何更快地读一本书</a></li></ul><figure><img src="https://imgs.codewoody.com/uploads/big/1bf513742dc4e3fe0aa2cd739cc6a1ee.jpeg" alt="呼吸读书法"><figcaption>呼吸读书法</figcaption></figure><ul><li><p>为什么<strong>供给能创造自己的需求</strong>呢？实际上，当生产者还没有生产或提供某种新的商品或消费品时，人们不能真正地看到或意识到这种东西带来的用处，因此很难想到对它的实际需求。就像是地铁，为什么10年前没有四通八达的地铁线路，人们也能按部就班地过日子，没有哭着喊着说没有地铁就不能活呢？这是因为当时人们还没有体会过地铁给他们带来的便捷，生活也并不依赖于它，因此并没有对于它有过于迫切的需求。相反，如果换成现在的我们失去了地铁，整个城市或许都会因此而崩溃。 -- <a href="https://www.toutiao.com/i6708094111167021572/?tt_from=weixin_moments&amp;utm_campaign=client_share&amp;wxshare_count=2&amp;from=timeline&amp;share_type=original&amp;timestamp=1562026117&amp;app=news_article&amp;utm_source=weixin_moments&amp;isappinstalled=0&amp;utm_medium=toutiao_android&amp;req_id=201907020808360100180692209643852&amp;group_id=6708094111167021572&amp;pbid=6677033007465252355" target="_blank" rel="noopener">地铁越修越多，交通反而拥挤</a></p></li><li><p>经济权力就是权力本身。-- <a href="https://www.zhihu.com/question/271847850/answer/726333668" target="_blank" rel="noopener">知乎 - 罗一觉</a></p></li><li><p>你问我宇宙大爆炸之前发生的事情，就像问我南极以南是什么地方。 -- 霍金</p></li></ul>]]></content>
     
     <summary type="html">
     
@@ -84,12 +116,16 @@
     
     </summary>
     
-      <category term="weekly" scheme="http://www.codewoody.com/categories/weekly/"/>
+      <category term="Weekly" scheme="http://www.codewoody.com/categories/Weekly/"/>
     
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
-      <category term="weekly" scheme="http://www.codewoody.com/tags/weekly/"/>
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
   </entry>
   
@@ -268,7 +304,7 @@
     
     </summary>
     
-      <category term="weekly" scheme="http://www.codewoody.com/categories/weekly/"/>
+      <category term="Weekly" scheme="http://www.codewoody.com/categories/Weekly/"/>
     
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
@@ -279,7 +315,7 @@
     
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
-      <category term="weekly" scheme="http://www.codewoody.com/tags/weekly/"/>
+      <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
   </entry>
   
@@ -507,32 +543,6 @@
       <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
     
       <category term="docker" scheme="http://www.codewoody.com/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>读书破万卷,下笔如有神</title>
-    <link href="http://www.codewoody.com/posts/60435/"/>
-    <id>http://www.codewoody.com/posts/60435/</id>
-    <published>2019-05-06T03:00:06.000Z</published>
-    <updated>2019-06-28T01:46:57.496Z</updated>
-    
-    <content type="html"><![CDATA[<p>能够获得暴利的职业，都有一个共同特点：可扩展性（scaling），一次劳动可以服务成千上万的人。</p><p>软件、电影、游戏行业都具有可扩展性，作品的生产成本是固定的，但可以被消费无数次，所以有巨大的获利空间，创造出许许多多的富豪。另一方面，理发师、厨师、出租车司机一次劳动，只能服务少数几个人，就不具有可扩展性，很难获得暴利，生存得很辛苦。</p><p>最近，我读到美国一个风险投资家的<a href="https://andrewchen.co/professional-blogging/" target="_blank" rel="noopener">文章</a>。他说了一句发人深思的话：</p><p>&quot;写作是最具可扩展性的活动。你呆在家里，不去参加活动/会议，只是在网上写下自己的想法，然后你就具有了最好的可扩展性。&quot;</p><p>我想了一下，还真是这样。你写了一篇文章，想让其他人看到，只要到处张贴就行了。每次转贴，就是扩展了一次。这比其他产品的扩展容易多了。面包师傅想要更多的人尝到自己的面包，只能多开面包店；网站要扩展，只能购买更多的服务器。相比之下，文字的扩展简直是零成本。</p><p>大公司每年花费数十亿美元用于广告，以求人们关注他们的产品。但是，一个好的作家可以免费获得这种扩展性。这就是为什么你应该把自己的想法写下来的原因，这么好的免费传播渠道，为什么不用呢？你以为，写下来不会有人看。错，其实是有人会看到的，如果他们觉得有价值，就会帮你传播出去。</p><div class="note info">            <p>这篇文章转载自<a href="http://www.ruanyifeng.com/blog/2019/05/weekly-issue-54.html" target="_blank" rel="noopener">阮一峰的博客</a>。这篇文章其实说了一个非常简洁明了却价值巨大的道理，也给我们启示：我们应该如何规划自己的职业道路。只是靠出售自己的时间，即便是清北的同学，也只是能做到一个尚算富裕，但是辛苦中产阶级。要更上一层楼，还是需要手握资本。而怎么获得资本呢？其实就是靠文章里说的“可扩展性的工作”。</p>          </div>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;能够获得暴利的职业，都有一个共同特点：可扩展性（scaling），一次劳动可以服务成千上万的人。&lt;/p&gt;
-&lt;p&gt;软件、电影、游戏行业都具有可扩展性，作品的生产成本是固定的，但可以被消费无数次，所以有巨大的获利空间，创造出许许多多的富豪。另一方面，理发师、厨师、出租车司机一次
-      
-    
-    </summary>
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
   </entry>
   
