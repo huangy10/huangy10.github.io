@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-07-23T09:51:52.939Z</updated>
+  <updated>2019-07-24T02:57:05.497Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -21,16 +21,16 @@
     <link href="http://www.codewoody.com/posts/41199/"/>
     <id>http://www.codewoody.com/posts/41199/</id>
     <published>2019-07-23T05:52:57.000Z</published>
-    <updated>2019-07-23T09:51:52.939Z</updated>
+    <updated>2019-07-24T02:57:05.497Z</updated>
     
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<h2 id="新闻">新闻</h2><h3 id="鲍里斯约翰逊成为新一任英国首相"><a href="http://www.xinhuanet.com/world/2019-07/23/c_1124789557.htm" target="_blank" rel="noopener">鲍里斯·约翰逊成为新一任英国🇬🇧首相</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/e13d52707f66863d9863cb22b18eacf5.jpg"></p><p>23日，鲍里斯.约翰逊(被称为英国版特朗普)正式当选执政党保守党党魁，在获得女王批准之后将接替特雷莎·梅出任英国首相。鲍里斯票数：92,153 杰里米·亨特票数：46,656 。参与投票的是16万保守党党员。</p><p>现年55岁的约翰逊是“脱欧派”领袖，曾多次强调英国必须在10月31日的新期限前完成“脱欧”，哪怕这样做的代价是“无协议脱欧”，他表示将与欧盟就新“脱欧”协议谈判。约翰逊是英国政坛鲜见的特色人物：反正统、破规矩、不修篇幅，且花絮不断。一头杂乱金发也是出名的个性标志。他也因2008年北京奥运会闭幕式上代表伦敦去接奥运会旗和火种而为中国民众熟知。</p><ul><li><a href="https://www.bbc.com/zhongwen/simp/uk-49086056" target="_blank" rel="noopener">英国新首相约翰逊：一名记者出身的领导人</a></li><li><a href="https://zhuanlan.zhihu.com/p/71608056" target="_blank" rel="noopener">应对硬脱欧，鲍里斯酿大招！减免买房印花税，让英国做税收天堂</a></li></ul><h2 id="资源">资源</h2><ul><li><a href="https://css-tricks.com/guide-svg-animations-smil/" target="_blank" rel="noopener">A Guide to SVG Animations (SMIL)</a></li><li><a href="https://design-patterns.readthedocs.io/zh_CN/latest/" target="_blank" rel="noopener">图说设计模式</a>：软件模式是将模式的一般概念应用于软件开发领域，即软件开发的 总体指导思路或参照样板。软件模式并非仅限于设计模式，还包括 架构模式、分析模式和过程模式等，实际上，在软件生存期的每一 个阶段都存在着一些被认同的模式。</li><li>今天发现在mac使用使用搜狗输入法的时候按下Cmd + Shift + E可以切换到一个专门的英文输入模式，这个模式下输入英文会有补全以及英文释义</li></ul>]]></content>
     
     <summary type="html">
     
       
       
-        
-
+        &lt;h2 id=&quot;新闻&quot;&gt;新闻&lt;/h2&gt;
+&lt;h3 id=&quot;鲍里斯约翰逊成为新一任英国首相&quot;&gt;&lt;a href=&quot;http://www.xinhuanet.com/world/2019-07/23/c_1124789557.htm&quot; target=&quot;_blank&quot; rel=&quot;noope
       
     
     </summary>
@@ -53,9 +53,9 @@
     <link href="http://www.codewoody.com/posts/59410/"/>
     <id>http://www.codewoody.com/posts/59410/</id>
     <published>2019-07-23T02:45:36.000Z</published>
-    <updated>2019-07-23T09:52:34.324Z</updated>
+    <updated>2019-07-24T06:50:14.542Z</updated>
     
-    <content type="html"><![CDATA[<p>最近家里有亲人沾染上了网贷的事情，果然是在身边印证了当前年轻人普遍负债的现象。不过这些网贷，既然这么容易就能借到，必然也是找各种擦边球的手段，来提高事实利率来对冲贸然接待的高风险。不然坏账这么多，肯定遭不住。</p><p>国家法律规定中，用24%和36%两个关键数字，划定了民间借贷的利率和利息问题。根据2015年9月1日起开始施行的<a href="http://www.court.gov.cn/zixun-xiangqing-15146.html" target="_blank" rel="noopener">《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》</a>司法解释：</p><blockquote><p>借贷双方约定的利率未超过年利率24%，出借人请求借款人按照约定的利率支付利息的，人民法院应予支持。借贷双方约定的利率超过年利率36%，超过部分的利息约定无效。借款人请求出借人返还已支付的超过年利率36%部分的利息的，人民法院应予支持。</p></blockquote><p>不过，大部分的网贷平台，到目前也不太可能蠢到把事实上奇高的利息写到纸面上。相反，这些高额利息会被包装成手续费，服务费之类的名目。例如，A从某网贷借出20000，服务费的扣除5000，还款24%的利息，事实上的年化利息达到了65%。</p><p>不过，2017年12月1日，联网金融风险专项整治工作领导小组办公室、P2P网贷风险专项整治工作领导小组办公室印发并实施了<a href="https://baike.baidu.com/reference/22239759/03b2NZyCEsP_dOZTcSiWZzbIqKCEX5Jkhu_NEfYrze1dX3L8gwUgF-RR2YdZ3JkukrTyhnRcopyqhCwMTq-ZXLwvRvf5JfFruU3UUyQJZAPf-HcXIH-C1XjNuntz" target="_blank" rel="noopener">《关于规范整顿“现金贷”业务的通知》</a>。其中第四部分，「持续推进，完善P2P网络借贷信息中介机构业务管理 」，第一条规定：</p><blockquote><p>不得撮合或变相撮合不符合法律有关利率规定的借贷业务；禁止从借贷本金中先行扣除利息、手续费、管理费、保证金以及设定高额逾期利息、滞纳金、罚息等。</p></blockquote><p>另，2018年<a href="https://baike.baidu.com/item/%E4%B8%AD%E5%9B%BD%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D%E5%8D%8F%E4%BC%9A" target="_blank" rel="noopener">中国互金会</a>发布<a href="http://finance.sina.com.cn/money/bank/hykx/2018-09-04/doc-ihiqtcan7041142.shtml" target="_blank" rel="noopener">《关于P2P网络借贷机构自律检查第一阶段会员自查自纠工作相关问题的说明》</a>，其中要求：</p><blockquote><p>会员机构不得撮合或变相撮合不符合法律有关利率规定的借贷业务，禁止从借贷本金中先行扣除利息、手续费、管理费、保证金以及设定高额逾期利息、滞纳金、罚息等,相关逾期罚息也要计算在综合资金成本中。</p></blockquote><p>随着法规的完善，这些网贷平台自然也是道高一尺，魔高一丈。很多网贷在收取服务费的时候，就是要求借款人将服务费转到私人账户。这样，将来有了纠纷，借款人也就无法举证说明这笔费用是平台收取的服务费了。今年春天爆出来的<a href="https://zh.wikipedia.org/zh-hans/%E8%A5%BF%E5%AE%89%E5%A5%94%E9%A9%B0%E6%96%B0%E8%BD%A6%E6%BC%8F%E6%B2%B9%E7%BB%B4%E6%9D%83%E4%BA%8B%E4%BB%B6" target="_blank" rel="noopener">西安奔驰车主维权</a>中：</p><blockquote><p>在曝光的谈话录音里，车主提到自己本来可以全款购买，但4S店称奔驰金融贷款利息低，用各种方法“引诱”自己使用奔驰金融。此后，她付完首付款后，在不知情的情况下被开通奔驰金融，还被迫交纳服务费1.5万，对方还要求把钱转至一个私人账户，并且没有发票。交完这笔服务费，才接着为她办理后续业务。车主表示，并不理解自己交纳的这笔服务费，到底获得了什么服务。</p></blockquote><p>西安这个案子全国瞩目，自然，当事人被收取的<a href="http://www.nbd.com.cn/articles/2019-06-13/1342626.html" target="_blank" rel="noopener">金融服务费被退还了</a>。其他的普通人遇到同样的时间，自然是不会有这个待遇。而且就目前来说，如果服务费之类的内容已经打到了私人账户上，确实没有任何有效的手段能够追回，或是让法院认可这笔交易是交纳服务费了，举证非常困难。但是如果网贷平台的环节设置中存在漏洞，例如在平台APP上曾经显示服务费的项目，也许可以有一定的转机。</p><p>更多阅读：</p><ul><li><a href="https://www.weibo.com/ttarticle/p/show?id=2309404370716387587185&amp;mod=zwenzhang" target="_blank" rel="noopener">网贷乱象再调查：到手8万8要还近16万，变相砍头息用户维权难</a></li><li><a href="http://www.xinhuanet.com/local/2018-02/28/c_1122467345.htm" target="_blank" rel="noopener">网贷真能逼死人 别让高利贷钻了创新空子</a></li><li><a href="http://finance.sina.com.cn/chanjing/cyxw/2018-03-14/doc-ifysftkm3469332.shtml" target="_blank" rel="noopener">秘而不宣的网贷砍头息：借款5000元 手续费就得1200</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>最近家里有亲人沾染上了网贷的事情，果然是在身边印证了当前年轻人普遍负债的现象。不过这些网贷，既然这么容易就能借到，必然也是找各种擦边球的手段，来提高事实利率来对冲贸然接待的高风险。不然坏账这么多，肯定遭不住。</p><p>国家法律规定中，用24%和36%两个关键数字，划定了民间借贷的利率和利息问题。根据2015年9月1日起开始施行的<a href="http://www.court.gov.cn/zixun-xiangqing-15146.html" target="_blank" rel="noopener">《最高人民法院关于审理民间借贷案件适用法律若干问题的规定》</a>司法解释：</p><blockquote><p>借贷双方约定的利率未超过年利率24%，出借人请求借款人按照约定的利率支付利息的，人民法院应予支持。借贷双方约定的利率超过年利率36%，超过部分的利息约定无效。借款人请求出借人返还已支付的超过年利率36%部分的利息的，人民法院应予支持。</p></blockquote><p>不过，大部分的网贷平台，到目前也不太可能蠢到把事实上奇高的利息写到纸面上。相反，这些高额利息会被包装成手续费，服务费之类的名目。例如，A从某网贷借出20000，服务费的扣除5000，还款24%的利息，事实上的年化利息达到了65%。</p><p>不过，2017年12月1日，联网金融风险专项整治工作领导小组办公室、P2P网贷风险专项整治工作领导小组办公室印发并实施了<a href="https://baike.baidu.com/reference/22239759/03b2NZyCEsP_dOZTcSiWZzbIqKCEX5Jkhu_NEfYrze1dX3L8gwUgF-RR2YdZ3JkukrTyhnRcopyqhCwMTq-ZXLwvRvf5JfFruU3UUyQJZAPf-HcXIH-C1XjNuntz" target="_blank" rel="noopener">《关于规范整顿“现金贷”业务的通知》</a>。其中第四部分，「持续推进，完善P2P网络借贷信息中介机构业务管理 」，第一条规定：</p><blockquote><p>不得撮合或变相撮合不符合法律有关利率规定的借贷业务；禁止从借贷本金中先行扣除利息、手续费、管理费、保证金以及设定高额逾期利息、滞纳金、罚息等。</p></blockquote><p>另，2018年<a href="https://baike.baidu.com/item/%E4%B8%AD%E5%9B%BD%E4%BA%92%E8%81%94%E7%BD%91%E9%87%91%E8%9E%8D%E5%8D%8F%E4%BC%9A" target="_blank" rel="noopener">中国互金会</a>发布<a href="http://finance.sina.com.cn/money/bank/hykx/2018-09-04/doc-ihiqtcan7041142.shtml" target="_blank" rel="noopener">《关于P2P网络借贷机构自律检查第一阶段会员自查自纠工作相关问题的说明》</a>，其中要求：</p><blockquote><p>会员机构不得撮合或变相撮合不符合法律有关利率规定的借贷业务，禁止从借贷本金中先行扣除利息、手续费、管理费、保证金以及设定高额逾期利息、滞纳金、罚息等,相关逾期罚息也要计算在综合资金成本中。</p></blockquote><p>随着法规的完善，这些网贷平台自然也是道高一尺，魔高一丈。很多网贷在收取服务费的时候，就是要求借款人将服务费转到私人账户。这样，将来有了纠纷，借款人也就无法举证说明这笔费用是平台收取的服务费了。今年春天爆出来的<a href="https://zh.wikipedia.org/zh-hans/%E8%A5%BF%E5%AE%89%E5%A5%94%E9%A9%B0%E6%96%B0%E8%BD%A6%E6%BC%8F%E6%B2%B9%E7%BB%B4%E6%9D%83%E4%BA%8B%E4%BB%B6" target="_blank" rel="noopener">西安奔驰车主维权</a>中：</p><blockquote><p>在曝光的谈话录音里，车主提到自己本来可以全款购买，但4S店称奔驰金融贷款利息低，用各种方法“引诱”自己使用奔驰金融。此后，她付完首付款后，在不知情的情况下被开通奔驰金融，还被迫交纳服务费1.5万，对方还要求把钱转至一个私人账户，并且没有发票。交完这笔服务费，才接着为她办理后续业务。车主表示，并不理解自己交纳的这笔服务费，到底获得了什么服务。</p></blockquote><p>西安这个案子全国瞩目，自然，当事人被收取的<a href="http://www.nbd.com.cn/articles/2019-06-13/1342626.html" target="_blank" rel="noopener">金融服务费被退还了</a>。其他的普通人遇到同样的时间，自然是不会有这个待遇。而且就目前来说，如果服务费之类的内容已经打到了私人账户上，确实没有任何有效的手段能够追回，或是让法院认可这笔交易是交纳服务费了，举证非常困难。但是如果网贷平台的环节设置中存在漏洞，例如在平台APP上曾经显示服务费的项目，也许可以有一定的转机。</p><p>不过，还有一个潜在的「文字」问题：上面涉及到的条款并非禁止收取高额服务费，而是禁止从本金中预先扣除这些费用，即变相的砍头息。如果已经全部拿到纸面的本金，再以其他渠道收取服务费，则是不违法的。</p><p>更多阅读：</p><ul><li><a href="https://www.weibo.com/ttarticle/p/show?id=2309404370716387587185&amp;mod=zwenzhang" target="_blank" rel="noopener">网贷乱象再调查：到手8万8要还近16万，变相砍头息用户维权难</a></li><li><a href="http://www.xinhuanet.com/local/2018-02/28/c_1122467345.htm" target="_blank" rel="noopener">网贷真能逼死人 别让高利贷钻了创新空子</a></li><li><a href="http://finance.sina.com.cn/chanjing/cyxw/2018-03-14/doc-ifysftkm3469332.shtml" target="_blank" rel="noopener">秘而不宣的网贷砍头息：借款5000元 手续费就得1200</a></li></ul>]]></content>
     
     <summary type="html">
     
