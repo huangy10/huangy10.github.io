@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-07-26T04:18:35.904Z</updated>
+  <updated>2019-07-26T06:00:29.981Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python: 获取经验分布(EDF)的方法</title>
+    <link href="http://www.codewoody.com/posts/42351/"/>
+    <id>http://www.codewoody.com/posts/42351/</id>
+    <published>2019-07-26T05:36:50.000Z</published>
+    <updated>2019-07-26T06:00:29.981Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是经验分布edf">什么是经验分布EDF</h2><p><a href="https://zh.wikipedia.org/wiki/%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">经验分布函数</a>（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有<span class="math inline">\(n\)</span>个数据点上都跳跃<span class="math inline">\(1/n\)</span>的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。</p><p>经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-Cantelli定理可以证明，经验分布函数以概率1收敛至这一累积分布函数。</p><p>令<span class="math inline">\((x_1, \dots, x_n)\)</span>为独立同分布的的实随机变量，它们共同的累积分布函数为<span class="math inline">\(F(t)\)</span>。于是，经验分布函数可以定义为</p><p><span class="math display">\[\begin{equation}\hat{F}_{n}(t)=\frac{\text { number of elements in the sample } \leq t}{n}=\frac{1}{n} \sum_{i=1}^{n} \mathbf{1}_{x_{i} \leq t}\end{equation}\]</span></p><p>其中<span class="math inline">\(\mathbf{1}_{A}\)</span> 为事件 <span class="math inline">\(A\)</span> 的指示函数。 <span class="math inline">\(\mathbf{1}_{x_i \leq t}\)</span>为<span class="math inline">\(p=F(t)\)</span>是伯努利随机变量。因而<span class="math inline">\(n \hat{F}_n(t)\)</span>则是期望为<span class="math inline">\(nF(t)\)</span>，方差为<span class="math inline">\(nF(t)(1 - F(t))\)</span>的二项随机变量。这意味着<span class="math inline">\(\hat{F}_n(t)\)</span>是<span class="math inline">\(F_(t)\)</span>的无偏估计。</p><figure><img src="https://imgs.codewoody.com/uploads/big/9bb7d75a59e3cc5467cd6461b3732198.png" alt="蓝线为经验分布函数，黑色长条表示相应的样本，灰线则是用于生成样本的累积分布函数。"><figcaption>蓝线为经验分布函数，黑色长条表示相应的样本，灰线则是用于生成样本的累积分布函数。</figcaption></figure><h2 id="python实现">Python实现</h2><p>从上面的定义来看，其实自己实现一个EDF函数也并不困难。这里有一个例子：<a href="https://www.codementor.io/kripanshubharga/calculate-ecdf-in-python-gycltzxi3" target="_blank" rel="noopener">Calculate ECDF in Python</a>。<code>statsmodels</code>这个库里面提供了现成的<a href="https://www.statsmodels.org/devel/generated/statsmodels.distributions.empirical_distribution.ECDF.html" target="_blank" rel="noopener"><code>ECDF</code>函数</a>。</p><blockquote><p>这里函数名字是ECDF，其中C表示累积分布。</p></blockquote><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> statsmodels.distributions.empirical_distribution <span class="keyword">import</span> ECDF</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ecdf = ECDF([<span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>])</span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>ecdf([<span class="number">3</span>, <span class="number">55</span>, <span class="number">0.5</span>, <span class="number">1.5</span>])</span><br><span class="line">array([ <span class="number">0.75</span>,  <span class="number">1.</span>  ,  <span class="number">0.</span>  ,  <span class="number">0.25</span>])</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;什么是经验分布edf&quot;&gt;什么是经验分布EDF&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://zh.wikipedia.org/wiki/%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0&quot; target
+      
+    
+    </summary>
+    
+      <category term="科研" scheme="http://www.codewoody.com/categories/%E7%A7%91%E7%A0%94/"/>
+    
+    
+      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="python" scheme="http://www.codewoody.com/tags/python/"/>
+    
+      <category term="数学" scheme="http://www.codewoody.com/tags/%E6%95%B0%E5%AD%A6/"/>
+    
+      <category term="科研" scheme="http://www.codewoody.com/tags/%E7%A7%91%E7%A0%94/"/>
+    
+  </entry>
   
   <entry>
     <title>Weekly - 5</title>
@@ -531,30 +563,6 @@
       <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
     
       <category term="python" scheme="http://www.codewoody.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Latex中各种各样的箭头</title>
-    <link href="http://www.codewoody.com/posts/13297/"/>
-    <id>http://www.codewoody.com/posts/13297/</id>
-    <published>2019-06-24T01:52:42.000Z</published>
-    <updated>2019-06-24T02:19:58.271Z</updated>
-    
-    <content type="html"><![CDATA[<p>Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。 <a id="more"></a></p><h2 id="默认箭头">默认箭头</h2><p>这里的默认指你不需要任何额外的<code>usepackage</code>就可以使用：</p><!-- ![默认箭头](https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png) --><img src="https://imgs.codewoody.com/uploads/big/43e7df8a651987e7b6897a0e0fa4d25b.png" width="60%"><figcaption>默认箭头</figcaption><h2 id="amssymb提供的箭头">amssymb提供的箭头</h2><p>需要<code>\usepackage{amssymb}</code></p><!-- ![amssymb箭头](https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png) --><img src="https://imgs.codewoody.com/uploads/big/7649e62ba185ffdbe255a3e10a36bbef.png" width="60%"><figcaption>amssymb箭头</figcaption><h2 id="further-reading">Further Reading</h2><p><a href="http://www.sascha-frank.com/Arrow/latex-arrows.html" target="_blank" rel="noopener">LaTeX arrows</a></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Latex中提供了各种“稀奇古怪的箭头形状”。一般箭头使用在公式环境下面。
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="latex" scheme="http://www.codewoody.com/tags/latex/"/>
     
   </entry>
   
