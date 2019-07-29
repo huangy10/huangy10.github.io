@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-07-26T06:00:29.981Z</updated>
+  <updated>2019-07-28T08:02:50.848Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机动车占用非机动车道停车/行驶的法律问题</title>
+    <link href="http://www.codewoody.com/posts/4757/"/>
+    <id>http://www.codewoody.com/posts/4757/</id>
+    <published>2019-07-28T05:26:02.000Z</published>
+    <updated>2019-07-28T08:02:50.848Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="http://www.cnca.gov.cn/bsdt/ywzl/flyzcyj/zcfg/201707/t20170711_54697.shtml" target="_blank" rel="noopener">《中华人民共和国道路交通安全法》</a>第七十条</p><blockquote><p>第七十条 驾驶自行车、电动自行车、三轮车在路段上横过机动车道，应当下车推行，有人行横道或者行人过街设施的，应当从人行横道或者行人过街设施通过;没有人行横道、没有行人过街设施或者不便使用行人过街设施的，在确认安全后直行通过。</p><p>因非机动车道被占用无法在本车道内行驶的非机动车，可以在受阻的路段借用相邻的机动车道行驶，并在驶过被占用路段后迅速驶回非机动车道。机动车遇此情况应当减速让行。</p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;&lt;a href=&quot;http://www.cnca.gov.cn/bsdt/ywzl/flyzcyj/zcfg/201707/t20170711_54697.shtml&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;《中华人民共和国道路交通安全法》&lt;/a&gt;第
+      
+    
+    </summary>
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="法律" scheme="http://www.codewoody.com/tags/%E6%B3%95%E5%BE%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>Python: 获取经验分布(EDF)的方法</title>
@@ -53,17 +80,13 @@
     <link href="http://www.codewoody.com/posts/41199/"/>
     <id>http://www.codewoody.com/posts/41199/</id>
     <published>2019-07-23T05:52:57.000Z</published>
-    <updated>2019-07-27T05:36:18.344Z</updated>
+    <updated>2019-07-29T02:28:15.625Z</updated>
     
-    <content type="html"><![CDATA[<p>最近香港那边热闹的狠，有意思的是，江泽民怒斥香港记者的视频又出现在了的油管的推荐表里。不过现在点进去看里面的评论，大多都是支持江的言论了，感慨自己当时确实是naive，不理解蛤哈的深意。现在回过头看今年来的海内外乱象，才知道他确实说的对。</p><p>其实也就是十余年的光景，世事已不可同日而语矣。</p><h2 id="新闻">新闻</h2><h3 id="鲍里斯约翰逊成为新一任英国首相"><a href="http://www.xinhuanet.com/world/2019-07/23/c_1124789557.htm" target="_blank" rel="noopener">鲍里斯·约翰逊成为新一任英国🇬🇧首相</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/e13d52707f66863d9863cb22b18eacf5.jpg"></p><p>23日，鲍里斯.约翰逊(被称为英国版特朗普)正式当选执政党保守党党魁，在获得女王批准之后将接替特雷莎·梅出任英国首相。鲍里斯票数：92,153 杰里米·亨特票数：46,656 。参与投票的是16万保守党党员。</p><p>现年55岁的约翰逊是“脱欧派”领袖，曾多次强调英国必须在10月31日的新期限前完成“脱欧”，哪怕这样做的代价是“无协议脱欧”，他表示将与欧盟就新“脱欧”协议谈判。约翰逊是英国政坛鲜见的特色人物：反正统、破规矩、不修篇幅，且花絮不断。一头杂乱金发也是出名的个性标志。他也因2008年北京奥运会闭幕式上代表伦敦去接奥运会旗和火种而为中国民众熟知。</p><ul><li><a href="https://www.bbc.com/zhongwen/simp/uk-49086056" target="_blank" rel="noopener">英国新首相约翰逊：一名记者出身的领导人</a></li><li><a href="https://zhuanlan.zhihu.com/p/71608056" target="_blank" rel="noopener">应对硬脱欧，鲍里斯酿大招！减免买房印花税，让英国做税收天堂</a></li></ul><h3 id="华为招聘应届博士年薪超过200万"><a href="https://www.zhihu.com/question/336418328/answer/759298963" target="_blank" rel="noopener">华为招聘应届博士年薪超过200万</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/f367b414a40dd1ff08320bf773b4acd3.jpg"></p><blockquote><p>都是博士，怎么差距那么大呢？？？</p></blockquote><h3 id="复旦女博士劈腿丑闻"><a href="https://www.zhihu.com/question/336719951" target="_blank" rel="noopener">复旦女博士劈腿丑闻</a></h3><blockquote><p>7月24日至25日，网传这样一条消息：复旦大学附属中山医院医生陆某为了和复旦大学女博士李某在一起而抛家弃子。但在他给李某买房、买车、买包包、送珠宝以及给她署名和刊发几篇高质量医学文章后，李某却和他分手。</p><p>经受不住打击，陆某选择了服30颗安眠药自杀。也有消息称，陆某自杀后，被抢救过来。</p></blockquote><ul><li><a href="https://news.ifeng.com/c/7obH6tZYJYu" target="_blank" rel="noopener">复旦女博士“劈腿”致男医生自杀？官方回应</a></li><li><a href="https://www.zhihu.com/question/336815292" target="_blank" rel="noopener">5 篇 SCI 相当于什么？需要花费多少时间和精力？</a></li><li><a href="https://www.zhihu.com/question/336818804" target="_blank" rel="noopener">「送」SCI 在学术圈是什么操作？是学术不端吗？</a></li><li><a href="https://www.zhihu.com/question/336719951/answer/761750649" target="_blank" rel="noopener">学术圈五大蛊王吃瓜汇总</a></li></ul><h3 id="刘强东案149页警方档案公布">刘强东案149页警方档案公布</h3><p>具体内容包括：</p><ol type="1"><li>女学生的友人8月30日拨打911报案的三起电话录音文本文件；</li><li>刘强东去年9月10日接受警方问话的电话录音，时长约30分钟；</li><li>刘强东进入女方公寓及在明大商学院内遭逮捕的照片；</li><li>女学生与当事人在中国的好友、男友等人的短信记录；</li><li>案发当日餐馆、公寓的高清版监控录像共9段，高清照片21张；</li><li>警方的全案报告，包括4份警方出警和问询记录报告，最长的一篇多达149页。</li></ol><p>刘强东涉嫌性侵案的149页的档案中，内容包括对刘强东及其他当事人和目击者访问的笔录，在警察报告的当事人访谈部分写道，女方在警方的询问下，表示刘强东将自己压在身下、举起了自己的双腿，进行了性器官插入，在这个过程中刘强东还询问女方是否处于安全期，性行为持续了约两分钟。</p><p>另外，关于女方在整个案件过程中的态度和言辞转变也在这些材料中披露出来，包括女方曾经想经常承认其性行为是自愿的，但后面又多次改变了自己的论述。</p><h3 id="放弃对菏泽怡海花园进行网络覆盖的努力"><a href="https://www.zhihu.com/question/336809415" target="_blank" rel="noopener">「放弃对菏泽怡海花园进行网络覆盖的努力」</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/30d611818d950dc5b77c72d5e6d647a0.jpg"> <img src="https://imgs.codewoody.com/uploads/big/06e45bce25078ab94b432465abd96acd.jpg"></p><h3 id="其他新闻汇总">其他新闻汇总</h3><ul><li>7月19日，天宫二号返回地球，受控坠毁，残害落入南太平洋</li><li>阿联酋在沙漠中建设了世界最大的太阳能电厂，一共安装了320万块太阳能板，可以为9万人供电。峰值发电量是1180兆瓦，相比之下，美国最大的太阳能厂是569兆瓦。</li><li>6月27日，美国参议院通过法律要求减少电网自动化程度，不得完全采用计算机控制。目的是防止电网遭受黑客攻击时，出现大规模停电。</li><li>欧盟新规要求新生产的电动汽车必须配备噪声发生器。</li><li>7月23日，美国《财富》杂志每年发布的“财富世界500强”榜单。小米上榜并在全球排名468位，是“互联网服务与零售”分类中的7家公司之一，成为史上最年轻的世界500强公司（除了合并产生的公司外）。同时，雷军成将给所有在职同事和核心外包服务团队攻击20538人赠予1000股小米股票。</li><li>7月23日，支付宝微博宣布给予第一个愿意相信淘宝并使用担保交易的人焦振中授予「支付宝终身尊贵奖」</li><li><a href="https://www.zhihu.com/question/337092839" target="_blank" rel="noopener">京都动画知名监督武本康弘确认离世，这会给京都动画会带来怎样的损失？</a></li></ul><h2 id="资源">资源</h2><ul><li><a href="https://css-tricks.com/guide-svg-animations-smil/" target="_blank" rel="noopener">A Guide to SVG Animations (SMIL)</a></li><li><a href="https://design-patterns.readthedocs.io/zh_CN/latest/" target="_blank" rel="noopener">图说设计模式</a>：软件模式是将模式的一般概念应用于软件开发领域，即软件开发的 总体指导思路或参照样板。软件模式并非仅限于设计模式，还包括 架构模式、分析模式和过程模式等，实际上，在软件生存期的每一 个阶段都存在着一些被认同的模式。</li><li>今天发现在mac使用使用搜狗输入法的时候按下Cmd + Shift + E可以切换到一个专门的英文输入模式，这个模式下输入英文会有补全以及英文释义</li><li><a href="https://www.scmp.com/china-internet-report" target="_blank" rel="noopener">中国互联网报告2019</a>: 南华早报出品。</li><li><a href="https://www.bbc.co.uk/news/extra/PLNMqvmycN/conjoined-twins" target="_blank" rel="noopener">一场将Safa和Marwa分开的战斗</a></li><li><a href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes" target="_blank" rel="noopener">Overleaf提供的Latex教程</a></li><li><a href="https://github.com/mattm/sql-style-guide#guidelines" target="_blank" rel="noopener">SQL风格指南</a></li></ul><h2 id="言论">言论</h2><ul><li>地位游戏一定是零和的，有赢家就肯定有输家。 比如，我当了部门主管，你就不能当了。所以，地位游戏很凶险，必须时刻提防其他玩家的冷枪。财富游戏不是零和的，我盖了一幢漂亮的房子，不影响你也盖一幢。我赚钱了，不影响其他人的利益，很可能还让其他人过得更好。比如，乔布斯创办了苹果公司，其他人就有了更好的电子产品可用。-- <a href="http://www.ruanyifeng.com/blog/2019/07/weekly-issue-66.html" target="_blank" rel="noopener">阮一峰</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>最近香港那边热闹的狠，有意思的是，江泽民怒斥香港记者的视频又出现在了的油管的推荐表里。不过现在点进去看里面的评论，大多都是支持江的言论了，感慨自己当时确实是naive，不理解蛤哈的深意。现在回过头看今年来的海内外乱象，才知道他确实说的对。</p><p>其实也就是十余年的光景，世事已不可同日而语矣。</p><h2 id="新闻">新闻</h2><h3 id="鲍里斯约翰逊成为新一任英国首相"><a href="http://www.xinhuanet.com/world/2019-07/23/c_1124789557.htm" target="_blank" rel="noopener">鲍里斯·约翰逊成为新一任英国🇬🇧首相</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/e13d52707f66863d9863cb22b18eacf5.jpg"></p><p>23日，鲍里斯.约翰逊(被称为英国版特朗普)正式当选执政党保守党党魁，在获得女王批准之后将接替特雷莎·梅出任英国首相。鲍里斯票数：92,153 杰里米·亨特票数：46,656 。参与投票的是16万保守党党员。</p><p>现年55岁的约翰逊是“脱欧派”领袖，曾多次强调英国必须在10月31日的新期限前完成“脱欧”，哪怕这样做的代价是“无协议脱欧”，他表示将与欧盟就新“脱欧”协议谈判。约翰逊是英国政坛鲜见的特色人物：反正统、破规矩、不修篇幅，且花絮不断。一头杂乱金发也是出名的个性标志。他也因2008年北京奥运会闭幕式上代表伦敦去接奥运会旗和火种而为中国民众熟知。</p><ul><li><a href="https://www.bbc.com/zhongwen/simp/uk-49086056" target="_blank" rel="noopener">英国新首相约翰逊：一名记者出身的领导人</a></li><li><a href="https://zhuanlan.zhihu.com/p/71608056" target="_blank" rel="noopener">应对硬脱欧，鲍里斯酿大招！减免买房印花税，让英国做税收天堂</a></li></ul><h3 id="华为招聘应届博士年薪超过200万"><a href="https://www.zhihu.com/question/336418328/answer/759298963" target="_blank" rel="noopener">华为招聘应届博士年薪超过200万</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/f367b414a40dd1ff08320bf773b4acd3.jpg"></p><blockquote><p>都是博士，怎么差距那么大呢？？？</p></blockquote><h3 id="复旦女博士劈腿丑闻"><a href="https://www.zhihu.com/question/336719951" target="_blank" rel="noopener">复旦女博士劈腿丑闻</a></h3><blockquote><p>7月24日至25日，网传这样一条消息：复旦大学附属中山医院医生陆某为了和复旦大学女博士李某在一起而抛家弃子。但在他给李某买房、买车、买包包、送珠宝以及给她署名和刊发几篇高质量医学文章后，李某却和他分手。</p><p>经受不住打击，陆某选择了服30颗安眠药自杀。也有消息称，陆某自杀后，被抢救过来。</p></blockquote><ul><li><a href="https://news.ifeng.com/c/7obH6tZYJYu" target="_blank" rel="noopener">复旦女博士“劈腿”致男医生自杀？官方回应</a></li><li><a href="https://www.zhihu.com/question/336815292" target="_blank" rel="noopener">5 篇 SCI 相当于什么？需要花费多少时间和精力？</a></li><li><a href="https://www.zhihu.com/question/336818804" target="_blank" rel="noopener">「送」SCI 在学术圈是什么操作？是学术不端吗？</a></li><li><a href="https://www.zhihu.com/question/336719951/answer/761750649" target="_blank" rel="noopener">学术圈五大蛊王吃瓜汇总</a></li></ul><h3 id="刘强东案149页警方档案公布">刘强东案149页警方档案公布</h3><p>具体内容包括：</p><ol type="1"><li>女学生的友人8月30日拨打911报案的三起电话录音文本文件；</li><li>刘强东去年9月10日接受警方问话的电话录音，时长约30分钟；</li><li>刘强东进入女方公寓及在明大商学院内遭逮捕的照片；</li><li>女学生与当事人在中国的好友、男友等人的短信记录；</li><li>案发当日餐馆、公寓的高清版监控录像共9段，高清照片21张；</li><li>警方的全案报告，包括4份警方出警和问询记录报告，最长的一篇多达149页。</li></ol><p>刘强东涉嫌性侵案的149页的档案中，内容包括对刘强东及其他当事人和目击者访问的笔录，在警察报告的当事人访谈部分写道，女方在警方的询问下，表示刘强东将自己压在身下、举起了自己的双腿，进行了性器官插入，在这个过程中刘强东还询问女方是否处于安全期，性行为持续了约两分钟。</p><p>另外，关于女方在整个案件过程中的态度和言辞转变也在这些材料中披露出来，包括女方曾经想经常承认其性行为是自愿的，但后面又多次改变了自己的论述。</p><h3 id="运营商放弃对菏泽怡海花园进行网络覆盖的努力"><a href="https://www.zhihu.com/question/336809415" target="_blank" rel="noopener">运营商放弃对菏泽怡海花园进行网络覆盖的努力</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/30d611818d950dc5b77c72d5e6d647a0.jpg"> <img src="https://imgs.codewoody.com/uploads/big/06e45bce25078ab94b432465abd96acd.jpg"></p><h3 id="郭文贵被指为中国间谍"><a href="https://www.bbc.com/zhongwen/simp/chinese-news-49087533" target="_blank" rel="noopener">郭文贵被指为中国间谍</a></h3><p>最近中国流亡美国的富商郭文贵被与其有商业争端的公司指为中国的间谍。两年前在海外媒体爆料出名的郭文贵此前也承认他曾经为中国国家安全部门做事。</p><p>据《华尔街日报》报道，郭文贵和Strategic Vision公司自2018年1月就开始产生商业纠纷。法庭文件显示，当时郭文贵同该公司签订了一份900万美元的雇佣合同。郭文贵已经向该公司支付了100万美元，用于启动调查。</p><p>Strategic Vision提供文件向法庭显示，郭文贵要求该公司搜集一些人的财务，社交媒体和旅行方面的资料。郭文贵提供的名单是一些与中共高层有联系的中国人。</p><p>法庭文件显示，这家调查公司还专门招募了前情报人员或执法人员进行上述调查。但他们查明，郭文贵名单上前15个人的名字已经被美国政府列为“记录受保护”的人，即不得对外透露这些人士的资料。</p><p>因此他们认为这些人士的移民状况被当局列为“不能对外公开”，可能意味着这些是帮助美国政府的人。他们认为郭文贵并不打算利用他们的调查结果对付中共，而且郭文贵也并非如他所说的那样是异见者。</p><h3 id="其他新闻汇总">其他新闻汇总</h3><ul><li>7月19日，天宫二号返回地球，受控坠毁，残害落入南太平洋</li><li>阿联酋在沙漠中建设了世界最大的太阳能电厂，一共安装了320万块太阳能板，可以为9万人供电。峰值发电量是1180兆瓦，相比之下，美国最大的太阳能厂是569兆瓦。</li><li>6月27日，美国参议院通过法律要求减少电网自动化程度，不得完全采用计算机控制。目的是防止电网遭受黑客攻击时，出现大规模停电。</li><li>欧盟新规要求新生产的电动汽车必须配备噪声发生器。</li><li>7月23日，美国《财富》杂志每年发布的“财富世界500强”榜单。小米上榜并在全球排名468位，是“互联网服务与零售”分类中的7家公司之一，成为史上最年轻的世界500强公司（除了合并产生的公司外）。同时，雷军成将给所有在职同事和核心外包服务团队攻击20538人赠予1000股小米股票。</li><li>7月23日，支付宝微博宣布给予第一个愿意相信淘宝并使用担保交易的人焦振中授予「支付宝终身尊贵奖」</li><li><a href="https://www.zhihu.com/question/337092839" target="_blank" rel="noopener">京都动画知名监督武本康弘确认离世，这会给京都动画会带来怎样的损失？</a></li><li>世界五百强中国首(129)次超越美国(121)。</li><li><a href="http://www.bjnews.com.cn/news/2019/07/24/607125.html" target="_blank" rel="noopener">河北「爱心妈妈」案主犯李丽娟获刑20年</a>。<a href="https://www.zhihu.com/question/336626906/answer/763425733" target="_blank" rel="noopener">知乎讨论</a></li></ul><h2 id="资源">资源</h2><ul><li><a href="https://css-tricks.com/guide-svg-animations-smil/" target="_blank" rel="noopener">A Guide to SVG Animations (SMIL)</a></li><li><a href="https://design-patterns.readthedocs.io/zh_CN/latest/" target="_blank" rel="noopener">图说设计模式</a>：软件模式是将模式的一般概念应用于软件开发领域，即软件开发的 总体指导思路或参照样板。软件模式并非仅限于设计模式，还包括 架构模式、分析模式和过程模式等，实际上，在软件生存期的每一 个阶段都存在着一些被认同的模式。</li><li>今天发现在mac使用使用搜狗输入法的时候按下Cmd + Shift + E可以切换到一个专门的英文输入模式，这个模式下输入英文会有补全以及英文释义</li><li><a href="https://www.scmp.com/china-internet-report" target="_blank" rel="noopener">中国互联网报告2019</a>: 南华早报出品。</li><li><a href="https://www.bbc.co.uk/news/extra/PLNMqvmycN/conjoined-twins" target="_blank" rel="noopener">一场将Safa和Marwa分开的战斗</a></li><li><a href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes" target="_blank" rel="noopener">Overleaf提供的Latex教程</a></li><li><a href="https://github.com/mattm/sql-style-guide#guidelines" target="_blank" rel="noopener">SQL风格指南</a></li></ul><h2 id="言论">言论</h2><ul><li>地位游戏一定是零和的，有赢家就肯定有输家。 比如，我当了部门主管，你就不能当了。所以，地位游戏很凶险，必须时刻提防其他玩家的冷枪。财富游戏不是零和的，我盖了一幢漂亮的房子，不影响你也盖一幢。我赚钱了，不影响其他人的利益，很可能还让其他人过得更好。比如，乔布斯创办了苹果公司，其他人就有了更好的电子产品可用。-- <a href="http://www.ruanyifeng.com/blog/2019/07/weekly-issue-66.html" target="_blank" rel="noopener">阮一峰</a></li></ul>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;最近香港那边热闹的狠，有意思的是，江泽民怒斥香港记者的视频又出现在了的油管的推荐表里。不过现在点进去看里面的评论，大多都是支持江的言论了，感慨自己当时确实是naive，不理解蛤哈的深意。现在回过头看今年来的海内外乱象，才知道他确实说的对。&lt;/p&gt;
-&lt;p&gt;其实也就是十余年的光
-      
+      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/e13d52707f66863d9863cb22b18eacf5.jpg&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -72,9 +95,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -171,7 +194,7 @@
     <link href="http://www.codewoody.com/posts/24622/"/>
     <id>http://www.codewoody.com/posts/24622/</id>
     <published>2019-07-15T05:44:07.000Z</published>
-    <updated>2019-07-23T09:53:17.463Z</updated>
+    <updated>2019-07-29T02:28:21.237Z</updated>
     
     <content type="html"><![CDATA[<figure><img src="https://imgs.codewoody.com/uploads/big/162af9ffc7fbac0835c29904548c369e.jpg" alt="「长安十二时辰」还是非常好看的，安利一下！"><figcaption>「长安十二时辰」还是非常好看的，安利一下！</figcaption></figure><h2 id="新闻">新闻</h2><h3 id="广州越秀区--轻微醉驾从宽免刑"><a href="https://auto.ifeng.com/c/7nu1P1tbUae" target="_blank" rel="noopener">广州越秀区 -「轻微醉驾从宽免刑」</a></h3><p>虽然不是这周发生的事情，不过进来看到了，深感滑稽，放在这里</p><blockquote><p>从今年 4 月 1 日起，越秀区检察院在轻微醉驾案件中引入社会公益服务考察项目。轻微醉驾者在满足一定的申请条件后，通过在一个月内参加 40 个小时的社会公益服务，来获得不起诉决定的机会。截至目前，已有48名轻微醉驾者申请该公益服务考察项目，其中已有 46 名获得罪轻不起诉决定。</p></blockquote><h3 id="朝阳区爆发诺如病毒感染">朝阳区爆发诺如病毒感染</h3><blockquote><p>7月15日凌晨，北京朝阳官方微博通报，7月12日晚，接到群众反映朝阳区豆各庄地区部分小区居民出现腹泻情况，截止到7月14日20时，调查了到医院就诊的49人、自述有症状未就诊的105人，并采集了肛拭子和便标本105件，已检测79件，其中，52件检测出诺如病毒。从调查情况判断，存在诺如病毒感染情况。专家提示，诺如病毒感染是一种常见消化道传染病，传染性强，常见症状为腹泻、呕吐。</p></blockquote><h3 id="张扣扣被执行死刑">张扣扣被执行死刑</h3><blockquote><p>7月17日，张扣扣被执行死刑。2018年除夕，张扣扣为母报仇，刺死了上坟返途中的邻居王家大儿子和三儿子，随后到王家将王家父亲刺死。2019年1月8日，汉中中院一审当庭判处张扣扣死刑，其当庭上诉。4月11日，陕西高院驳回上诉维持死刑判决。</p></blockquote><h3 id="京阿尼第一工作室火灾">京阿尼第一工作室火灾</h3><blockquote><p>堪称二次元911。这个工作室是京都动画最重要的工作室，这里集中了大多数制作部门。监督、演出、作监、原画、中割、上色、CG、美术、摄影……我们通常看到的京都动画内部的视频/照片，也都是在这里拍摄的。</p><p>预计死亡人数会超过10人，数十人受伤。本次火灾为人为纵火。</p></blockquote><p><img src="https://imgs.codewoody.com/uploads/big/3a1638df0964523e510db699d06a9e4f.jpg"></p><h3 id="章莹颖案被告获无期判决">章莹颖案被告获无期判决</h3><blockquote><p>历时两天、12名陪审团成员用8小时27分的时间完成了讨论，没有就判处章莹颖案凶手克里斯滕森死刑获得统一意见。克里斯滕森被判处终身监禁。根据美国联邦法律，他将老死狱中，不得假释。</p></blockquote><figure><img src="https://imgs.codewoody.com/uploads/big/ec4086430c5b1098979291cc5ba8ffba.jpg" alt="被告人克里斯滕森 Brendt Christensen"><figcaption>被告人克里斯滕森 Brendt Christensen</figcaption></figure><h3 id="魅族李楠辞职">魅族李楠辞职</h3><blockquote><p>这几天，关于李楠辞职创业的消息传得沸沸扬扬。电子烟，机械键盘，这位曾经魅族的功臣，活跃的知乎答主，会选择哪个方向作为职业的下一站，是很多“煤油”关心的问题。而早在今年 5 月，李楠就已经从魅族主要人员中移除。</p><p>针对此事，黄章昨晚再次在魅族论坛语出惊人：“能挣钱的就是人才，不断亏钱的就是费财”。虽然没有指名道姓，但结合最近的传言，很难不让人产生联想。</p></blockquote><p><img src="https://imgs.codewoody.com/uploads/big/a710fc7fe849fee648b3416892fed024.jpg"></p><h2 id="资源">资源</h2><ul><li><a href="https://www.sqlite.org/windowfunctions.html" target="_blank" rel="noopener">SQLite Window Function</a>：在最近的仿真研究中使用了Window function，是之前比较少接触到的，但是功能非常强大！</li></ul><h2 id="言论">言论</h2><ul><li><p>从本质上来说，父母选择怎样的育儿方式，不取决于父母小时候的经历，而取决于父母对孩子现在与未来的预测。 -- <a href="https://songshuhui.net/archives/106133" target="_blank" rel="noopener">科学松鼠会</a></p></li><li><p>经济学研究的是人们如何做出选择。社会学研究的是人们其实并无多少选择余地。 - 经济学家James Duesenberry</p></li></ul>]]></content>
     
@@ -186,9 +209,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -269,9 +292,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -344,9 +367,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -534,35 +557,11 @@
     
       <category term="树莓派" scheme="http://www.codewoody.com/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
     
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
       <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python下的音频处理库librosa打开文件是显示NoBackendError的解决</title>
-    <link href="http://www.codewoody.com/posts/40199/"/>
-    <id>http://www.codewoody.com/posts/40199/</id>
-    <published>2019-06-26T04:56:10.000Z</published>
-    <updated>2019-06-28T08:40:42.899Z</updated>
-    
-    <content type="html"><![CDATA[<p>近日在django项目中采用了librosa来分析用户上传的音频，主要是对其做一定间隔的采样用于绘制波形图。在本地(MacOS)上工作正常，部署到Ubuntu服务器后，自己手动用python方式运行django的server时，工作都是正常的，然而当我用superviosr挂起之后就一直报NoBackendError的错误，反复检查了FFmpeg的安装，应该是没有问题的。网上搜了一下没有看到比较合适的解决办法，故不得不自己读源码来调试了。 <a id="more"></a></p><p>由于我的程序中只采用了<code>librosa.load</code>这个命令，通过源代码可以发现librosa实际上是用<code>audioread</code>这个库的<code>audioread.audio_open</code>来读取音频文件的。这个函数的源代码如下：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">audio_open</span><span class="params">(path)</span>:</span></span><br><span class="line">    <span class="string">"""Open an audio file using a library that is available on this</span></span><br><span class="line"><span class="string">    system.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># Standard-library WAV and AIFF readers.</span></span><br><span class="line">    <span class="keyword">from</span> . <span class="keyword">import</span> rawread</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> rawread.RawAudioFile(path)</span><br><span class="line">    <span class="keyword">except</span> DecodeError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Core Audio.</span></span><br><span class="line">    <span class="keyword">if</span> _ca_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> macca</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> macca.ExtAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># GStreamer.</span></span><br><span class="line">    <span class="keyword">if</span> _gst_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> gstdec</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> gstdec.GstAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># MAD.</span></span><br><span class="line">    <span class="keyword">if</span> _mad_available():</span><br><span class="line">        <span class="keyword">from</span> . <span class="keyword">import</span> maddec</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> maddec.MadAudioFile(path)</span><br><span class="line">        <span class="keyword">except</span> DecodeError:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># FFmpeg.</span></span><br><span class="line">    <span class="keyword">from</span> . <span class="keyword">import</span> ffdec</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> ffdec.FFmpegAudioFile(path)</span><br><span class="line">    <span class="keyword">except</span> DecodeError:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># All backends failed!</span></span><br><span class="line">    <span class="keyword">raise</span> NoBackendError()</span><br></pre></td></tr></table></figure><p>可见之前我们遇到的NoBackendError就是这里的最后一行抛出的了，由于我安装的FFmpeg，进一步进入ffdec.py这个文件中。不难发现实际打开文件的是下面这个函数：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">popen_multiple</span><span class="params">(commands, command_args, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""Like `subprocess.Popen`, but can try multiple commands in case</span></span><br><span class="line"><span class="string">    some are not available.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    `commands` is an iterable of command names and `command_args` are</span></span><br><span class="line"><span class="string">    the rest of the arguments that, when appended to the command name,</span></span><br><span class="line"><span class="string">    make up the full first argument to `subprocess.Popen`. The</span></span><br><span class="line"><span class="string">    other positional and keyword arguments are passed through.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> i, command <span class="keyword">in</span> enumerate(commands):</span><br><span class="line">        cmd = [command] + command_args</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> subprocess.Popen(cmd, *args, **kwargs)</span><br><span class="line">        <span class="keyword">except</span> OSError:</span><br><span class="line">            <span class="keyword">if</span> i == len(commands) - <span class="number">1</span>:</span><br><span class="line">                <span class="comment"># No more commands to try.</span></span><br><span class="line">                <span class="keyword">raise</span></span><br></pre></td></tr></table></figure><p>这里的<code>commands</code>是直接传入的第33行的<code>COMMANDS</code>变量</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMANDS = (<span class="string">'ffmpeg'</span>, <span class="string">'avconv'</span>)</span><br></pre></td></tr></table></figure><p>我这里倒腾了好几下，最终发现实际是错误的原因是没有找到ffmpeg这个命令。我们在这里将ffmpeg替换成ffmpeg的绝对路径。你可以通过下面这行命令找到。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">which</span> ffmpeg</span><br></pre></td></tr></table></figure><p>最终我改成了</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">COMMANDS = (<span class="string">'/usr/bin/ffmpeg'</span>, <span class="string">'avconv'</span>)</span><br></pre></td></tr></table></figure><p>Boom！一切就工作正常了。这么想起来应该是安装ffmpeg的时候的环境变量有问题，导致在command line方式下调用ffmpeg命令出错吧。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;近日在django项目中采用了librosa来分析用户上传的音频，主要是对其做一定间隔的采样用于绘制波形图。在本地(MacOS)上工作正常，部署到Ubuntu服务器后，自己手动用python方式运行django的server时，工作都是正常的，然而当我用superviosr挂起之后就一直报NoBackendError的错误，反复检查了FFmpeg的安装，应该是没有问题的。网上搜了一下没有看到比较合适的解决办法，故不得不自己读源码来调试了。
-    
-    </summary>
-    
-      <category term="Debug" scheme="http://www.codewoody.com/categories/Debug/"/>
-    
-    
-      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
-    
-      <category term="python" scheme="http://www.codewoody.com/tags/python/"/>
     
   </entry>
   
