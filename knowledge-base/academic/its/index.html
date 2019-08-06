@@ -72,17 +72,6 @@
 
 
 
-<script>
-  (function(d) {
-    var config = {
-      kitId: 'qpn4asg',
-      scriptTimeout: 3000,
-      async: true
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
 
 
 
@@ -141,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="智能交通系统是将先进的信息技术、通讯技术、传感技术、控制技术及计算机技术等有效率地集成运用于整个交通运输管理体系，而创建起的一种在大范围内及全方位发挥作用的，实时、准确及高效率的综合的运输和管理系统。美国、日本、欧洲率先展开相应的研究并成为ITS发展的三强，此外加拿大、中国、韩国、新加坡、澳大利亚等国家的研究也具有相当规模。 现有的智能交通系统通信标准  WAVE(Wireless Access">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-09T14:04:56.066Z">
+<meta property="og:updated_time" content="2019-08-02T08:23:04.743Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="智能交通系统🚗">
 <meta name="twitter:description" content="智能交通系统是将先进的信息技术、通讯技术、传感技术、控制技术及计算机技术等有效率地集成运用于整个交通运输管理体系，而创建起的一种在大范围内及全方位发挥作用的，实时、准确及高效率的综合的运输和管理系统。美国、日本、欧洲率先展开相应的研究并成为ITS发展的三强，此外加拿大、中国、韩国、新加坡、澳大利亚等国家的研究也具有相当规模。 现有的智能交通系统通信标准  WAVE(Wireless Access">
@@ -512,6 +501,10 @@
 <h2 id="研究话题">研究话题</h2>
 <ul>
 <li><a href="./platoon">编队系统</a></li>
+<li>路由协议
+<ul>
+<li><a href="./routing/移动组网路由协议梳理.html">移动组网路由协议梳理</a></li>
+</ul></li>
 </ul>
 
         
@@ -629,7 +622,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1472,24 +1465,9 @@
       'correctBasicBD',
       'substCombLigaWithPUA'
     ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
   }()
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

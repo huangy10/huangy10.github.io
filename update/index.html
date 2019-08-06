@@ -72,17 +72,6 @@
 
 
 
-<script>
-  (function(d) {
-    var config = {
-      kitId: 'qpn4asg',
-      scriptTimeout: 3000,
-      async: true
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
 
 
 
@@ -134,18 +123,18 @@
 
 
 
-  <meta name="description" content="2019.06.29 在标题前方添加Emoji 2019.06.28  修改了内容宽度  具体方法为修改文件themes/next/source/css/_variables/Pisces.styl 1234// $content-desktop-large        = 1160px$content-desktop-large        = 960px// $content-deskto">
+  <meta name="description" content="2019.08.02 Reference部分文字渲染时不使用标准汉字标准格式的em渲染样式。方法为在_layout.swig中运行 12document.getElementById(&quot;refs&quot;)    .setAttribute(&quot;lang&quot;, &quot;en_US&quot;); 2019.06.29 在标题前方添加Emoji 2019.06.28  修改了内容宽度  具体方法为修改文件themes/next">
 <meta property="og:type" content="website">
 <meta property="og:title" content="博客更新">
 <meta property="og:url" content="http://www.codewoody.com/update/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="2019.06.29 在标题前方添加Emoji 2019.06.28  修改了内容宽度  具体方法为修改文件themes/next/source/css/_variables/Pisces.styl 1234// $content-desktop-large        = 1160px$content-desktop-large        = 960px// $content-deskto">
+<meta property="og:description" content="2019.08.02 Reference部分文字渲染时不使用标准汉字标准格式的em渲染样式。方法为在_layout.swig中运行 12document.getElementById(&quot;refs&quot;)    .setAttribute(&quot;lang&quot;, &quot;en_US&quot;); 2019.06.29 在标题前方添加Emoji 2019.06.28  修改了内容宽度  具体方法为修改文件themes/next">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png">
-<meta property="og:updated_time" content="2019-06-29T03:19:56.629Z">
+<meta property="og:updated_time" content="2019-08-02T07:00:41.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客更新">
-<meta name="twitter:description" content="2019.06.29 在标题前方添加Emoji 2019.06.28  修改了内容宽度  具体方法为修改文件themes/next/source/css/_variables/Pisces.styl 1234// $content-desktop-large        = 1160px$content-desktop-large        = 960px// $content-deskto">
+<meta name="twitter:description" content="2019.08.02 Reference部分文字渲染时不使用标准汉字标准格式的em渲染样式。方法为在_layout.swig中运行 12document.getElementById(&quot;refs&quot;)    .setAttribute(&quot;lang&quot;, &quot;en_US&quot;); 2019.06.29 在标题前方添加Emoji 2019.06.28  修改了内容宽度  具体方法为修改文件themes/next">
 <meta name="twitter:image" content="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png">
 
 
@@ -466,9 +455,12 @@
       <div class="post-body han-init-context">
         
         
-          <h2 id="section">2019.06.29</h2>
+          <h2 id="section">2019.08.02</h2>
+<p>Reference部分文字渲染时不使用标准汉字标准格式的<code>em</code>渲染样式。方法为在<code>_layout.swig</code>中运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"refs"</span>)</span><br><span class="line">    .setAttribute(<span class="string">"lang"</span>, <span class="string">"en_US"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="section-1">2019.06.29</h2>
 <p>在标题前方添加Emoji</p>
-<h2 id="section-1">2019.06.28</h2>
+<h2 id="section-2">2019.06.28</h2>
 <ol type="1">
 <li>修改了内容宽度</li>
 </ol>
@@ -482,18 +474,18 @@
 <figure>
 <img src="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png" alt="思源宋体"><figcaption>思源宋体</figcaption>
 </figure>
-<h2 id="section-2">2019.05.20</h2>
+<h2 id="section-3">2019.05.20</h2>
 <p>困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过<a href="https://marketplace.visualstudio.com/items?itemName=satokaz.vscode-bs-ctrlchar-remover" target="_blank" rel="noopener">“Remove backspace control character”</a>这个插件解决。在VS Code的设置中将<code>editor.formatOnSave</code>设置为true来自动处理文件。</p>
-<h2 id="section-3">2019.05.15</h2>
+<h2 id="section-4">2019.05.15</h2>
 <ol type="1">
 <li>修复了搜索和Feed的问题：文章中存在不可见字符，导致<code>atom.xml</code>和<code>search.xml</code>的格式出错</li>
 <li>替换了字体服务器的CDN，从<code>//fonts.googleapis.com</code>修改为<code>//fonts.css.network</code></li>
 </ol>
-<h2 id="section-4">20190507</h2>
-<h3 id="section-5">2</h3>
+<h2 id="section-5">20190507</h2>
+<h3 id="section-6">2</h3>
 <p>修改了Reference的样式。方法是在<code>themes/next/source/css/_custom/custom.styl</code>文件中添加如下内容：</p>
 <figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div<span class="selector-id">#refs</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div<span class="selector-id">#refs</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="section-6">1</h3>
+<h3 id="section-7">1</h3>
 <p>通过上标提供短的参考信息的方法：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sup</span> <span class="attr">title</span>=<span class="string">"Hover Text"</span>&gt;</span>?<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -572,7 +564,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -802,7 +794,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.06.29</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">2019.06.28</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">3.</span> <span class="nav-text">2019.05.20</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-3"><span class="nav-number">4.</span> <span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-4"><span class="nav-number">5.</span> <span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-5"><span class="nav-number">5.1.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section-6"><span class="nav-number">5.2.</span> <span class="nav-text">1</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#section"><span class="nav-number">1.</span> <span class="nav-text">2019.08.02</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-1"><span class="nav-number">2.</span> <span class="nav-text">2019.06.29</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-2"><span class="nav-number">3.</span> <span class="nav-text">2019.06.28</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-3"><span class="nav-number">4.</span> <span class="nav-text">2019.05.20</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-4"><span class="nav-number">5.</span> <span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-5"><span class="nav-number">6.</span> <span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#section-6"><span class="nav-number">6.1.</span> <span class="nav-text">2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#section-7"><span class="nav-number">6.2.</span> <span class="nav-text">1</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1415,24 +1407,9 @@
       'correctBasicBD',
       'substCombLigaWithPUA'
     ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
   }()
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

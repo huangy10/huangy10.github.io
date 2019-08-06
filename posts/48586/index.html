@@ -72,17 +72,6 @@
 
 
 
-<script>
-  (function(d) {
-    var config = {
-      kitId: 'qpn4asg',
-      scriptTimeout: 3000,
-      async: true
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
 
 
 
@@ -135,7 +124,7 @@
 
 
   <meta name="description" content="我是一个无人机集群技术的研究者，从最近开始我打算集中整理发布一些无人机，尤其是无人机集群技术的新进展以及评论文章。">
-<meta name="keywords" content="转载,无人机,科技新闻">
+<meta name="keywords" content="无人机,科技新闻,转载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【转载】无人机击落客机只是时间问题">
 <meta property="og:url" content="http://www.codewoody.com/posts/48586/index.html">
@@ -601,11 +590,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/转载/" rel="tag"># 转载</a>
-          
             <a href="/tags/无人机/" rel="tag"># 无人机</a>
           
             <a href="/tags/科技新闻/" rel="tag"># 科技新闻</a>
+          
+            <a href="/tags/转载/" rel="tag"># 转载</a>
           
         </div>
       
@@ -699,7 +688,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1525,24 +1514,9 @@
       'correctBasicBD',
       'substCombLigaWithPUA'
     ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
   }()
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

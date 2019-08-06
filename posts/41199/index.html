@@ -72,17 +72,6 @@
 
 
 
-<script>
-  (function(d) {
-    var config = {
-      kitId: 'qpn4asg',
-      scriptTimeout: 3000,
-      async: true
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
 
 
 
@@ -134,7 +123,7 @@
 
 
 
-  <meta name="keywords" content="杂谈,转载,科技新闻,Weekly">
+  <meta name="keywords" content="杂谈,科技新闻,转载,Weekly">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Weekly - 5">
 <meta property="og:url" content="http://www.codewoody.com/posts/41199/index.html">
@@ -144,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/f367b414a40dd1ff08320bf773b4acd3.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/30d611818d950dc5b77c72d5e6d647a0.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/06e45bce25078ab94b432465abd96acd.jpg">
-<meta property="og:updated_time" content="2019-07-29T02:28:15.625Z">
+<meta property="og:updated_time" content="2019-08-06T03:49:27.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Weekly - 5">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/e13d52707f66863d9863cb22b18eacf5.jpg">
@@ -494,7 +483,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-29 10:28:15" itemprop="dateModified" datetime="2019-07-29T10:28:15+08:00">2019-07-29</time>
+                <time title="Modified: 2019-08-06 11:49:27" itemprop="dateModified" datetime="2019-08-06T11:49:27+08:00">2019-08-06</time>
               
             
           </span>
@@ -663,9 +652,9 @@
           
             <a href="/tags/杂谈/" rel="tag"># 杂谈</a>
           
-            <a href="/tags/转载/" rel="tag"># 转载</a>
-          
             <a href="/tags/科技新闻/" rel="tag"># 科技新闻</a>
+          
+            <a href="/tags/转载/" rel="tag"># 转载</a>
           
             <a href="/tags/Weekly/" rel="tag"># Weekly</a>
           
@@ -770,7 +759,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1613,24 +1602,9 @@
       'correctBasicBD',
       'substCombLigaWithPUA'
     ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
   }()
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

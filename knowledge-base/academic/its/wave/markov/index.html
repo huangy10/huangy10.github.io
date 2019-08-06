@@ -72,17 +72,6 @@
 
 
 
-<script>
-  (function(d) {
-    var config = {
-      kitId: 'qpn4asg',
-      scriptTimeout: 3000,
-      async: true
-    },
-    h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
-  })(document);
-</script>
-
 
 
 
@@ -147,7 +136,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/398544df56e2adab791c91ef42a93942.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8f5fb17d2327166974e26e69f353fd14.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/adf77d621dedafe5738532d46089374c.png">
-<meta property="og:updated_time" content="2019-05-21T08:46:38.195Z">
+<meta property="og:updated_time" content="2019-07-30T13:40:16.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="马尔科夫链在WAVE链路层网络性能分析中的应用">
 <meta name="twitter:description" content="本文整理自[1]。这篇文章关注的是多信道MAC，即IEEE802.11p + IEEE1609.4。具体而言，主要研究下面几个方面:  饱和以及非饱和情况下数据传输性能； 多维马尔科夫链（最多三维）在MAC协议中的使用； 马尔科夫链模型和真是的应用需求对比，以改善现存的分析模型和协议设计。  现有通信机制/标准简述 为了构建车联网通信系统，每辆车都装备了On-Board Units (OBUs)，">
@@ -590,7 +579,7 @@
 <h3 id="二维马尔科夫链">二维马尔科夫链</h3>
 <p>令<span class="math inline">\(s(t)\)</span>和<span class="math inline">\(b(t)\)</span>分别为代表WSA包在时隙<span class="math inline">\(t\)</span>的退避阶段以及退避计数器的值的随机变量。令状态<span class="math inline">\(I_{s, \emptyset}\)</span>代表WSA队列为空。最大重传次数为<span class="math inline">\(m\)</span>，竞争窗口在第<span class="math inline">\(i\)</span>个阶段为<span class="math inline">\(W_{s, i}, (i \in [0, m])\)</span>。在第一次传输尝试时，退避窗口被设置为最小值<span class="math inline">\(W_{s, 0}\)</span>。当检测到碰撞时，竞争窗口加倍，并且开始重传。<strong>一个重要的假定是<span class="math inline">\(s(t)\)</span>，即退避的阶段，与是否发生碰撞是独立的</strong>。二维过程<span class="math inline">\(\{s(t), b(t)\}\)</span>可以建模成二维马尔科夫链。根据在达到最大退避窗口时的不同行为，我们可以划分两个不同的类别：</p>
 <ol type="1">
-<li><em>remaining maximal backoff stage</em>: 即达到最大的竞争窗口后，直到发送成功前，始终保持最大竞争窗口；</li>
+<li><em>remaining maximal backoff stage</em>: 即达到最大的竞争窗口后，直到发送成功前，始终保持最大竞争窗口；这种模式一般比较常见。</li>
 <li><em>reset backoff stage</em>: 即达到最大的竞争窗口后，立即重置竞争阶段<span class="math inline">\(s(t)\)</span>。</li>
 </ol>
 <figure>
@@ -600,6 +589,8 @@
 <p><span class="math display">\[\begin{equation}
 b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \leq k \leq W_{s, i} - 1
 \end{equation}\]</span></p>
+<h4 id="remaing-maximal-backoff-stage">Remaing maximal backoff stage</h4>
+<p>这本部分的内容主要来自<span class="citation" data-cites="eustathia2002csma">[5]</span>. 这篇文章也是基于Bianchi的经典论文<span class="citation" data-cites="bianchi2000performance">[4]</span>。其改进主要在于考虑了信道的繁忙状态条件以及此条件对于退避机制的使用有何影响。Bianchi使用的假设条件也为这篇文章所使用：有限数量的通信节点以及理想信道条件。</p>
 <h3 id="三维马尔科夫链">三维马尔科夫链</h3>
 <p>将CCHI上传输的包的类型分为三类：安全消息，WSA消息，控制消息。其中安全消息使用一维马尔科夫链，对于后两者，控制消息拥有更高的优先级，使用EDCA中的AC1，WSA使用AC2。</p>
 <p>在三维马尔科夫链中，类似二维的情况，我们用<span class="math inline">\(s(i, t)\)</span>和<span class="math inline">\(b(i, t)\)</span>来分别表示退避阶段和退避计数器的值。这里的<span class="math inline">\(i\)</span>表示EDCA类别，即<span class="math inline">\(i \in AC1, AC2\)</span>。用<span class="math inline">\(v(i, t)\)</span>表示退避过程的冻结状态(Freezing state)。综上，三维随机变量<span class="math inline">\(\{s(i, t), b(i, t), v(i, t)\}\)</span>可以表示成三维马尔科夫变量。由于控制消息拥有更高的优先级，那么控制帧就不会处于Freezing状态，即<span class="math inline">\(v(i, t) = -1\)</span>。此时AC1的马尔科夫链的结构和上一个部分我们提到的二维马尔科夫链的形态非常类似，如下图：</p>
@@ -623,6 +614,9 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
 </div>
 <div id="ref-bianchi2000performance">
 <p>[4] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coordination function,” <em>IEEE Journal on Selected Areas in Communications</em>, vol. 18, no. 3, pp. 535–547, 2000.</p>
+</div>
+<div id="ref-eustathia2002csma">
+<p>[5] E. Ziouva and T. Antonakopoulos, “CSMA/ca performance under high traffic conditions: Throughput and delay analysis,” <em>Computer Communications</em>, vol. 25, no. 3, pp. 313–321, 2002.</p>
 </div>
 </div>
 
@@ -765,7 +759,7 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-count">67</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -995,7 +989,7 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现有通信机制标准简述"><span class="nav-number">1.</span> <span class="nav-text">现有通信机制/标准简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学界现有的多信道mac方案"><span class="nav-number">2.</span> <span class="nav-text">学界现有的多信道MAC方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#马尔科夫链模型与动态cchi"><span class="nav-number">3.</span> <span class="nav-text">马尔科夫链模型与动态CCHI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一维马尔科夫链"><span class="nav-number">3.1.</span> <span class="nav-text">一维马尔科夫链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维马尔科夫链"><span class="nav-number">3.2.</span> <span class="nav-text">二维马尔科夫链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三维马尔科夫链"><span class="nav-number">3.3.</span> <span class="nav-text">三维马尔科夫链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现有通信机制标准简述"><span class="nav-number">1.</span> <span class="nav-text">现有通信机制/标准简述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学界现有的多信道mac方案"><span class="nav-number">2.</span> <span class="nav-text">学界现有的多信道MAC方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#马尔科夫链模型与动态cchi"><span class="nav-number">3.</span> <span class="nav-text">马尔科夫链模型与动态CCHI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一维马尔科夫链"><span class="nav-number">3.1.</span> <span class="nav-text">一维马尔科夫链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二维马尔科夫链"><span class="nav-number">3.2.</span> <span class="nav-text">二维马尔科夫链</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#remaing-maximal-backoff-stage"><span class="nav-number">3.2.1.</span> <span class="nav-text">Remaing maximal backoff stage</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三维马尔科夫链"><span class="nav-number">3.3.</span> <span class="nav-text">三维马尔科夫链</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
@@ -1553,7 +1547,8 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
       
       equationNumbers: {
         autoNumber: 'AMS'
-      }
+      },
+      
     }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
@@ -1648,24 +1643,9 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
       'correctBasicBD',
       'substCombLigaWithPUA'
     ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
   }()
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

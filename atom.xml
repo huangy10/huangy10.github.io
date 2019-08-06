@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.codewoody.com/"/>
-  <updated>2019-07-28T08:02:50.848Z</updated>
+  <updated>2019-08-06T03:48:13.038Z</updated>
   <id>http://www.codewoody.com/</id>
   
   <author>
@@ -17,11 +17,103 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Weekly-7</title>
+    <link href="http://www.codewoody.com/posts/61389/"/>
+    <id>http://www.codewoody.com/posts/61389/</id>
+    <published>2019-08-05T02:48:41.000Z</published>
+    <updated>2019-08-06T03:48:13.038Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="新闻">新闻</h2><h3 id="香港周一全港大罢工">香港周一全港大罢工</h3><blockquote><p>这轮香港抗议潮流是因为反对《逃犯条例》，不过《逃犯条例》之前已经被港府宣布寿终正寝，现在的抗议，又是为了什么呢？我看了这么多关于今天（5日）罢工的新闻，就是没看明白抗议者的诉求具体是什么？无非就是港独嘛，能不能「理直气壮」一点。</p><p>此前，美国总统特朗普在被采访时就香港的表态也是：「有人说，事情发展到一定程度时，他们会阻止。但这是香港和中国（内地）之间的事，因为香港是中国的一部分。必须由他们自己处理这个问题，不需要建议。」</p></blockquote><h3 id="人民币汇率破7"><a href="https://cn.reuters.com/article/column-yuan-fx-bottom-0805-idCNKCS1UV0CS?feedType=RSS&amp;feedName=vbc_CN_columnist_all&amp;virtualBrandChannel=14356" target="_blank" rel="noopener">人民币汇率破7</a></h3><p>8月5日，美元兑人民币汇率骤然波动，离岸、在岸价格均小幅升破 “7”这一整数关口。</p><h3 id="其他新闻">其他新闻</h3><ul><li><a href="https://cn.nytimes.com/morning-brief/20190805/xi-cousin-australia-hong-kong-monday-strike/?utm_source=tw-nytimeschinese&amp;utm_medium=social&amp;utm_campaign=cur" target="_blank" rel="noopener">美国二十四小时内发生两起大规模枪击案</a></li><li><a href="https://cn.nytimes.com/morning-brief/20190805/xi-cousin-australia-hong-kong-monday-strike/?utm_source=tw-nytimeschinese&amp;utm_medium=social&amp;utm_campaign=cur" target="_blank" rel="noopener">习近平表弟被澳大利亚当局调查</a>: 习近平表弟齐明为澳大利亚公民，今日卷入一起针对有组织犯罪，洗钱，以及滥用移民政策的调查中。</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;新闻&quot;&gt;新闻&lt;/h2&gt;
+&lt;h3 id=&quot;香港周一全港大罢工&quot;&gt;香港周一全港大罢工&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;这轮香港抗议潮流是因为反对《逃犯条例》，不过《逃犯条例》之前已经被港府宣布寿终正寝，现在的抗议，又是为了什么呢？我看了这么多关于今天（5日）
+      
+    
+    </summary>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/categories/Weekly/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Lychee使用中的头疼bug</title>
+    <link href="http://www.codewoody.com/posts/3710/"/>
+    <id>http://www.codewoody.com/posts/3710/</id>
+    <published>2019-07-31T05:52:28.000Z</published>
+    <updated>2019-07-31T06:07:00.291Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前我使用了<a href="http://localhost:4000/posts/65048/" target="_blank" rel="noopener">Lychee</a>来搭建我博客的图床。使用Lychee中可能会出现一些头疼的问题。</p><h2 id="无法上传图片">无法上传图片</h2><p>一般出现这种问题时，查看Nginx的<code>error.log</code>目录可以发现类似下面形式的错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2019/07/31 05:47:44 [crit] 306#306: *149 open() &quot;/var/tmp/nginx/client_body/0000000002&quot; failed (13: Permission denied), client: 172.18.0.1, server: _, request: &quot;POST /php/index.php HTTP/1.0&quot;, host: &quot;imgs.codewoody.com&quot;, referrer: &quot;https://imgs.codewoody.com/&quot;</span><br></pre></td></tr></table></figure><p>显示权限错误。导致做个错误的原因是对于<code>/var/tmp/nginx/client_body</code>这一目录，nginx缺乏写入的权限。解决方法如下：</p><p>首先进入容器内部：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it lychee_lychee_1 bash</span><br><span class="line">cd /var/tmp/nginx/client_body</span><br></pre></td></tr></table></figure><p>这一目录的所有者是<code>abc</code>用户，所在的group也是是<code>abc</code>。我们可以将<code>nginx</code>用户添加到这个组，并且为目录<code>/var/tmp/nginx/client_body</code>赋予组写入权限：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adduser nginx abc</span><br><span class="line">chmod g+w .</span><br></pre></td></tr></table></figure><p>问题解决。</p><ul><li><a href="https://serverfault.com/questions/727908/var-lib-nginx-client-body-0000000011-failed-13-permission-denied-with-node-j" target="_blank" rel="noopener">/var/lib/nginx/client_body/0000000011 failed (13: Permission denied) with node.js</a></li><li><a href="https://wincent.com/wiki/Fixing_nginx_client_body_temp_permission_denied_errors" target="_blank" rel="noopener">Fixing nginx client body temp permission denied errors</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前我使用了&lt;a href=&quot;http://localhost:4000/posts/65048/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Lychee&lt;/a&gt;来搭建我博客的图床。使用Lychee中可能会出现一些头疼的问题。&lt;/p&gt;
+&lt;h2 id=&quot;
+      
+    
+    </summary>
+    
+      <category term="Debug" scheme="http://www.codewoody.com/categories/Debug/"/>
+    
+    
+      <category term="linux" scheme="http://www.codewoody.com/tags/linux/"/>
+    
+      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
+    
+      <category term="docker" scheme="http://www.codewoody.com/tags/docker/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Weekly - 6</title>
+    <link href="http://www.codewoody.com/posts/41391/"/>
+    <id>http://www.codewoody.com/posts/41391/</id>
+    <published>2019-07-30T04:24:24.000Z</published>
+    <updated>2019-08-06T03:49:24.669Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="新闻">新闻</h2><h3 id="美国对华追加3000亿美元关税">美国对华追加3000亿美元关税</h3><figure><img src="https://imgs.codewoody.com/uploads/big/34e4e45b3b4a73bb3d88c868ef364c61.jpeg" alt="2019年7月30日，上海，中美经贸磋商举行前外滩附近悬挂的中美两国国旗。"><figcaption>2019年7月30日，上海，中美经贸磋商举行前外滩附近悬挂的中美两国国旗。</figcaption></figure><p>美国总统特朗普周四表示，将从9月1日起对剩余的3,000亿美元从中国进口商品加征10%的关税，之前中美两国谈判代表的最新一轮磋商未能取得进展。</p><p>市场反应激烈。布兰特原油暴挫7.2%，创三年多来最大单日跌幅，美股由升转跌，美国公债价格上扬。</p><ul><li><a href="https://cn.reuters.com/article/column-russell-china-us-trade-war-0802-idCNKCS1US0EO?feedType=RSS&amp;feedName=vbc_CN_columnist_all&amp;virtualBrandChannel=14356" target="_blank" rel="noopener">《RUSSELL专栏》美中或许自认握有贸易战制胜牌 双方都是虚张声势</a></li></ul><h3 id="华为公布上半年业绩">华为公布上半年业绩</h3><p>销售收入 4013 亿人民币，同比增长 23.2%，净利润率 8.7%，这是华为 2019 年上半年交出的成绩单，也是该公司首次公开发布半年业绩。</p><p>在 7 月 30 日的发布会上，华为公司董事长梁华介绍了各项具体业务的表现：上半年智能手机出货量达到 1.18 亿部，同比增长 24%，平板电脑同比增长 10%，PC 增长 3 倍，可穿戴设备增长 2 倍，云服务生态服务用户超过 5 亿，消费者业务收入为 2208 亿元。此外，华为已经拿到了 50 份商用 5G 合同，全球基站发货超过 15 万个。</p><h3 id="大陆居民赴台个人游试点暂停"><a href="https://www.traveldaily.cn/article/130835" target="_blank" rel="noopener">大陆居民赴台个人游试点暂停</a></h3><p>7月31日下午2点左右，文化和旅游部网站正式发布海峡两岸旅游交流协会关于暂停大陆居民赴台个人游试点的公告。公告称：鉴于当前两岸关系，决定自2019年8月1日起暂停47个城市大陆居民赴台个人游试点。</p><p><img src="https://imgs.codewoody.com/uploads/big/f0a92a32f9510affb78a2d99d1a9b893.png"></p><p>之前两岸关系紧张的时候一般是会限制团体游客，但是自2011年自由行开通依赖，大陆方面还从未就自由行进行限制。另外，这次禁令事发非常突然，7月31日发布，第二天就开始施行。当天上午十点多才陆续有小道消息。</p><p>目前关于为何会推出本轮禁令的目的尚不明确，原因众说纷纭。有人说是提前就台湾大选增加压力，也有说是因为台湾方面牵涉香港反送中过多，被大陆方面警告。</p><ul><li><a href="https://cn.reuters.com/article/china-tw-tourism-cctv-0801-idCNKCS1UR40Z?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">中国国台办称民进党严重破坏大陆居民赴台个人游试点的基础和条件</a></li></ul><h3 id="美联储降息25个基点"><a href="https://www.zhihu.com/question/338065122" target="_blank" rel="noopener">美联储降息25个基点</a></h3><p>这是美联储十年以来首次降息。</p><ul><li><a href="https://cn.reuters.com/article/column-chengshi-us-fed-0801-idCNKCS1UR37C?feedType=RSS&amp;feedName=vbc_CN_columnist_all&amp;virtualBrandChannel=14356" target="_blank" rel="noopener">《程实专栏》美联储降息：预期之内 规则之外</a></li></ul><h3 id="河北工程大学留学生威胁女生被遣返"><a href="https://news.sina.com.cn/c/2019-08-01/doc-ihytcitm6158858.shtml" target="_blank" rel="noopener">河北工程大学留学生威胁女生被遣返</a></h3><p>河北工程大学一校园自媒体账号“矿院日报社”发布消息称，7月31日18时许，其收到同学投稿，称自己遭到一名巴基斯坦留学生骚扰（舌吻和袭胸）。当日20时，被侵犯女学生到开元派出所报警，民警根据女生描述将犯罪嫌疑人带到派出所接受调查。该账号运营人员告诉新京报记者，相关校领导连夜处理此事，目前正在等待处理结果。</p><p>目前，警方依据《中华人民共和国治安处罚法》第四十四条之规定，对陶文做出行政拘留十日处罚，并遣送出境。</p><h3 id="天机芯登上nature封面"><a href="https://zhuanlan.zhihu.com/p/76124524" target="_blank" rel="noopener">「天机芯」登上Nature封面</a></h3><p>好消息！清华大学开发出全球首款异构融合类脑芯片，登上了最新一期 Nature 封面！研究团队还展示了由该芯片驱动的 “无人驾驶自行车” ，这项研究由清华大学类脑计算研究中心施路平教授带队，历时 7 年，终于修成正果！</p><p><img src="https://imgs.codewoody.com/uploads/big/61c08b803635a820b6d8b384515622f9.jpg"></p><h3 id="曼谷发生爆炸"><a href="https://cn.reuters.com/article/thailand-blasts-police-0802-idCNKCS1US0IO?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">曼谷发生爆炸</a></h3><p>泰国一名高级警官称，周五（8月2日）有六枚炸弹分别在曼谷三个地点爆炸，一个爆炸装置启动前被排除。</p><p>警官Kamtorn Uicharoen告诉路透，三枚炸弹在瓦塔纳路(Chaeng Wattana)的政府大楼爆炸，一枚没有爆炸。另外两枚在琼龙西(Chong Nonsi)地区爆炸。</p><p>“这两个地区的炸弹是由定时器引爆的自制炸弹，”他说。</p><p>一枚“乒乓炸弹”在Suan Luang地区爆炸。(完)</p><h3 id="其他新闻简讯">其他新闻简讯</h3><ul><li><a href="https://www.caishimv.com/index.php/web/web_archives/info_details.html?id=9754" target="_blank" rel="noopener">小红书疑似被各大安卓应用商店下架</a>：七麦数据的下架监控显示小红书APP在华为手机、魅族手机均被下架。目前，除小米商城和IOS系统的Apple store外，包括华为、OPPO、魅族、一加等在内的品牌商手机均无法下载小红书应用。</li><li><a href="https://www.ithome.com/0/436/158.htm" target="_blank" rel="noopener">京阿尼的一台服务器火灾中逃过一劫，原画数据已经恢复</a></li><li><a href="https://www.williamlong.info/archives/5779.html" target="_blank" rel="noopener">暴风冯鑫涉嫌犯罪被采取强制措施</a>: 没错，就是暴风影音的那个暴风集团。</li><li><a href="https://www.lieyunwang.com/archives/457371" target="_blank" rel="noopener">字节跳动入局全网搜索引擎</a>:7月31日晚，字节跳动在其“字节跳动招聘”公众号上正式对外为“字节跳动搜索部门”招聘员工。</li><li><a href="http://www.lieyunwang.com/archives/457376" target="_blank" rel="noopener">思科中国区裁员</a></li><li><a href="https://www.intel.cn/content/www/cn/zh/products/docs/processors/core/10th-gen-core-mobile-processors-brief.html" target="_blank" rel="noopener">英特尔证书发布11款十代酷睿处理器</a></li><li><a href="https://cn.reuters.com/article/us-withdraw-inf-russia-0802-idCNKCS1US116?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">美国正式退出中导条约</a></li></ul><h2 id="资源">资源</h2><ul><li><a href="https://dynamicwallpaper.club/" target="_blank" rel="noopener">macOS动态照片工具</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/34e4e45b3b4a73bb3d88c868ef364c61.jpeg&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/categories/Weekly/"/>
+    
+    
+      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
+    
+      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+      <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
+    
+  </entry>
+  
+  <entry>
     <title>机动车占用非机动车道停车/行驶的法律问题</title>
     <link href="http://www.codewoody.com/posts/4757/"/>
     <id>http://www.codewoody.com/posts/4757/</id>
     <published>2019-07-28T05:26:02.000Z</published>
-    <updated>2019-07-28T08:02:50.848Z</updated>
+    <updated>2019-07-29T02:28:37.286Z</updated>
     
     <content type="html"><![CDATA[<p><a href="http://www.cnca.gov.cn/bsdt/ywzl/flyzcyj/zcfg/201707/t20170711_54697.shtml" target="_blank" rel="noopener">《中华人民共和国道路交通安全法》</a>第七十条</p><blockquote><p>第七十条 驾驶自行车、电动自行车、三轮车在路段上横过机动车道，应当下车推行，有人行横道或者行人过街设施的，应当从人行横道或者行人过街设施通过;没有人行横道、没有行人过街设施或者不便使用行人过街设施的，在确认安全后直行通过。</p><p>因非机动车道被占用无法在本车道内行驶的非机动车，可以在受阻的路段借用相邻的机动车道行驶，并在驶过被占用路段后迅速驶回非机动车道。机动车遇此情况应当减速让行。</p></blockquote>]]></content>
     
@@ -80,7 +172,7 @@
     <link href="http://www.codewoody.com/posts/41199/"/>
     <id>http://www.codewoody.com/posts/41199/</id>
     <published>2019-07-23T05:52:57.000Z</published>
-    <updated>2019-07-29T02:28:15.625Z</updated>
+    <updated>2019-08-06T03:49:27.130Z</updated>
     
     <content type="html"><![CDATA[<p>最近香港那边热闹的狠，有意思的是，江泽民怒斥香港记者的视频又出现在了的油管的推荐表里。不过现在点进去看里面的评论，大多都是支持江的言论了，感慨自己当时确实是naive，不理解蛤哈的深意。现在回过头看今年来的海内外乱象，才知道他确实说的对。</p><p>其实也就是十余年的光景，世事已不可同日而语矣。</p><h2 id="新闻">新闻</h2><h3 id="鲍里斯约翰逊成为新一任英国首相"><a href="http://www.xinhuanet.com/world/2019-07/23/c_1124789557.htm" target="_blank" rel="noopener">鲍里斯·约翰逊成为新一任英国🇬🇧首相</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/e13d52707f66863d9863cb22b18eacf5.jpg"></p><p>23日，鲍里斯.约翰逊(被称为英国版特朗普)正式当选执政党保守党党魁，在获得女王批准之后将接替特雷莎·梅出任英国首相。鲍里斯票数：92,153 杰里米·亨特票数：46,656 。参与投票的是16万保守党党员。</p><p>现年55岁的约翰逊是“脱欧派”领袖，曾多次强调英国必须在10月31日的新期限前完成“脱欧”，哪怕这样做的代价是“无协议脱欧”，他表示将与欧盟就新“脱欧”协议谈判。约翰逊是英国政坛鲜见的特色人物：反正统、破规矩、不修篇幅，且花絮不断。一头杂乱金发也是出名的个性标志。他也因2008年北京奥运会闭幕式上代表伦敦去接奥运会旗和火种而为中国民众熟知。</p><ul><li><a href="https://www.bbc.com/zhongwen/simp/uk-49086056" target="_blank" rel="noopener">英国新首相约翰逊：一名记者出身的领导人</a></li><li><a href="https://zhuanlan.zhihu.com/p/71608056" target="_blank" rel="noopener">应对硬脱欧，鲍里斯酿大招！减免买房印花税，让英国做税收天堂</a></li></ul><h3 id="华为招聘应届博士年薪超过200万"><a href="https://www.zhihu.com/question/336418328/answer/759298963" target="_blank" rel="noopener">华为招聘应届博士年薪超过200万</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/f367b414a40dd1ff08320bf773b4acd3.jpg"></p><blockquote><p>都是博士，怎么差距那么大呢？？？</p></blockquote><h3 id="复旦女博士劈腿丑闻"><a href="https://www.zhihu.com/question/336719951" target="_blank" rel="noopener">复旦女博士劈腿丑闻</a></h3><blockquote><p>7月24日至25日，网传这样一条消息：复旦大学附属中山医院医生陆某为了和复旦大学女博士李某在一起而抛家弃子。但在他给李某买房、买车、买包包、送珠宝以及给她署名和刊发几篇高质量医学文章后，李某却和他分手。</p><p>经受不住打击，陆某选择了服30颗安眠药自杀。也有消息称，陆某自杀后，被抢救过来。</p></blockquote><ul><li><a href="https://news.ifeng.com/c/7obH6tZYJYu" target="_blank" rel="noopener">复旦女博士“劈腿”致男医生自杀？官方回应</a></li><li><a href="https://www.zhihu.com/question/336815292" target="_blank" rel="noopener">5 篇 SCI 相当于什么？需要花费多少时间和精力？</a></li><li><a href="https://www.zhihu.com/question/336818804" target="_blank" rel="noopener">「送」SCI 在学术圈是什么操作？是学术不端吗？</a></li><li><a href="https://www.zhihu.com/question/336719951/answer/761750649" target="_blank" rel="noopener">学术圈五大蛊王吃瓜汇总</a></li></ul><h3 id="刘强东案149页警方档案公布">刘强东案149页警方档案公布</h3><p>具体内容包括：</p><ol type="1"><li>女学生的友人8月30日拨打911报案的三起电话录音文本文件；</li><li>刘强东去年9月10日接受警方问话的电话录音，时长约30分钟；</li><li>刘强东进入女方公寓及在明大商学院内遭逮捕的照片；</li><li>女学生与当事人在中国的好友、男友等人的短信记录；</li><li>案发当日餐馆、公寓的高清版监控录像共9段，高清照片21张；</li><li>警方的全案报告，包括4份警方出警和问询记录报告，最长的一篇多达149页。</li></ol><p>刘强东涉嫌性侵案的149页的档案中，内容包括对刘强东及其他当事人和目击者访问的笔录，在警察报告的当事人访谈部分写道，女方在警方的询问下，表示刘强东将自己压在身下、举起了自己的双腿，进行了性器官插入，在这个过程中刘强东还询问女方是否处于安全期，性行为持续了约两分钟。</p><p>另外，关于女方在整个案件过程中的态度和言辞转变也在这些材料中披露出来，包括女方曾经想经常承认其性行为是自愿的，但后面又多次改变了自己的论述。</p><h3 id="运营商放弃对菏泽怡海花园进行网络覆盖的努力"><a href="https://www.zhihu.com/question/336809415" target="_blank" rel="noopener">运营商放弃对菏泽怡海花园进行网络覆盖的努力</a></h3><p><img src="https://imgs.codewoody.com/uploads/big/30d611818d950dc5b77c72d5e6d647a0.jpg"> <img src="https://imgs.codewoody.com/uploads/big/06e45bce25078ab94b432465abd96acd.jpg"></p><h3 id="郭文贵被指为中国间谍"><a href="https://www.bbc.com/zhongwen/simp/chinese-news-49087533" target="_blank" rel="noopener">郭文贵被指为中国间谍</a></h3><p>最近中国流亡美国的富商郭文贵被与其有商业争端的公司指为中国的间谍。两年前在海外媒体爆料出名的郭文贵此前也承认他曾经为中国国家安全部门做事。</p><p>据《华尔街日报》报道，郭文贵和Strategic Vision公司自2018年1月就开始产生商业纠纷。法庭文件显示，当时郭文贵同该公司签订了一份900万美元的雇佣合同。郭文贵已经向该公司支付了100万美元，用于启动调查。</p><p>Strategic Vision提供文件向法庭显示，郭文贵要求该公司搜集一些人的财务，社交媒体和旅行方面的资料。郭文贵提供的名单是一些与中共高层有联系的中国人。</p><p>法庭文件显示，这家调查公司还专门招募了前情报人员或执法人员进行上述调查。但他们查明，郭文贵名单上前15个人的名字已经被美国政府列为“记录受保护”的人，即不得对外透露这些人士的资料。</p><p>因此他们认为这些人士的移民状况被当局列为“不能对外公开”，可能意味着这些是帮助美国政府的人。他们认为郭文贵并不打算利用他们的调查结果对付中共，而且郭文贵也并非如他所说的那样是异见者。</p><h3 id="其他新闻汇总">其他新闻汇总</h3><ul><li>7月19日，天宫二号返回地球，受控坠毁，残害落入南太平洋</li><li>阿联酋在沙漠中建设了世界最大的太阳能电厂，一共安装了320万块太阳能板，可以为9万人供电。峰值发电量是1180兆瓦，相比之下，美国最大的太阳能厂是569兆瓦。</li><li>6月27日，美国参议院通过法律要求减少电网自动化程度，不得完全采用计算机控制。目的是防止电网遭受黑客攻击时，出现大规模停电。</li><li>欧盟新规要求新生产的电动汽车必须配备噪声发生器。</li><li>7月23日，美国《财富》杂志每年发布的“财富世界500强”榜单。小米上榜并在全球排名468位，是“互联网服务与零售”分类中的7家公司之一，成为史上最年轻的世界500强公司（除了合并产生的公司外）。同时，雷军成将给所有在职同事和核心外包服务团队攻击20538人赠予1000股小米股票。</li><li>7月23日，支付宝微博宣布给予第一个愿意相信淘宝并使用担保交易的人焦振中授予「支付宝终身尊贵奖」</li><li><a href="https://www.zhihu.com/question/337092839" target="_blank" rel="noopener">京都动画知名监督武本康弘确认离世，这会给京都动画会带来怎样的损失？</a></li><li>世界五百强中国首(129)次超越美国(121)。</li><li><a href="http://www.bjnews.com.cn/news/2019/07/24/607125.html" target="_blank" rel="noopener">河北「爱心妈妈」案主犯李丽娟获刑20年</a>。<a href="https://www.zhihu.com/question/336626906/answer/763425733" target="_blank" rel="noopener">知乎讨论</a></li></ul><h2 id="资源">资源</h2><ul><li><a href="https://css-tricks.com/guide-svg-animations-smil/" target="_blank" rel="noopener">A Guide to SVG Animations (SMIL)</a></li><li><a href="https://design-patterns.readthedocs.io/zh_CN/latest/" target="_blank" rel="noopener">图说设计模式</a>：软件模式是将模式的一般概念应用于软件开发领域，即软件开发的 总体指导思路或参照样板。软件模式并非仅限于设计模式，还包括 架构模式、分析模式和过程模式等，实际上，在软件生存期的每一 个阶段都存在着一些被认同的模式。</li><li>今天发现在mac使用使用搜狗输入法的时候按下Cmd + Shift + E可以切换到一个专门的英文输入模式，这个模式下输入英文会有补全以及英文释义</li><li><a href="https://www.scmp.com/china-internet-report" target="_blank" rel="noopener">中国互联网报告2019</a>: 南华早报出品。</li><li><a href="https://www.bbc.co.uk/news/extra/PLNMqvmycN/conjoined-twins" target="_blank" rel="noopener">一场将Safa和Marwa分开的战斗</a></li><li><a href="https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes" target="_blank" rel="noopener">Overleaf提供的Latex教程</a></li><li><a href="https://github.com/mattm/sql-style-guide#guidelines" target="_blank" rel="noopener">SQL风格指南</a></li></ul><h2 id="言论">言论</h2><ul><li>地位游戏一定是零和的，有赢家就肯定有输家。 比如，我当了部门主管，你就不能当了。所以，地位游戏很凶险，必须时刻提防其他玩家的冷枪。财富游戏不是零和的，我盖了一幢漂亮的房子，不影响你也盖一幢。我赚钱了，不影响其他人的利益，很可能还让其他人过得更好。比如，乔布斯创办了苹果公司，其他人就有了更好的电子产品可用。-- <a href="http://www.ruanyifeng.com/blog/2019/07/weekly-issue-66.html" target="_blank" rel="noopener">阮一峰</a></li></ul>]]></content>
     
@@ -95,9 +187,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -209,9 +301,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -292,9 +384,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -367,9 +459,9 @@
     
       <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
     
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
       <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
+    
+      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
@@ -479,89 +571,6 @@
     
     
       <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MAC: @rpath的坑</title>
-    <link href="http://www.codewoody.com/posts/21028/"/>
-    <id>http://www.codewoody.com/posts/21028/</id>
-    <published>2019-06-28T02:47:47.000Z</published>
-    <updated>2019-06-28T08:40:45.737Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="problem">Problem</h2><p>这篇文章的缘由是我在尝试使用<a href="https://www.nsnam.org" target="_blank" rel="noopener">ns3</a>带的NetAnim程序时，显示了下面这个错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui</span><br><span class="line">  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim</span><br><span class="line">  Reason: image not found</span><br><span class="line">[1]    86663 abort      ./NetAnim</span><br></pre></td></tr></table></figure><a id="more"></a><p>这是一个动态链接的错误，所以没法通过编译的时候添加<code>LDFLAGS</code>来解决。不过错误里面的<code>@rpath</code>这个东西倒是挺有意思，显然并不是环境变量。我在网上查了很多，但是大多数是围绕xcode讨论的，不太适用于我面临的场景（命令行）。不过这些文章（如<a href="http://www.tanhao.me/pieces/1361.html/" target="_blank" rel="noopener">这篇</a>)能够大致阐明<code>@rpath</code>的用途。简而言之，<code>@rpath</code>是一个类似Shell中的<code>PATH</code>的变量，程序在执行时会从<code>@rpath</code>指定的路径中寻找动态链接库文件。那么剩下的问题就是我们如何操作这个变量了。</p><h2 id="solution">Solution</h2><p>通过<code>otool</code>我们可以查看一个程序的动态链接文件搜索地址，例如我要用的<code>NetAnim</code>：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ otool -L ./NetAnim</span><br><span class="line">./NetAnim:</span><br><span class="line">@rpath/QtGui.framework/Versions/4/QtGui (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">@rpath/QtCore.framework/Versions/4/QtCore (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)</span><br><span class="line">/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)</span><br></pre></td></tr></table></figure><p>而我们可以通过<code>install_name_tool</code>来对这些地址进行操作。</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ install_name_tool -h</span><br><span class="line">Usage: /Library/Developer/CommandLineTools/usr/bin/install_name_tool [-change old new] ... [-rpath old new] ... [-add_rpath new] ... [-delete_rpath old] ... [-id name] input</span><br></pre></td></tr></table></figure><p>对我而言，我需要将Qt4的动态链接库添加到<code>NetAdmin</code>的搜索路径中去，可以使用如下的命令：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install_name_tool -add_rpath /usr/<span class="built_in">local</span>/Cellar/qt@4/4.8.7_3/lib ./NetAnim</span><br></pre></td></tr></table></figure><p>大功告成。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;problem&quot;&gt;Problem&lt;/h2&gt;
-&lt;p&gt;这篇文章的缘由是我在尝试使用&lt;a href=&quot;https://www.nsnam.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;ns3&lt;/a&gt;带的NetAnim程序时，显示了下面这个错误：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  Reason: image not found&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;[1]    86663 abort      ./NetAnim&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="Debug" scheme="http://www.codewoody.com/categories/Debug/"/>
-    
-    
-      <category term="macOS" scheme="http://www.codewoody.com/tags/macOS/"/>
-    
-      <category term="Debug" scheme="http://www.codewoody.com/tags/Debug/"/>
-    
-      <category term="ns3" scheme="http://www.codewoody.com/tags/ns3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo文章置顶/置底方法研究</title>
-    <link href="http://www.codewoody.com/posts/42846/"/>
-    <id>http://www.codewoody.com/posts/42846/</id>
-    <published>2019-06-26T14:51:15.000Z</published>
-    <updated>2019-06-26T15:02:26.589Z</updated>
-    
-    <content type="html"><![CDATA[<p>这篇文章讨论如何在Hexo中方便地实现文章置顶功能。</p><p>最初我采用了<a href="https://blog.minhow.com/2017/08/20/hexo/article-top/" target="_blank" rel="noopener">Hexo文章置顶的方法</a>。这个方法还是非常简单有效，不过存在一个问题：即不支持使用负数的<code>top</code>值将文章放在末尾。因此我做了 一点修改。</p><a id="more"></a><h2 id="原始方法">原始方法</h2><p>原始方法的核心思想是在Front-Matter中添加一个自定义的<code>top</code>字段，然后在<code>hexo-generator-index</code>中使用这一字段来实现排序。具体操作为，修改文件<code>node_modules/hexo-generator-index/lib/generator.js</code>，添加 如下代码：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">posts.data = posts.data.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (first.top &amp;&amp; second.top) &#123; <span class="comment">// 两篇文章top都有定义</span></span><br><span class="line">        <span class="keyword">return</span> first.top == second.top ? second.date - first.date : second.top - first.top <span class="comment">//若top值一样则按照文章日期降序排, 否则按照top值降序排</span></span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (first.top &amp;&amp; !second.top) &#123; <span class="comment">// 以下是只有一篇文章top有定义，将有top的排在前面</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!first.top &amp;&amp; second.top) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> second.date - first.date;  <span class="comment">// 都没定义top，按照文章日期降序排</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>更改后的完整代码如下：</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="keyword">var</span> pagination = <span class="built_in">require</span>(<span class="string">'hexo-pagination'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">locals</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> config = <span class="keyword">this</span>.config;</span><br><span class="line">  <span class="keyword">var</span> posts = locals.posts.sort(config.index_generator.order_by);</span><br><span class="line">    posts.data = posts.data.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (first.top &amp;&amp; second.top) &#123; <span class="comment">// 两篇文章top都有定义</span></span><br><span class="line">            <span class="keyword">return</span> first.top == second.top ? second.date - first.date : second.top - first.top <span class="comment">//若top值一样则按照文章日期降序排, 否则按照top值降序排</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (first.top &amp;&amp; !second.top) &#123; <span class="comment">// 以下是只有一篇文章top有定义，将有top的排在前面</span></span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!first.top &amp;&amp; second.top) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> second.date - first.date;  <span class="comment">// 都没定义top，按照文章日期降序排</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  <span class="keyword">var</span> paginationDir = config.pagination_dir || <span class="string">'page'</span>;</span><br><span class="line">  <span class="keyword">var</span> path = config.index_generator.path || <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">return</span> pagination(path, posts, &#123;</span><br><span class="line">    perPage: config.index_generator.per_page,</span><br><span class="line">    layout: [<span class="string">'index'</span>, <span class="string">'archive'</span>],</span><br><span class="line">    format: paginationDir + <span class="string">'/%d/'</span>,</span><br><span class="line">    data: &#123;</span><br><span class="line">      __index: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>然后在需要置顶的文章的front-matter中添加top字段。top值越大，则文章越靠前。top值一样的文章则根据日期排序。front-matter设置的一个例子如下：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">Hexo文章置顶方法研究</span></span><br><span class="line"><span class="attr">date:</span> <span class="number">2019</span><span class="bullet">-06</span><span class="bullet">-26</span> <span class="number">22</span><span class="string">:51:15</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">教程</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">hexo</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">MinHow</span></span><br><span class="line"><span class="attr">tags:</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">博客</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">开源项目</span></span><br><span class="line"><span class="attr">cover_picture:</span> <span class="attr">https://cloud.minhow.com/images/miho/theme/github-second.jpg</span></span><br><span class="line"><span class="attr">top:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure><h2 id="解决置底的问题">解决“置底”的问题</h2><p>无法置底的原因很简单，即在上面的js代码修改中，没有设置top值的文章的top变量是未定义的，且规定未定义top的文章总是比定义了top值的文章要靠后。我们赋予未定义top值的文章一个默认的0值，即可解决这个问题的。具体的操作是将修改代码内容替换成</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">posts.data = posts.data.sort(<span class="function"><span class="keyword">function</span>(<span class="params">first, second</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = first.top || <span class="number">0</span></span><br><span class="line">    <span class="keyword">var</span> b = second.top || <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> (a != b) &#123;</span><br><span class="line">      <span class="keyword">return</span> b - a</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> second.date - first.date</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这篇文章讨论如何在Hexo中方便地实现文章置顶功能。&lt;/p&gt;
-&lt;p&gt;最初我采用了&lt;a href=&quot;https://blog.minhow.com/2017/08/20/hexo/article-top/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo文章置顶的方法&lt;/a&gt;。这个方法还是非常简单有效，不过存在一个问题：即不支持使用负数的&lt;code&gt;top&lt;/code&gt;值将文章放在末尾。因此我做了 一点修改。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="教程" scheme="http://www.codewoody.com/categories/%E6%95%99%E7%A8%8B/"/>
-    
-    
-      <category term="教程" scheme="http://www.codewoody.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
-      <category term="hexo" scheme="http://www.codewoody.com/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Weekly - 1</title>
-    <link href="http://www.codewoody.com/posts/25582/"/>
-    <id>http://www.codewoody.com/posts/25582/</id>
-    <published>2019-06-26T06:05:17.000Z</published>
-    <updated>2019-06-29T14:05:17.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="so-whats-this">So what's this</h2><p>每周我都会读阮一峰的每周分享，有时候也会在其他的博客平台上看见别的博主整理的这些每周资源分享文章，觉得比较有用，我也打算整理一下自己的List。</p><p>最近一年多以来，我尝试尽可能将自己的思考过程以文字的方式记录下来，这样过几天回头来看，便于我整理思路。更重要的是，这种累积会给自己带来沉甸甸的“积累感”，给自己一个强大正反馈。</p><p><em>这篇是这一系类的每周分享的第一篇，贵在坚持！</em></p><a id="more"></a><h2 id="新闻">新闻</h2><h3 id="树莓派4发布"><a href="https://www.ifanr.com/1228499" target="_blank" rel="noopener">树莓派4发布</a></h3><figure><img src="https://imgs.codewoody.com/uploads/big/8d9f81cf9870dc648b9486ff54025a1a.jpg" alt="树莓派4"><figcaption>树莓派4</figcaption></figure><figure><img src="https://imgs.codewoody.com/uploads/big/8f4c25a7a87dd9c125bdf779b20c9861.png" alt="树莓派性能对比"><figcaption>树莓派性能对比</figcaption></figure><p>位于英国的教育慈善组织「Raspberry Pi 基金会」推出了它们的新一代产品：树莓派 4（Raspberry Pi 4），性能表现又上升了一个台阶，官方甚至称它「足以媲美一台入门级 x86 电脑」。树莓派的主要性能升级为：</p><ol type="1"><li>搭载了A72架构的BCM2711芯片，主频为1.5GHz</li><li>两个micro-HDMI</li><li>支持最高4GB LPDDR4内存</li><li>802.11ac 双频Wifi</li><li>千兆以太网</li><li>蓝牙5.0</li><li>5V/3A 的USB-C供电</li><li>USB2.0及USB3.0接口</li></ol><p>官方还承诺，会持续生产树莓派 4 至 2026 年 1 月.</p><h3 id="b站三体动画化">B站三体动画化</h3><p><a href="https://passport.weibo.com/visitor/visitor?entry=miniblog&amp;a=enter&amp;url=https%3A%2F%2Fweibo.com%2F1748075785%2FHAJ5ZiuBT&amp;domain=.weibo.com&amp;ua=php-sso_sdk_client-0.6.28&amp;_rand=1561603056.2875" target="_blank" rel="noopener">B站正式宣布《三体》动画化启动</a>: 作为重磅彩蛋，刘慈欣现身B站十周年活动现场。动画由B站出品、三体宇宙和制作方艺画开天联合出品。活动现场首播的概念版PV淋漓尽致地展现三体宇宙的宏大和黑暗森林法则的残酷。</p><blockquote><p>之前在B站上自己组团队做了三体动画（Minecraft版）的神游八方，也加入了动画化的主创团队。</p></blockquote><ul><li><a href="https://www.bilibili.com/3/" target="_blank" rel="noopener">专题页面</a></li></ul><h3 id="游戏适龄提示倡议"><a href="https://finance.sina.com.cn/roll/2019-06-27/doc-ihytcitk8046473.shtml" target="_blank" rel="noopener">《游戏适龄提示倡议》</a></h3><p>6月26日，人民网联合腾讯、网易、完美世界等10家头部游戏公司发起《游戏适龄提示倡议》，把游戏玩家分成4个年龄层级，并提出了相应的提示体系，包括游戏内容、类型和运营等方面的标准。年龄分层方面，此次倡议把游戏玩家分为18+、16+、12+、6+四级。例如6+多是休闲益智类，18+则有大量竞技、策略、棋牌类游戏。</p><figure><img src="https://imgs.codewoody.com/uploads/big/9ecb92ae01cbca2fc5d9909793357417.jpg" alt="分级标准"><figcaption>分级标准</figcaption></figure><blockquote><p>之前听老梁说的好，文化审查领域重要的是“自由裁量权”，而并不是挂在口头上的细枝末节的审查细节。没有分级制度，那么我想让你过你就能过，不让你过，你就不能过，随心所欲，岂不快哉？</p><p>&quot;在国民党统治时期，制定了一个新闻法，我们共产党人仔细研究它的字句，抓它的辫子，钻它的空子。现在我们当权，我看还是不要新闻法好，免得人家钻我们空子。没有法，我们主动，想怎样控制就怎样控制。&quot; -- 陈云 （孙旭培教授曾在《新闻立法之路》一文中引述）</p></blockquote><p>Further Reading：<a href="http://www.midphoto.com/chinese/whatsnew/2016/lawofnews.htm" target="_blank" rel="noopener">为什么中国没有新闻法</a>(<a href="/knowledge-base/backups/为什么中国没有新闻法.md">Backup Link</a>)</p><h3 id="联邦快递起诉美国政府"><a href="https://about.van.fedex.com/newsroom/fedex-statement-on-department-of-commerce-litigation/" target="_blank" rel="noopener">联邦快递起诉美国政府</a></h3><p>6月24日，联邦快递在官网发布声明称，已向哥伦比亚地区的美国地区法院提起诉讼，要求禁止美国商务部对联邦快递执行“出口管理条例”中的禁令。联邦快递认为，《出口管制条例》违反公共承运人在美国宪法第五修正案下的正当权利，因为他们不合理地要求承运人为可能违反《出口管制条例》的运品承担严格责任。</p><blockquote><p>魔幻现实主义</p></blockquote><h3 id="苹果首席设计官jonathan-ive将离职">苹果首席设计官Jonathan Ive将离职</h3><p>苹果首席设计官 Jonathan Ive 将于今年后期正式离开苹果，创立独立的设计公司 LoveFrom，其好友兼著名设计师 Marc Newson 将加入。届时，苹果将成为该设计公司其中一位主要客户。</p><p>Ive 在苹果的代表作包括 iMac、iPod、iPhone 等系列产品，参与设计了苹果的「飞船」总部 Apple Park。他在新闻稿中说：「在将近 30 年和无数项目后，让我最自豪的项目是我们持续投入精力创造了同行无法比拟的苹果设计团队，流程和文化。」</p><iframe width="560" height="315" src="https://www.youtube.com/embed/4xzLr7xSr-g" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe><blockquote><p>上面视频里的iOS 7即是Jonathan主导的，其革命性的变化在于用扁平化的设计取代拟物化的设计</p></blockquote><h3 id="全电动飞机-alice">全电动飞机 Alice</h3><p>在 6 月 17 日到 23 日举行的巴黎航空展上，以色列航空公司 Eviation 推出了自家首款全电动飞机 Alice。</p><p>这款用「爱丽丝」这个充满诗意的名字来命名的飞机，是全球首款全电动通勤飞机。</p><p>Eviation Alice 内部搭载了功率能达到 功率能够达到 900kW 的三台电机，以及一块可提供 900 千瓦时能量的锂电池。飞机充满一次电可以发行 1037 公里，巡航速度为每小时 407 公里。运载能力方面，Alice 飞机上有 9 个独立座位，同样也需要两名驾驶员才能驾驶。谈到 Alice 的机舱设计时，Eviation 官方表示飞机机舱做了一定的设计优化，自身能为乘客带来更好的降噪。售价方面，Alice 的定价为 400 万美元，折合约 2750 万人民币，每小时的飞行成本为 200 美元，折合约 1372 元。</p><figure><img src="https://imgs.codewoody.com/uploads/big/451b6c55f1bd4fc6d7259c70c17d8151.jpg" alt="巴黎航展 · Alice"><figcaption>巴黎航展 · Alice</figcaption></figure><h3 id="华为-p30-发货量破千万"><a href="http://www.sohu.com/a/323409776_223764?scm=1002.44003c.fe014a0151.PC_ARTICLE_REC&amp;spm=smpc.content.fd-d.32.15615936000232rn2g34" target="_blank" rel="noopener">华为 P30 发货量破千万</a></h3><p>6月27日，华为消费者业务手机产品线总裁何刚在MCW2019大会上公布了一系列数据，其中华为P30系列手机仅上市85天全球发货量就达到1000万台，比P20系列提前了62天。截止今年5月31日，华为手机整体出货量实现149天破亿。</p><figure><img src="https://imgs.codewoody.com/uploads/big/505dab1d529dfe5d3ef449446d007f59.png" alt="华为 P30 发货量破千万"><figcaption>华为 P30 发货量破千万</figcaption></figure><blockquote><p>果粉表示真香，想买。以及，辣鸡KOL</p></blockquote><h2 id="典故与梗">典故与梗</h2><p><strong>不作安安饿殍，效尤奋臂螳螂</strong></p><p>这句话，我一直理解反了意思。开始我以为是指不愿意做饿死鬼，即便是螳臂当车也要起来反抗的意思。结果，其原意是完全相反的。</p><p><a href="https://www.zhihu.com/question/68212300" target="_blank" rel="noopener">这句话出自顾诚的《明末农民战争史》的注释中</a>:</p><blockquote><p>【22】谈迁：《北游录》，《纪闻上》，《榜购一词》条。按：此条首云“总督杨文岳嗣昌出师，榜辑剧寇张献忠”，杨嗣昌字文弱，谈迁误为文岳，又称之为总督，遂与明保定总督杨文岳混为一人。杨复吉《梦阑琐笔》载此事时更写成“保督杨文岳出师榜缉张献忠”，均误。又杨氏所载词中“兴安、平利走四方”一句作“兴安、平利走东乡”。李馥荣：《滟滪囊》卷一所载杨嗣昌榜刊《西江月》词句为：“<strong>不作安安饿殍，效尤奋臂螳螂</strong>。往来楚蜀肆猖狂，弄兵潢池无状。云屯雨骤师集，蛇豕奔突奚藏？许尔军民绑来降，爵赏酬功上上。”或系杨嗣昌所刊另一榜文。</p></blockquote><p>这句话的意思是，尔等不安安静静地做一个饿死鬼，却效仿螳臂当车，自不量力（抵抗朝廷的剿灭大军）。当然，这句话可能并非杨总督本人所说，只是文人调侃他所做。不过，这句话透出的想法，杨总督脑子里大抵是有的，只不过要脸，不好说出来。对于这些统治者来捉，有这样的想法，其实不足为奇。但是，偏偏就有一些明明遇到乱世就会沦为“饿殍”的人，摆不正自己的位置。</p><p>历代造反的贫民，从陈胜吴广，到李自成，洪秀全，诚然造成了巨大的破坏，但若是不造反，又有什么活路呢？难道，做安安饿殍么？</p><h2 id="情绪">情绪</h2><p><strong>Youtube博主Etika自杀</strong></p><figure><img src="https://imgs.codewoody.com/uploads/big/b05fd2ee2db8d5adb14afe276509fe43.jpg" alt="Etika"><figcaption>Etika</figcaption></figure><p>2019年6月19日，Etika上传了一段疑似自杀宣言的视频，他背起书包，离开了家门。至此以后，没有人再看到Etika的任何踪迹。</p><p>6月22日，警方发现了Etika被遗弃的个人物品，在高达340英尺的大桥之上。</p><p>6月25日，纽约警方在布鲁克林大桥水域发现一具未明身份的男性遗体。今日，警方发布正式公告，遗体确为Etika本人，死因是自杀。</p><figure><img src="https://imgs.codewoody.com/uploads/big/d136781dd7e96199bc4f3697a7ccf46a.jpg" alt="网友在Etika自杀地的悼念"><figcaption>网友在Etika自杀地的悼念</figcaption></figure><blockquote><p>有很多极度抑郁的人以至于要自杀的人，有时候看起来会很开心的样子。永远不要以为自己有多么了解一个人，尤其是一个你没有那么熟悉，甚至是陌生的人。</p></blockquote><h2 id="文章与言论">文章与言论</h2><ol type="1"><li><p><a href="http://ohshitgit.com/" target="_blank" rel="noopener">Oh shit, git!</a>：作者针对一些在使用git过程中的痛点给出了解决方法</p></li><li><p><a href="https://jarv.is/notes/how-to-backup-linux-server/" target="_blank" rel="noopener">How To: Automatically Backup a Linux VPS to a Separate Cloud Storage Service</a>：如何将VPS备份到一个云存储平台</p></li><li><p>安卓碎片化严重到什么地步？安卓本身有12个版本，如果每个版本有12个厂商，每个厂商有12个手机型号，因此安卓生态至少包含1,728种&quot;版本- 品牌 - 设备&quot;的组合。</p></li><li><p><a href="https://www.prnewswire.com/news-releases/prose-proximity-services-for-lte--5g-networks-2017-2030---opportunities-challenges-strategies--forecasts-300396915.html" target="_blank" rel="noopener">ProSe (Proximity Services) for LTE &amp; 5G Networks: 2017-2030 - Opportunities, Challenges, Strategies &amp; Forecasts</a>: 5G是近年来的热词了，也是这次美国对华为发难的一个重要因素。不过舆论对于5G的认识，一般是一个加强版的4G蜂窝网。其实5G中引入的Promxity Service技术，将为传统蜂窝网引入D2D的能力，这可能带来深远的影响。</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://imgs.codewoody.com/uploads/big/6db29e24d20b926b20359a495e28fdcf.gif&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Weekly" scheme="http://www.codewoody.com/categories/Weekly/"/>
-    
-    
-      <category term="杂谈" scheme="http://www.codewoody.com/tags/%E6%9D%82%E8%B0%88/"/>
-    
-      <category term="树莓派" scheme="http://www.codewoody.com/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-      <category term="转载" scheme="http://www.codewoody.com/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="科技新闻" scheme="http://www.codewoody.com/tags/%E7%A7%91%E6%8A%80%E6%96%B0%E9%97%BB/"/>
-    
-      <category term="Weekly" scheme="http://www.codewoody.com/tags/Weekly/"/>
     
   </entry>
   
