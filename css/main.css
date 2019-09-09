@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3b2f9e;
+  background: #abfff5;
 }
 .feed-link,
 .chat {
@@ -2907,4 +2907,46 @@ h3::before {
 }
 h2.post-title::before {
   content: "📚";
+}
+twitter-widget {
+  margin-left: auto;
+  margin-right: auto;
+}
+.popover-container {
+  position: relative;
+  display: inline-block;
+}
+.popover-container:hover {
+  -webkit-animation-play-state: paused;
+}
+.popover-container:hover .popover-content {
+  visibility: visible;
+}
+.popover-content {
+  width: 200px;
+  height: 100%;
+  background: #fff;
+  padding: 10px;
+  border-radius: 3px;
+  position: absolute;
+  visibility: hidden;
+  bottom: 0px;
+  left: 50%;
+  top: -10px;
+  transform: translate(-50%, -100%);
+  box-shadow: 0 0 50px 0 rgba(0,0,0,0.5);
+  z-index: 1000;
+}
+.popover-arrow {
+  position: absolute;
+  margin: 10px 0 0 88px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #fff;
+}
+.foot-note-span {
+  font-size: 9pt;
+  color: #f00;
 }
