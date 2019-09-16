@@ -420,6 +420,386 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/2348/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/2348/" class="post-title-link" itemprop="url">Netlink:用户空间与内核空间交互</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-22 16:29:18 / Modified: 16:59:24" itemprop="dateCreated datePublished" datetime="2019-01-22T16:29:18+08:00">2019-01-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/kernel/" itemprop="url" rel="index"><span itemprop="name">kernel</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/2348/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/2348/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://stackoverflow.com/questions/20975566/what-is-the-best-way-to-communicate-a-kernel-module-with-a-user-space-program" target="_blank" rel="noopener">Reference</a></p>
+<h1 id="什么是netlink">1 什么是Netlink</h1>
+<p>Netlink is a socket family that supplies a messaging facility based on the <strong>++BSD socket interface++</strong> to send and retrieve kernel-space information from user-space.  Netlink is portable, highly extensible and it supports <strong>++event-based notifications++</strong>.</p>
+<blockquote>
+<p>从这段描述来看Netlink可以提供类似socket接口，这意味着我们能够传输比较大量的，结构化的数据。另外，Netlink还提供了基于时间通知的功能，也适合我们时刻监控系统动态。</p>
+</blockquote>
+<p>Netlink是一种面向数据表(datagram-oriented)的连通用户空间和内核空间的__++消息系统++__。同时，Netlink也可以用于进程间通信(InterProcess Communication, IPC)。我们这里只关注前者。Netlink构筑与通用的BSD scoket基础设施之上，因此支持使用<code>socket()</code>, <code>bind()</code>, <code>sendmsg()</code>, <code>recvmsg()</code>和其他通常的socket polling操作。</p>
+<blockquote>
+<p>一般的BSD socket使用的是固定格式的数据结构(如AF_INET或者AF_RAW)。Netlink则提供更加可扩展的数据格式。</p>
+</blockquote>
+<h1 id="netlink的典型应用场景">2 Netlink的典型应用场景</h1>
+<p>当前Netlink主要应用场景是网络相关应用，包括：</p>
+<ul>
+<li>advanced routing</li>
+<li>IPsec key management tools</li>
+<li>firewall state synchronization</li>
+<li>uesr-space packet enqueuing</li>
+<li>border gateway routing protocols</li>
+<li>wireless mesh routing protocols</li>
+</ul>
+<blockquote>
+<p>这个应用场景与我们的需要时契合的</p>
+</blockquote>
+<h1 id="netlink总线">3 Netlink总线</h1>
+<p>Netlink允许最多32条内核空间总线。一般来说每个总线都关联到一个内核子系统中（多个子系统也可以共享一个总线）。总线共享的例子包括：</p>
+<ol type="1">
+<li><code>nfnetlink</code>：所有防火墙相关子系统共享</li>
+<li><code>rtnetlink</code>：网络设备管理，路由和队列管理</li>
+</ol>
+<blockquote>
+<p>关于Netlink总线，我发现了一个内核的<a href="https://lwn.net/Articles/746776/" target="_blank" rel="noopener">patch</a>，其中提到，&quot;This patchset aims to improve this situation by add ing a new NETLINK_DESC bus with two commands...&quot;</p>
+</blockquote>
+<h1 id="netlink通信类型">4 Netlink通信类型</h1>
+<p>Netlink支持两种通信类型：</p>
+<ol type="1">
+<li>Unicast：一对一通信，即一个内核子系统对应一个用户空间程序。这种通信模式一般用来发送命令，或者获取命令执行的结果。</li>
+<li>Multicast：一对多通信。通常的场景是一个内核态模块向多个用户态监听者发送消息。这种监听者被划分为多个不同的组。一条Netlink总线可以提供多个组，用户空间可以订阅到一个或者多个组来获取对应的信息。最多可以创建
+<div id="nv60rt" data-type="math" data-display="inline" data-align="left" data-src="https://cdn.nlark.com/__latex/f19901f1c817ad846a411e6712e8db66.svg" data-text="2%5E%7B32%7D" data-width="22" data-height="24">
+<img src="https://cdn.nlark.com/__latex/f19901f1c817ad846a411e6712e8db66.svg" width="22">
+</div>
+个组。</li>
+</ol>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/fd04efbb980d5c7939ee72218283967a.png" alt="Example scenario of unicast and multicast Netlink sockets"><figcaption>Example scenario of unicast and multicast Netlink sockets</figcaption>
+</figure>
+<p>上图给出了Unicast和Multicast的图示。注意这里unicast是同步的，multicast是异步的。</p>
+<h1 id="netlink消息格式">5 Netlink消息格式</h1>
+<p>一般来说，Netlink消息对齐到32bit，其内部数据是<a href="https://www.quora.com/What-are-network-byte-order-and-host-byte-order-in-computer-networking" target="_blank" rel="noopener">host-byte order</a>. 一个Netlink消息总由一段16bytes的header组成，header的格式为<code>struct nlmsghdr</code>（定义在<code>&lt;include/linux/netlink.h&gt;</code>中）</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt="Layout of a Netlink message header"><figcaption>Layout of a Netlink message header</figcaption>
+</figure>
+<p>header包含如下字段：</p>
+<ul>
+<li>消息长度（32bits,  包含header的长度）</li>
+<li>消息类型（16bits）。消息类型的划分有两大类别：数据消息和控制消息。其中数据消息的类型取决于内核模块所允许的取值。控制消息类型则对所有Netlink子系统是一致的。控制消息的类型目前一共有四种。
+<ul>
+<li><code>NLMSG_NOOP</code>: 不对对应任何实质操作，只用来检测Netlink总线是否可用</li>
+<li><code>NLMSG_ERROR</code>：该消息包含了错误信息</li>
+<li><code>NLMSG_DONE</code>：this is the trailing message that is part of a multi-part message. A  multi-part message is composed of a set of messages all with the <code>NLM_F_MULTI</code> flag set.</li>
+<li><code>NLMSG_OVERRUN</code>：没有使用</li>
+</ul></li>
+<li>消息标识(16bits)。一些例子如下：
+<ul>
+<li><code>NLM_F_REQUEST</code>: 如果这个标识被设置了，表明这个消息代表了一个请求。从用户空间发往内核空间的请求必须要设置这个标识，否则内核子系统必须要回复一个<code>invalid argument(EINVAL)</code>的错误信息。</li>
+<li><code>NLM_F_CREATE</code>: 用户空间想要发布一个命令，或者创建一个新的配置。</li>
+<li><code>NLM_F_EXCL</code>: 通常和NLM_F_CREATE一起使用，用来出发配置已经存在的错误信息。</li>
+<li><code>NLM_F_REPLACE</code>: 用户空间想要替换现有配置。</li>
+<li><code>NLM_F_APPEND</code>: 想现有配置添加配置。这种操作一般针对的是有序的数据，如路由表。</li>
+<li><code>NLM_F_DUMP</code>: 用户应用想要和内核应用进行全面重新同步。这中消息的结果是一系列的multipart message。</li>
+<li><code>NLM_F_MULTI</code>: this is a multi-part message. A Netlink subsystem replies with a multi-part message if it has previously received a request from user-space with the NLM F DUMP flag set.</li>
+<li><code>NLM_F_ACK</code>: 设置了这个标识后，内核会返回一个确认信息表明一个请求已经执行。如果这个flag没有返回，那么错误信息会作为sendmsg()函数的返回值同步返回。</li>
+<li><code>NLM_F_ECHO</code>:  if this flag is set, the user-space application wants to get a report back via unicast of the request that it has send. 注意通过这种方式获取信息后，这个程序不会再通过事件通知系统获取同样的信息。</li>
+</ul></li>
+<li>Sequence Number (32bits):  The sequence number is used as a tracking cookie since the kernel does not change the sequence number value at all
+<ul>
+<li>可以和NLM_F_ACK一起使用，用户空间用来确认一个请求被正确地发出了。</li>
+<li>Netlink uses the same sequence number in the messages that are sent as reply to a given request</li>
+<li>For event-based notifications from kernel-space, this is always zero.</li>
+</ul></li>
+<li>Port-ID (32bits): 包含了Netlink分配的一个数字ID。Netlink使用不同的port ID来确定同一个用户态进程打开的不同socket通道。第一个socket的默认port ID是这个进程的PID(Process ID)。在下面这些场景下，port ID为0：
+<ul>
+<li>消息来自内核空间</li>
+<li>消息发送自用户空间，我们希望Netlink能够自动根据socket通道的port ID自动设置消息的port ID</li>
+</ul></li>
+</ul>
+<p>以上是通用Netlink header格式。一些内核子系统会进一步定义自己的header格式，这样不同的子系统可以共享同一个Netlink socket总线。这种情形成为GetNetlink。</p>
+<h1 id="netlink负载">6 Netlink负载</h1>
+<h2 id="type-length-valuetlv格式">6.1 Type-Length-Value(TLV)格式</h2>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt="An example of a hypothetical Netlink payload in TLV format"><figcaption>An example of a hypothetical Netlink payload in TLV format</figcaption>
+</figure>
+<p>Netlink的消息格式由TLV格式的属性组成。TLV属性分为Length,  Type和Payload三部分。这种格式具有很强的可扩展性。在内核中，TLV属性的header定义如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  &lt;------- NLA_HDRLEN ------&gt; &lt;-- NLA_ALIGN(payload)--&gt;</span></span><br><span class="line"><span class="comment"> * +---------------------+- - -+- - - - - - - - - -+- - -+</span></span><br><span class="line"><span class="comment"> * |        Header       | Pad |     Payload       | Pad |</span></span><br><span class="line"><span class="comment"> * |   (struct nlattr)   | ing |                   | ing |</span></span><br><span class="line"><span class="comment"> * +---------------------+- - -+- - - - - - - - - -+- - -+</span></span><br><span class="line"><span class="comment"> *  &lt;-------------- nlattr-&gt;nla_len --------------&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlattr</span> &#123;</span></span><br><span class="line">    __u16           nla_len;</span><br><span class="line">    __u16           nla_type;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>nla_type</code>：属性的取值很大程度上取决于内核空间子系统定义。不过Netlink预先定了两个重要的比特位：
+<ul>
+<li>NLA_F_NETSTED: 是否是嵌套属性。即在payload部分，以TLV的格式存储了更多的属性。</li>
+<li>NLA_F_NET_BYTEORDER: payload内容的字节顺序（是否是network byte order(1))</li>
+</ul></li>
+<li><code>nla_len</code>: 注意，尽管payload部分会按照32bit进行对齐，这里的长度内容是不包含对齐补全的bit的。另外，这里的长度值包含了header。</li>
+</ul>
+<h1 id="netlink错误消息">7 Netlink错误消息</h1>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt="Layout of a Netlink error message"><figcaption>Layout of a Netlink error message</figcaption>
+</figure>
+<p>Netlink提供了一种包含了Netlink error header的消息类型，其格式如上图所示。这个header定义为<code>struct nlmsgerr</code> (<code>&lt;include/linux/netlink.h&gt;</code>)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlmsgerr</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span>		error;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">nlmsghdr</span> <span class="title">msg</span>;</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * followed by the message contents unless NETLINK_CAP_ACK was set</span></span><br><span class="line"><span class="comment">	 * or the ACK indicates success (error == 0)</span></span><br><span class="line"><span class="comment">	 * message length is aligned with NLMSG_ALIGN()</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * followed by TLVs defined in enum nlmsgerr_attrs</span></span><br><span class="line"><span class="comment">	 * if NETLINK_EXT_ACK was set</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>error</code>: 错误类型。定义在<code>error.h</code>中，可以用<code>perror()</code>解析。</li>
+<li>Netlink消息，为触发此错误的消息内容。 &gt; With regards to message integrity, the kernel subsystems that support Netlink usually report invalid argument (EINVAL) via recvmsg() if user-space sends a malformed message</li>
+</ul>
+<h1 id="genetlink">8 GeNetlink</h1>
+<p>前文我们提到过GetNetlink了。这一技术是为了缓解Netlink总线数量过少的问题。GeNetlink allows to register up to 65520 families that share a single Netlink bus. Each family is intended to be equivalent to a virtual bus。其中，每个family通过一个唯一的string name and ID number来注册。其中string name作为主键，而ID number在不同的系统中可能不同。</p>
+<h1 id="netlink开发">9 Netlink开发</h1>
+<p>Netlink开发涉及到内核空间和用户空间双边的开发。Linux提供了很多帮助函数来见过Netlink开发中重复性的解析，验证，消息构建的操作。</p>
+<h2 id="用户空间开发">9.1 用户空间开发</h2>
+<p>从用户空间这一侧来看，Netlink sockets实现在通用的BSD socket接口之上。因此，在用户空间开发Netlink和开发TCP/IP socket应用是很类似的。不过，同其他典型的BSD socket应用相比，Netlink存在以下的不同之处：</p>
+<ol type="1">
+<li>Netlink sockets do not hide protocol details to user-space as other protocols to. 即，Netlink会直接处理原始数据本身，用户空间的开发也要直接处理原始数据格式的负载。</li>
+<li>Errors that comes from Netlink and kernel subsystems are not returned by recvmsg() as an integer. Instead, errors are encapsulated in the Netlink error message. 唯一的例外是No buffer space error (<code>ENOBUFS</code>)，这个错误是表明无法将Netlink消息放入队列。标准的通用socket错误，同样也是从<code>recvmsg()</code>中以integer形式返回。</li>
+</ol>
+<blockquote>
+<p>涉及用户空间的Netlink开发的有两个库：<a href="https://www.infradead.org/~tgr/libnl/" target="_blank" rel="noopener">libnl</a>和<a href="https://netfilter.org/projects/libmnl/" target="_blank" rel="noopener">libmnl</a>。这些库都是用C开发，用来简化Netlink开发。Netlink用户空间的进一步开发可以参考这两个库的例子和教程。</p>
+<p>原始API的文档：<a href="https://www.systutorials.com/docs/linux/man/7-netlink/" target="_blank" rel="noopener">https://www.systutorials.com/docs/linux/man/7-netlink/</a></p>
+</blockquote>
+<h3 id="打开socket">9.1.1 打开socket</h3>
+<p>下面来阐述一下用户空间的Netlink开发的重要事项。前面提到Netlink使用了BSD socket的接口。一般而言，创建socket的接口长这样子（<a href="http://web.mit.edu/macdev/Development/MITSupportLib/SocketsLib/Documentation/sockets.html" target="_blank" rel="noopener">socket接口</a>）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">socket</span> <span class="params">(<span class="keyword">int</span> family, <span class="keyword">int</span> type, <span class="keyword">int</span> protocol)</span></span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数<code>family</code>是socket的大类。在开发TCP/IP应用的时候，这里总是<code>AF_INET</code>。而在Netlink中，这里总是设置为<code>AF_NETLINK</code>。</li>
+<li><code>type</code>可以选择<code>SOCK_RAW</code>或者<code>SOCK_DGRAM</code>。不过Netlink并不会区分这两者。</li>
+<li>protocol为Netlink场景下定义的具体协议类型，现有的主要协议包括：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_ROUTE		0	<span class="comment">/* Routing/device hook				*/</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_UNUSED		1	<span class="comment">/* Unused number				*/</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_USERSOCK	2	<span class="comment">/* Reserved for user mode socket protocols 	*/</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_FIREWALL	3	<span class="comment">/* Unused number, formerly ip_queue		*/</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_SOCK_DIAG	4	<span class="comment">/* socket monitoring				*/</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_NFLOG		5	<span class="comment">/* netfilter/iptables ULOG */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_XFRM		6	<span class="comment">/* ipsec */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_SELINUX		7	<span class="comment">/* SELinux event notifications */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_ISCSI		8	<span class="comment">/* Open-iSCSI */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_AUDIT		9	<span class="comment">/* auditing */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_FIB_LOOKUP	10	</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_CONNECTOR	11</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_NETFILTER	12	<span class="comment">/* netfilter subsystem */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_IP6_FW		13</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_DNRTMSG		14	<span class="comment">/* DECnet routing messages */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_KOBJECT_UEVENT	15	<span class="comment">/* Kernel messages to userspace */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_GENERIC		16</span></span><br><span class="line"><span class="comment">/* leave room for NETLINK_DM (DM Events) */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_SCSITRANSPORT	18	<span class="comment">/* SCSI Transports */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_ECRYPTFS	19</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_RDMA		20</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_CRYPTO		21	<span class="comment">/* Crypto layer */</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_INET_DIAG	NETLINK_SOCK_DIAG</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我们可以直接使用NETLINK_USERSOCK供自己使用，或者自己定义一个新的量。</p>
+</blockquote>
+<blockquote>
+<p>这里的protocol应当对应的是1.1.3中提到的总线。推理过程如下： 1. https://lwn.net/Articles/746776/ 这个链接中提叫的patch描述中称：This patch set aims to improve this situation by adding a new NETLINK_DESC bus with two commands 2. 在<a href="#8642ah">参考文献</a>中谈论Netlink总线时，聚到了rtnetlink这个例子。根据rtnetlink的<a href="http://man7.org/linux/man-pages/man7/rtnetlink.7.html" target="_blank" rel="noopener">man page</a>， <code style="background-color: rgb(255, 255,255)"> #include &lt;asm/types.h&gt; #include &lt;linux/netlink.h&gt; #include &lt;linux/rtnetlink.h&gt; #include &lt;sys/socket.h&gt; <br> rtnetlink_socket = socket(AF_NETLINK, int socket_type, NETLINK_ROUTE); </code></p>
+</blockquote>
+<h3 id="绑定socket地址">9.1.2 绑定socket地址</h3>
+<p>在打开了一个socket之后，我们需要为socket绑定一个本地地址。Netlink的地址格式如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_nl</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">sa_family_t</span>    nl_family;  <span class="comment">/* AF_NETLINK   */</span></span><br><span class="line">  <span class="keyword">unsigned</span> <span class="keyword">short</span> nl_pad;     <span class="comment">/* zero         */</span></span><br><span class="line">  __u32          nl_pid;     <span class="comment">/* process pid */</span></span><br><span class="line">  __u32          ;  <span class="comment">/* mcast groups mask */</span></span><br><span class="line">&#125; nladdr;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里的nl_pid可以通过getpid()这个函数来获取当前进程的pid来进行赋值</p>
+</blockquote>
+<p>如果要在一个进程的多个线程中打开多个socket，可以用如下公式生成<code>nl_pid</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pthread_self() &lt;&lt; <span class="number">16</span> | getpid();</span><br></pre></td></tr></table></figure>
+<p><code>struct socketadd_nl</code>中的<code>nl_groups</code>为bit mask，代表了广播分组。当设置为0时代表单播消息。</p>
+<p>确定地址后可以将其绑定到socket</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fd为socket()返回的句柄</span></span><br><span class="line">bind(fd, (struct sockaddr*)&amp;nladdr, <span class="keyword">sizeof</span>(nladdr));</span><br></pre></td></tr></table></figure>
+<h3 id="发送netlink消息">9.1.3 发送Netlink消息</h3>
+<p>为了发送Netlink消息，我们还需要创建一个<code>struct socketaddr_nl</code>作为发送的目的地址。如果消息是发送给内核的，那么<code>nl_pid</code>和<code>nl_groups</code>都要设置为0。如果这个消息是一个多播消息，那么需要设置<code>nl_groups</code>的对应比特。设置好目的地址之后，我们可以开始组装<code>sentmsg()</code>API需要的消息格式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msghdr</span> <span class="title">msg</span>;</span></span><br><span class="line">msg.msg_name = (<span class="keyword">void</span> *)&amp;(nladdr);</span><br><span class="line">msg.msg_namelen = <span class="keyword">sizeof</span>(nladdr);</span><br></pre></td></tr></table></figure>
+<p>上面是socket的通用header，我们还需要设置Netlink自己的Message  header这里<code>struct nlmsghdr</code>定义为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlmsghdr</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  __u32 nlmsg_len;   <span class="comment">/* Length of message */</span></span><br><span class="line">  __u16 nlmsg_type;  <span class="comment">/* Message type*/</span></span><br><span class="line">  __u16 nlmsg_flags; <span class="comment">/* Additional flags */</span></span><br><span class="line">  __u32 nlmsg_seq;   <span class="comment">/* Sequence number */</span></span><br><span class="line">  __u32 nlmsg_pid;   <span class="comment">/* Sending process PID */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>在1.5中我们队各个字段的含义有了详细的介绍。按照对应的含义进行设置。 Netlink的消息由Netlink header和payload组成。因此我们需要一次性创建包含header和payload的内存块。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlmsghdr</span> *<span class="title">nlh</span> = (<span class="title">struct</span> <span class="title">nlmsghdr</span> *)<span class="title">malloc</span>(<span class="title">NLMSG_SPACE</span>(<span class="title">MAX_PAYLOAD</span>));</span> </span><br><span class="line"><span class="built_in">memset</span>(nlh, <span class="number">0</span>, NLMSG_SPACE(MAX_PAYLOAD));</span><br><span class="line">nlh-&gt;nlmsg_len = NLMSG_SPACE(MAX_PAYLOAD);</span><br><span class="line">nlh-&gt;nlmsg_pid = getpid();</span><br><span class="line">nlh-&gt;nlmsg_flags = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>此处使用的<code>NLMSG_SPACE</code>宏定义是Netlink提供的工具，其定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NLMSG_LENGTH(len) ((len) + NLMSG_HDRLEN)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NLMSG_SPACE(len) NLMSG_ALIGN(NLMSG_LENGTH(len))</span></span><br></pre></td></tr></table></figure>
+<p>这个宏做了两件事：</p>
+<ol type="1">
+<li>在长度上加上header的长度</li>
+<li>将Payload进行32bit对齐</li>
+</ol>
+<p>设置好负载内容后（负载数据段可以通过<span data-type="color" style="color:rgb(206, 103, 0)"><code>NLMSG_DATA</code></span><span data-type="color" style="color:rgb(197, 200, 198)"><code>(nlh)</code></span>来获取），就可以发送了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">iovec</span> <span class="title">iov</span>;</span></span><br><span class="line"></span><br><span class="line">iov.iov_base = (<span class="keyword">void</span> *)nlh;</span><br><span class="line">iov.iov_len = nlh-&gt;nlmsg_len;</span><br><span class="line"></span><br><span class="line">msg.msg_iov = &amp;iov;</span><br><span class="line">msg.msg_iovlen = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">sendmsg(fd, &amp;msg, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="接收netlink消息">9.1.3 接收Netlink消息</h3>
+<p>接收过程是类似的。接收程序需要提前分配一个足够的buffer来接收Netlink消息：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_nl</span> <span class="title">nladdr</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">msghdr</span> <span class="title">msg</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">iovec</span> <span class="title">iov</span>;</span></span><br><span class="line"></span><br><span class="line">iov.iov_base = (<span class="keyword">void</span> *)nlh;</span><br><span class="line">iov.iov_len = MAX_NL_MSG_LEN;</span><br><span class="line">msg.msg_name = (<span class="keyword">void</span> *)&amp;(nladdr);</span><br><span class="line">msg.msg_namelen = <span class="keyword">sizeof</span>(nladdr);</span><br><span class="line"></span><br><span class="line">msg.msg_iov = &amp;iov;</span><br><span class="line">msg.msg_iovlen = <span class="number">1</span>;</span><br><span class="line">recvmsg(fd, &amp;msg, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="内核空间开发">9.2 内核空间开发</h2>
+<h3 id="创建新的netlink协议类型">9.2.1 创建新的Netlink协议类型</h3>
+<p>除非要复用内核既有Netlink协议类型，不然最好定义一个自己用的总线类型</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NETLINK_TEST 31</span></span><br></pre></td></tr></table></figure>
+<p>这个定义可以加在<code>netlink.h</code>中，或者放在模块的头文件里。</p>
+<h3 id="创建socket">9.2.2 创建socket</h3>
+<p>在用户态，我们通过<code>socket()</code>接口来创建socket，而在内核中，我们使用如下的API：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">sock</span> *</span></span><br><span class="line"><span class="class"><span class="title">netlink_kernel_create</span>(<span class="title">struct</span> <span class="title">net</span> *<span class="title">net</span>, <span class="title">int</span> <span class="title">unit</span>, <span class="title">struct</span> <span class="title">netlink_kernel_cfg</span> *<span class="title">cfg</span>);</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>net</code>一般固定为全局变量<code>init_net</code></li>
+<li><code>unit</code>即为协议类型，我们在这里填上<code>NETLINK_TEST</code></li>
+<li><code>cfg</code>为Netlink的内核设置</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">netlink_kernel_cfg</span> &#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span>	groups;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span>	flags;</span><br><span class="line">	<span class="keyword">void</span>		(*input)(struct sk_buff *skb);</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mutex</span>	*<span class="title">cb_mutex</span>;</span></span><br><span class="line">	<span class="keyword">int</span>		(*bind)(struct net *net, <span class="keyword">int</span> group);</span><br><span class="line">	<span class="keyword">void</span>		(*unbind)(struct net *net, <span class="keyword">int</span> group);</span><br><span class="line">	<span class="keyword">bool</span>		(*compare)(struct net *net, struct sock *sk);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中<code>input</code>是必须要设置的，是socket在接收到一个消息后的回调函数。回调函数的一个例子如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">hello_nl_recv_msg</span><span class="params">(struct sk_buff *skb)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">nlmsghdr</span> *<span class="title">nlh</span>;</span></span><br><span class="line">    <span class="keyword">int</span> pid;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sk_buff</span> *<span class="title">skb_out</span>;</span></span><br><span class="line">    <span class="keyword">int</span> msg_size;</span><br><span class="line">    <span class="keyword">char</span> *msg = <span class="string">"Hello from kernel"</span>;</span><br><span class="line">    <span class="keyword">int</span> res;</span><br><span class="line"></span><br><span class="line">    printk(KERN_INFO <span class="string">"Entering: %s\n"</span>, __FUNCTION__);</span><br><span class="line"></span><br><span class="line">    msg_size = <span class="built_in">strlen</span>(msg);</span><br><span class="line"></span><br><span class="line">    nlh = (struct nlmsghdr *)skb-&gt;data;</span><br><span class="line">    printk(KERN_INFO <span class="string">"Netlink received msg payload:%s\n"</span>, (<span class="keyword">char</span> *)nlmsg_data(nlh));</span><br><span class="line">    pid = nlh-&gt;nlmsg_pid; <span class="comment">/*pid of sending process */</span></span><br><span class="line"></span><br><span class="line">    skb_out = nlmsg_new(msg_size, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!skb_out)</span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        printk(KERN_ERR <span class="string">"Failed to allocate new skb\n"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    nlh = nlmsg_put(skb_out, <span class="number">0</span>, <span class="number">0</span>, NLMSG_DONE, msg_size, <span class="number">0</span>);</span><br><span class="line">    NETLINK_CB(skb_out).dst_group = <span class="number">0</span>; <span class="comment">/* not in mcast group */</span></span><br><span class="line">    <span class="built_in">strncpy</span>(nlmsg_data(nlh), msg, msg_size);</span><br><span class="line"></span><br><span class="line">    res = nlmsg_unicast(nl_sk, skb_out, pid);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (res &lt; <span class="number">0</span>)</span><br><span class="line">        printk(KERN_INFO <span class="string">"Error while sending bak to user\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="从内核向用户态程序发送消息">9.2.3 从内核向用户态程序发送消息</h3>
+<p>正如在用户空间的发送流程那样，发送消息需要先设置一个socket接收地址。设置接收地址需要通过<code>NETLIN_CB</code>宏访问skb从control buffer中存储的netlink参数（<code>struct netlink_skb_parms</code>）。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">netlink_skb_parms</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">scm_creds</span>	<span class="title">creds</span>;</span>		<span class="comment">/* Skb credentials	*/</span></span><br><span class="line">	__u32			portid;</span><br><span class="line">	__u32			dst_group;</span><br><span class="line">	__u32			flags;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">sock</span>		*<span class="title">sk</span>;</span></span><br><span class="line">	<span class="keyword">bool</span>			nsid_is_set;</span><br><span class="line">	<span class="keyword">int</span>			nsid;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>其中重要的参数时<code>dst_group</code>和<code>flags</code>。 如果要发送的数据包是单播数据包，发送方式为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">NETLINK_CB(skb_out).dst_group = <span class="number">0</span>; <span class="comment">/* not in mcast group */</span></span><br><span class="line">res = nlmsg_unicast(nl_sk, skb_out, pid);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里的目标pid可以通过接收到的消息<code>nlh-&gt;nlmsg_pid</code>获取</p>
+</blockquote>
+<p>如果要发送的数据包是多播：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = nlmsg_multicast(nl_sk, skbout, own_pid, group, flags);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ol type="1">
+<li>此处的own_pid是传输自己的pid来纺织消息传递给自己。因此内核态在这里填写0</li>
+<li>NETLNK_CB(skb_out).dst_group会在发送函数内设置。</li>
+</ol>
+</blockquote>
+<h1 id="further-reading">10 Further Reading</h1>
+<ul>
+<li><a href="https://www.linuxjournal.com/article/7356" target="_blank" rel="noopener">Kernel Korner - Why and How to Use Netlink Socket</a></li>
+<li><a href="https://gist.github.com/arunk-s/c897bb9d75a6c98733d6" target="_blank" rel="noopener">https://gist.github.com/arunk-s/c897bb9d75a6c98733d6</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/32824/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2116,198 +2496,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/36948/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/36948/" class="post-title-link" itemprop="url">macOS绕过SIP安全机制限制的一种办法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-11-21 14:08:18" itemprop="dateCreated datePublished" datetime="2018-11-21T14:08:18+08:00">2018-11-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-15 13:33:51" itemprop="dateModified" datetime="2019-05-15T13:33:51+08:00">2019-05-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/36948/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/36948/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><a href="https://support.apple.com/en-us/HT204899" target="_blank" rel="noopener">SIP(System Security Protection)</a>是苹果在OSX EI Capitan及其后版本的操作系统中引入了一种新的安全机制。望文生义就可以看出，这个安全机制是用来维持系统的完整性，保护系统免收恶意软件的篡改。具体来说，SIP限制了root账户的权限范围，限制了root用户在对一些系统保护目录即其中文件的操作能力。但是<strong>任何对于安全性加强都意味着对灵活性的削弱</strong>。
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/36948/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2356,7 +2544,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">76</span>
+                    <span class="site-state-item-count">77</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

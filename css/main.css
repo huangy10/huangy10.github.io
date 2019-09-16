@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #abfff5;
+  background: #61feff;
 }
 .feed-link,
 .chat {
@@ -2948,5 +2948,8 @@ twitter-widget {
 }
 .foot-note-span {
   font-size: 9pt;
+  color: #f00;
+}
+.foot-note-span a {
   color: #f00;
 }
