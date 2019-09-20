@@ -612,6 +612,1014 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/41659/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/41659/" class="post-title-link" itemprop="url">Qt on Mac摸索记录 - 其四</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-20 12:17:50 / Modified: 15:55:08" itemprop="dateCreated datePublished" datetime="2019-09-20T12:17:50+08:00">2019-09-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/41659/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/41659/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="事件与信号events-and-signals">事件与信号(Events and signals)</h2>
+<p>事件系统在任何GUI框架中都是非常重要的，所有的GUI应用都是事件驱动的(Event-driven)。这些信号可以是用户产生，也可能是程序内部产生。在一个事件模型中，有如下三个重要的部分</p>
+<ul>
+<li>event source</li>
+<li>event object</li>
+<li>event target</li>
+</ul>
+<p>其中，event source是指产生事件的对象，一般在产生事件的同时，其内部状态也发生了变化。event object则是指描述事件本身的对象。event target则是需要响应这些事件的对象。</p>
+<p>当我们调用<code>QApplication::exec</code>函数时，应用进入主循环中(main loop)。主循环负责获取事件并将事件发送给合适的响应对象。Qt实现了独特的signal and slot机制。这一机制是对C++变成语言的扩展。这里，信号(signal)和槽(slot)用于对象之间的通信，其中信号在事件发生时产生。槽一般是一个正常的C++函数，当指定信号触发时这个函数会被调用。信号和槽需要事先进行连接。</p>
+<h3 id="鼠标点击">鼠标点击</h3>
+<p>我们之前已经见过了在<code>QPushButton</code>上应用信号与槽的机制来处理点击事件。这里不再赘述，参考<a href="/posts/24435/#%E6%8C%89%E9%92%AE%E4%B8%8E%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92">按钮与交互</a>这个部分。</p>
+<h3 id="按键响应">按键响应</h3>
+<p>下面的这个例子显示了按键响应的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// keypress.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">KeyPress</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    KeyPress(QWidget *parent = <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">keyPressEvent</span><span class="params">(QKeyEvent * e)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// keypress.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QKeyEvent&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"keypress.h"</span></span></span><br><span class="line"></span><br><span class="line">KeyPress::KeyPress(QWidget *parent)</span><br><span class="line">    : QWidget(parent)</span><br><span class="line">&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> KeyPress::keyPressEvent(QKeyEvent *event) &#123;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (event-&gt;key() == Qt::Key_Escape) &#123;  </span><br><span class="line">       qApp-&gt;quit();</span><br><span class="line">   &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"keypress.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  KeyPress window;</span><br><span class="line">  </span><br><span class="line">  window.resize(<span class="number">250</span>, <span class="number">150</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Key press"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意<code>keyPressEvent</code>是父类<code>QWidget</code>的一个<a href="https://doc.qt.io/qt-5/qwidget.html#keyPressEvent" target="_blank" rel="noopener">虚函数</a>。故这里我们不直接使用到槽函数。</p>
+<h3 id="qmoveevent"><code>QMoveEvent</code></h3>
+<p>这个事件代表Widget移动的过程，同样是通过override父类的虚函数实现的。见下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// move.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMainWindow&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Move</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  Q_OBJECT</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    Move(QWidget *parent = <span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">moveEvent</span><span class="params">(QMoveEvent *e)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// move.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMoveEvent&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"move.h"</span></span></span><br><span class="line"></span><br><span class="line">Move::Move(QWidget *parent)</span><br><span class="line">    : QWidget(parent)</span><br><span class="line">&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Move::moveEvent(QMoveEvent *e) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> x = e-&gt;pos().x();</span><br><span class="line">  <span class="keyword">int</span> y = e-&gt;pos().y();</span><br><span class="line">  </span><br><span class="line">  QString text = QString::number(x) + <span class="string">","</span> + QString::number(y);</span><br><span class="line"></span><br><span class="line">  setWindowTitle(text);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"move.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  Move window;</span><br><span class="line">  </span><br><span class="line">  window.resize(<span class="number">250</span>, <span class="number">150</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Move"</span>);</span><br><span class="line">  window.show();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="断开信号和槽的联系">断开信号和槽的联系</h3>
+<p>信号和槽可以通过槽连接气力啊，也可以断开。断开通过<code>disconnect</code>函数来实现，其参数形式应当和connect时的参数一致。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">connect(clickBtn, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;Disconnect::onClick);</span><br><span class="line"><span class="comment">// ... </span></span><br><span class="line">disconnect(clickBtn, &amp;QPushButton::clicked, <span class="keyword">this</span>,</span><br><span class="line">    &amp;Disconnect::onClick);</span><br></pre></td></tr></table></figure>
+<h3 id="timer">Timer</h3>
+<p>Timer是周期性发出的事件（当然也可以用来做single shot）。Timer的典型例子就是用来实现一个时钟：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLabel&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Timer</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    Timer(QWidget *parent = <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">timerEvent</span><span class="params">(QTimerEvent *e)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    QLabel *label;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"timer.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QHBoxLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTime&gt;</span></span></span><br><span class="line"></span><br><span class="line">Timer::Timer(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line">        </span><br><span class="line">  QHBoxLayout *hbox = <span class="keyword">new</span> QHBoxLayout(<span class="keyword">this</span>);</span><br><span class="line">  hbox-&gt;setSpacing(<span class="number">5</span>);               </span><br><span class="line">           </span><br><span class="line">  label = <span class="keyword">new</span> QLabel(<span class="string">""</span>, <span class="keyword">this</span>);</span><br><span class="line">  hbox-&gt;addWidget(label, <span class="number">0</span>, Qt::AlignLeft | Qt::AlignTop);</span><br><span class="line"></span><br><span class="line">  QTime qtime = QTime::currentTime();</span><br><span class="line">  QString stime = qtime.toString();</span><br><span class="line">  label-&gt;setText(stime);</span><br><span class="line">   </span><br><span class="line">  startTimer(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Timer::timerEvent(QTimerEvent *e) &#123;</span><br><span class="line">    </span><br><span class="line">  Q_UNUSED(e);</span><br><span class="line">  </span><br><span class="line">  QTime qtime = QTime::currentTime();</span><br><span class="line">  QString stime = qtime.toString();</span><br><span class="line">  label-&gt;setText(stime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"timer.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  Timer window;</span><br><span class="line">  </span><br><span class="line">  window.resize(<span class="number">250</span>, <span class="number">150</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Timer"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>startTimer</code>和<code>timerEvent</code>都是父类提供的函数。</p>
+<h2 id="qwidget">QWidget</h2>
+<p>这里梳理一下常用的基础控件类型。这些类都是<code>QWidget</code>的子类。</p>
+<h3 id="qlabel"><code>QLabel</code></h3>
+<p><code>QLabel</code>用来展示文字和<strong>图片</strong>，不涉及用户操作。</p>
+<h3 id="qslider"><code>QSlider</code></h3>
+<p><code>QSlider</code>提供了便捷的连续数字选择器。长这个样子：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/eaea3516103f00b8a146e529ab5aa805.png" style="width: 202px; border: none"></p>
+<h3 id="qcombobox"><code>QComboBox</code></h3>
+<p><code>QComboBox</code>可以让我们从有限的下拉选项中选择。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/aa45fd3c952bdd3f98fb8be349d789a9.png" style="width: 302px; border: none"></p>
+<h3 id="qspinbox"><code>QSpinBox</code></h3>
+<p>用来处理可以递增递减的离散数字</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/eb2b88936b46c8877b5c1b84746c0c85.png" style="width: 252px; border: none"></p>
+<h3 id="qlineedit"><code>QLineEdit</code></h3>
+<p>单行文字输入，这个我们之前已经接触过了。</p>
+<h3 id="statusbar"><code>Statusbar</code></h3>
+<p>状态栏，通过<code>statusBar()</code>函数来获取。</p>
+<h3 id="其他">其他</h3>
+<p>还有好多控件就不一一说明了，很多看名字就能知道是做什么用的：</p>
+<ul>
+<li><code>QCheckBox</code></li>
+<li><code>QListWidget</code></li>
+<li><code>QProgressBar</code></li>
+<li><code>QPixmap</code></li>
+<li><code>QSpliter</code></li>
+<li><code>QTableWidget</code></li>
+</ul>
+<h2 id="绘图">绘图</h2>
+<blockquote>
+<p>这个部分也是我需要关注的重点，如何自由地绘图</p>
+</blockquote>
+<p><code>QPainter</code>是我们进行绘图操作的画板。绘图过程在<code>paintEvent</code>函数(<code>QWidget</code>的函数)中完成。</p>
+<p>我们首先来看一个绘制直线的例子。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lines.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Lines</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    Lines(QWidget *parent = <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">paintEvent</span><span class="params">(QPaintEvent *event)</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">drawLines</span><span class="params">(QPainter *qp)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// lines.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QPainter&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"lines.h"</span></span></span><br><span class="line"></span><br><span class="line">Lines::Lines(QWidget *parent)</span><br><span class="line">    : QWidget(parent)</span><br><span class="line">&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Lines::paintEvent(QPaintEvent *e) &#123;</span><br><span class="line">    </span><br><span class="line">  Q_UNUSED(e);</span><br><span class="line">  </span><br><span class="line">  <span class="function">QPainter <span class="title">qp</span><span class="params">(<span class="keyword">this</span>)</span></span>;</span><br><span class="line">  drawLines(&amp;qp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Lines::drawLines(QPainter *qp) &#123;</span><br><span class="line">  </span><br><span class="line">  <span class="function">QPen <span class="title">pen</span><span class="params">(Qt::black, <span class="number">2</span>, Qt::SolidLine)</span></span>;  </span><br><span class="line">  qp-&gt;setPen(pen);</span><br><span class="line">  qp-&gt;drawLine(<span class="number">20</span>, <span class="number">40</span>, <span class="number">250</span>, <span class="number">40</span>);</span><br><span class="line"></span><br><span class="line">  pen.setStyle(Qt::DashLine);</span><br><span class="line">  qp-&gt;setPen(pen);</span><br><span class="line">  qp-&gt;drawLine(<span class="number">20</span>, <span class="number">80</span>, <span class="number">250</span>, <span class="number">80</span>);</span><br><span class="line"></span><br><span class="line">  pen.setStyle(Qt::DashDotLine);</span><br><span class="line">  qp-&gt;setPen(pen);</span><br><span class="line">  qp-&gt;drawLine(<span class="number">20</span>, <span class="number">120</span>, <span class="number">250</span>, <span class="number">120</span>);</span><br><span class="line"></span><br><span class="line">  pen.setStyle(Qt::DotLine);</span><br><span class="line">  qp-&gt;setPen(pen);</span><br><span class="line">  qp-&gt;drawLine(<span class="number">20</span>, <span class="number">160</span>, <span class="number">250</span>, <span class="number">160</span>);</span><br><span class="line"></span><br><span class="line">  pen.setStyle(Qt::DashDotDotLine);</span><br><span class="line">  qp-&gt;setPen(pen);</span><br><span class="line">  qp-&gt;drawLine(<span class="number">20</span>, <span class="number">200</span>, <span class="number">250</span>, <span class="number">200</span>);</span><br><span class="line"></span><br><span class="line">  QVector&lt;qreal&gt; dashes;</span><br><span class="line">  qreal space = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">  dashes &lt;&lt; <span class="number">1</span> &lt;&lt; space &lt;&lt; <span class="number">5</span> &lt;&lt; space;</span><br><span class="line"></span><br><span class="line">  pen.setStyle(Qt::CustomDashLine);</span><br><span class="line">  pen.setDashPattern(dashes);</span><br><span class="line">  </span><br><span class="line">  qp-&gt;setPen(pen);</span><br><span class="line">  qp-&gt;drawLine(<span class="number">20</span>, <span class="number">240</span>, <span class="number">250</span>, <span class="number">240</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>main.cpp</code>的文件内容很简单，我们之后就不放了。</p>
+</blockquote>
+<p>在这个例子中我们用六种不同的笔触画了六根线，如下图：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/d6a80beb64a9a390c3ebd109f3900178.png" style="width: 50%; border: none"></p>
+<blockquote>
+<p>更高阶的绘图还是看原教程吧，内容太多了。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/24435/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/24435/" class="post-title-link" itemprop="url">Qt on Mac摸索记录 - 其三</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-19 13:01:46" itemprop="dateCreated datePublished" datetime="2019-09-19T13:01:46+08:00">2019-09-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-20 14:30:48" itemprop="dateModified" datetime="2019-09-20T14:30:48+08:00">2019-09-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/24435/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/24435/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这个系列的摸索是在研究<a href="http://zetcode.com/gui/qt5/" target="_blank" rel="noopener">Qt Tutorial</a>英文教程的基础上，克服在macOS上遇到的若干问题写下的记录。前面两篇我们还是在研究比较基础的模块，还没有涉及具体的GUI部分。从这篇开始我们来研究GUI开发。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/24435/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/58026/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/58026/" class="post-title-link" itemprop="url">【转载】5G大战,美国败像已露</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-19 10:29:08 / Modified: 10:30:54" itemprop="dateCreated datePublished" datetime="2019-09-19T10:29:08+08:00">2019-09-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/杂谈/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/58026/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/58026/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.williamlong.info/archives/5822.html" target="_blank" rel="noopener">来源</a></p>
+<p>为了将中国企业排除在新一代通信标准5G之外，美国发动高科技战已过去1年有余。世界的数据网将不断分裂为相互隔绝的2个，一个美国主导，另一个中国主导——当初这样的担忧出现扩大。</p>
+<p>　　美国谷歌前董事长施密特也是敲响这一警钟的人之一。但是，美国、日本今后面对的情况也许比这个警钟更严厉，不仅是世界5G基础设施的一半，中国企业有掌握更多份额的可能性。在对亚洲各国采访的过程中，我禁不住这样想。</p>
+<p>　　传输庞大信息的5G网可以看作是人类身体上的大动脉。只要将其控制，在政治和军事方面，中国的影响力便可能进一步加强。</p>
+<p>　　但是，如果仅观察华盛顿大张旗鼓采取的对华强硬举措，容易令人感到正在加强攻势的是美方。</p>
+<p>　　美国2018年8月通过《国防授权法》，决定将华为技术和中兴通讯（ZTE）排除出美国。点燃了高科技战争的导火索。</p>
+<p>　　经过1年的宽限期，美国政府自今年8月13日起，禁止美国政府机构采购华为和中兴通讯的产品。1年后起，对于采用两家公司等产品的民营企业，也将被禁止与美国政府交易。</p>
+<p>　　美国担心如果让两家中国企业进入本国5G领域，重要信息可能被窃取。虽然中国否认这种危险，但美国正在敦促同盟国和友好国家也将两家企业排除出5G网。</p>
+<p>　　美国政府计划在事实上禁止向华为出口美国造零部件和软件。这将对于无法使用美国谷歌软件的华为智能手机终端构成打击。</p>
+<p>　　但是，要问能在多大程度上将2家中国企业排除出5G基础设施，局势对美国极为不利。与美国统一步调、决定排除华为的国家目前只有日本和澳大利亚。英国和法国都表示“正在讨论”，而德国则坚持“难以排除”的立场。</p>
+<p>　　在英德的通信基础设施中，华为已在4G领域浸透。德国政府内部有声音表示，“事到如今，让我们在5G中排除（中国企业），也是难为人的要求”。</p>
+<p>　　在这样背景下，左右中美5G战争形势的是亚洲的走向。8月下旬，在曼谷举行的“日本-东盟媒体合作论坛”（主办方为日本的国际交流基金）的讨论非常耐人寻味。在亚洲记者讨论世界局势的情况下，成为主要话题的是中美的5G战争。东南亚的大部分与会者都断言，美国难以战胜中国。</p>
+<p>　　的确，这种迹象很明显。柬埔寨采用华为的技术，将于年内启动5G服务。马来西亚和泰国也在5月底宣布不抵制华为。</p>
+<p>　　在菲律宾、印度尼西亚和缅甸，当地的通信大型企业与华为和中兴通讯签署合同，显示出在5G领域展开合作的趋势。</p>
+<p>　　原因何在？第一，能替代华为和中兴通讯的选项过度缺乏。从移动通信基础设施来看，这2家企业占到世界市场的近4成份额。虽然欧洲的爱立信（29％）和诺基亚（23.4％）也拥有较高份额，但在价格竞争中无法与中国企业相匹敌。</p>
+<p>　　东南亚的经济专家表示，与中国2家企业相比，爱立信和诺基亚的价格高出2——3成。对东南亚和印度来说不合算。</p>
+<p>　　另外一个原因在于美国自身。在批评中国的同时，美国自身也参与情报间谍活动——这种不信任感在亚洲内部不断增强。</p>
+<p>　　知道可能存在被中国获取信息的危险，但是，美国或许也在利用先进的高科技，大肆监视外国的通信，获取信息——东南亚的当局者和安全专家透露出这样的不满。</p>
+<p>　　东南亚冷眼旁观的是美国的间谍活动。美国国家安全局（NSA）前雇员斯诺登爆料称，美国政府侵入各国政府和企业的网络，暗中获取信息。</p>
+<p>　　也就是说，在信息被拿走的风险方面，中国和美国没有什么区别。在伊斯兰人口众多的印度尼西亚、马来西亚、巴基斯坦和文莱等国，甚至有看法认为，与中国相比，信息被美国窃取更为可怕。</p>
+<p>　　受长达20年的阿富汗和中东战争的影响，在亚洲的伊斯兰圈，对美国的感情芥蒂沉淀下来。一位前外交官的话很有代表性。</p>
+<p>　　他说：“正如萨达姆·侯赛因领导的伊拉克那样，美国将向不听话的国家投下炸弹。但是，中国将向看不顺眼的国家投下金钱（投资），还是中国更好。”</p>
+<p>　　要想抗衡华为和中兴通讯，欧洲和日韩的通信企业必须提高价格竞争力，建立能扩大市场份额的体制。美国或许有必要进一步共享所谓依赖中国企业的风险，在此基础上，为了在6G领域掌握主导权加快投资。日本通信商NTT最近成功开发出着眼于6G的新技术。中美数字主导权的竞争不会止步于5G，下一场战争已经打响。</p>
+<p>　　稿源：日经中文网，作者：秋田浩之</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/54018/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/54018/" class="post-title-link" itemprop="url">Qt on Mac摸索记录 - 其二</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-19 01:11:03 / Modified: 12:58:02" itemprop="dateCreated datePublished" datetime="2019-09-19T01:11:03+08:00">2019-09-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/54018/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/54018/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>跟着<a href="./posts/46595/">上一篇</a>继续。本篇介绍Qt重新造的轮子：容器系统和文件操作系统。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/54018/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/46595/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/46595/" class="post-title-link" itemprop="url">Qt on Mac摸索记录 - 其一</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-18 17:18:25" itemprop="dateCreated datePublished" datetime="2019-09-18T17:18:25+08:00">2019-09-18</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-19 01:10:35" itemprop="dateModified" datetime="2019-09-19T01:10:35+08:00">2019-09-19</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/46595/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/46595/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我参考<a href="http://zetcode.com/gui/qt5/introduction/" target="_blank" rel="noopener">http://zetcode.com/gui/qt5/introduction/</a>这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/46595/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/36409/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -847,12 +1855,24 @@
                 
               
 
-              <time title="Created: 2019-09-16 11:25:59 / Modified: 14:19:59" itemprop="dateCreated datePublished" datetime="2019-09-16T11:25:59+08:00">2019-09-16</time>
+              <time title="Created: 2019-09-16 11:25:59" itemprop="dateCreated datePublished" datetime="2019-09-16T11:25:59+08:00">2019-09-16</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-20 13:33:02" itemprop="dateModified" datetime="2019-09-20T13:33:02+08:00">2019-09-20</time>
               
             
           </span>
@@ -923,6 +1943,52 @@
 <h3 id="格力集团欲400亿卖掉格力电器"><a href="https://www.zhihu.com/question/319348233" target="_blank" rel="noopener">格力集团欲400亿卖掉格力电器</a></h3>
 <p>观察者网【格力集团欲400亿“卖掉”格力电器 富士康或接盘】 格力电器控股权从1991年成立以来一直属于珠海市国资委旗下格力集团。但在4月8日，格力集团拟通过公开征集受让方的方式协议转让格力集团持有的格力电器总股本15%的股票。本次转让完成后，公司控股股东和实际控制人可能将发生变更。</p>
 <p>一名珠海国资人士透露，近来富士康科技集团在珠海进行了大规模投资，有可能成为潜在的接盘方。</p>
+<h3 id="电影杀人回忆的故事原型真凶疑似被发现"><a href="https://www.zhihu.com/question/346644375" target="_blank" rel="noopener">电影《杀人回忆》的故事原型真凶疑似被发现</a></h3>
+<p><img src="https://imgs.codewoody.com/uploads/big/86cfe07d183298dcca59d16a7ba3de63.jpeg" style="width: 50%"></p>
+<p>不过按键已经超过了韩国刑法规定的追诉时效，嫌疑人无法被提起公诉并定罪。</p>
+<blockquote>
+<p>按照韩国的法律规定，2007年之前发生的案件的公诉时效是15年，因为这是同一个犯罪嫌疑人连续杀人，公诉期按照最后一个案件的发生日期来计算 -- 可惜最后一个杀人案是在1991年4月23日发生的，到现在已经28年，已经过了公诉时效，也就是说从法律上不能再对犯罪人处以刑罚了。</p>
+</blockquote>
+<h3 id="中美关系">中美关系</h3>
+<ul>
+<li>中央财办副主任、财政部副部长廖岷拟于<a href="https://news.ifeng.com/c/7q2LkwSwKvo" target="_blank" rel="noopener">本周三率团访美</a>，与美方就中美经贸问题进行磋商，为10月份在华盛顿举行的第十三轮中美经贸高级别磋商做准备。</li>
+</ul>
+<h3 id="香港后续">香港后续</h3>
+<ul>
+<li><a href="https://www.dw.com/zh/时局动荡-穆迪将香港信用评级展望调至-负面/a-50449907?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">穆迪调低香港信用评级展望至负面</a>。</li>
+<li>美国众议院院长佩洛西 (Nancy Pelosi) 9月18日在华府<a href="https://www.dw.com/zh/佩洛西见香港倡议人士%20中前官员对港发出警告/a-50489299?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">接见黄之锋与何韵诗等数名香港倡议人士</a>，并藉此向中国政府喊话，表示美国国会基于人权，支持香港「反送中」示威的运动者。</li>
+</ul>
+<h3 id="关于台湾的若干消息">关于台湾的若干消息</h3>
+<h4 id="大陆20个城市恢复金马澎个人游"><a href="https://news.ifeng.com/c/7q1RRCtC4YW" target="_blank" rel="noopener">大陆20个城市恢复金马澎个人游</a></h4>
+<p>金门县政府稍早宣布，大陆出入境管理部门公告，自本月20日起恢复受理金门、马祖、澎湖“小三通”个人旅游签注申请，“对长期仰赖‘小三通’的金门观光产业，无疑是一剂强心针，昔日陆客穿梭大街小巷的荣景，将可望再现。”相当于福建省、浙江省、江西省与广东省等20个城市，自20日起可循“小三通”到金门、马祖与澎湖个人游。</p>
+<p>在台湾这几个地方也是归于中华民国福建省管辖的。</p>
+<h4 id="所罗门群岛和台湾断交">所罗门群岛和台湾断交</h4>
+<p><img src="https://imgs.codewoody.com/uploads/big/743a97d06c038821e0c7c1691a0d400b.png"></p>
+<p>台湾“中央社”16日下午发布消息称，所罗门群岛总理梅纳西·索加瓦雷16日召开内阁会议，决定中断与台湾的关系，与中国大陆建交。随后，台外事部门召开记者会证实这一消息，并称台当局与所罗门群岛“断交”。</p>
+<p>目前台湾所谓“友邦”数量降至16个。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/a861e850f77376cdf288f69586949cf0.jpg"></p>
+<h4 id="基里巴斯和台湾断交"><a href="http://www.chinaqw.com/hqhr/2019/09-20/232095.shtml" target="_blank" rel="noopener">基里巴斯和台湾断交</a></h4>
+<p>20日的消息，太平洋岛国基里巴斯与台湾断交</p>
+<h4 id="郭台铭与柯文哲相继宣布不参加2020选举"><a href="https://news.ifeng.com/c/7q2MGfzEpzk" target="_blank" rel="noopener">郭台铭与柯文哲相继宣布不参加2020选举</a></h4>
+<p>鸿海集团前董事长郭台铭16日深夜宣布不参加2020年台湾地区领导人连署登记，先前与郭台铭达成参选默契的台北市长柯文哲将如何回应？会不会自己跳出来参选？今早近九点，柯文哲在市政会议前接受媒体联访，导报驻台记者获悉，柯文哲也宣布不选2020。</p>
+<p>于此同时，民进党前副总统<a href="https://www.dw.com/zh/郭台铭不选总统-韩国瑜盼见面/a-50453416?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">吕秀莲宣布参选</a>。</p>
+<h3 id="其他新闻">其他新闻</h3>
+<ul>
+<li><a href="https://cn.reuters.com/article/sa-drone-iran-attack-evidence-0919-idCNKBS1W403H?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">沙特展示油田袭击为伊朗所为的证据</a></li>
+<li><a href="https://www.zhihu.com/question/346762535/answer/829159422" target="_blank" rel="noopener">9月19日 华为在德国发布Mate 30系列</a></li>
+<li><a href="https://www.zhihu.com/question/346772743" target="_blank" rel="noopener">9月19日 李荣浩和杨丞琳宣布结婚</a></li>
+</ul>
+<h2 id="资源">资源</h2>
+<ul>
+<li><a href="http://zetcode.com/gui/pyqt5/" target="_blank" rel="noopener">PyQt5 tutorial</a></li>
+<li><a href="http://www.todayonhistory.com" target="_blank" rel="noopener">历史上的今天</a></li>
+<li><a href="https://www.appinn.com/100000-ai-faces/" target="_blank" rel="noopener">10万张不哟啊肖像权的人脸照片</a></li>
+<li><a href="https://fullstackopen.com/en/" target="_blank" rel="noopener">现代web开发</a></li>
+</ul>
+<h2 id="言论">言论</h2>
+<ul>
+<li>信息的商业模式，不应该是收费，而是应该鼓励更多的人消费它。</li>
+</ul>
 
           
         
@@ -1349,978 +2415,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/34441/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/34441/" class="post-title-link" itemprop="url">旧文迁移|Django部署:Nginx+Gunicorn+virtualenv+supervisor+PostgreSQL</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-08-30 11:06:37" itemprop="dateCreated datePublished" datetime="2019-08-30T11:06:37+08:00">2019-08-30</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-09-01 22:33:01" itemprop="dateModified" datetime="2019-09-01T22:33:01+08:00">2019-09-01</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/34441/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/34441/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：</p>
-<ul>
-<li>Nginx</li>
-<li>Gunicorn</li>
-<li>virtualenv</li>
-<li>supervisor</li>
-<li>PostgreSQL</li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/34441/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/8493/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/8493/" class="post-title-link" itemprop="url">Weekly-10</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-08-26 10:43:35" itemprop="dateCreated datePublished" datetime="2019-08-26T10:43:35+08:00">2019-08-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-09-03 11:52:21" itemprop="dateModified" datetime="2019-09-03T11:52:21+08:00">2019-09-03</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/8493/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/8493/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/598bd6a41c77bd17efa96a553b49a00b.png"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/8493/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/31351/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/31351/" class="post-title-link" itemprop="url">乌克兰独立广场旧事</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-08-22 12:14:04 / Modified: 12:53:51" itemprop="dateCreated datePublished" datetime="2019-08-22T12:14:04+08:00">2019-08-22</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/杂谈/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/31351/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/31351/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>喜欢历史的人，在看到当下的事情的时候，就会情不自禁地想到历史上一些类似的旧事。比如这次又见到了一个很有意思的新闻。说是联邦快递被曝出来在中国投递的包裹里面有真枪，而且包裹是从美国寄出来。这件事有意思的地方有这么几个点：</p>
-<p>其一是这件事情其实早在六月份就出来了，但是当时并没有在舆论上大范围传播，也没有中国的高调反应。反而是在这个节点爆出来，时机的选择耐人寻味。</p>
-<p>其二是这件事情的一些细节非常有意思。从联邦快递的<a href="https://www.zaobao.com.sg/realtime/china/story20190819-982134" target="_blank" rel="noopener">回应</a>来看，是联邦快递主动报警的，那么这件事情可能并不是联邦快递有意为之。不过，一个含枪支的包裹通过了层层检查，甚至包括中美两国的海关系统，都没有被查验出来。按理说枪支的形状特征非常明显，从X光下面走一遍很容易分辨出来。如果说美国方面要有小动作，故意放了一马，那中国这方面的检查为什么也放过了这个包裹了？看着有点『钓鱼执法』的意味。</p>
-<p>更有意思的事情来了。这两天，在香港也有一个类似的案子。19日在香港有一个<a href="http://news.dwnews.com/hongkong/news/2019-08-20/60145944.html" target="_blank" rel="noopener">军火案</a>在西九龙法院再审。被告林靖峰藏有的3支长枪和1支短枪已证实为真枪。此外，控方在庭上透露涉案包裹由美国寄往香港。这个案子案发，即被告被抓，是在今年1月14日。</p>
-<p>最近香港不太平，不过这个案子的案发时间，是在逃犯条例发布之前。不过，这上面的两个例子显示出境外的一些势力，确实有将枪支运送到香港，甚至是大陆的能力。那么，这些枪支能够用来做什么呢？这个时候就可以点题了，让我们来回忆一下历史。</p>
-<p>2013年底开始，由于时任乌克兰总统亚努科维奇中止了和欧盟签署政治和自由贸易协议，而强化和俄罗斯的关系，导致大规模的抗议活动。此轮抗议活动最终导致亚努科维奇下台。而且，这轮抗议的影响甚至导致乌克兰陷入分裂。随后陆续发生了克里米亚脱离乌克兰加入俄罗斯。乌克兰东部及南部产生分裂主义运动，乌克兰陷入内战。</p>
-<p>当时，乌克兰基辅的独立广场是反对派与政府的主要拉锯场地。在抗议期间，独立广场甚至出现了狙击手，反对派与政府方面均有人被狙击受伤甚至死亡。后来乌克兰新政府将狙击行为归咎于前总统亚努科维奇势力。不过去年似乎又有了一些有意思的信息。俄罗斯《卫星报》方面找到了当年参与狙击的格鲁吉亚狙击手亚历山大·列瓦济什维利。狙击手表示现任的乌克兰最高拉达国家安全与国防委员会主席谢尔盖·帕申斯基和人民议员弗拉基米尔·帕拉修克亲自参与了当年独立广场骚乱期间的杀人事件。《卫星报》还掌握有机票复印件，证明狙击手确实当时曾经前往基辅。</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/fbdc3949f8fc4ac87a8cda180c608f4b.jpeg" alt="2014年的基辅独立广场"><figcaption>2014年的基辅独立广场</figcaption>
-</figure>
-<p>另外，欧盟外长凯瑟琳·艾希顿（Catherine Margaret Ashton）和爱沙尼亚内务部长乌尔马斯·帕耶特（Urmas Paet）的电话对话录音，证明基辅独立广场现场的狙击手和乌克兰反对派有关。在谈话中乌尔马斯·帕耶特也提到，在基辅独立广场上出现的狙击手，是乌克兰反对派雇佣的，他所看到的所有的罪证都证明，无论示威民众还是执法人员都是被同一批狙击手射杀的。<a href="https://www.dw.com/zh/%E8%B0%81%E6%98%AF%E4%B9%8C%E5%85%8B%E5%85%B0%E5%B9%BF%E5%9C%BA%E7%8B%99%E5%87%BB%E6%89%8B%E7%9A%84%E5%B9%95%E5%90%8E%E6%8C%87%E4%BD%BF%E8%80%85/a-17480436" target="_blank" rel="noopener">爱沙尼亚驻基辅大使已证实此录音的真实性</a>。帕耶特称向其透露消息的是活动人士、医生柏格摩列兹（Olga Bogomolets）。许多人将这名医生视为独立广场的英雄，原本在新政府中有一席之位的她却拒绝出任。</p>
-<p>之前我看八方论坛上就香港问题采访王孟源的时候，王孟源就提到尽量不要派遣大陆方面的武装力量进入香港，否则如果有人想在香港复制当年独立广场上的套路，武警或者解放军就是不清楚这事了。看来，所言非虚。</p>
-<p>更多阅读</p>
-<ul>
-<li>华尔街日报：<a href="https://cn.wsj.com/articles/%E4%B8%AD%E5%9B%BD%E8%AD%A6%E6%96%B9%E8%B0%83%E6%9F%A5%E8%81%94%E9%82%A6%E5%BF%AB%E9%80%92%E5%8C%85%E8%A3%B9%E6%B6%89%E6%9E%AA%E6%A1%88-11566173341" target="_blank" rel="noopener">中国警方调查联邦快递包裹涉枪案</a></li>
-<li>环球网：<a href="http://china.huanqiu.com/gangao/2019-08/15326401.html?agt=15422" target="_blank" rel="noopener">香港警方检获军火案今再审，已证实至少4支真枪均由美国寄出</a></li>
-<li>德国之声：<a href="https://www.dw.com/zh/%E8%B0%81%E6%98%AF%E4%B9%8C%E5%85%8B%E5%85%B0%E5%B9%BF%E5%9C%BA%E7%8B%99%E5%87%BB%E6%89%8B%E7%9A%84%E5%B9%95%E5%90%8E%E6%8C%87%E4%BD%BF%E8%80%85/a-17480436" target="_blank" rel="noopener">谁是乌克兰广场狙击手的幕后指使者?</a></li>
-<li>环球网：<a href="http://world.huanqiu.com/regions/2014-02/4848059.html?agt=15422" target="_blank" rel="noopener">乌克兰称独立广场狙击手开火 致20多名警察受伤</a></li>
-<li><a href="https://www.youtube.com/watch?feature=player_embedded&amp;v=ZEgJ0oo3OA8" target="_blank" rel="noopener">盟外长凯瑟琳·艾希顿（Catherine Margaret Ashton）和爱沙尼亚内务部长乌尔马斯·帕耶特（Urmas Paet）的电话对话录音</a></li>
-<li>维基百科：<a href="https://zh.wikipedia.org/wiki/%E4%B9%8C%E5%85%8B%E5%85%B0%E4%BA%B2%E6%AC%A7%E7%9B%9F%E7%A4%BA%E5%A8%81%E8%BF%90%E5%8A%A8#cite_note-163" target="_blank" rel="noopener">乌克兰亲欧盟示威运动</a></li>
-<li>俄罗斯卫星通讯社：<a href="http://sputniknews.cn/politics/201802131024704098/" target="_blank" rel="noopener">格鲁吉亚狙击手：乌克兰议员曾参与基辅独立广场杀人事件</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/11084/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/11084/" class="post-title-link" itemprop="url">Weekly-9</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-08-19 15:53:13" itemprop="dateCreated datePublished" datetime="2019-08-19T15:53:13+08:00">2019-08-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-08-30 11:12:39" itemprop="dateModified" datetime="2019-08-30T11:12:39+08:00">2019-08-30</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/11084/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/11084/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/bdf4d2ef8d46da7e556dc8ad5fd515e3.jpg">
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/11084/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/38198/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Woody Huang">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/38198/" class="post-title-link" itemprop="url">C++ 中的字符串分割</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-08-14 15:22:11 / Modified: 15:39:46" itemprop="dateCreated datePublished" datetime="2019-08-14T15:22:11+08:00">2019-08-14</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/38198/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/38198/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="https://www.cnblogs.com/dfcao/p/cpp-FAQ-split.html" target="_blank" rel="noopener">原文地址</a></p>
-<h2 id="自己用stl实现">自己用STL实现</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; split(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s, <span class="keyword">const</span> <span class="built_in">string</span> &amp;seperator)&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="built_in">string</span>::size_type string_size;</span><br><span class="line">  string_size i = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">while</span>(i != s.size())&#123;</span><br><span class="line">    <span class="comment">//找到字符串中首个不等于分隔符的字母；</span></span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i != s.size() &amp;&amp; flag == <span class="number">0</span>)&#123;</span><br><span class="line">      flag = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">for</span>(string_size x = <span class="number">0</span>; x &lt; seperator.size(); ++x)</span><br><span class="line">    　　<span class="keyword">if</span>(s[i] == seperator[x])&#123;</span><br><span class="line">      　　++i;</span><br><span class="line">      　　flag = <span class="number">0</span>;</span><br><span class="line">     　　 <span class="keyword">break</span>;</span><br><span class="line">    　　&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//找到又一个分隔符，将两个分隔符之间的字符串取出；</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    string_size j = i;</span><br><span class="line">    <span class="keyword">while</span>(j != s.size() &amp;&amp; flag == <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="keyword">for</span>(string_size x = <span class="number">0</span>; x &lt; seperator.size(); ++x)</span><br><span class="line">    　　<span class="keyword">if</span>(s[j] == seperator[x])&#123;</span><br><span class="line">      　　flag = <span class="number">1</span>;</span><br><span class="line">     　　 <span class="keyword">break</span>;</span><br><span class="line">    　　&#125;</span><br><span class="line">      <span class="keyword">if</span>(flag == <span class="number">0</span>) </span><br><span class="line">    　　++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(i != j)&#123;</span><br><span class="line">      result.push_back(s.substr(i, j-i));</span><br><span class="line">      i = j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"a,b*c*d,e"</span>;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v = split(s, <span class="string">",*"</span>); <span class="comment">//可按多个字符来分隔;</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::size_type i = <span class="number">0</span>; i != v.size(); ++i)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; v[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="comment">//输出: a b c d</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>更加简洁的版本如下：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SplitString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; s, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;&amp; v, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::size_type pos1, pos2;</span><br><span class="line">  pos2 = s.find(c);</span><br><span class="line">  pos1 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">std</span>::<span class="built_in">string</span>::npos != pos2)</span><br><span class="line">  &#123;</span><br><span class="line">    v.push_back(s.substr(pos1, pos2-pos1));</span><br><span class="line">    pos1 = pos2 + c.size();</span><br><span class="line">    pos2 = s.find(c, pos1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(pos1 != s.length())</span><br><span class="line">    v.push_back(s.substr(pos1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="用c语言中的strtok-函数来进行分割">用C语言中的strtok 函数来进行分割</h2>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s[] = <span class="string">"a,b*c,d"</span>;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *sep = <span class="string">",*"</span>; <span class="comment">//可按多个字符来分割</span></span><br><span class="line">  <span class="keyword">char</span> *p;</span><br><span class="line">  p = strtok(s, sep);</span><br><span class="line">  <span class="keyword">while</span>(p)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s "</span>, p);</span><br><span class="line">    p = strtok(<span class="literal">NULL</span>, sep);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出: a b c d</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用boost库中的split函数">使用boost库中的split函数</h2>
-<p>boost库有很多方法来实现split，也包含了一个split函数，可以直接使用，非常实用而且强大，但是得自己下载boost库。使用代码如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/algorithm/string.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> boost;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">( <span class="built_in">vector</span> &lt;<span class="built_in">string</span>&gt; &amp; v )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">size_t</span> n = <span class="number">0</span>; n &lt; v.size(); n++)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\""</span> &lt;&lt; v[ n ] &lt;&lt; <span class="string">"\"\n"</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"a,b, c ,,e,f,"</span>;</span><br><span class="line">  <span class="built_in">vector</span> &lt;<span class="built_in">string</span>&gt; fields;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Original = \""</span> &lt;&lt; s &lt;&lt; <span class="string">"\"\n\n"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Split on \',\' only\n"</span>;</span><br><span class="line">  split( fields, s, is_any_of( <span class="string">","</span> ) );</span><br><span class="line">  print( fields );</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Split on \" ,\"\n"</span>;</span><br><span class="line">  split( fields, s, is_any_of( <span class="string">" ,"</span> ) );</span><br><span class="line">  print( fields );</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Split on \" ,\" and elide delimiters\n"</span>; </span><br><span class="line">  split( fields, s, is_any_of( <span class="string">" ,"</span> ), token_compress_on );</span><br><span class="line">  print( fields );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="更多阅读">更多阅读</h2>
-<ul>
-<li><a href="https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/" target="_blank" rel="noopener">How to split a string in C</a></li>
-<li><a href="http://www.cplusplus.com/faq/sequences/strings/split/" target="_blank" rel="noopener">Split a string</a></li>
-<li><a href="https://www.zhihu.com/question/36642771" target="_blank" rel="noopener">C++ 的 string 为什么不提供 split 函数？</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2364,7 +2463,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">79</span>
+                    <span class="site-state-item-count">84</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2514,7 +2613,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">46</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

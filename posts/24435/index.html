@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这个系列的摸索是在研究Qt Tutorial英文教程的基础上，克服在macOS上遇到的若干问题写下的记录。前面两篇我们还是在研究比较基础的模块，还没有涉及具体的GUI部分。从这篇开始我们来研究GUI开发。">
+<meta name="keywords" content="教程,C++,Qt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt on Mac摸索记录 - 其三">
+<meta property="og:url" content="http://www.codewoody.com/posts/24435/index.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="这个系列的摸索是在研究Qt Tutorial英文教程的基础上，克服在macOS上遇到的若干问题写下的记录。前面两篇我们还是在研究比较基础的模块，还没有涉及具体的GUI部分。从这篇开始我们来研究GUI开发。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1a14bb5978e2f4d7844b005ed289dbf6.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d8119dbb52ad1289549bb8e29916dcba.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/4eafd4e6e49effd13e8b92370496204c.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9079590b1679702a8da8ca51be4c6573.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/55d090d11407c6ee692f29a525f97e0c.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/101a9aba9e4ecc35c723622cc32e2bc3.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1f92dfbe6c1b7bd1cdc16b7e56902b5a.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5c99b1d0a4824c8cd573cdff321a926b.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8bfeb8877347930a9b2cab06e963a7af.png">
+<meta property="og:updated_time" content="2019-09-20T06:30:48.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Qt on Mac摸索记录 - 其三">
+<meta name="twitter:description" content="这个系列的摸索是在研究Qt Tutorial英文教程的基础上，克服在macOS上遇到的若干问题写下的记录。前面两篇我们还是在研究比较基础的模块，还没有涉及具体的GUI部分。从这篇开始我们来研究GUI开发。">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/1a14bb5978e2f4d7844b005ed289dbf6.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/posts/24435/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Qt on Mac摸索记录 - 其三 | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/24435/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Qt on Mac摸索记录 - 其三
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-19 13:01:46" itemprop="dateCreated datePublished" datetime="2019-09-19T13:01:46+08:00">2019-09-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-20 14:30:48" itemprop="dateModified" datetime="2019-09-20T14:30:48+08:00">2019-09-20</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/24435/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/24435/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这个系列的摸索是在研究<a href="http://zetcode.com/gui/qt5/" target="_blank" rel="noopener">Qt Tutorial</a>英文教程的基础上，克服在macOS上遇到的若干问题写下的记录。前面两篇我们还是在研究比较基础的模块，还没有涉及具体的GUI部分。从这篇开始我们来研究GUI开发。</p>
+<a id="more"></a>
+<h2 id="first-program-more">First program, more</h2>
+<p>在第一篇文章里面我们写了一个简单的窗口程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    QWidget window;</span><br><span class="line"></span><br><span class="line">    window.resize(<span class="number">250</span>, <span class="number">150</span>);</span><br><span class="line">    window.setWindowTitle(<span class="string">"Simple example"</span>);</span><br><span class="line">    window.show();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们将其扩展一下。</p>
+<h3 id="鼠标图标的例子">鼠标图标的例子</h3>
+<p>这个例子将展示控件的组合方式</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// cursors</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFrame&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QGridLayout&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cursors</span> :</span> <span class="keyword">public</span> QWidget</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  Cursors(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Cursors::Cursors (QWidget *parent)</span><br><span class="line">  : QWidget (parent)</span><br><span class="line">&#123;</span><br><span class="line">  QFrame* frame1 = <span class="keyword">new</span> QFrame(<span class="keyword">this</span>);</span><br><span class="line">  frame1-&gt;setFrameStyle(QFrame::Box);</span><br><span class="line">  frame1-&gt;setCursor(Qt::SizeAllCursor);</span><br><span class="line"></span><br><span class="line">  QFrame *frame2 = <span class="keyword">new</span> QFrame(<span class="keyword">this</span>);</span><br><span class="line">  frame2-&gt;setFrameStyle(QFrame::Box);</span><br><span class="line">  frame2-&gt;setCursor(Qt::WaitCursor) ;</span><br><span class="line"></span><br><span class="line">  QFrame *frame3 = <span class="keyword">new</span> QFrame(<span class="keyword">this</span>);</span><br><span class="line">  frame3-&gt;setFrameStyle(QFrame::Box);</span><br><span class="line">  frame3-&gt;setCursor(Qt::PointingHandCursor);</span><br><span class="line"></span><br><span class="line">  QGridLayout *grid = <span class="keyword">new</span> QGridLayout(<span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(frame1, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  grid-&gt;addWidget(frame2, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  grid-&gt;addWidget(frame3, <span class="number">0</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">  setLayout(grid);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>*argv[])</span> </span>&#123;</span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">  Cursors window;</span><br><span class="line">  window.resize(<span class="number">350</span>, <span class="number">150</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Cursors"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行界面如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/1a14bb5978e2f4d7844b005ed289dbf6.png" style="width: 70%; border: none"></p>
+<p>将鼠标放到不同的框里面，鼠标的图标形态会发生变化。</p>
+<h3 id="按钮与数据交互">按钮与数据交互</h3>
+<p>我们来写一个累加累减小工具。这次我们需要写三个文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// plusminus.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QPushButton&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLabel&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PlusMinus</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  Q_OBJECT</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    PlusMinus(QWidget *parent = <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> slots:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnPlus</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">OnMinus</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    QLabel *lbl;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// plusminus.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"plusminus.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QGridLayout&gt;</span></span></span><br><span class="line"></span><br><span class="line">PlusMinus::PlusMinus(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line">  QPushButton *plsBtn = <span class="keyword">new</span> QPushButton(<span class="string">"+"</span>, <span class="keyword">this</span>);</span><br><span class="line">  QPushButton *minBtn = <span class="keyword">new</span> QPushButton(<span class="string">"-"</span>, <span class="keyword">this</span>);</span><br><span class="line">  lbl = <span class="keyword">new</span> QLabel(<span class="string">"0"</span>, <span class="keyword">this</span>);</span><br><span class="line">  </span><br><span class="line">  QGridLayout *grid = <span class="keyword">new</span> QGridLayout(<span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(plsBtn, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  grid-&gt;addWidget(minBtn, <span class="number">0</span>, <span class="number">1</span>);</span><br><span class="line">  grid-&gt;addWidget(lbl, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  setLayout(grid);  </span><br><span class="line"></span><br><span class="line">  connect(plsBtn, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;PlusMinus::OnPlus);</span><br><span class="line">  connect(minBtn, &amp;QPushButton::clicked, <span class="keyword">this</span>, &amp;PlusMinus::OnMinus);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> PlusMinus::OnPlus() &#123;</span><br><span class="line">  <span class="keyword">int</span> val = lbl-&gt;text().toInt();</span><br><span class="line">  val++;</span><br><span class="line">  lbl-&gt;setText(QString::number(val));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> PlusMinus::OnMinus() &#123;</span><br><span class="line">  <span class="keyword">int</span> val = lbl-&gt;text().toInt();</span><br><span class="line">  val--;</span><br><span class="line">  lbl-&gt;setText(QString::number(val));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"plusminus.h"</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  PlusMinus window;</span><br><span class="line"></span><br><span class="line">  window.resize(<span class="number">300</span>, <span class="number">190</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Plus minus"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在原版英文教程中没有给出编译方法<span class="foot-note-span">【即没有给出pro文件的内容】</span>，这里可能会有一些坑要踩。我们首先来看一下源文件中有什么不太一样的地方，然后给出编译的方法。</p>
+<p>我们来看<code>plusminus.h</code>文件。首先我们要注意到<code>Q_OBJECT</code>这个宏。这个宏放在这里是我们使用Qt提供的信号与回调（槽）<span class="foot-note-span">【我也是刚开始学习，这里描述措辞后续可能需要更改】</span>的必要条件。宏的内容，实际上是定义了一些函数和属性，并且<code>qmake</code>编译系统在扫描到这个文件时，会自动生成实现这些函数的文件。另一需要注意的点是，在<code>OnPlus</code>和<code>OnMinus</code>声明的前面有<code>private slots</code>字段。这里的<code>slots</code>也是一个特殊的宏，起作用是将其后的函数标注为可供Qt事件响应系统的回调函数。</p>
+<p>要编译这几个文件，在处理pro文件时需要注意这么几点：</p>
+<ol type="1">
+<li>添加<code>Headers += plusminus.h</code>。如果没有这句话，编译系统就无法为<code>Q_OBJECT</code>标注的类创建需要的源文件，导致链接时出现<code>Undefined symbols for architecture XXX</code>类型的错误。</li>
+<li>这里编译过程的中间临时文件比较多，建议在pro文件里面添加</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OBJECTS_DIR=tmp</span><br><span class="line">MOC_DIR=tmp</span><br></pre></td></tr></table></figure>
+<p>完整的pro文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">######################################################################</span><br><span class="line"># Automatically generated by qmake (3.1) Wed Sep 18 17:05:09 2019</span><br><span class="line">######################################################################</span><br><span class="line"></span><br><span class="line">TEMPLATE = app</span><br><span class="line">TARGET = learnQt</span><br><span class="line">INCLUDEPATH += .</span><br><span class="line"></span><br><span class="line"># You can make your code fail to compile if you use deprecated APIs.</span><br><span class="line"># In order to do so, uncomment the following line.</span><br><span class="line"># Please consult the documentation of the deprecated API in order to know</span><br><span class="line"># how to port your code away from it.</span><br><span class="line"># You can also select to disable deprecated APIs only up to a certain version of Qt.</span><br><span class="line">#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0</span><br><span class="line"></span><br><span class="line">OBJECTS_DIR=tmp</span><br><span class="line">MOC_DIR=tmp</span><br><span class="line"></span><br><span class="line"># Input</span><br><span class="line">SOURCES += main.cpp plusminus.cpp</span><br><span class="line">HEADERS += plusminus.h</span><br><span class="line"></span><br><span class="line">QT += widgets</span><br></pre></td></tr></table></figure>
+<p>程序运行的界面如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/d8119dbb52ad1289549bb8e29916dcba.png" style="width: 70%; border: none"></p>
+<h2 id="menus-and-toobars"><a href="http://zetcode.com/gui/qt5/menusandtoolbars/" target="_blank" rel="noopener">Menus and toobars</a></h2>
+<p>这里来介绍菜单和工具栏的使用。尽管在不同的操作系统下他们长的不一样，但是Qt提供了一致的接口。</p>
+<h3 id="简单的例子">简单的例子</h3>
+<p>下面的例子给出了最简单的Menu功能演示。我们分成三个文件：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// simplemenu.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMainWindow&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SimpleMenu</span> :</span> <span class="keyword">public</span> QMainWindow &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    SimpleMenu(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// simplemenu.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"simplemenu.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMenu&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMenuBar&gt;</span></span></span><br><span class="line"></span><br><span class="line">SimpleMenu::SimpleMenu(QWidget *parent)</span><br><span class="line">    : QMainWindow(parent) &#123;</span><br><span class="line">    </span><br><span class="line">  QAction *quit = <span class="keyword">new</span> QAction(<span class="string">"&amp;Quit"</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  QMenu *file;</span><br><span class="line">  file = menuBar()-&gt;addMenu(<span class="string">"&amp;File"</span>);</span><br><span class="line">  file-&gt;addAction(quit);</span><br><span class="line"></span><br><span class="line">  connect(quit, &amp;QAction::triggered, qApp, QApplication::quit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"simplemenu.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line"></span><br><span class="line">  SimpleMenu window;</span><br><span class="line"></span><br><span class="line">  window.resize(<span class="number">250</span>, <span class="number">150</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Simple menu"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子在Mac上运行没法看到&quot;File&quot;这个菜单栏选项。为什么呢？这是因为在MAC中，名称为<code>Quit</code>的Action会被自动整合到名称为应用名的首个菜单项目里面去。要看到独立的<code>File</code>菜单选项，需要把<code>Quit</code>改成其他名字就好了。</p>
+<img src="https://imgs.codewoody.com/uploads/big/4eafd4e6e49effd13e8b92370496204c.png" style="width: 70%">
+<figcaption>
+图片出处：https://forum.qt.io/topic/98908/menubar-in-macos-not-working/9
+</figcaption>
+<p><br> Qt 的官方网文档在<a href="https://doc.qt.io/qt-5/qmenubar.html#details" target="_blank" rel="noopener">这里</a>说明了原因:</p>
+<blockquote>
+<p>Qt for macOS also provides a menu bar merging feature to make QMenuBar conform more closely to accepted macOS menu bar layout. The merging functionality is based on string matching the title of a QMenu entry. These strings are translated (using <code>QObject::tr()</code>) in the &quot;QMenuBar&quot; context. If an entry is moved its slots will still fire as if it was in the original place. The table below outlines the strings looked for and where the entry is placed if matched:</p>
+</blockquote>
+<p><img src="https://imgs.codewoody.com/uploads/big/9079590b1679702a8da8ca51be4c6573.png" style="border: none"></p>
+<h3 id="toolbar">Toolbar</h3>
+<blockquote>
+<p>这部分最近应该用不到，先不实验，把教程内容搬过来</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#pragma once</span><br><span class="line"></span><br><span class="line">#include &lt;QMainWindow&gt;</span><br><span class="line">#include &lt;QApplication&gt;</span><br><span class="line"></span><br><span class="line">class Toolbar : public QMainWindow &#123;</span><br><span class="line">    </span><br><span class="line">  Q_OBJECT  </span><br><span class="line"></span><br><span class="line">  public:</span><br><span class="line">    Toolbar(QWidget *parent = 0);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;toolbar.h&quot;</span><br><span class="line">#include &lt;QToolBar&gt;</span><br><span class="line">#include &lt;QIcon&gt;</span><br><span class="line">#include &lt;QAction&gt;</span><br><span class="line"></span><br><span class="line">Toolbar::Toolbar(QWidget *parent)</span><br><span class="line">    : QMainWindow(parent) &#123;</span><br><span class="line">    </span><br><span class="line">  QPixmap newpix(&quot;new.png&quot;);</span><br><span class="line">  QPixmap openpix(&quot;open.png&quot;);</span><br><span class="line">  QPixmap quitpix(&quot;quit.png&quot;);</span><br><span class="line">  </span><br><span class="line">  QToolBar *toolbar = addToolBar(&quot;main toolbar&quot;);</span><br><span class="line">  toolbar-&gt;addAction(QIcon(newpix), &quot;New File&quot;);</span><br><span class="line">  toolbar-&gt;addAction(QIcon(openpix), &quot;Open File&quot;);</span><br><span class="line">  toolbar-&gt;addSeparator();</span><br><span class="line">  QAction *quit = toolbar-&gt;addAction(QIcon(quitpix), </span><br><span class="line">      &quot;Quit Application&quot;);</span><br><span class="line">  </span><br><span class="line">  connect(quit, &amp;QAction::triggered, qApp, &amp;QApplication::quit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"toolbar.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  Toolbar window;</span><br><span class="line"></span><br><span class="line">  window.resize(<span class="number">300</span>, <span class="number">200</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"QToolBar"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="布局">布局</h2>
+<p>这个部分开始我们来将布局方面的知识，这也是我最为关注的部分。布局有两种方式：</p>
+<ul>
+<li>absolute positioning</li>
+<li>layout managers</li>
+</ul>
+<h3 id="绝对定位">绝对定位</h3>
+<p>绝对定位要求显式指定各个Widget的位置和大小。关于绝对定位我们需要注意如下几点：</p>
+<ul>
+<li>Widget的位置和大小不会因为窗口resize而变化</li>
+<li>使用绝对定位在不同平台上看起来可能不会不一样（通常会很糟糕）</li>
+<li>改变字体会导致布局出错</li>
+<li>如果我们试图修改布局，那那么需要进行大量的重构，这是非常费时的</li>
+</ul>
+<p>综合上面的原因，除了一些必须的场景以外，我们一般都是使用布局管理器。</p>
+<p>下面是一个使用绝对布局的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// absolute.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDesktopWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextEdit&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Absolute</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line">    </span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">     Absolute(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Absolute::Absolute(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line">        </span><br><span class="line">  QTextEdit *ledit = <span class="keyword">new</span> QTextEdit(<span class="keyword">this</span>);</span><br><span class="line">  ledit-&gt;setGeometry(<span class="number">5</span>, <span class="number">5</span>, <span class="number">200</span>, <span class="number">150</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  Absolute window;</span><br><span class="line"></span><br><span class="line">  window.setWindowTitle(<span class="string">"Absolute"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里<code>setGeometry()</code>函数用来设置绝对位置坐标和大小。</p>
+<p>下面我们开始介绍典型的布局管理器。</p>
+<h3 id="box布局">Box布局</h3>
+<p><code>QVBoxLayout</code>这个类将Widget垂直放置。Widget通过<code>addWidget</code>函数添加。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// verticalbox.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">VerticalBox</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    VerticalBox(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// verticalbox.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"verticalbox.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QVBoxLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QPushButton&gt;</span></span></span><br><span class="line"></span><br><span class="line">VerticalBox::VerticalBox(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line"></span><br><span class="line">  QVBoxLayout *vbox = <span class="keyword">new</span> QVBoxLayout(<span class="keyword">this</span>);</span><br><span class="line">  vbox-&gt;setSpacing(<span class="number">1</span>);</span><br><span class="line">  </span><br><span class="line">  QPushButton *settings = <span class="keyword">new</span> QPushButton(<span class="string">"Settings"</span>, <span class="keyword">this</span>);</span><br><span class="line">  settings-&gt;setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);</span><br><span class="line">  QPushButton *accounts = <span class="keyword">new</span> QPushButton(<span class="string">"Accounts"</span>, <span class="keyword">this</span>);</span><br><span class="line">  accounts-&gt;setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);</span><br><span class="line">  QPushButton *loans = <span class="keyword">new</span> QPushButton(<span class="string">"Loans"</span>, <span class="keyword">this</span>);</span><br><span class="line">  loans-&gt;setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);</span><br><span class="line">  QPushButton *cash = <span class="keyword">new</span> QPushButton(<span class="string">"Cash"</span>, <span class="keyword">this</span>);</span><br><span class="line">  cash-&gt;setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);</span><br><span class="line">  QPushButton *debts = <span class="keyword">new</span> QPushButton(<span class="string">"Debts"</span>, <span class="keyword">this</span>);</span><br><span class="line">  debts-&gt;setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);</span><br><span class="line"></span><br><span class="line">  vbox-&gt;addWidget(settings);</span><br><span class="line">  vbox-&gt;addWidget(accounts);</span><br><span class="line">  vbox-&gt;addWidget(loans);</span><br><span class="line">  vbox-&gt;addWidget(cash);</span><br><span class="line">  vbox-&gt;addWidget(debts);</span><br><span class="line"></span><br><span class="line">  setLayout(vbox);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里我们创建了五个垂直堆叠的按钮，并且让五个按钮再长、宽两个方向尽可能扩展(Expanding)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"verticalbox.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  VerticalBox window;</span><br><span class="line"></span><br><span class="line">  window.resize(<span class="number">240</span>, <span class="number">230</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"VerticalBox"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行之后长这个样子:</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/55d090d11407c6ee692f29a525f97e0c.png" style="width: 50%; border: none"></p>
+<p>类似于<code>QVboxLayout</code>, <code>QHBoxLayout</code>提供了水平排列的布局。垂直布局和水平布局可以联合起来使用。在下面这个例子中我们在窗口右下角添加两个水平分布的按钮。这就是通过混合使用垂直于水平分布实现的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// buttons.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QPushButton&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Buttons</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    Buttons(QWidget *parent = <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span>:</span><br><span class="line">    QPushButton *okBtn;</span><br><span class="line">    QPushButton *applyBtn;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"buttons.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QVBoxLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QHBoxLayout&gt;</span></span></span><br><span class="line"></span><br><span class="line">Buttons::Buttons(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line"></span><br><span class="line">  QVBoxLayout *vbox = <span class="keyword">new</span> QVBoxLayout(<span class="keyword">this</span>);</span><br><span class="line">  QHBoxLayout *hbox = <span class="keyword">new</span> QHBoxLayout();</span><br><span class="line"></span><br><span class="line">  okBtn = <span class="keyword">new</span> QPushButton(<span class="string">"OK"</span>, <span class="keyword">this</span>);</span><br><span class="line">  applyBtn = <span class="keyword">new</span> QPushButton(<span class="string">"Apply"</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  hbox-&gt;addWidget(okBtn, <span class="number">1</span>, Qt::AlignRight);</span><br><span class="line">  hbox-&gt;addWidget(applyBtn, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  vbox-&gt;addStretch(<span class="number">1</span>);</span><br><span class="line">  vbox-&gt;addLayout(hbox);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"buttons.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line"></span><br><span class="line">  Buttons window;</span><br><span class="line"></span><br><span class="line">  window.resize(<span class="number">290</span>, <span class="number">170</span>);</span><br><span class="line">  window.setWindowTitle(<span class="string">"Buttons"</span>);</span><br><span class="line">  window.show();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是一个更加复杂的布局嵌套的例子:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nesting.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Layouts</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    Layouts(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// nesting.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QVBoxLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QPushButton&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QListWidget&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"nesting.h"</span></span></span><br><span class="line"></span><br><span class="line">Layouts::Layouts(QWidget *parent)</span><br><span class="line">  : QWidget (parent)</span><br><span class="line">&#123;</span><br><span class="line">  QVBoxLayout *vbox = <span class="keyword">new</span> QVBoxLayout();</span><br><span class="line">  QHBoxLayout *hbox = <span class="keyword">new</span> QHBoxLayout(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  QListWidget *lw = <span class="keyword">new</span> QListWidget(<span class="keyword">this</span>);</span><br><span class="line">  lw-&gt;addItem(<span class="string">"The Omen"</span>); </span><br><span class="line">  lw-&gt;addItem(<span class="string">"The Exorcist"</span>);</span><br><span class="line">  lw-&gt;addItem(<span class="string">"Notes on a scandal"</span>);</span><br><span class="line">  lw-&gt;addItem(<span class="string">"Fargo"</span>);</span><br><span class="line">  lw-&gt;addItem(<span class="string">"Capote"</span>);</span><br><span class="line"></span><br><span class="line">  QPushButton *add = <span class="keyword">new</span> QPushButton(<span class="string">"Add"</span>, <span class="keyword">this</span>);</span><br><span class="line">  QPushButton *rename = <span class="keyword">new</span> QPushButton(<span class="string">"Rename"</span>, <span class="keyword">this</span>);</span><br><span class="line">  QPushButton *remove = <span class="keyword">new</span> QPushButton(<span class="string">"Remove"</span>, <span class="keyword">this</span>);</span><br><span class="line">  QPushButton *removeall = <span class="keyword">new</span> QPushButton(<span class="string">"Remove All"</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">  vbox-&gt;setSpacing(<span class="number">3</span>);</span><br><span class="line">  vbox-&gt;addStretch(<span class="number">1</span>);</span><br><span class="line">  vbox-&gt;addWidget(add);</span><br><span class="line">  vbox-&gt;addWidget(rename);</span><br><span class="line">  vbox-&gt;addWidget(remove);</span><br><span class="line">  vbox-&gt;addWidget(removeall);</span><br><span class="line">  vbox-&gt;addStretch(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  hbox-&gt;addWidget(lw);</span><br><span class="line">  hbox-&gt;addSpacing(<span class="number">15</span>);</span><br><span class="line">  hbox-&gt;addLayout(vbox);</span><br><span class="line"></span><br><span class="line">  setLayout(hbox);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"nesting.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line">    </span><br><span class="line">  Layouts window;</span><br><span class="line">  </span><br><span class="line">  window.setWindowTitle(<span class="string">"Layouts"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述程序运行得到的界面如下图：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/101a9aba9e4ecc35c723622cc32e2bc3.png" style="width: 70%; border: none"></p>
+<h3 id="form布局">Form布局</h3>
+<p><code>QFormLayout</code>可以处理典型的表格输入的布局。其子Widgets被分为两列，分别是Label和输入控件（例如<code>QLineEdit</code>或者<code>QSpinBox</code>)。 Form布局的使用见下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// form.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FormEx</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    FormEx(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// form.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFormLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLabel&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLineEdit&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"form.h"</span></span></span><br><span class="line"></span><br><span class="line">FormEx::FormEx(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line">        </span><br><span class="line">  QLineEdit *nameEdit = <span class="keyword">new</span> QLineEdit(<span class="keyword">this</span>);</span><br><span class="line">  QLineEdit *addrEdit = <span class="keyword">new</span> QLineEdit(<span class="keyword">this</span>);</span><br><span class="line">  QLineEdit *occpEdit = <span class="keyword">new</span> QLineEdit(<span class="keyword">this</span>);</span><br><span class="line">  </span><br><span class="line">  QFormLayout *formLayout = <span class="keyword">new</span> QFormLayout;</span><br><span class="line">  <span class="comment">// 调整Label的对齐规则为水平右对齐，垂直居中</span></span><br><span class="line">  formLayout-&gt;setLabelAlignment(Qt::AlignRight | Qt::AlignVCenter);</span><br><span class="line">  formLayout-&gt;addRow(<span class="string">"Name:"</span>, nameEdit);</span><br><span class="line">  formLayout-&gt;addRow(<span class="string">"Email:"</span>, addrEdit);</span><br><span class="line">  formLayout-&gt;addRow(<span class="string">"Age:"</span>, occpEdit);</span><br><span class="line">  </span><br><span class="line">  setLayout(formLayout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"form.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line"></span><br><span class="line">  FormEx window;</span><br><span class="line"></span><br><span class="line">  window.setWindowTitle(<span class="string">"Form example"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>程序运行得到的界面如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/1f92dfbe6c1b7bd1cdc16b7e56902b5a.png" style="width: 50%; border: none"></p>
+<h3 id="网格布局">网格布局</h3>
+<p>网格布局使用<code>QGridLayout</code>这个类，我们已经在前面的例子中见过了。这是一个强大的布局工具。英文教程中给了两个例子，其中Review那个例子要更加复杂一些，我们使用那个来说明：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// review.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Review</span> :</span> <span class="keyword">public</span> QWidget &#123;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    Review(QWidget *parent = <span class="number">0</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// review.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QGridLayout&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLabel&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QLineEdit&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextEdit&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"review.h"</span></span></span><br><span class="line"></span><br><span class="line">Review::Review(QWidget *parent)</span><br><span class="line">    : QWidget(parent) &#123;</span><br><span class="line"></span><br><span class="line">  QGridLayout *grid = <span class="keyword">new</span> QGridLayout(<span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;setVerticalSpacing(<span class="number">15</span>);</span><br><span class="line">  grid-&gt;setHorizontalSpacing(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">  QLabel *title = <span class="keyword">new</span> QLabel(<span class="string">"Title:"</span>, <span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(title, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">  title-&gt;setAlignment(Qt::AlignRight | Qt::AlignVCenter);</span><br><span class="line"></span><br><span class="line">  QLineEdit *edt1 = <span class="keyword">new</span> QLineEdit(<span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(edt1, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  QLabel *author = <span class="keyword">new</span> QLabel(<span class="string">"Author:"</span>, <span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(author, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">  author-&gt;setAlignment(Qt::AlignRight | Qt::AlignVCenter);</span><br><span class="line"></span><br><span class="line">  QLineEdit *edt2 = <span class="keyword">new</span> QLineEdit(<span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(edt2, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  QLabel *review = <span class="keyword">new</span> QLabel(<span class="string">"Review:"</span>, <span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(review, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">  review-&gt;setAlignment(Qt::AlignRight | Qt::AlignTop);</span><br><span class="line"></span><br><span class="line">  QTextEdit *te = <span class="keyword">new</span> QTextEdit(<span class="keyword">this</span>);</span><br><span class="line">  grid-&gt;addWidget(te, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  setLayout(grid);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"review.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;  </span><br><span class="line"></span><br><span class="line">  Review window;</span><br><span class="line"></span><br><span class="line">  window.setWindowTitle(<span class="string">"Review"</span>);</span><br><span class="line">  window.show();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用<code>QGridLayout::addWidget</code>参数的时候，除了行列号以外，剩下两个数字分别表示行列的Span。函数定义：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/5c99b1d0a4824c8cd573cdff321a926b.png"></p>
+<p>程序运行得到的界面是</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/8bfeb8877347930a9b2cab06e963a7af.png" style="width: 70%; border: none"></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/教程/" rel="tag"># 教程</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Qt/" rel="tag"># Qt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/58026/" rel="next" title="【转载】5G大战,美国败像已露">
+                <i class="fa fa-chevron-left"></i> 【转载】5G大战,美国败像已露
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/41659/" rel="prev" title="Qt on Mac摸索记录 - 其四">
+                Qt on Mac摸索记录 - 其四 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="Woody Huang">
+            
+              <p class="site-author-name" itemprop="name">Woody Huang</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#first-program-more"><span class="nav-number">1.</span> <span class="nav-text">First program, more</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#鼠标图标的例子"><span class="nav-number">1.1.</span> <span class="nav-text">鼠标图标的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按钮与数据交互"><span class="nav-number">1.2.</span> <span class="nav-text">按钮与数据交互</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#menus-and-toobars"><span class="nav-number">2.</span> <span class="nav-text">Menus and toobars</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的例子"><span class="nav-number">2.1.</span> <span class="nav-text">简单的例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toolbar"><span class="nav-number">2.2.</span> <span class="nav-text">Toolbar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布局"><span class="nav-number">3.</span> <span class="nav-text">布局</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绝对定位"><span class="nav-number">3.1.</span> <span class="nav-text">绝对定位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#box布局"><span class="nav-number">3.2.</span> <span class="nav-text">Box布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#form布局"><span class="nav-number">3.3.</span> <span class="nav-text">Form布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网格布局"><span class="nav-number">3.4.</span> <span class="nav-text">网格布局</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Woody Huang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/posts/24435/";
+    this.page.identifier = "posts/24435/";
+    this.page.title = 'Qt on Mac摸索记录 - 其三';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
+  }()
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

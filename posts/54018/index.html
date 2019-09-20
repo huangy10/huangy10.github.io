@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="跟着上一篇继续。本篇介绍Qt重新造的轮子：容器系统和文件操作系统。">
+<meta name="keywords" content="教程,C++,Qt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt on Mac摸索记录 - 其二">
+<meta property="og:url" content="http://www.codewoody.com/posts/54018/index.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="跟着上一篇继续。本篇介绍Qt重新造的轮子：容器系统和文件操作系统。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-19T04:58:02.047Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Qt on Mac摸索记录 - 其二">
+<meta name="twitter:description" content="跟着上一篇继续。本篇介绍Qt重新造的轮子：容器系统和文件操作系统。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/posts/54018/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Qt on Mac摸索记录 - 其二 | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/54018/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Woody Huang">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Qt on Mac摸索记录 - 其二
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-19 01:11:03 / Modified: 12:58:02" itemprop="dateCreated datePublished" datetime="2019-09-19T01:11:03+08:00">2019-09-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/54018/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/54018/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>跟着<a href="./posts/46595/">上一篇</a>继续。本篇介绍Qt重新造的轮子：容器系统和文件操作系统。</p>
+<a id="more"></a>
+<h2 id="容器">容器</h2>
+<p>按理说标准库里面就有各种容器的实现了，这里重新造轮子了？</p>
+<p>容器分为了两类：序列容器 和 关联容器。</p>
+<h3 id="qvector">QVector</h3>
+<p>动态数组容器，内部本质就是内存连续的数组，从而使得随机存取的效率非常高。但是对于元素的删除插入操作性能会比较差。对于长度很大的序列，推荐采用链表实现的的<code>QList</code>。</p>
+<p><code>QVector</code>的例子如下。使用非常简单，不再赘述。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QVector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QVector&lt;<span class="keyword">int</span>&gt; vals = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"The size of the vector is: "</span> &lt;&lt; vals.size() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"The first item is: "</span> &lt;&lt; vals.first() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"The last item is: "</span> &lt;&lt; vals.last() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    vals.append(<span class="number">6</span>);</span><br><span class="line">    vals.prepend(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"Elements: "</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> val : vals) &#123;</span><br><span class="line">        out &lt;&lt; val &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="qlist"><code>QList</code></h3>
+<p><code>QList</code> 也是序列容器，内部是链表实现。其随机访问、删除、插入操作效率都比较高。因此是 Qt 中最常用的容器。参考下面👇这个例子。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QList&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QList&lt;QString&gt; authors = &#123;<span class="string">"Balzac"</span>, <span class="string">"Tolstoy"</span>, </span><br><span class="line">        <span class="string">"Gulbranssen"</span>, <span class="string">"London"</span>&#125;;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i &lt; authors.size(); ++i) &#123;</span><br><span class="line">  </span><br><span class="line">        out &lt;&lt; authors.at(i) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    authors &lt;&lt; <span class="string">"Galsworthy"</span> &lt;&lt; <span class="string">"Sienkiewicz"</span>;</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"***********************"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::sort(authors.begin(), authors.end());</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"Sorted:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span> (QString author : authors) &#123;</span><br><span class="line">  </span><br><span class="line">        out &lt;&lt; author &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="qstringlist"><code>QStringList</code></h3>
+<p>为字符串做了优化的列表。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QList&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QString <span class="built_in">string</span> = <span class="string">"coin, book, cup, pencil, clock, bookmark"</span>;</span><br><span class="line">    QStringList items = <span class="built_in">string</span>.split(<span class="string">","</span>);</span><br><span class="line">    <span class="function">QStringListIterator <span class="title">it</span><span class="params">(items)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">        out &lt;&lt; it.next().trimmed() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="qset"><code>QSet</code></h3>
+<p>集合可以确保其中存储的值是唯一的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QSet&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QList&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QSet&lt;QString&gt; cols1 = &#123;<span class="string">"yellow"</span>, <span class="string">"red"</span>, <span class="string">"blue"</span>&#125;;</span><br><span class="line">    QSet&lt;QString&gt; cols2 = &#123;<span class="string">"blue"</span>, <span class="string">"pink"</span>, <span class="string">"orange"</span>&#125;;</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"There are "</span> &lt;&lt; cols1.size() &lt;&lt; <span class="string">" values in the set"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    cols1.insert(<span class="string">"brown"</span>);</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"There are "</span> &lt;&lt; cols1.size() &lt;&lt; <span class="string">" values in the set"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    cols1.unite(cols2);</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"There are "</span> &lt;&lt; cols1.size() &lt;&lt; <span class="string">" values in the set"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (QString val : cols1) &#123;</span><br><span class="line">        out &lt;&lt; val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QList&lt;QString&gt; lcols = cols1.values();</span><br><span class="line">    <span class="built_in">std</span>::sort(lcols.begin(), lcols.end());</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"*********************"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"Sorted:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (QString val : lcols) &#123;</span><br><span class="line">        out &lt;&lt; val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到合并(<code>unite()</code>)后重复元素被移除了，只留下一份。</p>
+<h3 id="qmap"><code>QMap</code></h3>
+<p><code>QMap</code>是关联式容器，存储key-value对。下面是<code>QMap</code>使用的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QMap&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QMap&lt;QString, <span class="keyword">int</span>&gt; items = &#123; &#123;<span class="string">"coins"</span>, <span class="number">5</span>&#125;, &#123;<span class="string">"books"</span>, <span class="number">3</span>&#125; &#125;;</span><br><span class="line"></span><br><span class="line">    items.insert(<span class="string">"bottles"</span>, <span class="number">7</span>);</span><br><span class="line"></span><br><span class="line">    QList&lt;<span class="keyword">int</span>&gt; values = items.values();</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"Values:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> val : values) &#123;</span><br><span class="line">        out &lt;&lt; val &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QList&lt;QString&gt; keys = items.keys();</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"Keys:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">for</span> (QString key : keys) &#123;</span><br><span class="line">        out &lt;&lt; key &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    QMapIterator&lt;QString, <span class="keyword">int</span>&gt; it(items);</span><br><span class="line"></span><br><span class="line">    out &lt;&lt; <span class="string">"Pairs:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">        it.next();</span><br><span class="line">        out &lt;&lt; it.key() &lt;&lt; <span class="string">": "</span> &lt;&lt; it.value() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义排序">自定义排序</h3>
+<p>自定义排序其实就是要自定义比较函数。以下面的类为例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// book.h</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Book</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        Book(QString, QString);</span><br><span class="line">        <span class="function">QString <span class="title">getAuthor</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line">        <span class="function">QString <span class="title">getTitle</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        QString author;</span><br><span class="line">        QString title;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// book.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QString&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"book.h"</span></span></span><br><span class="line"></span><br><span class="line">Book::Book(QString auth, QString tit) &#123;</span><br><span class="line">    author = auth;</span><br><span class="line">    title = tit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">QString Book::getAuthor() <span class="keyword">const</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> author;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">QString Book::getTitle() <span class="keyword">const</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> title;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用自定义的方式排序如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QList&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"book.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">compareByTitle</span><span class="params">(<span class="keyword">const</span> Book &amp;b1, <span class="keyword">const</span> Book &amp;b2)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">return</span> b1.getTitle() &lt; b2.getTitle();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    QList&lt;Book&gt; books = &#123;</span><br><span class="line">        Book(<span class="string">"Jack London"</span>, <span class="string">"The Call of the Wild"</span>),</span><br><span class="line">        Book(<span class="string">"Honoré de Balzac"</span>, <span class="string">"Father Goriot"</span>),</span><br><span class="line">        Book(<span class="string">"Leo Tolstoy"</span>, <span class="string">"War and Peace"</span>),</span><br><span class="line">        Book(<span class="string">"Gustave Flaubert"</span>, <span class="string">"Sentimental education"</span>),</span><br><span class="line">        Book(<span class="string">"Guy de Maupassant"</span>, <span class="string">"Une vie"</span>),</span><br><span class="line">        Book(<span class="string">"William Shakespeare"</span>, <span class="string">"Hamlet"</span>)</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::sort(books.begin(), books.end(), compareByTitle);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (Book book : books) &#123;</span><br><span class="line">        out &lt;&lt; book.getAuthor() &lt;&lt; <span class="string">": "</span> &lt;&lt; book.getTitle() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件系统">文件系统</h2>
+<p>这里涉及<code>QFile</code>, <code>QDir</code>, <code>QFileInfo</code>三个类。其中<code>QFile</code>负责操作文件（读取和写入），<code>QDir</code>提供了访问路径结构及其内容的接口，<code>QFileInfo</code>提供了与独立于操作系统的文件信息，包括文件名、文件存储的路径，访问时间，修改时间，权限，文件所有权信息。</p>
+<h3 id="文件大小">文件大小</h3>
+<p>文件的大小通过<code>QFileInfo::size()</code>函数来获取。见下面的完整例子:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFileInfo&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">    qWarning(<span class="string">"Usage: file_size file"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  QString filename = argv[<span class="number">1</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (!QFile(filename).exists()) &#123;</span><br><span class="line">    qWarning(<span class="string">"The file does not exist"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="function">QFileInfo <span class="title">fileinfo</span><span class="params">(filename)</span></span>;</span><br><span class="line">  </span><br><span class="line">  qint64 size = fileinfo.size();</span><br><span class="line">  </span><br><span class="line">  QString str = <span class="string">"The size is: %1 bytes"</span>;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; str.arg(size) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读取文件内容">读取文件内容</h3>
+<p>读取文件之前需要打开文件，并基于这个文件创建流。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFile&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"colours"</span>)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (!file.open(QIODevice::ReadOnly)) &#123;</span><br><span class="line">    qWarning(<span class="string">"Cannot open file for reading"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function">QTextStream <span class="title">in</span><span class="params">(&amp;file)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (!in.atEnd()) &#123;</span><br><span class="line">    QString line = in.readLine();</span><br><span class="line">    out &lt;&lt; line &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  file.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="写入文件内容">写入文件内容</h3>
+<p>要写入文件需要文件以写入模式打开。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFile&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line">    </span><br><span class="line">  QString filename = <span class="string">"distros"</span>;</span><br><span class="line">  <span class="function">QFile <span class="title">file</span><span class="params">(filename)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (file.open(QIODevice::WriteOnly)) &#123;</span><br><span class="line">      </span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(&amp;file)</span></span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"Xubuntu"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"Arch"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"Debian"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"Redhat"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    out &lt;&lt; <span class="string">"Slackware"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      </span><br><span class="line">    qWarning(<span class="string">"Could not open file"</span>);</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  file.close(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="复制文件">复制文件</h3>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFile&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">3</span>) &#123;</span><br><span class="line">      qWarning(<span class="string">"Usage: copyfile source destination"</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  QString source = argv[<span class="number">1</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (!QFile(source).exists()) &#123;</span><br><span class="line">      qWarning(<span class="string">"The source file does not exist"</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function">QString <span class="title">destin</span><span class="params">(argv[<span class="number">2</span>])</span></span>;</span><br><span class="line"></span><br><span class="line">  QFile::copy(source, destin);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件信息的获取">文件信息的获取</h3>
+<ul>
+<li>文件所有者：<code>QFileInfo::group()</code>和<code>QFileInfo::owner()</code>，返回的都是<code>QString</code>;</li>
+<li>修改时间: <code>QFileInfo::lastRead()</code>和<code>QFileInfo::lastModified()</code>，返回的是<code>QDateTime</code>;</li>
+<li>文件路径：参见下面的例子</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// filepath.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFileInfo&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">      out &lt;&lt; <span class="string">"Usage: file_times file"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  QString filename = argv[<span class="number">1</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="function">QFileInfo <span class="title">fileinfo</span><span class="params">(filename)</span></span>;</span><br><span class="line">  </span><br><span class="line">  QString absPath = fileinfo.absoluteFilePath();</span><br><span class="line">  QString baseName = fileinfo.baseName();</span><br><span class="line">  QString compBaseName = fileinfo.completeBaseName();</span><br><span class="line">  QString fileName = fileinfo.fileName();</span><br><span class="line">  QString suffix = fileinfo.suffix();</span><br><span class="line">  QString compSuffix = fileinfo.completeSuffix();</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; <span class="string">"Absolute file path: "</span> &lt;&lt; absPath &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"Base name: "</span> &lt;&lt; baseName &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"Complete base name: "</span> &lt;&lt; compBaseName &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"File name: "</span> &lt;&lt; fileName &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"Suffix: "</span> &lt;&lt; suffix &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"Whole suffix: "</span> &lt;&lt; compSuffix &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ./file_path ~/Downloads/qt-everywhere-opensource-src-5.5.1.tar.gz </span><br><span class="line">Absolute file path: /home/janbodnar/Downloads/qt-everywhere-opensource-src-5.5.1.tar.gz</span><br><span class="line">Base name: qt-everywhere-opensource-src-5</span><br><span class="line">Complete base name: qt-everywhere-opensource-src-5.5.1.tar</span><br><span class="line">File name: qt-everywhere-opensource-src-5.5.1.tar.gz</span><br><span class="line">Suffix: gz</span><br><span class="line">Whole suffix: 5.1.tar.gz</span><br></pre></td></tr></table></figure>
+<ul>
+<li>权限信息：通过<code>QFile::permissions</code>方法可以权限信息，具体的例子如下：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFile&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">      out &lt;&lt; <span class="string">"Usage: permissions file"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  QString filename = argv[<span class="number">1</span>];</span><br><span class="line">  </span><br><span class="line">  QFile::Permissions ps = QFile::permissions(filename);</span><br><span class="line">  </span><br><span class="line">  QString fper;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::ReadOwner) &#123;</span><br><span class="line">      fper.append(<span class="string">'r'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::WriteOwner) &#123;</span><br><span class="line">      fper.append(<span class="string">'w'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::ExeOwner) &#123;</span><br><span class="line">      fper.append(<span class="string">'x'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::ReadGroup) &#123;</span><br><span class="line">      fper.append(<span class="string">'r'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::WriteGroup) &#123;</span><br><span class="line">      fper.append(<span class="string">'w'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::ExeGroup) &#123;</span><br><span class="line">      fper.append(<span class="string">'x'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::ReadOther) &#123;</span><br><span class="line">      fper.append(<span class="string">'r'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::WriteOther) &#123;</span><br><span class="line">      fper.append(<span class="string">'w'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (ps &amp; QFile::ExeOther) &#123;</span><br><span class="line">      fper.append(<span class="string">'x'</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fper.append(<span class="string">'-'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; fper &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="操作路径directories">操作路径(directories)</h3>
+<ul>
+<li>创建文件夹: <code>QDir::mkdir()</code>，返回布尔值表明创建是否成功。<code>QDir::mkpath()</code>也是创建文件夹 ，其区别在于<code>mkpath()</code>函数会同时创建缺少的父文件夹。</li>
+<li>重命名: <code>QDir::exists()</code>, 文件是否存在。</li>
+<li>获取 一些特殊的文件夹的位置：
+<ul>
+<li><code>QDir::currentPath()</code></li>
+<li><code>QDir::homePath()</code></li>
+<li><code>QDir::tempPath()</code></li>
+<li><code>QDir::rootPath()</code></li>
+</ul></li>
+<li>输出文件夹内的内容</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFileInfo&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDir&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (argc != <span class="number">2</span>) &#123;</span><br><span class="line">      qWarning(<span class="string">"Usage: list_dir directory"</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  QString directory = argv[<span class="number">1</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="function">QDir <span class="title">dir</span><span class="params">(directory)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (!dir.exists()) &#123;</span><br><span class="line">      qWarning(<span class="string">"The directory does not exist"</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">  &#125;  </span><br><span class="line">  </span><br><span class="line">  dir.setFilter(QDir::Files | QDir::AllDirs);</span><br><span class="line">  dir.setSorting(QDir::Size | QDir::Reversed);</span><br><span class="line"></span><br><span class="line">  QFileInfoList <span class="built_in">list</span> = dir.entryInfoList();</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">int</span> max_size = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  foreach (QFileInfo finfo, <span class="built_in">list</span>) &#123;</span><br><span class="line">      QString name = finfo.fileName();</span><br><span class="line">      <span class="keyword">int</span> size = name.size();</span><br><span class="line">      <span class="keyword">if</span> (size &gt; max_size) &#123;</span><br><span class="line">          max_size = size;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">int</span> len = max_size + <span class="number">2</span>;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; QString(<span class="string">"Filename"</span>).leftJustified(len).append(<span class="string">"Bytes"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">list</span>.size(); ++i) &#123;</span><br><span class="line">    QFileInfo fileInfo = <span class="built_in">list</span>.at(i);</span><br><span class="line">    QString str = fileInfo.fileName().leftJustified(len);</span><br><span class="line">    str.append(QString(<span class="string">"%1"</span>).arg(fileInfo.size()));</span><br><span class="line">    out &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/教程/" rel="tag"># 教程</a>
+          
+            <a href="/tags/C/" rel="tag"># C++</a>
+          
+            <a href="/tags/Qt/" rel="tag"># Qt</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/46595/" rel="next" title="Qt on Mac摸索记录 - 其一">
+                <i class="fa fa-chevron-left"></i> Qt on Mac摸索记录 - 其一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/58026/" rel="prev" title="【转载】5G大战,美国败像已露">
+                【转载】5G大战,美国败像已露 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="Woody Huang">
+            
+              <p class="site-author-name" itemprop="name">Woody Huang</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#容器"><span class="nav-number">1.</span> <span class="nav-text">容器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#qvector"><span class="nav-number">1.1.</span> <span class="nav-text">QVector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qlist"><span class="nav-number">1.2.</span> <span class="nav-text">QList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qstringlist"><span class="nav-number">1.3.</span> <span class="nav-text">QStringList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qset"><span class="nav-number">1.4.</span> <span class="nav-text">QSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qmap"><span class="nav-number">1.5.</span> <span class="nav-text">QMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义排序"><span class="nav-number">1.6.</span> <span class="nav-text">自定义排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件系统"><span class="nav-number">2.</span> <span class="nav-text">文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件大小"><span class="nav-number">2.1.</span> <span class="nav-text">文件大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读取文件内容"><span class="nav-number">2.2.</span> <span class="nav-text">读取文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写入文件内容"><span class="nav-number">2.3.</span> <span class="nav-text">写入文件内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制文件"><span class="nav-number">2.4.</span> <span class="nav-text">复制文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件信息的获取"><span class="nav-number">2.5.</span> <span class="nav-text">文件信息的获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作路径directories"><span class="nav-number">2.6.</span> <span class="nav-text">操作路径(directories)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Woody Huang</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/posts/54018/";
+    this.page.identifier = "posts/54018/";
+    this.page.title = 'Qt on Mac摸索记录 - 其二';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
+  }()
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
