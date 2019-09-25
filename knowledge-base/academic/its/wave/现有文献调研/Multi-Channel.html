@@ -135,7 +135,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bb04ddedee00dadee9635854b99919f1.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/aee16e55815aa0fa73ddcdffb2029e7e.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/832b58b9739355368e8dcebdefa291c4.png">
-<meta property="og:updated_time" content="2019-09-16T08:51:26.136Z">
+<meta property="og:updated_time" content="2019-09-24T09:02:37.237Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多信道机制调研">
 <meta name="twitter:description" content="Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商机制来保证访">
@@ -562,6 +562,12 @@
 <p>由于相距两跳以上的节点之间可以复用时隙。所以这里只考虑两跳以内的时隙分配问题。当一个没有被分配时隙的新节点进入网络时，该节点首先要监听信道一个同步间隔(Synchronization Interval)的时间。通过从邻居节点中解析相关信息，该车辆可以获知两跳内的时隙占用情况。然后此新节点随机选择一个空闲时隙作为basic time slot - 基础时隙。然后到下一个同步间隔时，该节点广播自己的状态消息。</p>
 <p>一个同步间隔内的时隙总数可以按照交通密度进行调整。将广播段的时隙总数记为<span class="math inline">\(N_{ts} \in [N_{\min}, N_{\max}]\)</span>。网络中车辆数目为<span class="math inline">\(K\)</span>, 那么可用时隙数量为<span class="math inline">\(N_{ava} = N_{ts} - K\)</span>。直观上来看，<span class="math inline">\(N_{ava}\)</span>越大，新节点获取时隙的速度越快。如果我们规定网络中可用时隙的数目不能小于一个阈值<span class="math inline">\(N_{thre}\)</span>，那么当<span class="math inline">\(N_{ava} &lt; N_{thre}\)</span>时，车辆会尝试增加广播段时隙的总数。反过来，如果车辆减少，<span class="math inline">\(N_{ava}\)</span>超过<span class="math inline">\(N_{thre}\)</span>，车辆会尝试降低时隙总数<span class="foot-note-span">【并不是立即降低】</span>，具体算法的伪代码见下图：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/bb04ddedee00dadee9635854b99919f1.png" style="width: 70%"></p>
+<blockquote>
+<p id="伪代码说明">
+关于上面的算法我发现了一个有意思的问题:
+</p>
+<p>伪代码第9行中，如果只有两个节点，且两个节点采用了同一个时隙时，这两个节点都无法收到对面的包。那么按照现有的伪代码的逻辑， 这两个节点会持续占用这两个节点进行通信，二者互相无法感知对方的存在。</p>
+</blockquote>
 <h4 id="sch-接入过程">SCH 接入过程</h4>
 <p>SCH的资源分配于CCH的协商段完成。由于SCH的通常是点对点通信，故完成协商的节点可以不等CCHI结束，立即切换到SCH进行通信。</p>
 <p>协商段的协商过程示意图如下：</p>
@@ -727,7 +733,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">84</span>
+                    <span class="site-state-item-count">85</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
