@@ -135,7 +135,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bb04ddedee00dadee9635854b99919f1.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/aee16e55815aa0fa73ddcdffb2029e7e.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/832b58b9739355368e8dcebdefa291c4.png">
-<meta property="og:updated_time" content="2019-09-26T06:17:21.058Z">
+<meta property="og:updated_time" content="2019-09-26T06:34:23.449Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多信道机制调研">
 <meta name="twitter:description" content="Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商机制来保证访">
@@ -311,23 +311,6 @@
         
         
           
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
-
-  </li>
-        
-        
-        
-          
           <li class="menu-item menu-item-updates">
 
     
@@ -339,6 +322,40 @@
     
 
     <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-channel">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="https://t.me/everthingaboutbullshit" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>channel</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
 
   </li>
 
@@ -407,6 +424,9 @@
             
 
     
+    
+      
+      
     
       
       
@@ -576,7 +596,7 @@
 <p>另外一个比较重要的点是，由于协商段发送的消息体积非常小，DCF机制中，与信道繁忙状态下冻结退避计数器的机制没有使用。</p>
 <p>SCHI 也被分割成多个时隙。一对车辆之间的传输可能无法使用整个SCHI，因此这部分资源可以复用。复用通过RES消息来调度</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/832b58b9739355368e8dcebdefa291c4.png" style="width:50%"></p>
-<p>如上图的，RES中包含了的源节点车辆ID <span class="math inline">\(ID_{sour\_veh}\)</span>，为需要服务的车辆；目标节点车辆ID <span class="math inline">\(ID_{dest\_veh}\)</span>，为提供服务的车辆；SCH信道编号<span class="math inline">\(N_{sch}\)</span>，以及SCH的长度<span class="math inline">\(T_{sch}\)</span>；以及需要使用的时隙集合<span class="math inline">\(O_{set_ts}\)</span>。网络中其他车辆在收到RES消息时，会相应地更新SCH占用信息。</p>
+<p>如上图的，RES中包含了的源节点车辆ID <span class="math inline">\(\text{ID}_{sour\_veh}\)</span>，为需要服务的车辆；目标节点车辆ID <span class="math inline">\(\text{ID}_{dest\_veh}\)</span>，为提供服务的车辆；SCH信道编号<span class="math inline">\(N_{sch}\)</span>，以及SCH的长度<span class="math inline">\(T_{sch}\)</span>；以及需要使用的时隙集合<span class="math inline">\(O_{set_ts}\)</span>。网络中其他车辆在收到RES消息时，会相应地更新SCH占用信息。</p>
 <p>在选择SCH信道时，优先选择已经被占用的信道。如果SCH中剩余的时隙资源无法满足需要，那么采用&quot;try the best to transmit&quot;的策略，选择最长的时隙分配。</p>
 <h2 id="reference">Reference</h2>
 
