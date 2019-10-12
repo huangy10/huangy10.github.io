@@ -134,7 +134,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d69ae9c3151c623014bc9b558db9d8c2.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e2c04dd8198326358eae142bdfc5ee81.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e8b569cd74ad3509519e49502b858bb1.jpg">
-<meta property="og:updated_time" content="2019-06-11T02:53:06.408Z">
+<meta property="og:updated_time" content="2019-10-09T06:53:15.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWK">
 <meta name="twitter:description" content="这篇文章转载自Linux三剑客老大 awk  概述 awk同sed命令类似，只不过sed擅长取行，awk命令擅长取列。（根据了解awk是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel） 原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理 用法: 1awk [可选的命令行选项] &apos;BEGIN&amp;#123;命令 &amp;#125; pattern&amp;#123; 命令">
@@ -545,6 +545,11 @@
 <p>我们将字符串 <code>I love you</code> 通过管道传递给<code>awk</code>命令，相当于<code>awk</code>处理一个文件，该文件的内容就是<code>I love you</code>,默认通过空格作为分隔符(不管列之间有多少个空格都将当作一个空格处理)<code>I love you</code>就分割成三列了。</p>
 <p>假如分割符号为 <code>.</code> ，可以这样用</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">'192.168.1.1'</span> | awk -F <span class="string">"."</span> <span class="string">'&#123;print $2&#125;'</span></span></span><br><span class="line">168</span><br></pre></td></tr></table></figure>
+<p>如果要打印某个范围内的所有行，可以使用如下的<a href="https://stackoverflow.com/questions/5081916/how-to-print-all-the-columns-after-a-particular-number-using-awk" target="_blank" rel="noopener">方法</a>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123; s = ""; for (i = 9; i &lt;= NF; i++) s = s $i " "; print s &#125;'</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里可以看出为什么开头说awk是一种语言了</p>
+</blockquote>
 <h2 id="条件过滤">条件过滤</h2>
 <p>我们知道<code>awk</code>的用法是这样的，那么<code>pattern</code>部分怎么用呢？</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">awk [可选的命令行选项] 'BEGIN&#123;命令 &#125; pattern&#123; 命令 &#125; END&#123; 命令 &#125;'  文件名</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat score.txt</span></span><br><span class="line">tom 60 60 60</span><br><span class="line">kitty 90 95 87</span><br><span class="line">jack 72 84 99</span><br><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'$2&gt;=90&#123;print $0&#125;'</span> score.txt</span></span><br><span class="line">kitty 90 95 87</span><br></pre></td></tr></table></figure>
@@ -733,7 +738,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">86</span>
+                    <span class="site-state-item-count">87</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
