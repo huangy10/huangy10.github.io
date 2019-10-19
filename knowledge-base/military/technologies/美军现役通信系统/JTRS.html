@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概述 目前，美军正在逐步对现役通信系统进行数字化项目改造，以适应未来数字化战场的需要，联合战术无线电系统（JTRS）就是其中的一个重要项目。它是美军唯一一种可适用于所有军兵种要求的通用新型系列（数字）战术电台，其作用主要用于逐步取代美军各军兵种现役的20多个系列约125种以上型号的75万部电台。 联合战术无线电系统（JTRS）工作频率范围（2MHz–3GHz）极宽，基本覆盖了高频/甚高频/特高频波">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JTRS: 联合战术无线电系统">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/military/technologies/美军现役通信系统/JTRS.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="概述 目前，美军正在逐步对现役通信系统进行数字化项目改造，以适应未来数字化战场的需要，联合战术无线电系统（JTRS）就是其中的一个重要项目。它是美军唯一一种可适用于所有军兵种要求的通用新型系列（数字）战术电台，其作用主要用于逐步取代美军各军兵种现役的20多个系列约125种以上型号的75万部电台。 联合战术无线电系统（JTRS）工作频率范围（2MHz–3GHz）极宽，基本覆盖了高频/甚高频/特高频波">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/573589a98dc1b513e12f6d86961233db.JPG">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/094b1ebc36bf0fc720b1b42fb39f137c.jpg">
+<meta property="og:updated_time" content="2019-10-18T08:51:30.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JTRS: 联合战术无线电系统">
+<meta name="twitter:description" content="概述 目前，美军正在逐步对现役通信系统进行数字化项目改造，以适应未来数字化战场的需要，联合战术无线电系统（JTRS）就是其中的一个重要项目。它是美军唯一一种可适用于所有军兵种要求的通用新型系列（数字）战术电台，其作用主要用于逐步取代美军各军兵种现役的20多个系列约125种以上型号的75万部电台。 联合战术无线电系统（JTRS）工作频率范围（2MHz–3GHz）极宽，基本覆盖了高频/甚高频/特高频波">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/573589a98dc1b513e12f6d86961233db.JPG">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/military/technologies/美军现役通信系统/JTRS">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JTRS: 联合战术无线电系统 | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge menu-item-active">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-channel">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="https://t.me/everthingaboutbullshit" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>channel</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">JTRS: 联合战术无线电系统
+
+</h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/">MILITARY</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/">TECHNOLOGIES</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/美军现役通信系统/">美军现役通信系统</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>JTRS</li>
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body han-init-context">
+        
+        
+          <h2 id="概述">概述</h2>
+<p>目前，美军正在逐步对现役通信系统进行数字化项目改造，以适应未来数字化战场的需要，联合战术无线电系统（JTRS）就是其中的一个重要项目。它是美军唯一一种可适用于所有军兵种要求的通用新型系列（数字）战术电台，其作用主要用于逐步取代美军各军兵种现役的20多个系列约125种以上型号的75万部电台。</p>
+<p>联合战术无线电系统（JTRS）工作频率范围（2MHz–3GHz）极宽，基本覆盖了高频/甚高频/特高频波段，型号有手持式、背负式、车载式、机载式、舰载式和固定式等，其主要特点为多频段多模式多信道、可网络互联，这使得JTRS各种型号的电台在复杂的战场环境下不仅能做到相互之间兼容互通，而且还可通过其跨频段跨时空的横向和纵向网络为分布在广阔战区内不同地域的美国陆、海、空和海军陆战队提供远程超视距且安全可靠的语音、数据、图像和视频通信，因而联合战术无线电系统（JTRS）未来有望成为美军在数字化战场中的主要通信手段。</p>
+<hr>
+<p><img src="https://imgs.codewoody.com/uploads/big/573589a98dc1b513e12f6d86961233db.JPG" alt="" style="width: 50%; border: none;"></p>
+<p><a href="https://en.wikipedia.org/wiki/Joint_Tactical_Radio_System" target="_blank" rel="noopener">JTRS</a>旨在使用一套可编程的软件定义无线电(SDN)系统来取代现存的多种独立频段的的无线电台。只需要通过软件配置就可以让设备工作与普通的频段与不同的模式（波形）之下，而不需要同时安装多种不同的无线电物理终端，从而实现融合各种基于独立硬件的无线电功能。因此JTRS具有广阔的工作频段范围（2MHz ~ 2GHz）。</p>
+<p>美国陆军<span class="foot-note-span">【2012年7月五角大楼关闭了JTRS项目办公室，并将采购职权交给陆军(<a href="http://news.ifeng.com/mil/3/detail_2012_08/02/16502782_0.shtml" target="_blank" rel="noopener">source</a>)】</span>在<strong>2015年六月</strong>宣布全面生产HMS项目（2015-2016年评估，2017年全速生产）。早在1997年8月，JTRS计划获得美军TROC<span class="foot-note-span">【联合需求审查委员会】</span>批准，以美国国防部的联合战术结构(JTA)标准为基础。预计美军各军种的大量战术通信计划都将被JTRS取代。这样把大量军用无线电研究活动合并成单一计划，可加速计划的完成，节省研究、开发、采购、训练等费用。美国防部拟用JTRS取代美军现用的25～30个系列共75万部电台。目前，除了海军的数字模块电台计划、空军的集成终端计划和陆军的未来数字电台计划继续进行外，美已删减了大量的研究计划，而且早期型号的JTRS系统将由上述三种电台发展而来。</p>
+<h2 id="工程规划">工程规划</h2>
+<p>综上描述，JTRS是一个野心勃勃的庞大计划，美军计划使用JTRS提供的一揽子通信方案，取代过去的数量众多的单一信道通信设备。</p>
+<p>2005年，JTRS项目重组，改由JPEO(Joint Program Executive Officer)领导。JPEO将JTRS项目拆分成如下五个ACAT 1D子项：</p>
+<ul>
+<li>JTRS Network Enterprise Domain (NED)</li>
+<li>JTRS Ground Mobile Radios (GMR)</li>
+<li>JTRS Handheld, Manpack, &amp; Small Form Fit (HMS)</li>
+<li>JTRS Multifunctional Information Distribution System (MIDS)</li>
+<li>JTRS Maritime Fixed/Station (AMF)</li>
+</ul>
+<p>以及一个ACAT III项目 Handheld JTRS Enchanced Multi-Band Intra-Team Radio (JEM).</p>
+<h3 id="ned">NED</h3>
+<p>简而言之，NED项目负责开发，维护和增强JTRS对于Legacy网络和协议兼容与互操作。NED产品线包括：</p>
+<ul>
+<li>15 Legacy Waveforms
+<ul>
+<li>Bowman VHF</li>
+<li>Collection Of Broadcasts From Remote Assets (COBRA)</li>
+<li>Enhanced Position Location Reporting System (EPLRS)</li>
+<li>Have Quick II</li>
+<li>High Frequency Single sideband / Automatic link establishment (HF SSB/ALE)</li>
+<li>NATO Standardization Agreement 5066 (HF 5066)</li>
+<li>Link 16</li>
+<li>Single Channel Ground and Airborne Radio System (SINCGARS)</li>
+<li>Ultra High Frequency Demand Assigned Multiple Access Satellite communications (UHF DAMA SATCOM) 181/182/183/184</li>
+<li>Ultra High Frequency Line-of-Sight Communications System (UHF LOS)</li>
+<li>Very High Frequency Line-of-Sight Communications System (VHF LOS)</li>
+</ul></li>
+<li>3 Mobile Ad Hoc Networking Waveforms
+<ul>
+<li><a href="Wideband%20Networking%20Waveform"><strong>Wideband Networking Waveform (WNW)</strong></a></li>
+<li>Soldier Radio Waveform (SRW)</li>
+<li>Mobile User Objective System (MUOS)–Red Side Processing</li>
+</ul></li>
+<li>Network Enterprise Services (NES) including
+<ul>
+<li>JTRS WNW Network Manager (JWNM)</li>
+<li>Soldier Radio Waveform Network Manager (SRWNM)</li>
+<li>JTRS Enterprise Network Manager (JENM)</li>
+<li>Enterprise Network Services (ENS)</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>注意上面Wideband Networking Waveform即为 <em>Traffic Predictions for Tactical Wideband Communication</em> 这篇论文面向的方向，只是JTRS的很小的一部分。</p>
+</blockquote>
+<h3 id="gmr">GMR</h3>
+<p>GMR则是面向DoD（国防部）和陆军改革的核心项目，提供了联合作战的关键通信能力。GMR项目由波音公司承保。</p>
+<p>GMR可以使用1至4个信道，支持多个安全等级，可以高效地使用2MHz ~ 2GHz的频段。此无线电兼容SCA (Software Communication Architecture)，提高了其带宽，并可以和现存的多个军用电台系统互操作。GMR支持如下Waveform<span class="foot-note-span">【waveform可以理解为软件定义无线电中的「软件」】</span></p>
+<ul>
+<li>WNW</li>
+<li>SRW</li>
+<li>SINCGARS</li>
+<li>EPLRS</li>
+<li>UHF SATCOM</li>
+<li>HF SATCOM</li>
+</ul>
+<p><img src="https://imgs.codewoody.com/uploads/big/094b1ebc36bf0fc720b1b42fb39f137c.jpg" style="width: 50%; border: none" alt=""></p>
+<p>上述所有的波形中，GMR的核心是WNW。WNW支持在非LOS(non-line-of-sight)场景下的重新路由和重传(re-route and re-transmit)，从而确保在地面战场维持环境感知。GMR WNW采用ad hoc的组网方式，可以使得玩过</p>
+<p>目前GMR合同已经完成，陆军计划将GMR中获得的知识应用于未来的<a href="https://asc.army.mil/web/portfolio-item/c3t-mid-tier-networking-vehicular-radios-mnvr/" target="_blank" rel="noopener">Mid-Tier Networking Vehicular Radio</a> solicitation<span class="foot-note-span">【可以翻译为中间层网络车载电台系统，起作用是在更高层次的战术通信网络，如旅和营级别，和低层次的战术通信网络，如连排级别，起到中间层的作用，solicatitation的意思是募款】</span>中。</p>
+<p>不过由于JTRS GMR项目严重超预算，美国国防部将援引纳恩-麦克柯迪法案，大幅度削减GMR的购买数量。(<a href="http://www.dsti.net/Information/News/69765" target="_blank" rel="noopener">source-2011</a>)</p>
+<h3 id="hms">HMS</h3>
+<p>JTRS HMS (Handheld, Manpack &amp; Small Form-Fit)，即手持，背负式即便携式的JTRS电台设备由Thales<span class="foot-note-span">【法国🇫🇷公司】</span>和General Dynamic Mission Systems<span class="foot-note-span">【美国🇺🇸公司】</span>联合开发。JTRS HMS用来取代<a href="https://acronyms.thefreedictionary.com/CSCHR" target="_blank" rel="noopener">CSCHR</a><span class="foot-note-span">【Consolidated Single-Channel Handheld Radio，单信道手持设备】</span>(PRC-148, PRC-152<span class="foot-note-span">【均为猎鹰系列产品】</span>)等。JTRS HMS项目是为了满足Office of the Assistant Secretary of Defense for Network and Information Integration/DoD Chief Information Office的需求，要求就兼容SCA的软硬件。</p>
+<h3 id="mids-jtrs">MIDS JTRS</h3>
+<p>MIDS 为安全，可扩展，模块化，无线，抗阻塞的数字信息系统。目前为空军，地面部队以及两栖部队提供Tactical Air Navigation (TAN), Link-16, J-Voice等通信手段。</p>
+<h3 id="amf">AMF</h3>
+<p>AMF主要是面向海空军载具和固定平台提供四信道、全双工、软件定义的无线电台。</p>
+<h2 id="更多阅读">更多阅读</h2>
+<ul>
+<li><a href="http://news.ifeng.com/mil/3/detail_2012_08/02/16502782_0.shtml" target="_blank" rel="noopener">五角大楼关闭联合战术无线电系统项目办公室</a></li>
+<li><a href="https://www.secrss.com/articles/12991" target="_blank" rel="noopener">美海军升级数据链终端，实现军事通信组网</a></li>
+<li><a href="http://www.defence.org.cn/article-13-31499.html" target="_blank" rel="noopener">2005年·联合战术无线电系统发展分析</a></li>
+<li><a href="http://www.chinaequip.com.cn/bg/2706.html" target="_blank" rel="noopener">美国军用通信装备抗干扰技术发展调研报告</a>: 付费报告，1.5万。</li>
+<li><a href="https://defensesystems.com/microsites/2010-jtrs/gmr.aspx?m=1" target="_blank" rel="noopener">Joint Tactical Radio System (JRTS) Ground Mobile Radios (GMR)</a></li>
+</ul>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/">MILITARY</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/">TECHNOLOGIES</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/美军现役通信系统/">美军现役通信系统</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>JTRS</li>
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="治部少辅">
+            
+              <p class="site-author-name" itemprop="name">治部少辅</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">88</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工程规划"><span class="nav-number">2.</span> <span class="nav-text">工程规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ned"><span class="nav-number">2.1.</span> <span class="nav-text">NED</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gmr"><span class="nav-number">2.2.</span> <span class="nav-text">GMR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hms"><span class="nav-number">2.3.</span> <span class="nav-text">HMS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mids-jtrs"><span class="nav-number">2.4.</span> <span class="nav-text">MIDS JTRS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#amf"><span class="nav-number">2.5.</span> <span class="nav-text">AMF</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多阅读"><span class="nav-number">3.</span> <span class="nav-text">更多阅读</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">治部少辅</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/knowledge-base/military/technologies/美军现役通信系统/JTRS.html";
+    this.page.identifier = "knowledge-base/military/technologies/美军现役通信系统/JTRS.html";
+    this.page.title = 'JTRS: 联合战术无线电系统';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
+  }()
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
