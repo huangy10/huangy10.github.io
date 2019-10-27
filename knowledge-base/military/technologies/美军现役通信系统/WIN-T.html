@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="WIN-T【中文可以称为：作战人员信息网】是陆军从战区到营级所采用的一个移动、高速、大容量的宽频主干网战术通信网络，可支持陆军全频谱作战, 将最终取代MSE（移动用户设备）和TRI-TAC（三军联合战术通信系统）。作为美军全球信息栅格 (GIG)的战术组成部分, WIN-T将促进装备部队很好地利用GIG服务以及能力 (包括数据库、收集人员、以及国建机构) , 增加信息赋能行动的次数。 WIN-T是">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WIN-T">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/military/technologies/美军现役通信系统/WIN-T.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="WIN-T【中文可以称为：作战人员信息网】是陆军从战区到营级所采用的一个移动、高速、大容量的宽频主干网战术通信网络，可支持陆军全频谱作战, 将最终取代MSE（移动用户设备）和TRI-TAC（三军联合战术通信系统）。作为美军全球信息栅格 (GIG)的战术组成部分, WIN-T将促进装备部队很好地利用GIG服务以及能力 (包括数据库、收集人员、以及国建机构) , 增加信息赋能行动的次数。 WIN-T是">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5a02c936d7d12f61833c7a064c8129d7.jpg">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e4966d4e20ba475fda7946ae465e5d70.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/dde810b0e49ad9cc8064c456401ff44c.png">
+<meta property="og:updated_time" content="2019-10-22T07:43:10.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WIN-T">
+<meta name="twitter:description" content="WIN-T【中文可以称为：作战人员信息网】是陆军从战区到营级所采用的一个移动、高速、大容量的宽频主干网战术通信网络，可支持陆军全频谱作战, 将最终取代MSE（移动用户设备）和TRI-TAC（三军联合战术通信系统）。作为美军全球信息栅格 (GIG)的战术组成部分, WIN-T将促进装备部队很好地利用GIG服务以及能力 (包括数据库、收集人员、以及国建机构) , 增加信息赋能行动的次数。 WIN-T是">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/5a02c936d7d12f61833c7a064c8129d7.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/military/technologies/美军现役通信系统/WIN-T">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>WIN-T | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge menu-item-active">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-channel">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="https://t.me/everthingaboutbullshit" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>channel</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">WIN-T
+
+</h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/">MILITARY</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/">TECHNOLOGIES</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/美军现役通信系统/">美军现役通信系统</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>WIN-T</li>
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body han-init-context">
+        
+        
+          <p>WIN-T<span class="foot-note-span">【中文可以称为：作战人员信息网】</span>是陆军从战区到营级所采用的一个移动、高速、大容量的宽频主干网战术通信网络，可支持陆军全频谱作战, 将最终取代MSE（移动用户设备）和TRI-TAC（三军联合战术通信系统）。作为美军<a href="./GIG.html">全球信息栅格 (GIG)</a>的战术组成部分, WIN-T将促进装备部队很好地利用GIG服务以及能力 (包括数据库、收集人员、以及国建机构) , 增加信息赋能行动的次数。</p>
+<p><del>WIN-T是未来美国陆军一种移动、高速、大容量的宽频主干网通信网络，可支持陆军全频谱作战，其地域覆盖范围上至战区级单位下至连级单位，将地面作战人员与指挥官和全球信息栅格（GIG）联系在一起。该网络也是以节点（包括机载通信节点）为中心的系统，主要节点有广域网络节点（WN）和用户节点（SN），其中广域网络节点之间的连接是依靠地面宽带无线电中继系统或卫星通信或对流层散射通信或无人机通信或光纤电缆等方式实现的，这些相互连接的广域网节点就形成了WIN-T网络的主干；而用户节点则为战术用户接入该网络提供了入口。</del></p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/5a02c936d7d12f61833c7a064c8129d7.jpg" alt="THE BACKBONE OF THE U.S. ARMY&#39;S TACTICAL NETWORK"><figcaption>THE BACKBONE OF THE U.S. ARMY'S TACTICAL NETWORK</figcaption>
+</figure>
+<p>未来战术级作战人员信息网（WIN-T）将广泛使用<a href="./JTRS.html">联合战术无线电系统（JTRS）</a>和机载通信节点（ACN），以解决互通、带宽、速度、入口等问题，最终实现美军各军兵种部队对战场实时态势的全面感知。WIN-T项目分为4个增项<span class="foot-note-span">【Increment】</span>实施。</p>
+<h2 id="increments">Increments</h2>
+<h3 id="increment-1-communications-at-the-halt">Increment 1: Communications AT-THE-HALT</h3>
+<p>最初被称为Joint Network Node Network (JNN-N)项目<span class="foot-note-span">【JNN项目是2003年伊拉克战争期间总结MSE的问题以后紧急开发的，2004年部署到伊拉克，2007年JNN被合并到充足后的WIN-T项目中<sup>6</sup>】</span>。WIN-T Increment 1 (Inc.1) 最早在2004年的Operation Enduring Freedom和Operation Iraqi Freedom行动中开始列装<span class="foot-note-span">【列装：Fielding】</span>。Inc.1 第一次赋予了营<span class="foot-note-span">【battalion】</span>级别的高速语音交换服务和数据通信网络。</p>
+<p>Inc.1 的列装工作在2012年6月完成<sup>2</sup>，目前为止由美国陆军、国民警卫队和预备役部队使用。为了增强网络安全系数，在2012年以后发展了Inc.1b升级版。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/e4966d4e20ba475fda7946ae465e5d70.png"></p>
+<h3 id="increment-2-communication-on-the-move">Increment 2: Communication ON-THE-MOVE</h3>
+<p>2013年7月，美国陆军第十山地师于阿富汗战场最早开始列装Inc.2 <sup>2</sup>。Inc.2 使得士兵可以在脱离基础设施支持的情况下进行通信。</p>
+<p>Inc.2扩大了网络吞吐量，提供了<strong>自动化的网络管理功能</strong><span class="foot-note-span">【2016年，PdM WIN-T Increment 3被改组为PdM Tactical Cyber and Network Operations (TCNO)项目，这一项目负责实现网络管理功能。参见<a href="http://localhost:4000/knowledge-base/military/technologies/%E7%BE%8E%E5%86%9B%E7%8E%B0%E5%BD%B9%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F/NetOps.html#netops-win-t" target="_blank" rel="noopener">NetOps</a>中的介绍】</span>和<strong>移动组网能力</strong>。Inc.2 将移动卫星通信扩展到机动旅战斗队网络中的连一级，使用高敏网络电台。Inc.2中的视距网络为指挥所提供30Mb/s<sup>6</sup>的总吞吐量。具备自组织的能力和自愈能力，提高了网络的可靠性。</p>
+<p>其中，Inc.2 中的Tactical Communication Nodes<span class="foot-note-span">【战术通信节点】</span>技术提供了战场移动基础设施服务。可移动的Point of Presence系统，该系统包含部署于营级及以上的战术单位的作战车辆的<span class="foot-note-span">【营级单位包含4个连，每个连最多两百名士兵10到30个载具】</span>，以及vehicle wireless packages, Soldier Network Extension等连级的系统。</p>
+<p>Inc.2 使得作战命令从旅到师到连队等通信可以通过完全ad-hoc的自组网方式进行。指挥官和通信兵可以战场的任意地方操作和维护网络，而不需要专门停下来建设通信设备<span class="foot-note-span">【ON-THE-MOVE的含义】</span>。</p>
+<p>Inc.2 于2015年6月进行投产，至少于2018年末，陆军尚未完成Inc.2的列装。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/dde810b0e49ad9cc8064c456401ff44c.png"></p>
+<blockquote>
+<p>上图中NCW为Network-Centric Waveform，是WIN-T专用的一种波形。<i>NCW supports a heterogeneous network of terminals with varying antenna, power, and overall transceiver characteristics, ranging from large-aperture strategic terminals to small-aperture tactical/mobile terminals employing satellite communications on the move (S-COTM), and, by employing an advanced network scheduler, maximizes network data throughput and terminal population by making near optimal use of satellite and terminal resources. (<a href="https://ieeexplore.ieee.org/document/4454797" target="_blank" rel="noopener">source</a>)</i></p>
+<p>HNW为 High-Band Waveform</p>
+</blockquote>
+<h3 id="increment-3">Increment 3</h3>
+<p>这个项目还未开始猎装。Inc.3 预计会提供完全的移动，灵活，动态的战术网络能力，能够为较为孤立地区的稀疏部队部署提供通信支持。Inc.3 中将会引入空中平台支持<span class="foot-note-span">【2014年，陆军对Inc.3项目进行重组，将空中层删除，推迟到未来开发<sup>6</sup>】</span>。从而实现一种三层架构的通信体系，包括：</p>
+<ol type="1">
+<li>传统的Line-Of-Sight通信；</li>
+<li>空中平台：包括使用UAV和其他空中平台；</li>
+<li>beyond-line-of-sight，如卫星</li>
+</ol>
+<p><strong>2017年WIN-T Inc3项目被美国国会叫停</strong>。2018和2019年都有发生从WIN-T Inc.3项目中挪用经费到其他项目的事情。</p>
+<h2 id="win-t-中存在的问题6">WIN-T 中存在的问题<sup>6</sup></h2>
+<p>WIN-T 项目耗资巨大，但是经过多次演习测试，并未实现预期的效果，动中通<span class="foot-note-span">【Communication ON-THE-MOVE】</span>的能力仍然有限，无法有效应对同样在军事上具有较强势力的对手。WIN-T在部署和使用过程中暴露出以下问题：</p>
+<ol type="1">
+<li>操作复杂</li>
+<li>压缩了作战人员的使用空间</li>
+<li>动中通能力有限</li>
+<li>装备过重</li>
+<li>过度依赖中继设备: 在<sup>6</sup>的文章中提到，「虽然经过了系统升级战术通信节点、网络运营和安全中心可以越过中继设备在20min的时间里完成通信的重新建立，较之前的几个小时已经有了很大的进步，但是仍然不能满足战场需求」。这篇文章本身并未给出20min这一数据的出处。</li>
+<li>网络安全方面存在大量漏洞</li>
+</ol>
+<blockquote>
+<p>上面的六点我目前只关注第五点，所以其他的细节并未列出，详情参见「美国陆军战术级作战人员信息网络相关问题分析及启示」论文。</p>
+</blockquote>
+<p>对于20min这个数据的考证信息整理如下：</p>
+<p>在<a href="https://www.army.mil/article/149704/army_to_introduce_new_command_post_wireless_capability" target="_blank" rel="noopener">Army to introduce new command post wireless capability</a>这篇报道中提到：</p>
+<blockquote>
+<p><i>By going wireless, command posts not only shed cumbersome cabling, but network set up and tear down times are cut from hours to minutes, making those jumps easier and faster.</i></p>
+</blockquote>
+<h2 id="reference">Reference</h2>
+<ol type="1">
+<li><a href="https://ieeexplore.ieee.org/abstract/document/6735828" target="_blank" rel="noopener">Army Warfighter Network - Tactical (WIN-T) Theory of Operation</a>: WIN-T是美国陆军（Army）的第一个全面集成的战区级的数据网络系统，可以从战区级往下覆盖至连级别<span class="foot-note-span">【连排级应该是<a href="./JTRS.html">JTRS</a>的天下】</span>。WIN-T项目分为4个增项<span class="foot-note-span">【Increment】</span>实施。</li>
+<li><a href="https://gdmissionsystems.com/en/communications/warfighter-information-network-tactical" target="_blank" rel="noopener">Warfighter Information Network - Tactical (WIN-T)</a>，这个网页里面提供了WIN-T的Commander's Handbook以及Program Update两个文件的下载。</li>
+<li>Wiki: <a href="https://en.wikipedia.org/wiki/PM_WIN-T#WIN-T_Increment_2" target="_blank" rel="noopener">PM WIN-T</a></li>
+<li><a href="https://www.army.mil/article/167785/army_enhances_netops_the_eyes_and_ears_of_the_network" target="_blank" rel="noopener">Army enhances NetOps, the eys and ears of the network</a>: 陆军已经在测试WIN-T Inc.3引入的新的NetOps软件升级。NetOps</li>
+<li><a href="https://kilthub.cmu.edu/articles/Using_the_SEI_Architecture_Tradeoff_Analysis_Method_to_Evaluate_WIN-T_A_Case_Study/6585821/1" target="_blank" rel="noopener">Using hte SEI Architecture Tradeoff Analysis Method to Evaluate WIN-T: A Case Study</a></li>
+<li><a href="http://www.jc2.org.cn/CN/article/downloadArticleFile.do?attachType=PDF&amp;id=272" target="_blank" rel="noopener">美国陆军战术级作战人员信息网络相关问题分析及启示</a></li>
+<li><a href="https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&amp;dbname=CJFD2010&amp;filename=QBZH201006036&amp;uid=WEEvREdxOWJmbC9oM1NjYkZCbDdrNXcxd0FMS2g4T3ZVdjdJSVBTaktqVEE=$R1yZ0H6jyaa0en3RxVUd8df-oHi7XMMDo7mtKT6mSmEvTuk11l2gFA!!&amp;v=MTUyOTZVTDNOTkMvUlpyRzRIOUhNcVk5R1lvUjhlWDFMdXhZUzdEaDFUM3FUcldNMUZyQ1VSTE9lWitSdUZ5L2c=" target="_blank" rel="noopener">美军下一代高级战术互联网体系结构发展研究</a></li>
+<li>Inc.2 测试报告: <a href="https://apps.dtic.mil/dtic/tr/fulltext/u2/a621709.pdf" target="_blank" rel="noopener">Warfighter Information Network-Tactical Increment 2 (WIN-T Inc 2)</a></li>
+<li>NCW介绍论文：<a href="https://ieeexplore.ieee.org/document/4454797" target="_blank" rel="noopener">The WIN-T MF-TDMA Mesh Network Centric Waveform</a></li>
+<li>globalsecurity.com: <a href="https://www.globalsecurity.org/military/systems/ground/win-t.htm" target="_blank" rel="noopener">Warfighter Information Network-Tactical (WIN-T)</a></li>
+<li><a href="https://win-t.army.mil/wint/menu.cfm" target="_blank" rel="noopener">PM WIN-T Information &amp; Support Exchange</a></li>
+<li>一篇西电硕士论文：<a href="https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CMFD&amp;dbname=CMFD2009&amp;filename=2009055867.nh&amp;uid=WEEvREcwSlJHSldRa1FhcTdWa2FjR1dTV1UwTzFDR0IyM1h1VWdVUHh4Zz0=$9A4hF_YAuvQ5obgVAqNKPCYcEjKensW4IQMovwHtwkF4VYPoHbKxJw!!&amp;v=MjkwMTRxVHJXTTFGckNVUkxPZVorUnRGeXpsVTdySlYxMjdGN085RzluS3FKRWJQSVI4ZVgxTHV4WVM3RGgxVDM=" target="_blank" rel="noopener">WIN-T侦察干扰策略研究</a></li>
+<li>网络管理模块相关的论文：<a href="https://ieeexplore.ieee.org/abstract/document/1605974" target="_blank" rel="noopener">Hierarchical and federated network management for tactical environments</a></li>
+</ol>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/">MILITARY</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/">TECHNOLOGIES</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/military/technologies/美军现役通信系统/">美军现役通信系统</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>WIN-T</li>
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="治部少辅">
+            
+              <p class="site-author-name" itemprop="name">治部少辅</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">90</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#increments"><span class="nav-number">1.</span> <span class="nav-text">Increments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#increment-1-communications-at-the-halt"><span class="nav-number">1.1.</span> <span class="nav-text">Increment 1: Communications AT-THE-HALT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#increment-2-communication-on-the-move"><span class="nav-number">1.2.</span> <span class="nav-text">Increment 2: Communication ON-THE-MOVE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#increment-3"><span class="nav-number">1.3.</span> <span class="nav-text">Increment 3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#win-t-中存在的问题6"><span class="nav-number">2.</span> <span class="nav-text">WIN-T 中存在的问题6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">治部少辅</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/knowledge-base/military/technologies/美军现役通信系统/WIN-T.html";
+    this.page.identifier = "knowledge-base/military/technologies/美军现役通信系统/WIN-T.html";
+    this.page.title = 'WIN-T';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script>
+    void function(){
+    window.hinst = Han().setRoutine([
+      'initCond',
+      'renderElem',
+      'renderJiya',
+      'renderHanging',
+      'renderHWS',
+      'correctBasicBD',
+      'substCombLigaWithPUA'
+    ]).render()
+    document.getElementById("refs")
+        .setAttribute("lang", "en_US");
+  }()
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

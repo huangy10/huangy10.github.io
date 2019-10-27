@@ -437,6 +437,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/38198/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/38198/" class="post-title-link" itemprop="url">C++ 中的字符串分割</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-14 15:22:11 / Modified: 15:39:46" itemprop="dateCreated datePublished" datetime="2019-08-14T15:22:11+08:00">2019-08-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/38198/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/38198/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="https://www.cnblogs.com/dfcao/p/cpp-FAQ-split.html" target="_blank" rel="noopener">原文地址</a></p>
+<h2 id="自己用stl实现">自己用STL实现</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; split(<span class="keyword">const</span> <span class="built_in">string</span> &amp;s, <span class="keyword">const</span> <span class="built_in">string</span> &amp;seperator)&#123;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; result;</span><br><span class="line">  <span class="keyword">typedef</span> <span class="built_in">string</span>::size_type string_size;</span><br><span class="line">  string_size i = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">while</span>(i != s.size())&#123;</span><br><span class="line">    <span class="comment">//找到字符串中首个不等于分隔符的字母；</span></span><br><span class="line">    <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i != s.size() &amp;&amp; flag == <span class="number">0</span>)&#123;</span><br><span class="line">      flag = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">for</span>(string_size x = <span class="number">0</span>; x &lt; seperator.size(); ++x)</span><br><span class="line">    　　<span class="keyword">if</span>(s[i] == seperator[x])&#123;</span><br><span class="line">      　　++i;</span><br><span class="line">      　　flag = <span class="number">0</span>;</span><br><span class="line">     　　 <span class="keyword">break</span>;</span><br><span class="line">    　　&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//找到又一个分隔符，将两个分隔符之间的字符串取出；</span></span><br><span class="line">    flag = <span class="number">0</span>;</span><br><span class="line">    string_size j = i;</span><br><span class="line">    <span class="keyword">while</span>(j != s.size() &amp;&amp; flag == <span class="number">0</span>)&#123;</span><br><span class="line">      <span class="keyword">for</span>(string_size x = <span class="number">0</span>; x &lt; seperator.size(); ++x)</span><br><span class="line">    　　<span class="keyword">if</span>(s[j] == seperator[x])&#123;</span><br><span class="line">      　　flag = <span class="number">1</span>;</span><br><span class="line">     　　 <span class="keyword">break</span>;</span><br><span class="line">    　　&#125;</span><br><span class="line">      <span class="keyword">if</span>(flag == <span class="number">0</span>) </span><br><span class="line">    　　++j;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(i != j)&#123;</span><br><span class="line">      result.push_back(s.substr(i, j-i));</span><br><span class="line">      i = j;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"a,b*c*d,e"</span>;</span><br><span class="line">  <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; v = split(s, <span class="string">",*"</span>); <span class="comment">//可按多个字符来分隔;</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;::size_type i = <span class="number">0</span>; i != v.size(); ++i)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; v[i] &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  <span class="comment">//输出: a b c d</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更加简洁的版本如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SplitString</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; s, <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::<span class="built_in">string</span>&gt;&amp; v, <span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">string</span>&amp; c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">std</span>::<span class="built_in">string</span>::size_type pos1, pos2;</span><br><span class="line">  pos2 = s.find(c);</span><br><span class="line">  pos1 = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">std</span>::<span class="built_in">string</span>::npos != pos2)</span><br><span class="line">  &#123;</span><br><span class="line">    v.push_back(s.substr(pos1, pos2-pos1));</span><br><span class="line">    pos1 = pos2 + c.size();</span><br><span class="line">    pos2 = s.find(c, pos1);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(pos1 != s.length())</span><br><span class="line">    v.push_back(s.substr(pos1));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="用c语言中的strtok-函数来进行分割">用C语言中的strtok 函数来进行分割</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s[] = <span class="string">"a,b*c,d"</span>;</span><br><span class="line">  <span class="keyword">const</span> <span class="keyword">char</span> *sep = <span class="string">",*"</span>; <span class="comment">//可按多个字符来分割</span></span><br><span class="line">  <span class="keyword">char</span> *p;</span><br><span class="line">  p = strtok(s, sep);</span><br><span class="line">  <span class="keyword">while</span>(p)&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%s "</span>, p);</span><br><span class="line">    p = strtok(<span class="literal">NULL</span>, sep);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出: a b c d</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用boost库中的split函数">使用boost库中的split函数</h2>
+<p>boost库有很多方法来实现split，也包含了一个split函数，可以直接使用，非常实用而且强大，但是得自己下载boost库。使用代码如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;boost/algorithm/string.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> boost;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">( <span class="built_in">vector</span> &lt;<span class="built_in">string</span>&gt; &amp; v )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">size_t</span> n = <span class="number">0</span>; n &lt; v.size(); n++)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"\""</span> &lt;&lt; v[ n ] &lt;&lt; <span class="string">"\"\n"</span>;</span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">string</span> s = <span class="string">"a,b, c ,,e,f,"</span>;</span><br><span class="line">  <span class="built_in">vector</span> &lt;<span class="built_in">string</span>&gt; fields;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Original = \""</span> &lt;&lt; s &lt;&lt; <span class="string">"\"\n\n"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Split on \',\' only\n"</span>;</span><br><span class="line">  split( fields, s, is_any_of( <span class="string">","</span> ) );</span><br><span class="line">  print( fields );</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Split on \" ,\"\n"</span>;</span><br><span class="line">  split( fields, s, is_any_of( <span class="string">" ,"</span> ) );</span><br><span class="line">  print( fields );</span><br><span class="line"></span><br><span class="line">  <span class="built_in">cout</span> &lt;&lt; <span class="string">"Split on \" ,\" and elide delimiters\n"</span>; </span><br><span class="line">  split( fields, s, is_any_of( <span class="string">" ,"</span> ), token_compress_on );</span><br><span class="line">  print( fields );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="更多阅读">更多阅读</h2>
+<ul>
+<li><a href="https://www.fluentcpp.com/2017/04/21/how-to-split-a-string-in-c/" target="_blank" rel="noopener">How to split a string in C</a></li>
+<li><a href="http://www.cplusplus.com/faq/sequences/strings/split/" target="_blank" rel="noopener">Split a string</a></li>
+<li><a href="https://www.zhihu.com/question/36642771" target="_blank" rel="noopener">C++ 的 string 为什么不提供 split 函数？</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/60301/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2145,200 +2334,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/9986/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/9986/" class="post-title-link" itemprop="url">Mysql安装过程中没有提示设置密码的问题</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-18 14:49:26" itemprop="dateCreated datePublished" datetime="2019-07-18T14:49:26+08:00">2019-07-18</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-07-23 17:52:21" itemprop="dateModified" datetime="2019-07-23T17:52:21+08:00">2019-07-23</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Debug/" itemprop="url" rel="index"><span itemprop="name">Debug</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/9986/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/9986/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li><a href="https://www.digitalocean.com/community/questions/no-password-is-asked-when-installing-mysql-server" target="_blank" rel="noopener">原贴地址</a></li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/9986/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2387,7 +2382,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">89</span>
+                    <span class="site-state-item-count">90</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -3141,9 +3136,9 @@
       
     
       
-        
-      
     
+      
+        
       
     
       
