@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。  WAVE协议内容及特点 WAVE标准中的Beacon性能简化分析 IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析 WAVE中的SCH调度机制研究状况 通信范围模型探讨 ns3中的wave模块  ns3中的Attribu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-05T08:03:43.236Z">
+<meta property="og:updated_time" content="2019-10-27T15:58:54.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wireless Access in Vehicular Environments (WAVE)">
 <meta name="twitter:description" content="WAVE的全称是Wireless Access in Vehicular Environment，是目前车联网通信的标准。  WAVE协议内容及特点 WAVE标准中的Beacon性能简化分析 IEEE802.11 DCF中Basic Access和RTS/CTS机制的理论饱和吞吐率性能差异分析 WAVE中的SCH调度机制研究状况 通信范围模型探讨 ns3中的wave模块  ns3中的Attribu">
@@ -543,6 +543,7 @@
 <li><a href="./markov">马尔科夫链在WAVE网络性能分析中的应用</a>
 <ol type="1">
 <li><a href="./markov/3D-markov.html">三维马尔科夫链的详细调研</a></li>
+<li><a href="./markov/2D-markov.html">二维马尔科夫链的详细调研</a></li>
 <li><a href="./markov/1D-markov.html">一维马尔科夫过程的使用</a></li>
 </ol></li>
 <li>更多文献调研
@@ -669,7 +670,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">90</span>
+                    <span class="site-state-item-count">91</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -685,6 +686,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     
@@ -726,6 +729,8 @@
                     
                   
                     
+                    
+                      
                     
                       
                     
@@ -1533,20 +1538,22 @@
 
 
   <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  
   <script>
     void function(){
-    window.hinst = Han().setRoutine([
-      'initCond',
-      'renderElem',
-      'renderJiya',
-      'renderHanging',
-      'renderHWS',
-      'correctBasicBD',
-      'substCombLigaWithPUA'
-    ]).render()
-    document.getElementById("refs")
-        .setAttribute("lang", "en_US");
-  }()
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+      // window.hinst = Han(document.querySelector('.post-body')).setRoutine([
+      //   'initCond',
+      //   'renderElem',
+      //   'renderJiya',
+      //   'renderHanging',
+      //   'renderHWS',
+      //   'correctBasicBD',
+      //   'substCombLigaWithPUA'
+      // ]).render()
+      document.getElementById("refs")
+          .setAttribute("lang", "en_US");
+    }()
+
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

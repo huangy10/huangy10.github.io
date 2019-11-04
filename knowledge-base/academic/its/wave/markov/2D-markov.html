@@ -125,7 +125,7 @@
 
   <meta name="description" content="前言 二维马尔科夫链是在涉及包含退避过程的DCF机制的最常用模型。这部分理论工作的文章大部分可以追溯到Bianchi在2000年的经典论文[1]。这篇论文在过去近20年里获得了将近一万条引用。这篇文章我们在介绍WAVE协议时详细提到过。 Bianchi的经典论文 引入信道繁忙条件 这部分的内容主要来自[2]。 System Model 沿用了Bianchi的假设条件，包括有限数量的通信节点(\(n">
 <meta property="og:type" content="website">
-<meta property="og:title" content="二维马尔科夫链">
+<meta property="og:title" content="二维马尔科夫链的使用">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/2D-markov.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="前言 二维马尔科夫链是在涉及包含退避过程的DCF机制的最常用模型。这部分理论工作的文章大部分可以追溯到Bianchi在2000年的经典论文[1]。这篇论文在过去近20年里获得了将近一万条引用。这篇文章我们在介绍WAVE协议时详细提到过。 Bianchi的经典论文 引入信道繁忙条件 这部分的内容主要来自[2]。 System Model 沿用了Bianchi的假设条件，包括有限数量的通信节点(\(n">
@@ -133,9 +133,9 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/b9caa185947e66233862ca27916c7921.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/f01151f6d7bcba58edda6353bfae5dc8.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/64a9413662f187b1c9e62ab0fd9ef1d6.png">
-<meta property="og:updated_time" content="2019-08-03T06:43:31.758Z">
+<meta property="og:updated_time" content="2019-10-27T16:00:41.069Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="二维马尔科夫链">
+<meta name="twitter:title" content="二维马尔科夫链的使用">
 <meta name="twitter:description" content="前言 二维马尔科夫链是在涉及包含退避过程的DCF机制的最常用模型。这部分理论工作的文章大部分可以追溯到Bianchi在2000年的经典论文[1]。这篇论文在过去近20年里获得了将近一万条引用。这篇文章我们在介绍WAVE协议时详细提到过。 Bianchi的经典论文 引入信道繁忙条件 这部分的内容主要来自[2]。 System Model 沿用了Bianchi的假设条件，包括有限数量的通信节点(\(n">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/b9caa185947e66233862ca27916c7921.png">
 
@@ -157,7 +157,7 @@
   };
 </script>
 
-  <title>二维马尔科夫链 | 治部少辅</title>
+  <title>二维马尔科夫链的使用 | 治部少辅</title>
   
 
 
@@ -457,7 +457,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">二维马尔科夫链
+<h2 class="post-title" itemprop="name headline">二维马尔科夫链的使用
 
 </h2>
 
@@ -1069,7 +1069,7 @@ q=1-e^{-\lambda E\left[S_{t s}\right]}
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">90</span>
+                    <span class="site-state-item-count">91</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1085,6 +1085,8 @@ q=1-e^{-\lambda E\left[S_{t s}\right]}
                     
                   
                     
+                    
+                      
                     
                       
                     
@@ -1126,6 +1128,8 @@ q=1-e^{-\lambda E\left[S_{t s}\right]}
                     
                   
                     
+                    
+                      
                     
                       
                     
@@ -1495,7 +1499,7 @@ q=1-e^{-\lambda E\left[S_{t s}\right]}
   var disqus_config = function() {
     this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/markov/2D-markov.html";
     this.page.identifier = "knowledge-base/academic/its/wave/markov/2D-markov.html";
-    this.page.title = '二维马尔科夫链';
+    this.page.title = '二维马尔科夫链的使用';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');
@@ -1952,20 +1956,22 @@ q=1-e^{-\lambda E\left[S_{t s}\right]}
 
 
   <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  
   <script>
     void function(){
-    window.hinst = Han().setRoutine([
-      'initCond',
-      'renderElem',
-      'renderJiya',
-      'renderHanging',
-      'renderHWS',
-      'correctBasicBD',
-      'substCombLigaWithPUA'
-    ]).render()
-    document.getElementById("refs")
-        .setAttribute("lang", "en_US");
-  }()
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+      // window.hinst = Han(document.querySelector('.post-body')).setRoutine([
+      //   'initCond',
+      //   'renderElem',
+      //   'renderJiya',
+      //   'renderHanging',
+      //   'renderHWS',
+      //   'correctBasicBD',
+      //   'substCombLigaWithPUA'
+      // ]).render()
+      document.getElementById("refs")
+          .setAttribute("lang", "en_US");
+    }()
+
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
