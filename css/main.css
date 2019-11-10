@@ -1835,7 +1835,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d11bde;
+  background: #ffa6af;
 }
 .feed-link,
 .chat {
@@ -2532,9 +2532,10 @@ ul.breadcrumb li+li:last-child {
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .content-wrap {
-    width: 100%;
-    padding: 20px;
+    float: none;
+    margin: 0 auto;
     border-radius: initial;
+    min-width: 628px;
   }
 }
 @media (max-width: 767px) {
@@ -2955,4 +2956,7 @@ twitter-widget {
 }
 pre {
   font-size: 13px;
+}
+.post-body {
+  color: #000;
 }

@@ -131,7 +131,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="自己搭建了一个SS服务器以后，自然而然的会同身边的朋友共享。自然，身边的朋友一起用，大部分服务器配置都可以毫无压力的支撑。但倘若一传十十传百，最后成百上千的人一起用一个服务器，那就撑不住了。 当然你可以隔一段时间换一次密码，但是后面的麻烦事也不少（要同步更新不同设备上的设置，身边的朋友来问你新设置）。 几天我研究了一下，为ss服务器增加了多用户即为每个用户设置独立的连接数限制的方法，这样能够比较完">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-13T14:27:05.898Z">
+<meta property="og:updated_time" content="2019-11-08T07:48:23.602Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shadowsocks：多用户账号独立，并限制用户连接数">
 <meta name="twitter:description" content="自己搭建了一个SS服务器以后，自然而然的会同身边的朋友共享。自然，身边的朋友一起用，大部分服务器配置都可以毫无压力的支撑。但倘若一传十十传百，最后成百上千的人一起用一个服务器，那就撑不住了。 当然你可以隔一段时间换一次密码，但是后面的麻烦事也不少（要同步更新不同设备上的设置，身边的朋友来问你新设置）。 几天我研究了一下，为ss服务器增加了多用户即为每个用户设置独立的连接数限制的方法，这样能够比较完">
@@ -481,12 +481,24 @@
                 
               
 
-              <time title="Created: 2018-11-13 16:50:23 / Modified: 22:27:05" itemprop="dateCreated datePublished" datetime="2018-11-13T16:50:23+08:00">2018-11-13</time>
+              <time title="Created: 2018-11-13 16:50:23" itemprop="dateCreated datePublished" datetime="2018-11-13T16:50:23+08:00">2018-11-13</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-11-08 15:48:23" itemprop="dateModified" datetime="2019-11-08T15:48:23+08:00">2019-11-08</time>
               
             
           </span>
@@ -560,19 +572,24 @@
       
         <p>自己搭建了一个SS服务器以后，自然而然的会同身边的朋友共享。自然，身边的朋友一起用，大部分服务器配置都可以毫无压力的支撑。但倘若一传十十传百，最后成百上千的人一起用一个服务器，那就撑不住了。 当然你可以隔一段时间换一次密码，但是后面的麻烦事也不少（要同步更新不同设备上的设置，身边的朋友来问你新设置）。 几天我研究了一下，为ss服务器增加了多用户即为每个用户设置独立的连接数限制的方法，这样能够比较完美的解决同朋友共享服务器的问题了。 <a id="more"></a></p>
 <p>这里默认你已经知道怎么按照通常的方法安装和配置SS了。如果你不了解的话，网络上的文章很多的。</p>
-<h2 id="多用户的实现">1. 多用户的实现</h2>
+<h2 id="多用户的实现">多用户的实现</h2>
 <p>多用户的实现比较简单，Python和Go实现的服务器自带多用户支持。通常的配置我们一般是这么写 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"::"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="string">"8888"</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"yourpassword"</span></span><br><span class="line">  // Other configs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>只需要将配置文件按照下面的方式进行修改就可以实现多用户了。 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"::"</span>,</span><br><span class="line">  <span class="attr">"port_password"</span>: &#123;</span><br><span class="line">    <span class="attr">"8881"</span>: <span class="string">"password1"</span>,</span><br><span class="line">    <span class="attr">"8882"</span>: <span class="string">"password2"</span>,</span><br><span class="line">    <span class="attr">"8883"</span>: <span class="string">"password3"</span></span><br><span class="line">  &#125;</span><br><span class="line">  // other configs</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>就可以了。之后不同的用户可以通过不同的端口访问，而每个端口都有独立的密码。</p>
 <blockquote>
 <p>Further Reading: <a href="https://github.com/shadowsocks/shadowsocks/wiki/Configure-Multiple-Users" target="_blank" rel="noopener">Reference</a></p>
 </blockquote>
-<h2 id="限制用户连接">2. 限制用户连接</h2>
+<h2 id="限制用户连接">限制用户连接</h2>
 <p>我在网上调查了一下实现限制用户连接的方法，很多都提到了通过<code>iptables</code>来进行设置。但是这种方法太过复杂，很容易出问题。后来我找到一个ss的补丁，可以比较好的解决这个问题。补丁地址是<a href="https://github.com/falseen/PySocket" target="_blank" rel="noopener">falssen/PySocket</a>。 这个工程提供了一些其他的功能，但是我们这里只关注<code>Limit_Clients</code>文件夹下的<code>socket.py</code>这个文件。这个文件的原理是利用Python包导入的机制，用自定义的<code>socket.py</code>来替换默认的<code>socket</code>包，并在<code>socket</code>接口中植入一些新的功能。 <del>按照<code>READMe.md</code>的提示安装好<code>socket.py</code>文件</del> &gt; 有很多朋友不知道这里要怎么处理socket.py文件。其实并不复杂。用<code>which</code>命令查看一下ss脚本安装的位置，一般情况下是<code>/usr/local/bin/</code>，那么你只需要把<code>socket.py</code>文件放到<code>/usr/local/bin</code>下面就行。这一操作的原理是，python在导入包时总是先检查当前目录。注意，如果修改了<code>socket.py</code>文件，需要重启进程才能生效。</p>
 <p>然后修改文件中<code>white_list</code>和<code>black_list</code>两个变量。例如我自己使用的<code>1017</code>端口，我不希望添加限制，则将<code>white_list</code>设置为 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">white_list = [<span class="number">1017</span>]</span><br></pre></td></tr></table></figure></p>
 <p>我给朋友们用的是[1018]端口，我希望这个端口的连接数不要超过40个，则将<code>black_list</code>设置为 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">black_list = &#123;<span class="number">1018</span>:<span class="number">40</span>&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="注意">3. 注意</h2>
+<h2 id="注意">注意</h2>
 <p>注意方法的实质是限制接入的客户端IP数量，因此，处在同一路由器下面的多台设备也会被识别为一台。</p>
+<h2 id="更多阅读">更多阅读</h2>
+<ul>
+<li><a href="posts/6289/">Shadowsocks中继：从IPv4到IPv6</a>: 目前防火墙越加越高，遇到重大事件的时候，很多梯子都会挂掉。不过，有个好消息是，因为IPv6网络在国内的普及率还不高，因此IPv6还没有被特别针对。如果你有IPv6资源（一般教育网支持IPv6），可以将Shadowsocks通信从IPv4转化成IPv6再出去，会更加安全可靠一些。</li>
+<li><a href="posts/35429/">Shadowsocks性能优化</a></li>
+</ul>
 
       
     </div>
@@ -701,7 +718,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">91</span>
+                    <span class="site-state-item-count">92</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -943,7 +960,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多用户的实现"><span class="nav-number">1.</span> <span class="nav-text">1. 多用户的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制用户连接"><span class="nav-number">2.</span> <span class="nav-text">2. 限制用户连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">3.</span> <span class="nav-text">3. 注意</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多用户的实现"><span class="nav-number">1.</span> <span class="nav-text">多用户的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制用户连接"><span class="nav-number">2.</span> <span class="nav-text">限制用户连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">3.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多阅读"><span class="nav-number">4.</span> <span class="nav-text">更多阅读</span></a></li></ol></div>
             
 
           </div>
