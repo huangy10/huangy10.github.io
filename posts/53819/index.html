@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这次我们要读的文章是Group centric networking: A new approach for wireless multi-hop networking[1]，文章的作者来自MIT的林肯实验室。这篇文章主要提出了一种针对大规模的物联网系统无线网络的网络架构方案，方案的名称为Group Centric Networking (GCN)。协议仿真由NS3仿真来实现，同时还在一个由90部">
+<meta name="keywords" content="无人机,科研,读论文,路由">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读论文:一种面向无线网络的Group Centric Networking路由算法">
+<meta property="og:url" content="http://www.codewoody.com/posts/53819/index.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="这次我们要读的文章是Group centric networking: A new approach for wireless multi-hop networking[1]，文章的作者来自MIT的林肯实验室。这篇文章主要提出了一种针对大规模的物联网系统无线网络的网络架构方案，方案的名称为Group Centric Networking (GCN)。协议仿真由NS3仿真来实现，同时还在一个由90部">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ca59b0e35fba4e7241838a21b2625246.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/b6466094228a828aeaa0f7fde8c5edca.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d7cf157e7c8d68d80f097d64ac7e3daa.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/02f619ef796b116c7cf1575cd03db232.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/20f62faf19e544624d7ed29aee029f3b.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8145678d535d8bf3f933c70771ce62be.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5fe8f7a2133675fb2166526d7ae62417.png">
+<meta property="og:updated_time" content="2019-11-28T18:04:15.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="读论文:一种面向无线网络的Group Centric Networking路由算法">
+<meta name="twitter:description" content="这次我们要读的文章是Group centric networking: A new approach for wireless multi-hop networking[1]，文章的作者来自MIT的林肯实验室。这篇文章主要提出了一种针对大规模的物联网系统无线网络的网络架构方案，方案的名称为Group Centric Networking (GCN)。协议仿真由NS3仿真来实现，同时还在一个由90部">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/ca59b0e35fba4e7241838a21b2625246.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/posts/53819/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>读论文:一种面向无线网络的Group Centric Networking路由算法 | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-channel">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="https://t.me/everthingaboutbullshit" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>channel</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/53819/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">读论文:一种面向无线网络的Group Centric Networking路由算法
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-28 10:59:29" itemprop="dateCreated datePublished" datetime="2019-10-28T10:59:29+08:00">2019-10-28</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-11-29 02:04:15" itemprop="dateModified" datetime="2019-11-29T02:04:15+08:00">2019-11-29</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读论文/" itemprop="url" rel="index"><span itemprop="name">读论文</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/53819/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/53819/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这次我们要读的文章是<i>Group centric networking: A new approach for wireless multi-hop networking</i><span class="citation" data-cites="greg2018group">[1]</span>，文章的作者来自MIT的<a href="https://zh.wikipedia.org/zh-hans/%E6%9E%97%E8%82%AF%E5%AF%A6%E9%A9%97%E5%AE%A4" target="_blank" rel="noopener">林肯实验室</a>。这篇文章主要提出了一种针对大规模的物联网系统无线网络的网络架构方案，方案的名称为Group Centric Networking (GCN)。协议仿真由NS3仿真来实现，同时还在一个由90部Android手机组成的测试平台上进行了测试，并且作者将相关的源代码进行了开源。在通信网络相关的文章中，能够进行如此详尽的实现和测试的文章不多的。因此这篇文章有比较多的研究价值。</p>
+<a id="more"></a>
+<blockquote>
+<p>评论：看完这篇文之后再回到这里写评论。这篇文章提出的思想还是有意思的。现有的无线组网算法基本是对有线场景的路由算法的照搬，尤其是那些基于链路的路由算法。但是无线通信天然就是广播的，充分挖掘这一特点可以提高无线路由的可靠性。不过，作者选取的场景比较「诡异」，虽然提出了分组的概念，但是组内成员在空间上没有聚集性，而且和众多非组内成员杂处。这一场景可能在某些IOT场景有其合理性，但是对于移动组网场景而言，这个组的分布特点，是不太符合实际情况的。一般移动场景，需要进行通信的分组都是有一定的空间聚集性，且不同的组之间往往会有一定的距离，且不会杂处。例如无人机集群，同一组的无人机一般是执行某个任务，集中于某个区域，而不同组队无人机执行不同的任务，一般不在一块。所以这篇文章对于解决我们的问题，作用非常有限。</p>
+</blockquote>
+<p>多跳无线自组网问题由来已久，但是我们还并未真正实现最初的设想 -- 即提供一种能够几乎不依赖于基础设施泛在的连接网络。目前广泛使用的无线网络方案，如Wifi和移动蜂窝网络，仍然依靠有限网络作为backbone，其无线部分只是解决了最后一跳的问题。不过随着物联网的大规模应用趋势逐渐到来，这种星型拓扑的结构可能无法支撑爆炸性增长的节点数量。因此发展自组网能力就非常重要。物联网的节点，是不大可能全部采用有线连接的方式的。用有线方式部署成本比较高，维护困难。事实上5G网络已经引入了<a href="https://en.wikipedia.org/wiki/Device-to-device" target="_blank" rel="noopener">D2D</a>部分。</p>
+<p>多跳无线自组网问题的核心挑战包括：</p>
+<ol type="1">
+<li>网络的可扩展性</li>
+<li>通信的可靠性</li>
+<li>高动态特性（不稳定拓扑）</li>
+</ol>
+<p>其中，对于物联网应用来说一般节点位置比较固定，故第三点问题不太显著。</p>
+<p>下面我们来详细讨论一下<span class="citation" data-cites="greg2018group">[1]</span>中的内容。</p>
+<h2 id="未来网络特点分析">未来网络特点分析</h2>
+<p>传统的网络架构往往强调一个「地址」的概念。通常一个用户是client，另一个用户是server，这两个用户在网络中的任意位置，通过路由算法进行连接。在未来的网络中，这种点对点(P2P)的架构可能就不合时宜了。在物联网场景中，更多的是海量的设备位于一个局域网络中，服务于一个人类终端用户，或是在工厂中协作改进生产效率。传统的长距离的P2P通信将不是网络通信的主要内容。作者将这种「局域化」通信的网络特性称之为Group-Centric，即局部通信成为网络流量的主要模式。</p>
+<p>总结来看，Group-Centric网络有如下特点：</p>
+<ul>
+<li><i>Devices will be grouped by an inherent set of &quot;interests&quot; that are dependent on the tasks they are performing, and these group members will wish to communicate reliably between one another. Devices are not limited to a single group, and can belong to multiple groups.</i></li>
+<li><i>The majority of message exchanges will be within some local area, and long-distance traffic will only be a small fraction of overall communications.</i></li>
+<li><i>Any device can be a source or a sink, and traffic patterns between them may be one-to-one, one-to-many, many-to-one, or many-to-many.</i></li>
+<li><i>Future wireless environments will have a mix of mobile and stationary devices, where mobility will be typically be limited to some local area.</i></li>
+</ul>
+<blockquote>
+<p>文章中提到一个数据很有意思：<i>a recent study shows that 95% of traffic in military networks travels at most three hops, with only 5% of traffic being long-range</i><span class="citation" data-cites="ramanathan2010scalability">[2]</span></p>
+</blockquote>
+<p><strong>当前多跳无线网络的路由机制，本质上是照搬有线网络中的解决思路</strong>。这些路由机制都是基于链接(Link)的，即将远程端到端通信分解为多个首尾相接的链路。但是相比于有线网络，无线网络有天然的广播特性(干扰，多径，噪声等问题)，因此执着于Link的方式是不合适的。<i>The idea of a link is itself borrowed from wired networks: in a wireless network, there is no one-to-one connection between two radios; transmissions are sent over-the-air and are typically overheard by multiple devices</i>。</p>
+<p>本文<span class="citation" data-cites="greg2018group">[1]</span>提出的GCN方法，就摒弃了基于Link的路由概念，而使用了「智能洪泛」(smart-flood)的方法。GCN的核心特点如下：</p>
+<ul>
+<li><i>No link state or neighbor information is utilized or maintained, and minimal control information is exchanged.</i></li>
+<li><i>Data is efficiently disseminated only across the region where group members exist. To support this, we develop a novel Group Discovery algorithm that dynamically discovers the region of interest and efficiently selects the minimal amount of relay nodes required to “cover” this region</i></li>
+<li><i>More reliable communications is achieved in an error-prone and mobile environment by using <strong>tunable resiliency</strong>, where the number of redundant data relays is configurable and is able to self-adjust in response to real-time channel conditions.</i></li>
+<li><i>Devices communicate in a many-to-many traffic pattern. Efficient one-to-one, one-to-many, and many-to-one are subsets.</i></li>
+</ul>
+<p>文章证明了，CGN相比于传统无线网络路由算法，使用的网络资源少一个数量级，且提供了可靠的通信连接。</p>
+<h2 id="gcn机制内容">GCN机制内容</h2>
+<p>GCN 设计的目的是服务于设备分组聚集的网络，其中大部分的通信内容都在组内部进行。 网络中的节点资源受限，环境中存在干扰导致通信并不总是可靠。因通信需要：i) 能够抗干扰；ii) 高效实用带宽和能量。</p>
+<h3 id="业务模式">业务模式</h3>
+<p>组件用户的通信是多对多模式(many-to-many)。一个用户可能希望想另一个组中的全部或者部分用户发送数据，或者是从另一个组内收集数据。注意One-to-one, one-to-many, 和many-to-one通信模式其实都是many-to-many的子集。</p>
+<p>GCN 的一个网络布局的例子如下图：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/ca59b0e35fba4e7241838a21b2625246.png" alt="An example of a group centric network"><figcaption>An example of a group centric network</figcaption>
+</figure>
+<p>在上图中，通过定义一系列的中继节点，我们让组内的成员可以互相连接起来。使用one-to-many的通信方式，即便存在一条链路传输失败，其他节点可以继续中继数据。上图中只显示了一个Group，但是节点事实上可以同时从属于多个group。</p>
+<p>GCN的核心机制如下：</p>
+<ul>
+<li><i>Group Discovery</i>: Efficient discovery of the local region where group members reside via a group discovery algorithm that is able to connect group members without the use of global control information</li>
+<li><i>Tunable resiliency</i>: Relay nodes are activated such that the local region is sufficiently &quot;covered&quot; in data by having a tunable number of <strong>redundant data relays</strong>. This allows for resiliency towards both packet loss and mobility without the need for the constant exchange of control information. The number of activated relay nodes self-adjusts in response to real-time channel conditions</li>
+<li><i>Targeted flooding</i>: Data can be efficiently and resiliently sent between sets of group members through an approach we call &quot;targeted flooding&quot;</li>
+</ul>
+<h3 id="group-discovery">Group Discovery</h3>
+<p>Group Discovery 的作用是在<strong>没有先验信息的情况下</strong>于局部发现彼此相连的组成员（不局限于一跳，但是最大跳跃数不会太高）。且这一过程不需要进行低效率的全局广播过程。Naive的做法是使用TTL机制来做洪泛广播，不过这种方式非常低效，浪费通信资源。</p>
+<p>本文提出了一种更叫高效的方法，我们称之为<i>discovery regeneration</i>。其基本思想是，预期发送一个TTL比较大的包，不如多次重新生成一个TTL比较小的包。具体的过程如下：</p>
+<ol type="1">
+<li>某个组成员通过发送一个discovery message来发起group discovery操作。相应的discovery message的TTL值，会根据group想要扩展的范围来进行设置。将最初发起者设置的TTL成为<i>source TTL</i>。</li>
+<li>如果某个组成员监听到了一个discovery message，该节点会使用source TTL来重新生成一个消息。</li>
+<li>如果一个非组成员监听到一个discovery message，如果其TTL大于0，那么将TTL减一后再次广播，反之如果TTL为0，则什么都不做。</li>
+</ol>
+<p>中继节点(Data relays)通过Group Nodes发送的ACK消息来确定。当一个Group Member收到一个discovery消息时，会向中继此discovery消息的Group Node发送ACK消息。加载在Group Nodes之间的非组成员节点在收到对应的ACK时，会成为 Data Relays. 当Group Nodes收到多个discovery消息时，只会对第一个discovery消息发送ACK。去重机制会确保discovery消息只被广播发送一次。还有一点要注意的是，ACK消息只会发送给重新生成discovery消息的Group Node，而非一路转发回到最初的原始节点。</p>
+<p>在GCN中，当一个节点成为Data Relay的时候，这个节点就作为整个Group的网络的中继节点而存在，而非只服务于当初发送ACK的那个Group Node。同时，中继节点也不需要保留发送ACK的这个组节点的信息。反过来，任何Group Node也会监听来自Relay Node的信息。</p>
+<p>上面这一套发现流程完成之后，GCN中的<strong>任何节点都不需要保留链路信息或者是邻居信息</strong>。借助于Relay Node的作用，现在所有组成员都被连接了起来，通过现有网络架构，可以实现One-to-all模式的通信，进而也可以实现many-to-many的通信模式。这个组发现流程可以周期性地执行，从而允许网络结构调整，包括新节点加入等。</p>
+<p>下图是上述发现流程的一个例子：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/b6466094228a828aeaa0f7fde8c5edca.png" alt="图中生成discovery时初始TTL为2，发出去的时候减去1。非组成员并不重新生成新的discovery包，而是将TTL减去1转发，因此限制了扩散范围。"><figcaption>图中生成discovery时初始TTL为2，发出去的时候减去1。非组成员并不重新生成新的discovery包，而是将TTL减去1转发，因此限制了扩散范围。</figcaption>
+</figure>
+<blockquote>
+<p>从上面的描述来看，这里的组发现过程，并不只是发现组的成员，还要发现转发需要的Relay Node。</p>
+</blockquote>
+<p>那么，剩下的问题是如何选择合适的初始TTL值呢？如果TTL选的太小，那么不足以发现所有的组成员。如果TTL太大，则会产生太多的冗余通信内容。文章的作者从理论和仿真的角度论证了即便是比较低的TTL值也足以发现比较稀疏的网络中的所有组成员。</p>
+<p>设<span class="math inline">\(N\)</span>个用户分布在面积为<span class="math inline">\(A\)</span>的二维区域中，那么用户密度为<span class="math inline">\(\lambda = N / A\)</span>。任意一个用户是组成员的概率是<span class="math inline">\(P_g\)</span>，每个成员的通信传输距离都是<span class="math inline">\(X\)</span>。在如上假设下，我们可以得到被发现的组成员的比例，同TTL初始值<span class="math inline">\(T\)</span>的关系为<span class="math inline">\(1 - e^{P_g \lambda \pi ((X - \frac{1}{2\lambda})\cdot T)^2}\)</span>。下图是仿真和理论结果的拟合情况。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/d7cf157e7c8d68d80f097d64ac7e3daa.png" alt="仿真场景为100个节点均匀分布在半径为100米的圆形区域内，每个用户的传输距离是40m。上图中不同的曲线使用了不同的P_g值。所有节点都是静止的"><figcaption>仿真场景为100个节点均匀分布在半径为100米的圆形区域内，每个用户的传输距离是40m。上图中不同的曲线使用了不同的<span class="math inline">\(P_g\)</span>值。所有节点都是静止的</figcaption>
+</figure>
+<p>为了比较GCN机制的优越性，作者提供了整体传输效率的比较。这里的传输效率是指为了将一个消息发送给的网络中所有的组成员，需要实际发送的数据量的大小。这里我们不详细介绍这个环节了，对比图如下。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/02f619ef796b116c7cf1575cd03db232.png" alt="传输效率对比图"><figcaption>传输效率对比图</figcaption>
+</figure>
+<h3 id="tunable-resiliency">Tunable Resiliency</h3>
+<p>前面的组发现流程为网络中分散分布的组成员创建了一系列中继节点组成的集合，该集合的中继可以实现组成员之间的one-to-many的通信。不过这一组合是「最小组合」，其可靠性还缺乏保障。如果某一中继环节传输失败可能导致后续的传输中断。节点的运动会使得这种情况愈发严重。</p>
+<p>为了提升GCN机制的可靠性，作者在上述组发现机制之余在增加了一个新的机制 -- Tunable Resiliency。这一新机制可以激活额外的中继节点以改善GCN广播转发过程的可靠性。额外激活的中继节点的数量可以根据信道条件自适应地调整。Tunable Resiliency机制对于组发现的过程的修改如下：</p>
+<ol type="1">
+<li>在ACK<span class="foot-note-span">【ACK为组成员回复给潜在的中继节点的】</span>机发送前增加一小段延时。</li>
+<li>每个用户都记录其周围的可见邻居节点的数量，以方便确定其周围存在的可能的中继节点的数量。</li>
+<li>以随机性的方法选择一组用户<span class="foot-note-span">【用户依照一定的概率自行决策】</span>成为中继节点。</li>
+</ol>
+<p>在ACK前增加一小段的延时是为了让组发现消息(discovery message)充分传输到特定用户的周围，以方便用户统计周围邻居节点的数量<span class="foot-note-span">【下面马上会讨论这个】</span>。这一延时的大小的确定取决于用户的链路层。</p>
+<p>在邻居节点数量统计过程中，一个用户会计算周围发送discovery messages的节点的户数量。除非一个节点是非组成员节点，而且TTL为0，不然收到discovery messages的节点会立刻转发此消息。因此延后ACK一小段时间，节点<span class="foot-note-span">【目标区域内的节点，包括组成员和非组成员都可以通过这个过程获知邻居数量信息】</span>在发送前可以通过收到的discovery messages的数量来统计周围邻居的数量。</p>
+<p>对于可以潜在的中继节点候选者，其可以根据周围邻居的数量来调整自己转变成中继节点的概率。这样可以保证最终生成的中继节点的数量符合预期的密度。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/20f62faf19e544624d7ed29aee029f3b.png" alt="Tunable Resiliency 效果示例"><figcaption>Tunable Resiliency 效果示例</figcaption>
+</figure>
+<h3 id="targeted-flooding">Targeted flooding</h3>
+<p>上面的两个部分我们讨论的组发现和Tunable Resiliency过程构造的中继节点集合，主要面向的还是一对多的通信模式。为了能够有效地实现多对一或者一对一的通信，作者提出了Targeted Flooding机制。</p>
+<p>为了实现这种通信模式，GCN需要通过控制消息传输来获取距离信息（跳跃数，而非空间距离），从而构建一个组成员的梯度场。在每次包（数据包以及控制包）传输时，包会包含如下额外信息：发送者的ID和已经经过的跳跃数(hop count)。每当一个用户监听到一个包时，都会记录自己距离包的最初发送者的距离（跳跃数）。</p>
+<h4 id="one-to-one-traffic">one-to-one traffic</h4>
+<p>对于某用户<span class="math inline">\(i\)</span>，将其到另一用户<span class="math inline">\(j\)</span>的距离记为<span class="math inline">\(\Delta_j^i\)</span>。从一个用户向另一个用户发出的消息将会在其Header中包含目标地址以及最大传输距离（Maximum Retransmt Distance, MRD）<span class="foot-note-span">【MRD在每次转发后都会更新减一】</span>。中继节点在收到要转发的包时，检查其自身到目标的距离是否不超过MRD的限制。若是，则转发，否则放弃转发。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/8145678d535d8bf3f933c70771ce62be.png" alt="Traget Flooding for One-To-One的例子，图中圈内的数字为该节点到j的距离"><figcaption>Traget Flooding for One-To-One的例子，图中圈内的数字为该节点到<span class="math inline">\(j\)</span>的距离</figcaption>
+</figure>
+<p>上面的例子给出了Target Flooding的过程。在(a)中，经过one-to-group过程，组内节点都可以知道自己到<span class="math inline">\(j\)</span>的跳跃数。图中圈内的数字为该节点到<span class="math inline">\(j\)</span>的距离。(b)展示了直观的通过链路状态的路由方式，但是这种方式需要维持路由表，开销巨大而且在动态场景下不太稳定。(c)演示了将MRD设置为2时从<span class="math inline">\(i\)</span>到<span class="math inline">\(j\)</span>消息的传播路径。可见Flooding的范围是受控的。(d)则 演示了将MDR设置为3的情形，这时冗余传输增加了，但是可以提供更多的鲁棒性。</p>
+<h4 id="one-to-many-traffic">one-to-many traffic</h4>
+<p>这里说的one-to-many指发送给组的一个子集，而非发送给整个组。这种通信模式是对one-to-one的直接扩展。节点在发送时直接指定多个目标地址/MRD对就可以了，其他处理过程和one-to-one通信过程是一样的。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/5fe8f7a2133675fb2166526d7ae62417.png" alt="One-to-many的例子"><figcaption>One-to-many的例子</figcaption>
+</figure>
+<h4 id="many-to-many-traffic">many-to-many traffic</h4>
+<p>many-to-many过程中，各个发送节点独立发送one-to-many模式的消息即可。</p>
+<blockquote>
+<p>以上是协议涉及的所有内容，至于仿真部分这里就不分析了</p>
+</blockquote>
+<h2 id="reference" class="unnumbered">Reference</h2>
+<div id="refs" class="references">
+<div id="ref-greg2018group">
+<p>[1] G. Kuperman, J. Sun, B.-N. Cheng, P. Deutsch, and A. Narula-Tam, “Group centric networking: A new approach for wireless multi-hop networking,” <em>Ad Hoc Networks</em>, vol. 79, pp. 160–172, 2018.</p>
+</div>
+<div id="ref-ramanathan2010scalability">
+<p>[2] R. Ramanathan, R. Allan, P. Basu, J. Feinberg, G. Jakllari, V. Kawadia, S. Loos, J. Redi, C. Santivanez, and J. Freebersyser, “Scalability of mobile ad hoc networks: Theory vs practice,” in <em>2010-milcom 2010 military communications conference</em>, 2010, pp. 493–498.</p>
+</div>
+</div>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/无人机/" rel="tag"># 无人机</a>
+          
+            <a href="/tags/科研/" rel="tag"># 科研</a>
+          
+            <a href="/tags/读论文/" rel="tag"># 读论文</a>
+          
+            <a href="/tags/路由/" rel="tag"># 路由</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/59180/" rel="next" title="Weekly-18">
+                <i class="fa fa-chevron-left"></i> Weekly-18
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/10221/" rel="prev" title="Weekly-19">
+                Weekly-19 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="治部少辅">
+            
+              <p class="site-author-name" itemprop="name">治部少辅</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">97</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#未来网络特点分析"><span class="nav-number">1.</span> <span class="nav-text">未来网络特点分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gcn机制内容"><span class="nav-number">2.</span> <span class="nav-text">GCN机制内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#业务模式"><span class="nav-number">2.1.</span> <span class="nav-text">业务模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group-discovery"><span class="nav-number">2.2.</span> <span class="nav-text">Group Discovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tunable-resiliency"><span class="nav-number">2.3.</span> <span class="nav-text">Tunable Resiliency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#targeted-flooding"><span class="nav-number">2.4.</span> <span class="nav-text">Targeted flooding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#one-to-one-traffic"><span class="nav-number">2.4.1.</span> <span class="nav-text">one-to-one traffic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#one-to-many-traffic"><span class="nav-number">2.4.2.</span> <span class="nav-text">one-to-many traffic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#many-to-many-traffic"><span class="nav-number">2.4.3.</span> <span class="nav-text">many-to-many traffic</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">治部少辅</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/posts/53819/";
+    this.page.identifier = "posts/53819/";
+    this.page.title = '读论文:一种面向无线网络的Group Centric Networking路由算法';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      },
+      
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  
+  <script>
+    void function(){
+      // window.hinst = Han(document.querySelector('.post-body')).setRoutine([
+      //   'initCond',
+      //   'renderElem',
+      //   'renderJiya',
+      //   'renderHanging',
+      //   'renderHWS',
+      //   'correctBasicBD',
+      //   'substCombLigaWithPUA'
+      // ]).render()
+      document.getElementById("refs")
+          .setAttribute("lang", "en_US");
+    }()
+
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
