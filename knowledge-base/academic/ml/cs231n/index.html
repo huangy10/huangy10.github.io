@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk 在记录课程内容的同时，我也会对课程的内容做重">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CS231n 课程笔记">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/ml/cs231n/index.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk 在记录课程内容的同时，我也会对课程的内容做重">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1a23b6c81566c8da141925d0e1f36ed6.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a1ef2bc8a5d4339ab38b530909ddd624.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/92fc7b3dc9413d9d7f526fb2646060ab.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ebf2ba0f23b9150f4e3b47c546b7e1d6.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/f2ed2d410c34321b7c4621bc8721823e.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/78dd0d4698a9e829e8f25b613d918539.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9fdd0fd146bb8a20de949cb19b00f58b.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bfb6b365136e1d5872e684207d06ca2d.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/58ed0392663a305e925f7e3c2f7cd399.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a05532ae8094411124878313ca6c6fb9.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/90bc6494411295a632f44f6b374adce6.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/12e2d7f35082a8eb86e47c1baf6eceb1.jpg">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d346be5dafd0027f469da0b7c02d5a99.png">
+<meta property="og:updated_time" content="2019-12-23T11:54:26.086Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CS231n 课程笔记">
+<meta name="twitter:description" content="这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk 在记录课程内容的同时，我也会对课程的内容做重">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/1a23b6c81566c8da141925d0e1f36ed6.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/ml/cs231n/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>CS231n 课程笔记 | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge menu-item-active">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-channel">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="https://t.me/everthingaboutbullshit" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>channel</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h2 class="post-title" itemprop="name headline">CS231n 课程笔记
+
+</h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/ml/">ML</a></li>
+          
+        
+      
+    
+      
+      
+        
+          <li>CS231N</li>
+        
+      
+    
+      
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body han-init-context">
+        
+        
+          <p>这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：<a href="https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk" target="_blank" rel="noopener">https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk</a></p>
+<p>在记录课程内容的同时，我也会对课程的内容做重新整理，同时加入一些额外的信息和我的一些理解。另外，由于「形而上」的东西听得太多了，所以这里的笔记也不会记录那些内容。</p>
+<p>这个课程主要面向的是「图像识别」(<i>Image Recognition</i>)，其中涉及的主要技术是卷积神经网络 (<i>Convolutional Neural Networks</i>, CNN)。</p>
+<h2 id="关于-machine-learning">关于 Machine Learning</h2>
+<p>在这个课程中，我们主要是用神经卷积网络，也就是 Deep Learning 来解决图像识别的问题。图像识别实质上是一个<strong>分类问题</strong> (Classification)：事先我们定义一系列的类别，然后将输入图像划分为特定的类别。这可以视为一个特殊的函数，函数接收一个图片作为输入，输出一个离散的类别判断结果。这个问题是非常复杂的，我们无法显式地，或者说以解析的形式给出这样的函数。因此，解决这类问题，我们一般都是采用数据驱动的方法。所谓数据驱动，是指：</p>
+<ol type="1">
+<li>收集足够数量的<strong>带标注</strong>的数据；</li>
+<li>使用<strong>机器学习</strong>训练出一个分类器 (Classifier)；</li>
+<li>在测试集上评估分类器的性能水平。</li>
+</ol>
+<p>分类器是机器学习最早的引用。在介绍深度学习之前，我们先来从一些比较基础的机器学习方法开始了解机器的一些基本原理和设计思想。</p>
+<h3 id="数据集与数据建模">数据集与数据建模</h3>
+<p>在图像分类问题中，输入数据为图像格式。在计算机中，图像本质上是一个多维矩阵。例如对于 RGB 三通道的图像，其数据表示为 <span class="math inline">\(width \times height \times 3\)</span>。</p>
+<p>对于机器学习来说，足够数量的标注数据及测试数据是非常重要的。在学习过程中，我们一般采用现有的公开数据集。例如这里我们就是用公开数据集 <a href="https://en.wikipedia.org/wiki/CIFAR-10" target="_blank" rel="noopener">CIFAR10</a>。这个数据集包括了 10 个类别的图像，对于每个类别，各有 50000 个训练图像和 10000 个测试图像。每个图像的大小是 <span class="math inline">\(32 \times 32 \times 3\)</span></p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/1a23b6c81566c8da141925d0e1f36ed6.png" alt="CIFAR10 数据集类别和图像示例"><figcaption>CIFAR10 数据集类别和图像示例</figcaption>
+</figure>
+<h3 id="nearest-neighbor">Nearest Neighbor</h3>
+<p>为了区分不同类别的图像，我们首先需要度量两个不同的图像之间的差别。这里我们介绍一些度量两个图像之间差别的方法。这里图像差别也称成为图像作为<strong>向量</strong>在高维空间中的<strong>图像距离</strong></p>
+<blockquote>
+<p>这里定义的图像距离，一般要求被比较的图像拥有相同的尺寸。如果图像尺寸不同可以通过缩放来变换到一致的尺寸后再计算距离。</p>
+</blockquote>
+<p>L1 距离也被成为曼哈顿距离。L1 距离定义如下：</p>
+<p><span class="math display">\[
+d_1 (I_1, I_2) = \sum_{p} |I_1^p - I_2^p|
+\]</span></p>
+<p>这里的 <span class="math inline">\(p\)</span> 可以视为<strong>逐像素</strong>的迭代器。下面的例子有助于进一步理解 L1 距离的定义：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/a1ef2bc8a5d4339ab38b530909ddd624.png" alt="L1 距离示例"><figcaption>L1 距离示例</figcaption>
+</figure>
+<blockquote>
+<p>这种逐像素的定义方法对于语义内容的鲁棒性是非常差的，例如如果图像的亮度发生变化，就会导致距离的大幅变化。</p>
+</blockquote>
+<p>基于 L1 距离的定义，也可以实现一个简单的机器学习模型，Nearest Neighbor：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NearestNeighbor</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(self, X, Y)</span>:</span></span><br><span class="line">        <span class="comment"># X 的尺寸是 N x D，每行是一个输入的训练样本，一共 N 个样本。Y 则是一维的。</span></span><br><span class="line">        self.Xtr = x</span><br><span class="line">        self.ytr = y  <span class="comment"># 这里只是简单地记录下训练数据</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">predict</span><span class="params">(self, X)</span>:</span></span><br><span class="line">        num_test = X.shape[<span class="number">0</span>]</span><br><span class="line">        Ypred = np.zeros(num_test, dtype=self.ytr.dtype)</span><br><span class="line">        <span class="comment"># 遍历每个训练样本，计算 L1 距离，按照距离最近的原则选出类别</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(num_test):</span><br><span class="line">            distance = np.sum(np.abs(self.Xtr - X[i:]), axis=<span class="number">1</span>)</span><br><span class="line">            min_index = np.argmin(distance)</span><br><span class="line">            Ypred[i] = self.ytr[min_index]</span><br><span class="line">        <span class="keyword">return</span> Ypred</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>且不论 L1 距离的效率。上面的机器学习模型中，训练过程的复杂度是 O(1)，在训练阶段只需要记住训练数据就可以了。但是预测过程的复杂度是 O(N)，因为需要逐个比对输入样本和训练集数据的距离。这对于模型的实际应用是非常不利的。对于机器学习应用来说，我们可以接收在训练过程中慢一点，但是不能接收在应用过程中太慢。</p>
+</blockquote>
+<p>Nearest Neighbor (NN) 的分类效果如下图所示：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/92fc7b3dc9413d9d7f526fb2646060ab.png" alt="" style="width: 60%"></p>
+<p>可以看到，NN 分类出来的结果，类别之间的切线非常曲折，这意味这少数的偏差值或者标注的错误会对分类结果产生比较大的影响，同时也不符合我们直观观察的结果，缺少真实世界的连续性。K-NN 算法就是为了解决这个问题而提出的。</p>
+<h3 id="k-nn">K-NN</h3>
+<p>K-NN 算法的思想是，比起在 NN 算法中我们值选择最近的 <strong>1 个</strong>点作为判决依据，在K-NN中，我们让距离输入点最近的 <span class="math inline">\(K\)</span> 个点进行<strong>投票</strong>，哪个类别的多，就判决为哪个类别。例如 <span class="math inline">\(K = 3\)</span> 时，距离输入点最近的 3 个样本点中，2 个是类别 A 的，1 个是类别 B 的，则输入点被判决为类别 A。K-NN 分类效果如下图：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/ebf2ba0f23b9150f4e3b47c546b7e1d6.png" alt="可以看到随着 K 的增长，不同区域之间的犬牙交错现象得到了抑制（红蓝之间的边界线）。白色区域为投票出现平票的区域。"><figcaption>可以看到随着 K 的增长，不同区域之间的犬牙交错现象得到了抑制（红蓝之间的边界线）。白色区域为投票出现平票的区域。</figcaption>
+</figure>
+<p>这里投票的过程没有加权重，在 K-NN 算法中，可以对投票环节进行不同的权重设计以达到不同的效果<span class="foot-note-span">【不过即便使用了 K-NN 算法的改进，这类基于距离的算法在图像的<strong>语义层面</strong>的分类上效果还是不好，所以基本上图像方面的问题都不实用 K-NN 算法。不过 K-NN 算法非常简单，适合让入门者了解机器学习的一些基本概念】</span>。</p>
+<h3 id="更多不同类型的距离定义">更多不同类型的距离定义</h3>
+<p>上面的 K-NN 算法说明中我们一直使用的是 L1 距离。除了这种距离定义以外，还有其他众多不同的距离定义形式。如 L2 距离，又称欧几里得距离 (欧氏距离) 的定义为：</p>
+<p><span class="math display">\[
+d_2(I_1, I2) = \sqrt{\sum_p(I_1^p - I_2^p)^2}
+\]</span></p>
+<blockquote>
+<p>这里讨论一下 L1 和 L2 物理意义的区别。L1 距离的定义依赖于坐标轴，如果将坐标轴旋转一下，那么点之间的 L1 距离就会发生变化。L2 则不依赖于坐标轴的定义。因此 L2 适应用比较一般的情况，而如果坐标轴具备一定的特殊含义时，L1 距离可能会有比较好的效果。另外，计算量也可能成为需要考虑的因素。L2 的计算量要比 L1 大的多。</p>
+<p>当然在实际应用中，还是靠尝试两者看效果来决定到底使用哪种。</p>
+</blockquote>
+<h3 id="超参数与-validation">超参数与 Validation</h3>
+<p>在使用 K-NN 算法时，如何选择参数 K 的值，如何选择距离函数是我们在训练开始以前就要指定的参数。这里需要我们设置，而不是从数据学习来的参数我们称之为超参数 (<i>Hyperparameter</i>)。如何设置合适的超参数的值依赖于具体的问题<span class="foot-note-span">【调参大法好】</span>。</p>
+<p>那么，如何调参呢？很多初学者会想当然地认为，调参的目的是让训练的模型在训练集上获得最好的性能，但是这是非常不好的做法。例如在 K-NN 算法中，设置 <span class="math inline">\(K = 1\)</span> 能够获得更好的精度。又例如在多项式曲线拟合中，如果有 100 个点，那么使用 100 阶的多项式去拟合能够在训练集上的完美的误差 -- 0。但是我们训练机器学习模型并不是为了让我们的模型在训练集上使用，而是在更多潜在的数据上使用。</p>
+<p>那么一个简单改进思路是设置专门的测试集，在测试集上调试超参数的值。但是这也会产生上面提到的那种超参数和数据之前产生<strong>过强</strong>的耦合现象。更好的做法，是在训练集，测试集之外，设置专门的验证集 (<i>Validation</i>)，我们在验证集上调节超参数，最后在测试集上评估模型的性能<span class="foot-note-span">【使用这种做法，而不是使用前面两种错误的做法】</span>。</p>
+<p>更加强化的做法，我们称之为 <i>Cross-Validation</i>，即交叉验证。我们将训练数据分割为若干等分，然后逐个将某个等分作为验证集，将其他的作为训练集。<strong>这种做法一般适合小规模的数据集，在深度学习中用的比较少</strong>。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/f2ed2d410c34321b7c4621bc8721823e.png" alt="图中绿色的为训练集，黄色的为验证集，红色的是测试集"><figcaption>图中绿色的为训练集，黄色的为验证集，红色的是测试集</figcaption>
+</figure>
+<h2 id="线性分类">线性分类</h2>
+<h3 id="分类器的形式">分类器的形式</h3>
+<p>线性分类 (Linear Classfication) 中，线性的意思代表了在这类分类器其中，分类器通过对特征数据进行线性组合来得到分类判决的依据。从可视化的角度来看，线性分类器中，不同类别的分界表现为高维的平面。特别的，在二维情况下，这个分界表现为直线，直线的两侧为不同的类别<span class="foot-note-span">【当然界面的线性会限制线性分类器的使用范围】</span>。</p>
+<blockquote>
+<p>线性分类是支撑向量机 (SVM) 的扩展。</p>
+</blockquote>
+<p>例如在 CIFAR 10 分类问题中，使用线性分类意味着我们使用一个线性函数 <span class="math inline">\(f(x, W)\)</span> 将图像输入 <span class="math inline">\(x\)</span> 转化分类依据的分数。其中 <span class="math inline">\(W\)</span> 为需要从数据中学习的参数。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/78dd0d4698a9e829e8f25b613d918539.png"></p>
+<p>这里线性函数的具体形式为:</p>
+<p><span class="math display">\[
+f(x, W) = Wx + b
+\]</span></p>
+<blockquote>
+<p>如果给 <span class="math inline">\(x\)</span> 扩展一个列，且将新的维度设置为 1，则 <span class="math inline">\(b\)</span> 也可以整合进矩阵 <span class="math inline">\(W\)</span></p>
+</blockquote>
+<p>这里矩阵 <span class="math inline">\(W\)</span> 为 <span class="math inline">\(10 \times 3072\)</span><span class="foot-note-span">【3072 = 32 * 32 * 3】</span>。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/9fdd0fd146bb8a20de949cb19b00f58b.png"></p>
+<p>如何理解线性分类器中的参数矩阵 <span class="math inline">\(W\)</span> 呢？事实上，参数矩阵基于模板创建了<strong>模板图像</strong>，然后通过模板图像来识别输入。我们将 <span class="math inline">\(W\)</span> 中的每一行还原成图像，结果如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/bfb6b365136e1d5872e684207d06ca2d.png"></p>
+<p>我们可以从中看出对应类别的一些特征。这反应了参数矩阵 <span class="math inline">\(W\)</span> 作为<strong>模板</strong>图像的意义。在线性分类器中，受限于分类器的结构，每个类别我们只能生成一个这样的模板图像。而在更加复杂的模型中，我们可以得到层次更加丰富，数量更加庞大的模板模型。</p>
+<blockquote>
+<p>Assignment 1: <a href="http://cs231n.github.io/assignments2017/assignment1/" target="_blank" rel="noopener">http://cs231n.github.io/assignments2017/assignment1/</a></p>
+</blockquote>
+<h3 id="损失函数">损失函数</h3>
+<p>损失函数 (<i>Loss Function</i>) 是一个在机器学习与优化问题中非常重要的概念，它是效用函数 (<i>Utility Function</i>) 的反面。损失函数量化了预测结果的好坏程度。那么，找到让损失函数最小的参数，就能实现模型的最优化。损失函数的选择对于模型的性能有决定性的影响。</p>
+<p>在本章节我们使用的线性函数中，损失函数的形式为：在给定数据集 <span class="math inline">\(\{(x_i, y_i\}_{i = 1}^{N}\)</span>，其中 <span class="math inline">\(x_i\)</span> 为代表图像的向量数据，<span class="math inline">\(y_i\)</span> 为整型的标签值。损失函数的形式为 <span class="math inline">\(L_i (f(x_i, W), y_i)\)</span>。这是单个样本的损失。模型在整个数据集上的平均损失为：</p>
+<div style="border: 1px solid">
+<p><span class="math display">\[
+L = \frac{1}{N}\sum_i L_i (f(x_i, W), y_i)
+\]</span></p>
+</div>
+<h4 id="svm-loss">SVM Loss</h4>
+<p>源自支撑向量机的损失函数形式为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+L_i &amp;= \sum_{j \neq y_i} \left\{ \begin{array}{ll}
+0, &amp; \text{if}\quad s_{y_i} \geq s_j + 1\\
+s_j - s_{y_i} + 1, &amp; \text{otherwise}
+\end{array}
+\right.\\
+&amp;= \sum_{j \neq y_i} \max (0, s_j - s_{y_i} + 1)
+\end{aligned}
+\]</span></p>
+<p>其原理为逐一检查分类器为每个类别给出的分数。对于非正确的某个类别，如果分类器给出的分数低于为正确的分类给出的分数（这里设置了一个判决的阈值，阈值为1，即分数值需要低于超过1，反过来就是正确的类别的分数要有至少 1 的分数优势），则贡献 0 的损失。反之，贡献的损失值为分数差加上阈值 1。最后将所有非正确类别贡献的损失加起来。显然，如果分类器给出的结果是正确的，且有足够的辨识度（不给两个类别十分相近的评分），则损失是0。否则总会有一个正的损失分数，即分数的取值范围是<span class="math inline">\([0, \infty)\)</span>。</p>
+<blockquote>
+<p>这里的阈值选择其实是比较随意的。1 是上面的损失函数定义中的唯一常数。事实上我们并不关心分数的绝对大小，而是关注其相对大小。例如如果将 <span class="math inline">\(W\)</span> 和 <span class="math inline">\(b\)</span> 同时乘以 10，那么分数之间的差也会乘以 10，那么阈值也可以变为 10。因此这里阈值常数只不过大致限定了分数的数量级，其选择不会对分类器的性能产生根本性的影响。因此这里我们设置成 1 就可以了。这个阈值不是需要优化的超参数。</p>
+</blockquote>
+<p>下面用一个例子来说明。如果对于一张猫的照片，给出三个类别 cat, car, frog 的分数分别为 3.2, 5.1, -1.7，则损失计算的方法是：</p>
+<p><span class="math display">\[
+\begin{aligned}
+L_i &amp;= \sum_{j \neq y_i} \max(0, s_j, s_{y_i} + 1) \\
+&amp;= \max(0, 5.1 - 3.2 + 1) + \max(0, -1.7 - 3.2 + 1) \\
+&amp;= 2.9 + 0 \\
+&amp;= 2.9
+\end{aligned}
+\]</span></p>
+<p>SVM Loss 的代码实现示例为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">L_i_vectorized</span><span class="params">(x, y, W)</span>:</span></span><br><span class="line">    scores = W.dot(x)</span><br><span class="line">    margins = np.maximum(<span class="number">0</span>, scores - scores[y] + <span class="number">1</span>)</span><br><span class="line">    margins[y] = <span class="number">0</span></span><br><span class="line">    loss_i = np.sum(margins)</span><br><span class="line">    <span class="keyword">return</span> loss_i</span><br></pre></td></tr></table></figure>
+<h4 id="softmax">Softmax</h4>
+<p>我们并不关心分类器给出的分数的绝对大小，而是关心分数的相对大小。因此我们需要一种方法能够对分数输出的值进行形式上的统一。另外，有时候我们需要给出一个结果判断的概率评估。基于这两个需求，我们可以使用 Softmax (cross-entropy loss) 来处理分数结果。Softmax函数的形式为：</p>
+<p><span class="math display">\[
+P(Y = k | X = x_i) = \frac{e^{s_k}}{\sum_j e^{s_j}}
+\]</span></p>
+<p>此时对应的损失函数可以定义为：</p>
+<p><span class="math display">\[
+L_i = - \log P(Y = y_i | X = x_i) = -\log \left(\frac{e^{y_i}}{\sum_j e^{s_j}}\right)
+\]</span></p>
+<blockquote>
+<p>Softmax 损失函数相比于 SVM 损失函数的一个特点在于，SVM 损失只关心分数是否存在一定的优势，而只要优势存在，具体的分差他就不再关心。例如分数 [10, 9, 9] 和 分数 [10, -100, -100] (第一个类别是正确的类别) 产生的损失是一样的。但是 Softmax 进一步关心分差的值的大小。因此，Softmax 要求不断地向正确的选项上集中分数。</p>
+</blockquote>
+<h3 id="过拟合与正则化">过拟合与正则化</h3>
+<p>在上面的「超参数与Validation」章节我们提到了模型与训练数据**过度*耦合的问题。例如考虑一个曲线拟合问题，如果曲线形式足够复杂，让曲线穿过每一个数据点，那么可以取得最小的误差。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/58ed0392663a305e925f7e3c2f7cd399.png" alt="" style="width: 60%"></p>
+<p>但是在潜在的应用数据上，这种拟合曲线性能不一定好：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/a05532ae8094411124878313ca6c6fb9.png" alt="" style="width: 60%"></p>
+<p>使用一些更加简单的模型能够取得更好的效果：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/90bc6494411295a632f44f6b374adce6.png" alt="" style="width: 60%"></p>
+<p>这种模型过于拟合训练数据的情况我们称之为过拟合。为了解决过拟合问题，我们为损失函数引入了<strong>正则化</strong>项目 (<i>Regulation</i>)。改进后的损失函数的形式是：</p>
+<p><span class="math display">\[
+L(W) = \frac{1}{N}\sum_{i = 1}^{N}L_i (f(x_i, W), y_i) + \lambda R(W)
+\]</span></p>
+<p>正则化可以避免模型过于复杂，保持比较简洁的模型。这是因为简单的模型可能有更大的普适性。正则化的目的也可以说是为了<strong>泛化</strong>模型的适用范围。</p>
+<p>这里的 <span class="math inline">\(\lambda\)</span> 为超参数。</p>
+<blockquote>
+<p>为什么加入正则化项可以阻止模型过于复杂呢？是因为函数 <span class="math inline">\(R(\cdot)\)</span> 评估了模型的复杂度？</p>
+</blockquote>
+<p>比较常用的正则化项如下：</p>
+<ul>
+<li>L1 正则化：<span class="math inline">\(R(W) = \sum_k \sum_l W^2_{k,l}\)</span></li>
+<li>L2 正则化：<span class="math inline">\(R(W) = \sum_k \sum_l |W_{k,l}|\)</span></li>
+<li>Elastic net (L1 + L2): <span class="math inline">\(R(W) = \sum_k \sum_l \beta W^2_{k,l} + \sum_k \sum_l |W_{k,l}|\)</span></li>
+</ul>
+<blockquote>
+<p>Dropout, Batch Normalization, Stochastic Depth 也是正则化的手段</p>
+</blockquote>
+<h3 id="优化">优化</h3>
+<p>在我们已经定义分类器的形式，也就是分数的定义方式 <span class="math inline">\(f(x, W) = W x\)</span>，并且引入了损失函数的定义之后，寻找合适的参数矩阵 <span class="math inline">\(W\)</span> 的过程，其实就是最小化损失函数的过程。这是一个优化问题 (<i>Optimization</i>)。</p>
+<h3 id="梯度下降">梯度下降</h3>
+<p>梯度的概念是「多元函数」的斜率概念。而梯度定义为函数向各个变量求导得到的导数组成的向量。<strong>梯度向量的反向即为函数值下降速度最快的方向</strong>。这个概念在高等函数里面是比较基础的概念。剩下的问题是，如何求解损失函数的梯度 <span class="math inline">\(dL/dW\)</span>。</p>
+<blockquote>
+<p>用数值方法计算梯度是非常糟糕的算法。因为在深度学习中，参数的数量非常庞大，逐个维度计算数值导数计算量非常大。但是数值方法可以用来验证我们的梯度解析公式是否正确。</p>
+</blockquote>
+<blockquote>
+<p>梯度只是指明了下降的方向，参数应该沿着负梯度方向前进多少的距离，这是一个需要提前指定的超参数。这个参数一般称之为 <i>Learning Rate</i>。</p>
+</blockquote>
+<h4 id="随机梯度下降">随机梯度下降</h4>
+<p>损失函数的完整形式为</p>
+<p><span class="math display">\[
+L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
+\]</span></p>
+<p>其中要遍历整个训练集，在数据量比较大时，这意味着极为庞大的计算量。随机梯度下降 (<i>Stochastic Gradient Descent</i>) 则解决了这个问题。在计算梯度时，我们不再是遍历整个训练集，而是从训练集中随机选出一个子集（一般是32/64/128 个），然后基于这个子集计算梯度。</p>
+<h4 id="梯度的计算">梯度的计算</h4>
+<p>我们使用 <i>Computational Graphs</i> 的方法来处理复杂的模型的梯度计算问题。例如，前面提到的线性分类器，其计算图为：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/12e2d7f35082a8eb86e47c1baf6eceb1.jpg"></p>
+<p>在计算图的基础上，我们可以逆着计算流的方向，使用 <a href="https://en.wikipedia.org/wiki/Backpropagation" target="_blank" rel="noopener"><i>back propagation</i></a> 的方法来计算梯度，其原理是微分计算的<a href="https://zh.wikipedia.org/zh-hans/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99" target="_blank" rel="noopener">链式法则</a>。下面是一个简单的使用 <i>back propagation</i> 计算梯度的例子:</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/d346be5dafd0027f469da0b7c02d5a99.png"></p>
+<h2 id="神经网络">神经网络</h2>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/">ACADEMIC</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/academic/ml/">ML</a></li>
+          
+        
+      
+    
+      
+      
+        
+          <li>CS231N</li>
+        
+      
+    
+      
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="治部少辅">
+            
+              <p class="site-author-name" itemprop="name">治部少辅</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">治部少辅</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/ml/cs231n/index.html";
+    this.page.identifier = "knowledge-base/academic/ml/cs231n/index.html";
+    this.page.title = 'CS231n 课程笔记';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      },
+      
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  
+  <script>
+    void function(){
+      // window.hinst = Han(document.querySelector('.post-body')).setRoutine([
+      //   'initCond',
+      //   'renderElem',
+      //   'renderJiya',
+      //   'renderHanging',
+      //   'renderHWS',
+      //   'correctBasicBD',
+      //   'substCombLigaWithPUA'
+      // ]).render()
+      document.getElementById("refs")
+          .setAttribute("lang", "en_US");
+    }()
+
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

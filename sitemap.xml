@@ -2,9 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/posts/54189/</loc>
+    
+    <lastmod>2019-12-23T11:57:40.963Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/ml/cs231n/index.html</loc>
+    
+    <lastmod>2019-12-23T11:54:26.086Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/history/%E4%B8%AD%E5%9B%BD%E5%8F%B2/%E4%B8%AD%E5%8F%A4%E5%8F%B2/%E4%B8%89%E5%9B%BD%E4%B8%A4%E6%99%8B%E5%8D%97%E5%8C%97%E6%9C%9D/%E5%8D%81%E5%85%AD%E5%9B%BD%E6%A6%82%E5%86%B5/%E5%8C%97%E5%87%89.html</loc>
+    
+    <lastmod>2019-12-23T10:07:21.985Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/history/%E4%B8%AD%E5%9B%BD%E5%8F%B2/%E4%B8%AD%E5%8F%A4%E5%8F%B2/%E4%B8%89%E5%9B%BD%E4%B8%A4%E6%99%8B%E5%8D%97%E5%8C%97%E6%9C%9D/%E5%8D%81%E5%85%AD%E5%9B%BD%E6%A6%82%E5%86%B5/%E5%90%8E%E5%87%89.html</loc>
+    
+    <lastmod>2019-12-22T15:30:00.265Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
+    
+    <lastmod>2019-12-21T15:14:33.953Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/news/%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6/%E6%B9%96%E5%8D%97%E6%80%80%E5%8C%96%E6%96%B0%E6%99%83%E4%B8%80%E4%B8%AD%E6%93%8D%E5%9C%BA%E5%9F%8B%E5%B0%B8%E6%A1%88.html</loc>
+    
+    <lastmod>2019-12-19T03:02:47.729Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/posts/53997/</loc>
     
-    <lastmod>2019-12-15T17:20:21.008Z</lastmod>
+    <lastmod>2019-12-16T05:39:52.054Z</lastmod>
     
   </url>
   
@@ -37,13 +79,6 @@
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
-    
-    <lastmod>2019-12-13T07:15:35.042Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.codewoody.com/knowledge-base/news/%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6/%E7%BE%8E%E5%9B%BD%E6%9E%AA%E5%87%BB%E6%A1%88.html</loc>
     
     <lastmod>2019-12-11T19:07:00.624Z</lastmod>
@@ -68,13 +103,6 @@
     <loc>http://www.codewoody.com/knowledge-base/history/%E4%B8%AD%E5%9B%BD%E5%8F%B2/%E4%B8%AD%E5%8F%A4%E5%8F%B2/%E4%B8%89%E5%9B%BD%E4%B8%A4%E6%99%8B%E5%8D%97%E5%8C%97%E6%9C%9D/%E5%8D%81%E5%85%AD%E5%9B%BD%E6%A6%82%E5%86%B5/%E8%83%A1%E5%A4%8F.html</loc>
     
     <lastmod>2019-12-09T08:10:14.958Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/history/%E4%B8%AD%E5%9B%BD%E5%8F%B2/%E4%B8%AD%E5%8F%A4%E5%8F%B2/%E4%B8%89%E5%9B%BD%E4%B8%A4%E6%99%8B%E5%8D%97%E5%8C%97%E6%9C%9D/%E5%8D%81%E5%85%AD%E5%9B%BD%E6%A6%82%E5%86%B5/%E5%8C%97%E5%87%89.html</loc>
-    
-    <lastmod>2019-12-09T08:10:07.167Z</lastmod>
     
   </url>
   
@@ -145,13 +173,6 @@
     <loc>http://www.codewoody.com/posts/53357/</loc>
     
     <lastmod>2019-12-08T14:49:21.930Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/news/%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6/%E6%B9%96%E5%8D%97%E6%80%80%E5%8C%96%E6%96%B0%E6%99%83%E4%B8%80%E4%B8%AD%E6%93%8D%E5%9C%BA%E5%9F%8B%E5%B0%B8%E6%A1%88.html</loc>
-    
-    <lastmod>2019-12-04T17:54:17.315Z</lastmod>
     
   </url>
   
@@ -383,13 +404,6 @@
     <loc>http://www.codewoody.com/posts/58220/</loc>
     
     <lastmod>2019-10-27T13:28:58.937Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/history/%E4%B8%AD%E5%9B%BD%E5%8F%B2/%E4%B8%AD%E5%8F%A4%E5%8F%B2/%E4%B8%89%E5%9B%BD%E4%B8%A4%E6%99%8B%E5%8D%97%E5%8C%97%E6%9C%9D/%E5%8D%81%E5%85%AD%E5%9B%BD%E6%A6%82%E5%86%B5/%E5%90%8E%E5%87%89.html</loc>
-    
-    <lastmod>2019-10-26T03:47:26.826Z</lastmod>
     
   </url>
   
