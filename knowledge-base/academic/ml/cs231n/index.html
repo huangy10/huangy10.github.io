@@ -143,7 +143,10 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/90bc6494411295a632f44f6b374adce6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/12e2d7f35082a8eb86e47c1baf6eceb1.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d346be5dafd0027f469da0b7c02d5a99.png">
-<meta property="og:updated_time" content="2019-12-23T11:54:26.086Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/06b383e0ac612356327bbd24f88f7e74.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ef67b15e4df2bdc02a28c9f31ea88978.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/30469a05fd796b2d3819cd60329ac053.png">
+<meta property="og:updated_time" content="2019-12-28T11:50:51.038Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n 课程笔记">
 <meta name="twitter:description" content="这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk 在记录课程内容的同时，我也会对课程的内容做重">
@@ -620,6 +623,9 @@ f(x, W) = Wx + b
 </blockquote>
 <p>这里矩阵 <span class="math inline">\(W\)</span> 为 <span class="math inline">\(10 \times 3072\)</span><span class="foot-note-span">【3072 = 32 * 32 * 3】</span>。</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/9fdd0fd146bb8a20de949cb19b00f58b.png"></p>
+<div id="meaning-of-w">
+
+</div>
 <p>如何理解线性分类器中的参数矩阵 <span class="math inline">\(W\)</span> 呢？事实上，参数矩阵基于模板创建了<strong>模板图像</strong>，然后通过模板图像来识别输入。我们将 <span class="math inline">\(W\)</span> 中的每一行还原成图像，结果如下：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/bfb6b365136e1d5872e684207d06ca2d.png"></p>
 <p>我们可以从中看出对应类别的一些特征。这反应了参数矩阵 <span class="math inline">\(W\)</span> 作为<strong>模板</strong>图像的意义。在线性分类器中，受限于分类器的结构，每个类别我们只能生成一个这样的模板图像。而在更加复杂的模型中，我们可以得到层次更加丰富，数量更加庞大的模板模型。</p>
@@ -714,12 +720,40 @@ L(W) = \frac{1}{N}\sum_{i = 1}^{N}L_i (f(x_i, W), y_i) + \lambda R(W)
 L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
 \]</span></p>
 <p>其中要遍历整个训练集，在数据量比较大时，这意味着极为庞大的计算量。随机梯度下降 (<i>Stochastic Gradient Descent</i>) 则解决了这个问题。在计算梯度时，我们不再是遍历整个训练集，而是从训练集中随机选出一个子集（一般是32/64/128 个），然后基于这个子集计算梯度。</p>
-<h4 id="梯度的计算">梯度的计算</h4>
+<h4 id="梯度的计算-computational-graphs">梯度的计算 (Computational Graphs)</h4>
 <p>我们使用 <i>Computational Graphs</i> 的方法来处理复杂的模型的梯度计算问题。例如，前面提到的线性分类器，其计算图为：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/12e2d7f35082a8eb86e47c1baf6eceb1.jpg"></p>
 <p>在计算图的基础上，我们可以逆着计算流的方向，使用 <a href="https://en.wikipedia.org/wiki/Backpropagation" target="_blank" rel="noopener"><i>back propagation</i></a> 的方法来计算梯度，其原理是微分计算的<a href="https://zh.wikipedia.org/zh-hans/%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99" target="_blank" rel="noopener">链式法则</a>。下面是一个简单的使用 <i>back propagation</i> 计算梯度的例子:</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/d346be5dafd0027f469da0b7c02d5a99.png"></p>
+<blockquote>
+<p>当然要是你微积分和矩阵论学的足够好，可以直接算。</p>
+</blockquote>
+<blockquote>
+<p>Sigmoid 函数 <span class="math inline">\(\sigma (x) = \frac{1}{1 + e^{-x}}\)</span> 的微分是</p>
+<p><span class="math display">\[
+\frac{d \sigma (x)}{d x} = (1 - \sigma (x)) \sigma (x)
+\]</span></p>
+</blockquote>
 <h2 id="神经网络">神经网络</h2>
+<p>神经网络 (<i>Neural Networks</i>)。</p>
+<h3 id="神经网络模型">神经网络模型</h3>
+<p>在上一个章节，我们建立起了一个线性分类的模型框架，这个框架包括线性模型，损失函数，以及优化方法 (梯度下降)。其中，线性模型的形式是 <span class="math inline">\(f = Wx\)</span>。我们将其扩展为 <span class="math inline">\(f = W_2 \max (0, W_1 x)\)</span>，这就成为一个<strong>两层</strong>的神经网络模型。</p>
+<blockquote>
+<p>两层模型中的 <span class="math inline">\(\max(0, \cdot)\)</span> 计算实际上就是 Relu 函数，这类函数成为激励函数 (<i>activation functions</i>)，后面我们会提到。这类<strong>非线性</strong>函数是神经网络多层叠加的关键。缺乏这些非线性函数作为中继，将线性函数组装起来其实仍然是一层的。</p>
+</blockquote>
+<p><img src="https://imgs.codewoody.com/uploads/big/06b383e0ac612356327bbd24f88f7e74.png" alt="" style="width: 60%"></p>
+<p>这个扩展过程可以继续扩展下去，这样我们可以得到更深层数的神经网络的模型。例如三层的结构：<span class="math inline">\(f=W_3 \max (0, W_2 \max (0, W_1 x))\)</span></p>
+<p>在<a href="#meaning-of-w">前面</a>我们提到过，线性分类器具有作为<strong>模板图像</strong>的含义。但是，线性分类器只能为每一个类别的图像创建一个模板。在多层神经网络中，网络结构的复杂性使得模型可以为同一类别创建<strong>不同层次</strong>的多个模板。</p>
+<blockquote>
+<p>注意，尽管这个模型的名字叫做神经网络，但是这只是<strong>类比</strong>而已，神经网络模型和生物学意义上的神经网络有本质的不同。神经网络模型也不是仿生学。</p>
+</blockquote>
+<h3 id="激励函数">激励函数</h3>
+<p>从某种程度上，激励函数可以视为将神经网络的不同层链接在一起的胶水，也是神经网络中<strong>非线性要素</strong>的来源。下面是一些常用的激励函数。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/ef67b15e4df2bdc02a28c9f31ea88978.png"></p>
+<h3 id="隐藏层">隐藏层</h3>
+<p>隐藏层 (<i>hidden layer</i>) 是对多层神经网络中除输入输出层以外的其他层的称呼。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/30469a05fd796b2d3819cd60329ac053.png"></p>
+<h2 id="卷积神经网络">卷积神经网络</h2>
 
         
       </div>
@@ -848,7 +882,7 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">108</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1100,7 +1134,7 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算-computational-graphs"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算 (Computational Graphs)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络模型"><span class="nav-number">3.1.</span> <span class="nav-text">神经网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激励函数"><span class="nav-number">3.2.</span> <span class="nav-text">激励函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层"><span class="nav-number">3.3.</span> <span class="nav-text">隐藏层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">4.</span> <span class="nav-text">卷积神经网络</span></a></li></ol></div>
             
 
           </div>
