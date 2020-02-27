@@ -437,6 +437,1290 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/14647/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/14647/" class="post-title-link" itemprop="url">[读论文]自动驾驶编队与LTE D2D通信</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-11 16:03:23" itemprop="dateCreated datePublished" datetime="2019-12-11T16:03:23+08:00">2019-12-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-12-13 18:16:04" itemprop="dateModified" datetime="2019-12-13T18:16:04+08:00">2019-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读论文/" itemprop="url" rel="index"><span itemprop="name">读论文</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/14647/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/14647/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这里选择的文章是 2017 年的文章 <a href="https://ieeexplore.ieee.org/document/7829297" target="_blank" rel="noopener">Better Platooning Control Toward Autonomous Driving: An LTE Device-To-Device Communications Strategy That Meets Ultralow Latency Requirements</a>。文章来自 <a href="http://www.ieeevtc.org/vtmagazine/" target="_blank" rel="noopener">Vehicular Technology Magazine</a> 杂志。这个杂志的影响因子挺高的。从标题来看，作者关注的是 LTE D2D 通信无人驾驶编队的控制问题中的应用。D2D 通信是 5G 引入的一个非常重要的特性。可以说对于物联网应用来说，D2D 能力比起带宽和延时来说更为重要。不过舆论对于这个问题的关注不多。这篇文章是一篇 Magazine，一般 Magazine 文章关注的都是研究趋势，而不是关注特别细节的技术问题。因此仔细阅读这篇文章，可以帮助我们了解车联网 + 5G 研究的一些前沿的思路，而不用陷入很多繁冗的细节问题。</p>
+<blockquote>
+<p>看完了文章可以来做一些评论了。最初看这篇文章的目的有两方面，首先是我准备投稿 VTM，因此找来上面的文章看看其风格，而具体而言选择这篇文章，是因为这篇文章涉及的无人驾驶编队问题和 5G D2D 技术都是我比较关心的。</p>
+<p>从文章风格来看，这篇 VTM 还是比较典型的 Magazine 文章风格：即篇幅不长，图片比较多，而几乎没有公式。文章的会有比较大段、详细的研究背景阐述。其提出的协议和机制内容不会特别复杂，也比较少和其他文章的协议进行对比。总结而言，这类文章是选择一个比较新的研究背景，在充分介绍背景问题的基础上，提出一些非常简单的机制，具有 Tutorial 的性质。</p>
+<p>就这篇文章的内容来说，其提出的通信架构其实是非常简单的，模型也非常简单。可见，要写这类 Magazine 文章，提出什么精巧详尽的协议并不是最重要的。最重要的还是要找到非常好的研究场景。</p>
+</blockquote>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/14647/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/53997/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/53997/" class="post-title-link" itemprop="url">Weekly-25</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-09 16:44:07" itemprop="dateCreated datePublished" datetime="2019-12-09T16:44:07+08:00">2019-12-09</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-12-16 13:39:52" itemprop="dateModified" datetime="2019-12-16T13:39:52+08:00">2019-12-16</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/53997/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/53997/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://imgs.codewoody.com/uploads/big/8a010830e663bf6758614846d0920736.jpg"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/53997/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/27790/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/27790/" class="post-title-link" itemprop="url">[翻译]网页中的图像优化指南</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-04 03:07:43 / Modified: 21:25:27" itemprop="dateCreated datePublished" datetime="2019-12-04T03:07:43+08:00">2019-12-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/27790/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/27790/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本文翻译自<a href="https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d" target="_blank" rel="noopener">Optimizing images for the web - an in-depth guide</a></p>
+<p><img src="https://imgs.codewoody.com/uploads/big/11095b11da720ac41968ed26b81beb9d.jpg"></p>
+<p>这篇文章提供了Web开发中涉及图像的一些优化问题：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/27790/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/4652/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/4652/" class="post-title-link" itemprop="url">Weekly-24</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-02 12:28:48" itemprop="dateCreated datePublished" datetime="2019-12-02T12:28:48+08:00">2019-12-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-12-13 16:15:38" itemprop="dateModified" datetime="2019-12-13T16:15:38+08:00">2019-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/4652/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/4652/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://imgs.codewoody.com/uploads/big/57ff1d652828123817e2eba8b6061242.jpg"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/4652/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/62057/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/62057/" class="post-title-link" itemprop="url">高技术人才长期羁押问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-01 14:04:11" itemprop="dateCreated datePublished" datetime="2019-12-01T14:04:11+08:00">2019-12-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-01-22 13:23:13" itemprop="dateModified" datetime="2020-01-22T13:23:13+08:00">2020-01-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/杂谈/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/62057/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/62057/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>近期华为一位工程师在获取离职赔偿之后被公司诬告，导致他被羁押了251天的事情再次带来了社会舆论对于技术人才遭遇的这种司法不公的关注。似乎在这种问题上，我国的取保候审制度似乎就成了摆设。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/62057/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/38296/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/38296/" class="post-title-link" itemprop="url">[转载]传华为13年老员工离职索要赔偿被关押251天</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-11-30 19:37:18 / Modified: 19:38:51" itemprop="dateCreated datePublished" datetime="2019-11-30T19:37:18+08:00">2019-11-30</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/38296/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/38296/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>原文转载自：<a href="https://www.williamlong.info/archives/5902.html" target="_blank" rel="noopener">https://www.williamlong.info/archives/5902.html</a></p>
+</blockquote>
+<p>11月28日一份刑事赔偿决定书在网上流传，一位华为离职员工李洪元索要2N赔偿之后，被华为控告敲诈勒索，于2018年12月16日被拘留，法院认定犯罪事实不清，证据不足，不符合起诉条件，关押251天后李洪元重回自由。</p>
+<p>在法院的宣判文中，深圳龙岗法院表示：深圳市公安局移送审查起诉的犯罪嫌疑人李洪元涉嫌敲诈勒索罪一案退回公安机关第二次补充侦查。深圳市公安局于7月10日提交了《补充侦查报告》，反映了其在与李洪元商谈离职补偿问题时，李洪元根本不存在敲诈勒索的行为。为此，鉴于李洪元的行为根本不构成犯罪或者依法不应追究刑事责任的实际情况，依照《刑事诉讼法》第一百七十三条第一款及第一百七十一条第四款之规定，对华为该员工作出法定不起诉的决定。</p>
+<p>经本院审查并通过补充侦查，仍然认为深圳市公安局认定的犯罪事实不清，证据不足，不符合起诉条件。于2019年8月22日决定对李洪元不起诉。对赔偿请求人李洪元予以国家赔偿，包括人身自由损害赔偿金79300.94元，精神损害抚慰金27755元，两项合计107522. 94元。向李洪元原工作单位、其父亲李洪元所在的工作单位发函、为其消除影响、恢复名誉。</p>
+<p>从宣判文中可见：</p>
+<ol type="1">
+<li>李洪元2005年入职华为担任工程师，离职前在逆变器销售管理部工作，2018年1月31日离职，在华为工作13年之久，主动离职与辞退离职尚未知晓。</li>
+<li>离职过程中，因为补偿金额发生争议，商议后补偿33万元左右。</li>
+<li>2018年3月8日，李洪元离职近40天后，华为向其转款补偿金，注意是通过私人账号，同时备注转款原因离职经济补偿。</li>
+</ol>
+<p>前边的一系列流程都很正常，离职然后补偿，但华为的HR并没有停手，他们起诉李洪元敲诈勒索，于2018年12月16日被拘留，幸亏人民法院认定犯罪事实不清，证据不足，认定不符合起诉条件，关押251天后李洪元重回自由。</p>
+<p>以下为不起诉意向书（部分）内容：</p>
+<p>2018年12月15日，华为公司委托法务人员袁x到深圳市公安局经侦支队八大队报案称：公司员工李xx与杨x等人勾结，在与公司的离职补偿劳动纠纷中，威胁将资料外泄披露，要求公司给予补偿。在公安机关以侵犯商业秘密立案而查证无果的情况下，华为公司改变策略，于2018年12月28日以涉嫌敲诈勒索再次报案，控告李xx于2018年1月31日与部门领导何xx洽谈离职补偿过程中，采用威胁和强制的方式，迫使该员工何xx同意私下给付额外补偿金33万元，以换取他不闹事，不举报，顺利离职的承诺。</p>
+<p>本案中，华为公司相关工作人员何xx、李x、袁x、周x作为证人，分别多次接受了公安机关的询问，并制作了询问笔录。所有这些证人均口径一致的指证李xx在与何xx商谈离职补偿时，采用了威胁和强制的方式，逼迫何xx给予额外的2N补偿，最后何xx考虑到李xx的危险性，不得不作出让步。好在该员工李xx保存了当时与何xx商谈离职补偿时的录音资料，通过该录音资料能够反证何xx等人是在说谎，不能排除有恶意构陷李xx之嫌。辩护人觉得事态严重，迅速向贵院出具了法律意见书，要求人民检察院将本案退回补充侦查。</p>
+<p>公安机关在第一次补充侦查阶段，提交了将查扣的李xx的两部手机、一台笔记本电脑、一个录音笔、一个u盘、一个移动硬盘设备内的电子数据委托广东安证计算机司法鉴定所进行司法鉴定后，该所出具的《司法鉴定意见书》及录音资料文字版。能够证明当时的商谈是在双方有说有笑的基础上进行的，最终经过2小时12分24秒的充分协商，达成了离职补偿协议，整个过程并无李xx实施威胁或要挟的语言，反倒是何xx与袁x反复强调该协议内容合法，要求该员工李xx尽快接受协议约定的内容并迅速签字，足以证明李xx在与何xx商谈离职补偿的时候没有采用敲诈勒索的方式，何xx等人的证言称何xx在与李xx商谈离职补偿时受到李洪元敲诈勒索没有事实根据。</p>
+<p>公安机关在第二次补充侦查过程中，再一次对何xx进行了询问，并附上了对何xx的询问笔录。可能这次是何xx良心发现，推翻了原来的证言，并如实陈述了自己与李xx仅仅只是2018年1月31日下午接触过一次，且在这次商谈过程中，李xx并没有对其实施要挟和威胁行为。该陈述与公安机关第一次补充侦查阶段提供的2019年5月13日华为公司逆变器管理部HRBP吕辉平出具的《关于李xx工作调整和合同不续签的两次正式沟通说明》内容相印证。吕xx在说明中称，自己协助主管熊x与该员工进行了两次沟通，第一次是在2017年7月底指出该员工业务不足以及工作调整，下半年工作重点和输出等，并提供机会给他工作调整；第二次是2017年12月份，作出不续签合同的正式沟通，安排工作交接和要求，整个沟通过程平和，李表示了解公司离职政策，并没有跟沟通主管和吕xx提特殊要求。由此可见，李xx在2018年1月31日与何xx商谈离职补偿之前，没有采用任何过激的语言，当获知公司不续签劳动合同的消息后，也能够保持理智，并没有提出任何特殊要求；接着在与何xx商谈离职补偿的过程中，更没有对何xx实施要挟和威胁的方式。那么，本案所谓敲诈勒索罪依法不能成立。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/37730/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/37730/" class="post-title-link" itemprop="url">【翻译】使用Swift语言来进行数据科学研究的指南</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-11-29 23:06:56" itemprop="dateCreated datePublished" datetime="2019-11-29T23:06:56+08:00">2019-11-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-12-01 18:37:23" itemprop="dateModified" datetime="2019-12-01T18:37:23+08:00">2019-12-01</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/37730/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/37730/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://imgs.codewoody.com/uploads/big/b5e001b9f8a4d9dafcd5ec496a58de85.jpg"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/37730/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/46352/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -662,7 +1946,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-11-28 22:21:44" itemprop="dateModified" datetime="2019-11-28T22:21:44+08:00">2019-11-28</time>
+                <time title="Modified: 2020-01-22 13:23:13" itemprop="dateModified" datetime="2020-01-22T13:23:13+08:00">2020-01-22</time>
               
             
           </span>
@@ -970,1387 +2254,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/4268/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/4268/" class="post-title-link" itemprop="url">Weekly-22</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-21 20:25:09" itemprop="dateCreated datePublished" datetime="2019-11-21T20:25:09+08:00">2019-11-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-11-27 16:47:16" itemprop="dateModified" datetime="2019-11-27T16:47:16+08:00">2019-11-27</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/4268/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/4268/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>受了点伤，这周更新的内容估计要少一点了。</p>
-<h2 id="新闻">新闻</h2>
-<h3 id="至21日伊朗连续第三天关闭互联网"><a href="https://www.voachinese.com/a/iran-blocks-internet-for-3rd-day-20191118/5171338.html" target="_blank" rel="noopener">至21日伊朗连续第三天关闭互联网</a></h3>
-<p>伊朗当局为镇压全国反政府抗议活动，已连续第三天关闭互联网服务。自上星期五（11月15日）抗议爆发以来，已有至少八人丧生。</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/803c4704ec6cbdffb0e9e8a32573c2ed.jpg" alt="伊朗反政府抗议者封锁了首都德黑兰的一条道路。(2019年11月17日)"><figcaption>伊朗反政府抗议者封锁了首都德黑兰的一条道路。(2019年11月17日)</figcaption>
-</figure>
-<p>互联网中断使得伊朗人很难与其他国家和外界分享抗议图片和信息。星期五早些时候，政府突然将汽油价格上调了50%，引发了抗议活动。伊朗新的汽油价格约合每升合13美分，仍属世界最低油价之列。但许多伊朗人认为，在经济状况不断恶化之际，这将给他们增加更多经济负担。</p>
-<h3 id="美国两院通过香港人权法案"><a href="https://www.voachinese.com/a/HOUSE-PASSED-HONG-KONG-ACT-20191120/5174540.html" target="_blank" rel="noopener">美国两院通过香港人权法案</a></h3>
-<p>美国国会众议院星期三(11月20日)以压倒多数通过了《香港人权与民主法案》。这项法案将定期审议香港的自治地位，从而决定是否维持美国法律所赋予香港的特殊待遇。这部法案接下来送交特朗普总统等候签署。</p>
-<p>参议院在星期二无异议通过了这部法案。众议院在今年9月曾无异议通过同一法案的众议院版本。按照国会程序，两院版本如果不同，在送交总统签署前，必须加以协调。然而，在国会年底休假将近之际，众议院直接对参议院版本进行了表决，因此无须再整合版本和二度表决。</p>
-<blockquote>
-<p>有意思的是，NYT的报道说这一事件的反复显示了华为在白宫的脆弱地位。其实恰恰想法。要是华为的地位真的脆弱，早就完全禁了，何至于这么反复延期，落人笑柄呢？</p>
-</blockquote>
-<h3 id="美国延期华为的临时许可"><a href="https://cn.nytimes.com/technology/20191119/huawei-us-china/" target="_blank" rel="noopener">美国延期华为的临时许可</a></h3>
-<p>本周伊始，特朗普政府给了中国电信巨头华为一个喘息的机会。它很可能会以不同的监管机构投票表决，使这家企业在美国更难开展业务而告终。商务部周一表示，将把允许企业向华为出口商品的许可证延长90天，尽管华为被列入美国政府的黑名单，禁止与美国合作伙伴开展业务。联邦通信委员会（Federal Communications Commission，简称FCC）将于周五投票，决定是否禁止无线供应商利用联邦补贴购买华为设备——设立该补贴的目的是将宽带接入扩大到服务不足的地区。</p>
-<h3 id="其他">其他</h3>
-<h4 id="国际">国际</h4>
-<ul>
-<li>安倍晋三成为日本在职时间最长的首相。<a href="https://cn.reuters.com/article/japan-abe-longest-serving-1120-wedn-idCNKBS1XU0CV?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></li>
-<li>三艘在俄罗斯被扣押的乌克兰舰艇回到乌克兰。<a href="http://sputniknews.cn/opinion/201911211030093179/" target="_blank" rel="noopener">source</a><span class="foot-note-span">【进来欧盟(主要是法国牵头)正在从中协调俄乌和解，这一举措应该是和解进程推进的表现】</span></li>
-<li>中国区块链技术相关专利申请数量位居世界第一，达到美国的三倍。<a href="http://sputniknews.cn/china/201911211030093101/" target="_blank" rel="noopener">source</a></li>
-<li>图瓦卢外交部长科菲访问台湾。</li>
-</ul>
-<h4 id="国内">国内</h4>
-<ul>
-<li>王思聪21日再次被限制消费。<a href="https://www.zhihu.com/question/356958027" target="_blank" rel="noopener">source</a></li>
-<li>江一燕获奖的别墅被确认是违建。<a href="https://www.zhihu.com/question/356958027" target="_blank" rel="noopener">source</a></li>
-</ul>
-<h4 id="科技">科技</h4>
-<ul>
-<li>Nature 重磅发现癌基因存在于环形 ecDNA。<a href="https://www.zhihu.com/question/356918720" target="_blank" rel="noopener">source</a></li>
-<li>阿里王坚当选中国工程院院士。<a href="https://www.williamlong.info/archives/5896.html" target="_blank" rel="noopener">source</a></li>
-<li>IPv4地址耗尽。<a href="https://www.ithome.com/0/459/157.htm" target="_blank" rel="noopener">source</a></li>
-</ul>
-<h2 id="文章与资源">文章与资源</h2>
-<ul>
-<li><a href="http://www.ruanyifeng.com/blog/2019/11/css-position.html" target="_blank" rel="noopener">CSS定位详解</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/4588/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/4588/" class="post-title-link" itemprop="url">Weekly-21</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-12 13:33:41" itemprop="dateCreated datePublished" datetime="2019-11-12T13:33:41+08:00">2019-11-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-11-26 12:45:51" itemprop="dateModified" datetime="2019-11-26T12:45:51+08:00">2019-11-26</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/4588/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/4588/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/36dce87fe23e5e8a2a69a3634adc2332.jpg">
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/4588/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/53549/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/53549/" class="post-title-link" itemprop="url">Weekly-20</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-06 15:40:13" itemprop="dateCreated datePublished" datetime="2019-11-06T15:40:13+08:00">2019-11-06</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-11-21 16:09:03" itemprop="dateModified" datetime="2019-11-21T16:09:03+08:00">2019-11-21</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/53549/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/53549/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/1fd7fc646d55c11f2a5394df02b88ce8.jpg"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/53549/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/10221/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/10221/" class="post-title-link" itemprop="url">Weekly-19</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-03 16:30:29" itemprop="dateCreated datePublished" datetime="2019-11-03T16:30:29+08:00">2019-11-03</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-12-28 15:45:14" itemprop="dateModified" datetime="2019-12-28T15:45:14+08:00">2019-12-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/10221/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/10221/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/5f44c8f9ab4135c21d04774404e7347d.jpg">
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/10221/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/53819/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/53819/" class="post-title-link" itemprop="url">读论文:一种面向无线网络的Group Centric Networking路由算法</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-10-28 10:59:29" itemprop="dateCreated datePublished" datetime="2019-10-28T10:59:29+08:00">2019-10-28</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-11-29 02:04:15" itemprop="dateModified" datetime="2019-11-29T02:04:15+08:00">2019-11-29</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读论文/" itemprop="url" rel="index"><span itemprop="name">读论文</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/53819/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/53819/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这次我们要读的文章是<i>Group centric networking: A new approach for wireless multi-hop networking</i><span class="citation" data-cites="greg2018group">[1]</span>，文章的作者来自MIT的<a href="https://zh.wikipedia.org/zh-hans/%E6%9E%97%E8%82%AF%E5%AF%A6%E9%A9%97%E5%AE%A4" target="_blank" rel="noopener">林肯实验室</a>。这篇文章主要提出了一种针对大规模的物联网系统无线网络的网络架构方案，方案的名称为Group Centric Networking (GCN)。协议仿真由NS3仿真来实现，同时还在一个由90部Android手机组成的测试平台上进行了测试，并且作者将相关的源代码进行了开源。在通信网络相关的文章中，能够进行如此详尽的实现和测试的文章不多的。因此这篇文章有比较多的研究价值。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/53819/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/59180/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/59180/" class="post-title-link" itemprop="url">Weekly-18</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-10-27 21:28:29" itemprop="dateCreated datePublished" datetime="2019-10-27T21:28:29+08:00">2019-10-27</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-11-03 16:34:44" itemprop="dateModified" datetime="2019-11-03T16:34:44+08:00">2019-11-03</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/59180/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/59180/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/6415960c2c878cf88a16235b55373f03.jpeg"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/59180/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/58220/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/58220/" class="post-title-link" itemprop="url">Weekly-17</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-10-20 14:43:49" itemprop="dateCreated datePublished" datetime="2019-10-20T14:43:49+08:00">2019-10-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-10-27 21:28:58" itemprop="dateModified" datetime="2019-10-27T21:28:58+08:00">2019-10-27</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/58220/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/58220/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/11b96d95c8d170401a9c3dd80ce75d5b.jpg"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/58220/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2394,7 +2302,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">108</span>
+                    <span class="site-state-item-count">115</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2437,7 +2345,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2564,7 +2474,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -2650,7 +2568,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -3150,21 +3068,21 @@
   
     
       
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
         
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
       
     
       

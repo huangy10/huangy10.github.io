@@ -146,7 +146,19 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/06b383e0ac612356327bbd24f88f7e74.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ef67b15e4df2bdc02a28c9f31ea88978.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/30469a05fd796b2d3819cd60329ac053.png">
-<meta property="og:updated_time" content="2019-12-28T11:50:51.038Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e76759cf77f99e2dffb350e6262732b8.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/659edb0e76db1195d770c14232be9925.gif">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1bef52d8718ad19a518a9f276de13398.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/686318979265b92ebe3a9c436c0ed7f9.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7036c4a6c678e1a5ca9cdd999d314867.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/45ebcb4734eebcc3a18b4890f7efba73.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/68e587f93388da56130e7be42e7f9f7b.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3156d580caa4311be546e332112e53bd.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/64eb4a66755be767765c27ffc1aa679a.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1fdd052b84a701c800012616f07bb2b0.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c1b9955b9e458eec9ad9ed366f1e4158.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/050f37998e76ce6a5a93bcbd38fdf9a4.png">
+<meta property="og:updated_time" content="2020-02-26T08:59:58.788Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n 课程笔记">
 <meta name="twitter:description" content="这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk 在记录课程内容的同时，我也会对课程的内容做重">
@@ -680,7 +692,7 @@ L_i = - \log P(Y = y_i | X = x_i) = -\log \left(\frac{e^{y_i}}{\sum_j e^{s_j}}\r
 <p>Softmax 损失函数相比于 SVM 损失函数的一个特点在于，SVM 损失只关心分数是否存在一定的优势，而只要优势存在，具体的分差他就不再关心。例如分数 [10, 9, 9] 和 分数 [10, -100, -100] (第一个类别是正确的类别) 产生的损失是一样的。但是 Softmax 进一步关心分差的值的大小。因此，Softmax 要求不断地向正确的选项上集中分数。</p>
 </blockquote>
 <h3 id="过拟合与正则化">过拟合与正则化</h3>
-<p>在上面的「超参数与Validation」章节我们提到了模型与训练数据**过度*耦合的问题。例如考虑一个曲线拟合问题，如果曲线形式足够复杂，让曲线穿过每一个数据点，那么可以取得最小的误差。</p>
+<p>在上面的「超参数与Validation」章节我们提到了模型与训练数据<strong>过度</strong>耦合的问题。例如考虑一个曲线拟合问题，如果曲线形式足够复杂，让曲线穿过每一个数据点，那么可以取得最小的误差。</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/58ed0392663a305e925f7e3c2f7cd399.png" alt="" style="width: 60%"></p>
 <p>但是在潜在的应用数据上，这种拟合曲线性能不一定好：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/a05532ae8094411124878313ca6c6fb9.png" alt="" style="width: 60%"></p>
@@ -754,6 +766,180 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
 <p>隐藏层 (<i>hidden layer</i>) 是对多层神经网络中除输入输出层以外的其他层的称呼。</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/30469a05fd796b2d3819cd60329ac053.png"></p>
 <h2 id="卷积神经网络">卷积神经网络</h2>
+<p><img src="https://imgs.codewoody.com/uploads/big/e76759cf77f99e2dffb350e6262732b8.png"></p>
+<blockquote>
+<p>关于卷积神经网络和神经网络的区别：在神经网络中，事实上各个输入之间是相互独立的，我们可以调换输入向量中不同元素的位置，相应的，我们调整参数矩阵中对应元素的位置，可以让调换前后的模型具有等价性。这种特性事实上忽略了不通元素之间的空间联系。这种空间联系在很多数据类型，尤其是图像数据上，是非常重要的。这也是卷积神经网络要解决的问题。卷积神经网络中，卷积过程实际上就是空间相关的过程。</p>
+</blockquote>
+<h3 id="卷积层">卷积层</h3>
+<p>在神经网络中（现在我们称之为全连接网络），对于一个输入图像，我们是直接将其伸展为一个一维向量，例如一个 <span class="math inline">\(32 \times 32 \times 3\)</span> 的图像，我们将其伸展为 <span class="math inline">\(3072 \times 1\)</span> 的向量。这种伸展没有体现各个像素之间的空间关联。卷积层则使用一个Filter来保留空间上的临近相关性。仍然以一个<span class="math inline">\(32 \times 32 \times 3\)</span>图像为例，我们选择一个<span class="math inline">\(n\times n \times 3\)</span>的Filter。注意Filter的通道数要和原图的相同。<span class="math inline">\(n\)</span>为Filter的大小。然后我们将Filter叠在输入图像上从左至右，从上至下进行扫描。在每个扫描位置上，将Filter中的元素和原输入图像的对应元素相乘求和（点积），加上一个偏移(这个偏移是Optional的)以后得到一个常数输入。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/659edb0e76db1195d770c14232be9925.gif" alt="图片来源：12张动图解析深度学习中的卷积网络，注意图中在图像边缘处的处理。Filter扫描框是否要越过图片边界，以及越过边界外的部分如何填充值是一个需要探究的问题。越过边界的幅度称为Padding。Padding会影响输入矩阵的尺寸。实践中通常我们会Padding出一圈0以保证输入和输出的尺寸相同。"><figcaption>图片来源：<a href="https://cloud.tencent.com/developer/article/1031131" target="_blank" rel="noopener">12张动图解析深度学习中的卷积网络</a>，注意图中在图像边缘处的处理。Filter扫描框是否要越过图片边界，以及越过边界外的部分如何填充值是一个需要探究的问题。越过边界的幅度称为Padding。Padding会影响输入矩阵的尺寸。实践中通常我们会Padding出一圈0以保证输入和输出的尺寸相同。</figcaption>
+</figure>
+<p>对于同一层输入我们还可以使用多个Filter（一般是同尺寸）的，以得到多通道的输出。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/1bef52d8718ad19a518a9f276de13398.png"></p>
+<p>不同层之间插入激励函数。我们将这样卷积层叠加起来就得到了卷积神经网络。</p>
+<p>卷积层输入层尺寸的计算法方法为：</p>
+<p><span class="math display">\[
+D_{output} = (D_{input} - D_{filter} + padding \times 2) / stride + 1
+\]</span></p>
+<p>其中 <span class="math inline">\(stride\)</span> 为卷积扫描过程的步长。有一个要注意的问题是，上面的除法过程要求整除，而不是计算上做取整处理。如果不能整除，会有部分数据没有被扫描到。</p>
+<h3 id="pooling层">Pooling层</h3>
+<blockquote>
+<p>Pooling这个词我还没有看到比较好的中文翻译。其作用本质上是正则化，限制模型的过拟合和路径依赖</p>
+</blockquote>
+<p>Pooling其实就是在做降采样，其作用：</p>
+<ul>
+<li>makes representations smaller and more manageable</li>
+<li>operates over each activation map independently</li>
+</ul>
+<p><img src="https://imgs.codewoody.com/uploads/big/686318979265b92ebe3a9c436c0ed7f9.png"></p>
+<h4 id="max-pooling">Max Pooling</h4>
+<p><img src="https://imgs.codewoody.com/uploads/big/7036c4a6c678e1a5ca9cdd999d314867.png"></p>
+<h3 id="神经卷积网络">神经卷积网络</h3>
+<p>以上介绍的卷积层还有Pooling层，再加上之前我们已经知道的激励函数还有全连接网络，我们可以组织出卷积神经网络的基本架构：</p>
+<p>现在问题是我们如何训练神经网络，其中的关键又在于back-propagation怎么计算。</p>
+<p>卷积神经网络的参数由两部分组成。一是全连接网络部分，这部分的梯度计算方法和之前的是一样的。二是卷积层部分的参数，这是这里我们要重点讨论的。</p>
+<h4 id="one-time-setup">One time setup</h4>
+<ul>
+<li>Activation Functions</li>
+<li>Data Preprocessing</li>
+<li>Weight Initialization</li>
+<li>Batch Normalization</li>
+<li>Babysitting the Learning Process</li>
+<li>Hyperparameter Optimization</li>
+</ul>
+<h5 id="activation-functions">Activation Functions</h5>
+<p>In practice:</p>
+<ul>
+<li>Use ReLU. Be careful with your learning rate</li>
+<li>Try out Leaky ReLU / Maxout / ELU</li>
+<li>Try out tanh but don't expect much</li>
+<li>Don't use sigmoid</li>
+</ul>
+<h5 id="data-preprocessing">Data Preprocessing</h5>
+<p>归一化输入数据：均值为0，标准差为1。（在实践中一般均值为0就行了，这个均值可以使整个图尺度的均值，也可以按通道(RGB)计算）</p>
+<h5 id="weight-initialization">Weight Initialization</h5>
+<p>不要初始化成一样的值（一样的值的话那本质上就是 <span class="math inline">\(W = 0\)</span>) 了。初步的想法是用小的随机值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W = <span class="number">0.01</span> * np.random.randn(D, H)</span><br></pre></td></tr></table></figure>
+<p>这种方法对于小规模的网络可能还管用，对于大规模的网络会存在问题。例如在一个十层网络中，每层有500个神经元，采用tanh的激励函数，用以上的方法进行参数初始化，那我们得到的每层的输出的分布为：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/45ebcb4734eebcc3a18b4890f7efba73.png"></p>
+<p>可以看到每层的均值都是比较稳定的维持在0左右，但是标准差上产生了逐层收缩的现象，而且很快就收敛到了几乎0的情况。在第一层上的输出还是维持了一个比较典型的高斯分布的曲线，后面就只剩下单峰了，这意味着所有的激励输出都成为了0。再考虑梯度计算过程，前两三层往后的参数的梯度也会趋近于0，这样会导致初期的收敛速度会非常慢。</p>
+<p>如果我们去掉<span class="math inline">\(0.01\)</span>这样的系数，即</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W = <span class="number">1.0</span> * np.random.randn(D, H)</span><br></pre></td></tr></table></figure>
+<p>那么得到的各层输出是：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/68e587f93388da56130e7be42e7f9f7b.png"></p>
+<p>可以看到输出的取值向<span class="math inline">\(\pm 1\)</span>集中，这意味着大多数激励输出都饱和了。这时大部分的梯度值都会是0。</p>
+<p>一个比较好的做法是Xavier Initialization [Glorot et al., 2010]：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W = np.random.randn(fan_in, fan_out) / np.sqrt(fan_in)</span><br></pre></td></tr></table></figure>
+<p>此时各层输出会变为：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/3156d580caa4311be546e332112e53bd.png"></p>
+<p>在这个初始化方法中，参数的幅度与输入维度之间呈负相关关系，这种关系可以理解为参数的初始化值能够自适应地调整，以在激励为0和激励饱和之间取得一个平衡点。不过这个初始化方法在使用ReLU激励函数时就没法起到这个作用了，因为ReLU总是会干掉你的一半激励（在输出取值均值为0时，大概一半的值小于0，这时激励会饱和）。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/64eb4a66755be767765c27ffc1aa679a.png"></p>
+<p>解决这个问题的是一个非常魔幻的方法😁[He et al., 2015]：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">W = np.random.randn(fan_in, fan_out) / np.sqrt(fan_in / <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://imgs.codewoody.com/uploads/big/1fdd052b84a701c800012616f07bb2b0.png"></p>
+<p>合适的初始化方法仍然是一个在研究中的问题。</p>
+<h5 id="batch-normalization">Batch Normalization</h5>
+<p>在上面的参数初始化环节我们提到我们希望激励函数的输出能够呈现单位高斯分布(Unit Gaussian, 即均值0，标准差1)。考虑一组(Batch)数据在某层的激励输出，我们使其表现为单位高斯分布：</p>
+<p><span class="math display">\[
+\hat{x}^{(k)} = \frac{x^{(k)} - E[x^{(k)}]}{\sqrt{Var[x^{(k)}]}}
+\]</span></p>
+<blockquote>
+<p>上面这个式子是可以微分的</p>
+</blockquote>
+<p>Batch Normalization一般放在全连接层或者卷积层的后面，在激励函数前面。这种调整可以让激励函数的输入落到激励函数的非饱和段（ReLU除外）。但是这未必是最好的选择，有时候我们会希望能够有部分输入能够到达饱和段。因此我们会对Batch Normalization的结果进行进一步处理。我们可以把参数选择交给机器学习来设置：</p>
+<p><span class="math display">\[
+y^{(k)} = \gamma^{(k)}\hat{x}^{(k)} + \beta^{(k)}
+\]</span></p>
+<p>当<span class="math inline">\(\gamma^{(k)} = \sqrt{Var[x^{(k)}]}, \beta^{(k)} = E[x^{(k)}]\)</span>时，实际上抵消了Batch Normalization的效果。</p>
+<blockquote>
+<p>注意这个偏移过程不是Batch Normalization必须的。</p>
+</blockquote>
+<p>综上，完整的Batch Normalization过程如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/c1b9955b9e458eec9ad9ed366f1e4158.png" alt="" style="width: 70%"></p>
+<p>注意在Test环节，Batch Normalization使用的均值和方差不是根据输入的Batch计算的，而是使用一个固定的经验值。这个经验值可以使用训练集的平均值。</p>
+<p>Batch Normalization的好处汇总如下：</p>
+<ul>
+<li>Improves gradient flow through the network</li>
+<li>Allows higher learning rates</li>
+<li>Reduces the strong dependence on initialization</li>
+<li>Acts as a form of regularization in a funny way, and slightly reduces the need for dropout, maybe</li>
+</ul>
+<h5 id="babysitting-the-training-process">Babysitting the training process</h5>
+<p>一般的训练步骤：</p>
+<ol type="1">
+<li>数据预处理（均值/标准差）</li>
+<li>选择网络架构</li>
+<li>用初始值计算一下损失函数，关掉正则化项，判断损失输出是否处于正常的水平</li>
+<li>加入正则项，看损失的变化是否合理</li>
+<li>用一个非常小的训练集来训练，关掉正则化，应该能够发现过拟合现象，即我们可以得到非常小的损失值</li>
+<li>加入比较小的正则化，找出合适的Learning Rate（能够观察到损失下降）。如果损失基本不下降，那Learning Rate就太小了。如果损失出现了NaN（损失爆炸），那么通常是Learning Rate太高。</li>
+</ol>
+<h5 id="hyperparameter-optimization">Hyperparameter Optimization</h5>
+<p>使用之前提到的Cross-Validation strategy。</p>
+<h4 id="optimizationfancier">Optimization(Fancier)</h4>
+<h5 id="随机梯度下降算法的问题">随机梯度下降算法的问题</h5>
+<p>考虑这样的场景，对于一个二维问题来说，损失函数在一个参数的方向上变化缓慢，但是在另一个参数的方向上变化迅速（<a href="https://baike.baidu.com/item/%E6%9D%A1%E4%BB%B6%E6%95%B0" target="_blank" rel="noopener">条件数</a>比较差）。此时梯度前进的方向会呈现剧烈的锯齿现象：即在一个方向上来回波动，在另一个方向上进展缓慢：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/050f37998e76ce6a5a93bcbd38fdf9a4.png"></p>
+<p>这种现象在二维问题上可能看起来只是特例，但是在高维问题上，出现梯度差异大的维度的概率是非常高的，因此这个问题的影响会比想象中的严重。</p>
+<p>SGD的另一个问题是无法很好的处理局部最优值问题。在局部最优的位置上梯度会为0。另外，在鞍点处，由于梯度值会趋近于0，因此在这个区域学习的进展也会非常缓慢。</p>
+<p>第三个问题是，SGD是随机选择部分子集来计算梯度（以减少计算量），这个随机选择的过程会带来一定程度的噪声，这个噪声会在一定程度上降低学习效率。</p>
+<h5 id="改进">改进</h5>
+<p>一个思路是给梯度加上「冲力」(SGD + Momentum)。原版的梯度下降是</p>
+<p><span class="math display">\[
+x_{t+1}=x_{t}-\alpha \nabla f\left(x_{t}\right)
+\]</span></p>
+<p>这里梯度被视为近似速度的概念。我们可以把梯度当成类似加速度的概念：</p>
+<p><span class="math display">\[
+\begin{array}{l}
+{v_{t+1}=\rho v_{t}+\nabla f\left(x_{t}\right)} \\
+{x_{t+1}=x_{t}-\alpha v_{t+1}}
+\end{array}
+\]</span></p>
+<p>上面的<span class="math inline">\(\rho\)</span>可以被理解为摩擦力（一般取值为0.9或者0.99），使得过去的梯度影响逐渐消退。这种「冲力」可以使得梯度下降过程中可以突破局部最优区间，并且可以较为快速地通过原来下降缓慢的区间。在速度累积的过程中，随机梯度计算引入的噪声可以被平均掉，这带来更加平滑的收敛过程。</p>
+<p>Nesterov Momentum对于梯度计算的做出了一点调整：</p>
+<p><span class="math display">\[
+\begin{array}{l}
+{v_{t+1}=\rho v_{t}-\alpha \nabla f\left(x_{t}+\rho v_{t}\right)} \\
+{x_{t+1}=x_{t}+v_{t+1}}
+\end{array}
+\]</span></p>
+<p>其中梯度计算的位置不是当前所处的位置，而是保持目前的速度前进到的下一个时刻的位置的梯度作为此刻的加速度。上式看着有一点不太好，梯度计算的位置有一点反直觉，我们做一下等价变换<span class="math inline">\(\tilde{x}_{t}=x_{t}+\rho v_{t}\)</span>：</p>
+<p><span class="math display">\[
+\begin{aligned}
+v_{t+1} &amp;=\rho v_{t}-\alpha \nabla f\left(\tilde{x}_{t}\right) \\
+\tilde{x}_{t+1} &amp;=\tilde{x}_{t}-\rho v_{t}+(1+\rho) v_{t+1} \\
+&amp;=\tilde{x}_{t}+v_{t+1}+\rho\left(v_{t+1}-v_{t}\right)
+\end{aligned}
+\]</span></p>
+<p>这样形式上更加接近于SGD Momentum的版本。</p>
+<p>接下来我们介绍AdaGrad</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grad_squared = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    dx = compute_gradient(x)</span><br><span class="line">    grad_squared += dx * dx</span><br><span class="line">    x -= learning_rate * dx / (np.sqrt(grad_squared) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+<p>AdaGrad的好处是能够平衡梯度下降的速度。当某个维度上的梯度值比较小是，这个维度方向上的前进速度被加速，当某个维度上的梯度比较大时，则被减速。另外，随着时间累积，<code>grad_sqaured</code>的值越大，这意味着梯度下降的速度整体上越来越慢，这个现象可好可坏。在凸问题上，接近最优点时减速有助于更好地逼近到最佳点。但是对于非凸问题，局部最优和鞍点的响应会被放大。</p>
+<p>AdaGrad的改进版是RMSProp:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">grad_squared = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    dx = compute_gradient(x)</span><br><span class="line">    grad_squared = decay_rate * grad_squared + (<span class="number">1</span> - decay_rate) * dx * dx</span><br><span class="line">    x -= learning_rate * dx / (np.sqrt(grad_squared) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+<p>这里用<code>decay_rate</code>来抑制<code>grad_squared</code>单调递增的趋势。</p>
+<p>将Momentum和AdaGrad的想法结合起来就得到了Adam(部分)：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">first_moment = <span class="number">0</span></span><br><span class="line">second_moment = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">    dx = compute_gradient(x)</span><br><span class="line">    first_moment = beta1 * first_moment + (<span class="number">1</span> - beta1) * dx</span><br><span class="line">    second_moment = beta2 * second_moment + (<span class="number">1</span> - beta2) * dx * dx</span><br><span class="line">    x -= learning_rate * first_moment / (np.sqrt(second_moment) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+<p>注意到最初时，可能会产生一个非常大的步长。这是由于算法的结构导致，而非问题的集合特征导致。这个大的步长不是我们希望的。修正这个问题得到就是Adam的完全体：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">first_moment = <span class="number">0</span></span><br><span class="line">second_moment = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> range(num_iterations):</span><br><span class="line">    dx = compute_gradient(x)</span><br><span class="line">    first_moment = beta1 * first_moment + (<span class="number">1</span> - beta1) * dx</span><br><span class="line">    second_moment = beta2 * second_moment + (<span class="number">1</span> - beta2) * dx * dx</span><br><span class="line">    first_unbias = first_moment / (<span class="number">1</span> - beta1 ** t)</span><br><span class="line">    second_unbias = second_moment / (<span class="number">1</span> - beta2 ** t)</span><br><span class="line">    x -= learning_rate * first_unbias / (np.sqrt(second_unbias) + <span class="number">1e-7</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>一般来说，Adam方法是比较推荐的方法</strong>。</p>
+<h4 id="regularization">Regularization</h4>
+<h5 id="dropout">Dropout</h5>
+<p>Dropout的操作非常简单。在做模型的正向计算，在每一层我们随机把一些输出设置为0。一般这个概率是0.5。这样做的好处是迫使网络具备一定的冗余能力，避免模型出现「路径依赖」。</p>
+<p>另一种解读是，Dropout其实是让我们能够在一个大的模型中能够实现众多较小模型的组合。相当于同时训练了数量庞大的较小模型。</p>
+<p>Dropout的问题在于，在Test阶段我们如何处理呢？理想的方法是做积分：</p>
+<p><span class="math display">\[
+y=f(x)=E_{z}[f(x, z)]=\int p(z) f(x, z) d z
+\]</span></p>
+<blockquote>
+<p>上面的 z 为 Dropout 的 Mask</p>
+</blockquote>
+<p>这个积分过程充分展开，得到的结果其实就是在停用Dropout的基础上，对层的输出乘以Dropout概率。更好的方法是在Dropout层上除以这个概率p，这样训练阶段就不需要额外处理了。</p>
+<h5 id="data-augmentation">Data Augmentation</h5>
+<p>数据增强这个话题比较多样，有很多数据增强的方法。例如在图像识别中我们可以将所有图片翻转一次作为新的样本。或者调整一下图像的明度，对比度等。这类方法有很多。</p>
+<h4 id="transfer-learning">Transfer Learning</h4>
+<p>用预训练的大模型（解决相似问题的），使用其中的大部分参数，在较小的训练数据集合上训练小部分参数。</p>
 
         
       </div>
@@ -882,7 +1068,7 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">108</span>
+                    <span class="site-state-item-count">115</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -925,7 +1111,9 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -1052,7 +1240,15 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1134,7 +1330,7 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算-computational-graphs"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算 (Computational Graphs)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络模型"><span class="nav-number">3.1.</span> <span class="nav-text">神经网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激励函数"><span class="nav-number">3.2.</span> <span class="nav-text">激励函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层"><span class="nav-number">3.3.</span> <span class="nav-text">隐藏层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">4.</span> <span class="nav-text">卷积神经网络</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算-computational-graphs"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算 (Computational Graphs)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络模型"><span class="nav-number">3.1.</span> <span class="nav-text">神经网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激励函数"><span class="nav-number">3.2.</span> <span class="nav-text">激励函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层"><span class="nav-number">3.3.</span> <span class="nav-text">隐藏层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">4.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层"><span class="nav-number">4.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pooling层"><span class="nav-number">4.2.</span> <span class="nav-text">Pooling层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#max-pooling"><span class="nav-number">4.2.1.</span> <span class="nav-text">Max Pooling</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经卷积网络"><span class="nav-number">4.3.</span> <span class="nav-text">神经卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#one-time-setup"><span class="nav-number">4.3.1.</span> <span class="nav-text">One time setup</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#activation-functions"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">Activation Functions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#data-preprocessing"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">Data Preprocessing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#weight-initialization"><span class="nav-number">4.3.1.3.</span> <span class="nav-text">Weight Initialization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#batch-normalization"><span class="nav-number">4.3.1.4.</span> <span class="nav-text">Batch Normalization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#babysitting-the-training-process"><span class="nav-number">4.3.1.5.</span> <span class="nav-text">Babysitting the training process</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hyperparameter-optimization"><span class="nav-number">4.3.1.6.</span> <span class="nav-text">Hyperparameter Optimization</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#optimizationfancier"><span class="nav-number">4.3.2.</span> <span class="nav-text">Optimization(Fancier)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#随机梯度下降算法的问题"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">随机梯度下降算法的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#改进"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">改进</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regularization"><span class="nav-number">4.3.3.</span> <span class="nav-text">Regularization</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#dropout"><span class="nav-number">4.3.3.1.</span> <span class="nav-text">Dropout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#data-augmentation"><span class="nav-number">4.3.3.2.</span> <span class="nav-text">Data Augmentation</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-learning"><span class="nav-number">4.3.4.</span> <span class="nav-text">Transfer Learning</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1155,7 +1351,7 @@ L(W)=\frac{1}{N} \sum_{i=1}^{N} L_{i}\left(x_{i}, y_{i}, W\right)+\lambda R(W)
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

