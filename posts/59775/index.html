@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+<html class="theme-next pisces use-motion han-js-rendered no-han-space" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  <!--  -->
+  
+  
+  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+
+
+
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.0">
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=7.1.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=7.1.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="原文地址是: Training a Convolutional Neural Network from scratch。原文的撰写时间是2019年6月7日。 在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整">
+<meta name="keywords" content="翻译,python,ml,机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[翻译]从头开始训练一个卷积神经网络">
+<meta property="og:url" content="http://www.codewoody.com/posts/59775/index.html">
+<meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="原文地址是: Training a Convolutional Neural Network from scratch。原文的撰写时间是2019年6月7日。 在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/88955ef5145051fb920e6060b337900e.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ed825d814cb7744f836ed4a13c35fae2.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e4b4bd71ddd6e51a5686040b9dd067f1.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/001cf17378733ee19156be1278bc3636.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/0b9a79552e8bf9951c07d031c8f918c4.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5b827a34812d898a22fa9921d2e17ea1.png">
+<meta property="og:updated_time" content="2020-03-01T02:02:48.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[翻译]从头开始训练一个卷积神经网络">
+<meta name="twitter:description" content="原文地址是: Training a Convolutional Neural Network from scratch。原文的撰写时间是2019年6月7日。 在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/88955ef5145051fb920e6060b337900e.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="治部少辅" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http://www.codewoody.com/posts/59775/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[翻译]从头开始训练一个卷积神经网络 | 治部少辅</title>
+  
+
+
+
+
+  <script async src="//www.googletagmanager.com/gtag/js?id=UA-114736006-1"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-114736006-1');
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">治部少辅</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">大一大万大吉</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-knowledge">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/knowledge-base" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>knowledge</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-weekly">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/Weekly/" rel="section"><i class="menu-item-icon fa fa-fw fa-newspaper-o"></i> <br>weekly</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-updates">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/update" rel="section"><i class="menu-item-icon fa fa-fw fa-edit"></i> <br>updates</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-channel">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="https://t.me/everthingaboutbullshit" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-signal"></i> <br>channel</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+
+  
+
+  <a href="https://github.com/huangy10" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewbox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a>
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/59775/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="治部少辅">
+      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
+      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="治部少辅">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">[翻译]从头开始训练一个卷积神经网络
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2020-02-29 21:01:12" itemprop="dateCreated datePublished" datetime="2020-02-29T21:01:12+08:00">2020-02-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-01 10:02:48" itemprop="dateModified" datetime="2020-03-01T10:02:48+08:00">2020-03-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/教程/" itemprop="url" rel="index"><span itemprop="name">教程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/posts/59775/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/59775/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             Views:  
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文地址是: <a href="https://towardsdatascience.com/training-a-convolutional-neural-network-from-scratch-2235c2a25754" target="_blank" rel="noopener">Training a Convolutional Neural Network from scratch</a>。原文的撰写时间是2019年6月7日。</p>
+<p>在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整的训练的工作流。这里我们架设你对于什么是卷积神经网络有一个基础的了解。如果你还缺乏最基本的知识，可以阅读原文作者的<a href="https://victorzhou.com/blog/intro-to-cnns-part-1/" target="_blank" rel="noopener">文章</a>。同时文章中部分地方还假定你对于多元微积分有一定的了解<span class="foot-note-span">【基本上你好好上过大学的高等数学应该就能理解】</span>。</p>
+<h2 id="搭建环境">搭建环境</h2>
+<p>我们的主要任务是用CNN来解决<a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener">MNIST</a>手写数字字符的识别问题。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/88955ef5145051fb920e6060b337900e.png"></p>
+<p>这里我们的CNN网络有一个卷积层(Conv Layer)，一个Max Pooling层和一个Softmax层，如下图所示：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/ed825d814cb7744f836ed4a13c35fae2.png" alt="这个模型接受MNIST中28*28的灰度图输出，并输出一个10维向量，向量的每一维对应一个数字。"><figcaption>这个模型接受MNIST中28*28的灰度图输出，并输出一个10维向量，向量的每一维对应一个数字。</figcaption>
+</figure>
+<p>在代码层面，我们写了三个类，每个类代表一个层。这三个类分别是: <code>Conv3x3</code>, <code>MaxPool</code>和<code>Softmax</code>。每个类实现了一个<code>forward()</code>函数，用来进行CNN模型的正向计算。代码内容如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">conv = Conv3x3(<span class="number">8</span>)                  <span class="comment"># 28x28x1 -&gt; 26x26x8</span></span><br><span class="line">pool = MaxPool2()                  <span class="comment"># 26x26x8 -&gt; 13x13x8</span></span><br><span class="line">softmax = Softmax(<span class="number">13</span> * <span class="number">13</span> * <span class="number">8</span>, <span class="number">10</span>) <span class="comment"># 13x13x8 -&gt; 10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(image, label)</span>:</span></span><br><span class="line">  <span class="string">'''</span></span><br><span class="line"><span class="string">  Completes a forward pass of the CNN and calculates the accuracy and</span></span><br><span class="line"><span class="string">  cross-entropy loss.</span></span><br><span class="line"><span class="string">  - image is a 2d numpy array</span></span><br><span class="line"><span class="string">  - label is a digit</span></span><br><span class="line"><span class="string">  '''</span></span><br><span class="line">  <span class="comment"># We transform the image from [0, 255] to [-0.5, 0.5] to make it easier</span></span><br><span class="line">  <span class="comment"># to work with. This is standard practice.</span></span><br><span class="line">  out = conv.forward((image / <span class="number">255</span>) - <span class="number">0.5</span>)</span><br><span class="line">  out = pool.forward(out)</span><br><span class="line">  out = softmax.forward(out)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Calculate cross-entropy loss and accuracy. np.log() is the natural log.</span></span><br><span class="line">  loss = -np.log(out[label])</span><br><span class="line">  acc = <span class="number">1</span> <span class="keyword">if</span> np.argmax(out) == label <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> out, loss, acc</span><br></pre></td></tr></table></figure>
+<p>代码的完整地址在<a href="https://github.com/vzhou842/cnn-from-scratch" target="_blank" rel="noopener">Github</a>。</p>
+<p>直接运行输出得到的结果是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MNIST CNN initialized!</span><br><span class="line">[Step 100] Past 100 steps: Average Loss 2.302 | Accuracy: 11%</span><br><span class="line">[Step 200] Past 100 steps: Average Loss 2.302 | Accuracy: 8%</span><br><span class="line">[Step 300] Past 100 steps: Average Loss 2.302 | Accuracy: 3%</span><br><span class="line">[Step 400] Past 100 steps: Average Loss 2.302 | Accuracy: 12%</span><br></pre></td></tr></table></figure>
+<p>这里模型给出的精度非常差，这是因为模型还未进行训练。</p>
+<h2 id="模型训练">模型训练</h2>
+<p>训练一个神经网络通常由两个阶段组成：</p>
+<ol type="1">
+<li>forward阶段：在forward阶段，我们将输入送入模型，正向计算出结果；</li>
+<li>backward阶段：用于计算梯度并更新权重参数；</li>
+</ol>
+<p>我们遵循上述模式来训练我们的CNN。这里我们采用了两个主要的实现设计思路：</p>
+<ol type="1">
+<li>在forward阶段，每个层会缓存下所有的数据，包括输入和中间变量，这些缓存下来的值会用于backward阶段的计算。</li>
+<li>在backwad阶段，每个层会接收到后一层的梯度，并返回本层计算出来的梯度。</li>
+</ol>
+<p>这种设计思路可以让我们的训练实现保持间接和组织化。反映这一点最好的方式是直接读代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Feed forward</span></span><br><span class="line">out = conv.forward((image / <span class="number">255</span>) - <span class="number">0.5</span>)</span><br><span class="line">out = pool.forward(out)</span><br><span class="line">out = softmax.forward(out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Calculate initial gradient</span></span><br><span class="line">gradient = np.zeros(<span class="number">10</span>)</span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Backprop</span></span><br><span class="line">gradient = softmax.backprop(gradient)</span><br><span class="line">gradient = pool.backprop(gradient)</span><br><span class="line">gradient = conv.backprop(gradient)</span><br></pre></td></tr></table></figure>
+<p>接下来我们来讨论每一层的backprop怎么做（forward其实是非常简单的）。</p>
+<h2 id="backprop-softmax">Backprop: Softmax</h2>
+<p>按照backward的顺序我们首先讨论Softmax层。首先我们来回忆一下交叉信息熵损失函数的定义：</p>
+<p><span class="math display">\[
+L = - ln (p_c)
+\]</span></p>
+<p>其中<span class="math inline">\(p_c\)</span>为正确类别的 c 的预测概率。首先我们要计算的是在backfowrad阶段Softmax输入，<span class="math inline">\(\partial L / \partial out_s\)</span>，其中<span class="math inline">\(out_s\)</span>为Softmax的输出，这个输出为一个10维向量，其中每个元素是对应数字的概率。这个计算很简单：</p>
+<p><span class="math display">\[
+\frac{\partial L}{\partial o u t_{s}(i)}=\left\{\begin{array}{ll}
+0 &amp; \text { if } i \neq c \\
+-\frac{1}{p_{i}} &amp; \text { if } i=c
+\end{array}\right.
+\]</span></p>
+<p>其中<span class="math inline">\(c\)</span>为正确的类别。代码的实现为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gradient = np.zeros(<span class="number">10</span>)</span><br><span class="line">gradeint[label] = <span class="number">-1</span> / out[label]</span><br></pre></td></tr></table></figure>
+<p>这里得到的是Softmax层在backforward阶段的输入，Softmax需要以此为输入计算出一个梯度交给前面的层。我们先来看forward阶段的实现。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Softmax</span>:</span></span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a forward pass of the softmax layer using the given input.</span></span><br><span class="line"><span class="string">    Returns a 1d numpy array containing the respective probability values.</span></span><br><span class="line"><span class="string">    - input can be any array with any dimensions.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    self.last_input_shape = input.shape</span><br><span class="line"></span><br><span class="line">    input = input.flatten()</span><br><span class="line">    self.last_input = input</span><br><span class="line"></span><br><span class="line">    input_len, nodes = self.weights.shape</span><br><span class="line"></span><br><span class="line">    totals = np.dot(input, self.weights) + self.biases</span><br><span class="line">    self.last_totals = totals</span><br><span class="line"></span><br><span class="line">    exp = np.exp(totals)</span><br><span class="line">    <span class="keyword">return</span> exp / np.sum(exp, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从这里的代码来看，作者说的Softmax层其实是一个全连接层 + Softmax函数</p>
+</blockquote>
+<p>我们缓存了三个变量：</p>
+<ul>
+<li><code>input</code>的形状</li>
+<li><code>input</code>展平后的值</li>
+<li><code>totals</code>，softmax激励函数的输入</li>
+</ul>
+<p>基于上面这三个缓存的值我们可以开始计算梯度。上面我们已经计算了Softmax backprop的输入，可以发现只有<code>out_s(c)</code>是非零的，因此我们在Softmax内部计算的时候可以忽略其他项目，即我们只需要计算<span class="math inline">\(out_c\)</span>关于输入的微分。<code>out_s(c)</code>的计算过程是：</p>
+<p><span class="math display">\[
+o u t_{s}(c)=\frac{e^{t_{c}}}{\sum_{i} e^{t_{i}}}=\frac{e^{t_{c}}}{S}
+\]</span></p>
+<p>根据链式法则可以做计算，对于<span class="math inline">\(k \neq c\)</span>：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial o u t_{s}(c)}{\partial t_{k}} &amp;=-e^{t_{c}} S^{-2}\left(\frac{\partial S}{\partial t_{k}}\right) \\
+&amp;=-e^{t_{c}} S^{-2}\left(e^{t_{k}}\right) \\
+&amp;=\frac{-e^{t_{c}} e^{t_{k}}}{S^{2}}
+\end{aligned}
+\]</span></p>
+<p>对于<span class="math inline">\(t_c\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial o u t_{s}(c)}{\partial t_{c}} &amp;=\frac{S e^{t_{c}}-e^{t_{c}} \frac{\partial S}{\partial t_{c}}}{S^{2}} \\
+&amp;=\frac{S e^{t_{c}}-e^{t_{c}} e^{t_{c}}}{S^{2}} \\
+&amp;=\frac{e^{t_{c}}\left(S-e^{t_{c}}\right)}{S^{2}}
+\end{aligned}
+\]</span></p>
+<p>我们把这部分用代码实现出来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Softmax</span>:</span></span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, d_L_d_out)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a backward pass of the softmax layer.</span></span><br><span class="line"><span class="string">    Returns the loss gradient for this layer's inputs.</span></span><br><span class="line"><span class="string">    - d_L_d_out is the loss gradient for this layer's outputs.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># We know only 1 element of d_L_d_out will be nonzero</span></span><br><span class="line">    <span class="keyword">for</span> i, gradient <span class="keyword">in</span> enumerate(d_L_d_out):</span><br><span class="line">      <span class="keyword">if</span> (gradient == <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># e^totals</span></span><br><span class="line">      t_exp = np.exp(self.last_totals)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Sum of all e^totals</span></span><br><span class="line">      S = np.sum(t_exp)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of out[i] against totals</span></span><br><span class="line">      d_out_d_t = - t_exp[i] * t_exp / (S ** <span class="number">2</span>)</span><br><span class="line">      d_out_d_t[i] = t_exp[i] * (S - t_exp[i]) / (S ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># ... to be continued</span></span><br></pre></td></tr></table></figure>
+<p>这里得到还只是对中间变量的梯度，最终我们要得到的是对Weights, bias以及input的梯度，其中：</p>
+<ol type="1">
+<li>我们使用<span class="math inline">\(\partial \mathrm{L} / \partial \mathrm{W}\)</span> 来更新Weights矩阵；</li>
+<li>我们使用<span class="math inline">\(\partial \mathrm{L} / \partial \mathrm{b}\)</span> 来更新bias向量;</li>
+<li><span class="math inline">\(\partial \mathrm{L} / \partial i n p u t\)</span>被送往上一层；</li>
+</ol>
+<p>为了计算这三个梯度，我们从下面的式子出发：</p>
+<p><span class="math display">\[
+t=w \cdot input +b
+\]</span></p>
+<p>这些梯度计算都比较简单：</p>
+<span class="math display">\[\begin{aligned}
+&amp;\frac{\partial t}{\partial w}=i n p u t\\
+&amp;\frac{\partial t}{\partial b}=1\\
+&amp;\frac{\partial t}{\partial i n p u t}=w
+\end{aligned}\]</span>
+<p>利用链式法则汇总</p>
+<span class="math display">\[\begin{aligned}
+\frac{\partial L}{\partial w} &amp;=\frac{\partial L}{\partial o u t} * \frac{\partial o u t}{\partial t} * \frac{\partial t}{\partial w} \\
+\frac{\partial L}{\partial b} &amp;=\frac{\partial L}{\partial o u t} * \frac{\partial o u t}{\partial t} * \frac{\partial t}{\partial b} \\
+\frac{\partial L}{\partial i n p u t} &amp;=\frac{\partial L}{\partial o u t} * \frac{\partial o u t}{\partial t} * \frac{\partial t}{\partial i n p u t}
+\end{aligned}\]</span>
+<p>将这些代码话就可以得到</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Softmax</span>:</span></span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, d_L_d_out)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a backward pass of the softmax layer.</span></span><br><span class="line"><span class="string">    Returns the loss gradient for this layer's inputs.</span></span><br><span class="line"><span class="string">    - d_L_d_out is the loss gradient for this layer's outputs.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># We know only 1 element of d_L_d_out will be nonzero</span></span><br><span class="line">    <span class="keyword">for</span> i, gradient <span class="keyword">in</span> enumerate(d_L_d_out):</span><br><span class="line">      <span class="keyword">if</span> gradient == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># e^totals</span></span><br><span class="line">      t_exp = np.exp(self.last_totals)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Sum of all e^totals</span></span><br><span class="line">      S = np.sum(t_exp)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of out[i] against totals</span></span><br><span class="line">      d_out_d_t = -t_exp[i] * t_exp / (S ** <span class="number">2</span>)</span><br><span class="line">      d_out_d_t[i] = t_exp[i] * (S - t_exp[i]) / (S ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of totals against weights/biases/input</span></span><br><span class="line">      d_t_d_w = self.last_input</span><br><span class="line">      d_t_d_b = <span class="number">1</span></span><br><span class="line">      d_t_d_inputs = self.weights</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of loss against totals</span></span><br><span class="line">      d_L_d_t = gradient * d_out_d_t</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of loss against weights/biases/input</span></span><br><span class="line">      d_L_d_w = d_t_d_w[np.newaxis].T @ d_L_d_t[np.newaxis]</span><br><span class="line">      d_L_d_b = d_L_d_t * d_t_d_b</span><br><span class="line">      d_L_d_inputs = d_t_d_inputs @ d_L_d_t</span><br><span class="line"></span><br><span class="line">      <span class="comment"># ... to be continued</span></span><br></pre></td></tr></table></figure>
+<p>剩下的问题是输出了。我们用<span class="math inline">\(W\)</span>和<span class="math inline">\(b\)</span>的梯度，使用SGD方法更新对应的参数，同时将对<code>input</code>的梯度输出，沿着backfoward方向进行传递：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Softmax</span></span></span><br><span class="line"><span class="class">  # ...</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">  <span class="title">def</span> <span class="title">backprop</span><span class="params">(self, d_L_d_out, learn_rate)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a backward pass of the softmax layer.</span></span><br><span class="line"><span class="string">    Returns the loss gradient for this layer's inputs.</span></span><br><span class="line"><span class="string">    - d_L_d_out is the loss gradient for this layer's outputs.</span></span><br><span class="line"><span class="string">    - learn_rate is a float</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    <span class="comment"># We know only 1 element of d_L_d_out will be nonzero</span></span><br><span class="line">    <span class="keyword">for</span> i, gradient <span class="keyword">in</span> enumerate(d_L_d_out):</span><br><span class="line">      <span class="keyword">if</span> gradient == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">      <span class="comment"># e^totals</span></span><br><span class="line">      t_exp = np.exp(self.last_totals)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Sum of all e^totals</span></span><br><span class="line">      S = np.sum(t_exp)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of out[i] against totals</span></span><br><span class="line">      d_out_d_t = -t_exp[i] * t_exp / (S ** <span class="number">2</span>)</span><br><span class="line">      d_out_d_t[i] = t_exp[i] * (S - t_exp[i]) / (S ** <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of totals against weights/biases/input</span></span><br><span class="line">      d_t_d_w = self.last_input</span><br><span class="line">      d_t_d_b = <span class="number">1</span></span><br><span class="line">      d_t_d_inputs = self.weights</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of loss against totals</span></span><br><span class="line">      d_L_d_t = gradient * d_out_d_t</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Gradients of loss against weights/biases/input</span></span><br><span class="line">      d_L_d_w = d_t_d_w[np.newaxis].T @ d_L_d_t[np.newaxis]</span><br><span class="line">      d_L_d_b = d_L_d_t * d_t_d_b</span><br><span class="line">      d_L_d_inputs = d_t_d_inputs @ d_L_d_t</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Update weights / biases</span></span><br><span class="line">      self.weights -= learn_rate * d_L_d_w</span><br><span class="line">      self.biases -= learn_rate * d_L_d_b</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> d_L_d_inputs.reshape(self.last_input_shape)</span><br></pre></td></tr></table></figure>
+<p>注意返回的时候我们要调整<code>d_L_d_inputs</code>的性状以吻合最初输入的<code>input</code>的大小。我们来验证一下我们的代码，单独训练一下Softmax层试试看：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Imports and setup here</span></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(image, label)</span>:</span></span><br><span class="line">  <span class="comment"># Impementation excluded</span></span><br><span class="line">  <span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(im, label, lr=<span class="number">.005</span>)</span>:</span></span><br><span class="line">  <span class="string">'''</span></span><br><span class="line"><span class="string">  Completes a full training step on the given image and label.</span></span><br><span class="line"><span class="string">  Returns the cross-entropy loss and accuracy.</span></span><br><span class="line"><span class="string">  - image is a 2d numpy array</span></span><br><span class="line"><span class="string">  - label is a digit</span></span><br><span class="line"><span class="string">  - lr is the learning rate</span></span><br><span class="line"><span class="string">  '''</span></span><br><span class="line">  <span class="comment"># forward</span></span><br><span class="line">  out, loss, acc = forward(im, label)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Calculate initial gradient</span></span><br><span class="line">  gradient = np.zeros(<span class="number">10</span>)</span><br><span class="line">  gradient[label] = <span class="number">-1</span> / out[label]</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Backprop</span></span><br><span class="line">  gradient = softmax.backprop(gradient, lr)</span><br><span class="line">  <span class="comment"># <span class="doctag">TODO:</span> backprop MaxPool2 layer</span></span><br><span class="line">  <span class="comment"># <span class="doctag">TODO:</span> backprop Conv3x3 layer</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> loss, acc</span><br><span class="line"></span><br><span class="line">print(<span class="string">'MNIST CNN initialized!'</span>)</span><br><span class="line"><span class="comment"># Train!</span></span><br><span class="line">loss = <span class="number">0</span></span><br><span class="line">num_correct = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i, (im, label) <span class="keyword">in</span> enumerate(zip(train_images, train_labels)):</span><br><span class="line">  <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> i % <span class="number">99</span> == <span class="number">0</span>:</span><br><span class="line">    print(</span><br><span class="line">      <span class="string">'[Step %d] Past 100 steps: Average Loss %.3f | Accuracy: %d%%'</span> %</span><br><span class="line">      (i + <span class="number">1</span>, loss / <span class="number">100</span>, num_correct)</span><br><span class="line">    )</span><br><span class="line">    loss = <span class="number">0</span></span><br><span class="line">    num_correct = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  l, acc = train(im, label)</span><br><span class="line">  loss += l</span><br><span class="line">  num_correct += acc</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里的训练过程不太规范，是一个个地喂数据，同时计算在训练集上的准确率。</p>
+</blockquote>
+<p>运行后的输出是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">MNIST CNN initialized!</span><br><span class="line">[Step 100] Past 100 steps: Average Loss 2.239 | Accuracy: 18%</span><br><span class="line">[Step 200] Past 100 steps: Average Loss 2.140 | Accuracy: 32%</span><br><span class="line">[Step 300] Past 100 steps: Average Loss 1.998 | Accuracy: 48%</span><br><span class="line">[Step 400] Past 100 steps: Average Loss 1.861 | Accuracy: 59%</span><br><span class="line">[Step 500] Past 100 steps: Average Loss 1.789 | Accuracy: 56%</span><br><span class="line">[Step 600] Past 100 steps: Average Loss 1.809 | Accuracy: 48%</span><br><span class="line">[Step 700] Past 100 steps: Average Loss 1.718 | Accuracy: 63%</span><br><span class="line">[Step 800] Past 100 steps: Average Loss 1.588 | Accuracy: 69%</span><br><span class="line">[Step 900] Past 100 steps: Average Loss 1.509 | Accuracy: 71%</span><br><span class="line">[Step 1000] Past 100 steps: Average Loss 1.481 | Accuracy: 70%</span><br></pre></td></tr></table></figure>
+<p>可以看到准确度有了很大的提高，我们的CNN已经开始学习了。</p>
+<h2 id="backprop-max-pooling">Backprop: Max Pooling</h2>
+<p>Max Pooling层其实没有任何参数，但是我们还是要实现backprop操作以将梯度操作继续向前传导。我们还是从forward开始</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaxPool2</span>:</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, input)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a forward pass of the maxpool layer using the given input.</span></span><br><span class="line"><span class="string">    Returns a 3d numpy array with dimensions (h / 2, w / 2, num_filters).</span></span><br><span class="line"><span class="string">    - input is a 3d numpy array with dimensions (h, w, num_filters)</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line"></span><br><span class="line">    self.last_input = input</span><br><span class="line"></span><br><span class="line">    <span class="comment"># More Implementation</span></span><br><span class="line">    <span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p>MaxPool 的正向操作是将输入划分为<span class="math inline">\(2\times 2\)</span>的小格子，每个格子里面输出最大值。那么backprop时，我们则将backprop的输入尺寸加倍，并将梯度值传递到Pooling时最大值所在的位置，其他位置上则为 0。</p>
+<p>下面是一个简单的例子：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/e4b4bd71ddd6e51a5686040b9dd067f1.png"></p>
+<p>那么backprop的过程为</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/001cf17378733ee19156be1278bc3636.png"></p>
+<p>代码实现如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MaxPool2</span></span></span><br><span class="line"><span class="class">  # ...</span></span><br><span class="line"><span class="class"></span></span><br><span class="line"><span class="class">  <span class="title">def</span> <span class="title">iterate_regions</span><span class="params">(self, image)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Generates non-overlapping 2x2 image regions to pool over.</span></span><br><span class="line"><span class="string">    - image is a 2d numpy array</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    h, w, _ = image.shape</span><br><span class="line">    new_h = h // <span class="number">2</span></span><br><span class="line">    new_w = w // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(new_h):</span><br><span class="line">      <span class="keyword">for</span> j <span class="keyword">in</span> range(new_w):</span><br><span class="line">        m_region = image[(i * <span class="number">2</span>):(i * <span class="number">2</span> + <span class="number">2</span>), (j * <span class="number">2</span>):(j * <span class="number">2</span> + <span class="number">2</span>)]</span><br><span class="line">        <span class="keyword">yield</span> im_region, i, j</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, d_L_d_out)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a backward pass of the maxpool layer.</span></span><br><span class="line"><span class="string">    Returns the loss gradient for this layer's inputs.</span></span><br><span class="line"><span class="string">    - d_L_d_out is the loss gradient for this layer's outputs.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    d_L_d_input = np.zeros(self.last_input.shape)</span><br><span class="line">    <span class="keyword">for</span> im region, i, j <span class="keyword">in</span> self.iterate_regions(self.last_input):</span><br><span class="line">      h, w, f = im_region.shape</span><br><span class="line">      amax = np.amax(im_region, axis=(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">      <span class="keyword">for</span> i2 <span class="keyword">in</span> range(h):</span><br><span class="line">        <span class="keyword">for</span> j2 <span class="keyword">in</span> range(w):</span><br><span class="line">          <span class="keyword">for</span> f2 <span class="keyword">in</span> range(f):</span><br><span class="line">            <span class="comment"># If this pixel was the max value, copy the gradient to it</span></span><br><span class="line">            <span class="keyword">if</span> im_region[i2, j2, f2] == amax[f2]:</span><br><span class="line">              d_L_d_input[i * <span class="number">2</span> + i2, j * <span class="number">2</span> + j2, f2] = d_L_d_out[i, j, f2]</span><br><span class="line">    <span class="keyword">return</span> d_L_d_input</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这个实现是循环的，效率太低了。</p>
+</blockquote>
+<p>Max Pooling的backprop操作到这里就可以了。</p>
+<h2 id="backprop-conv">Backprop: Conv</h2>
+<p>卷积层的处理是CNN的网络的核心。还是遵循前例，我们从forward阶段的缓存开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Conv3x3</span></span></span><br><span class="line"><span class="class">  # ...</span></span><br><span class="line"><span class="class">  <span class="title">def</span> <span class="title">forward</span><span class="params">(self, input)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a forward pass of the conv layer using the given input.</span></span><br><span class="line"><span class="string">    Returns a 3d numpy array with dimensions (h, w, num_filters).</span></span><br><span class="line"><span class="string">    - input is a 2d numpy array</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    self.last_input = input</span><br><span class="line"></span><br><span class="line">    <span class="comment"># More implementation</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>为了简化操作，我们这里假设Conv层的输入的是2维数组（即通道数为1），这是因为这个Conv层在这里是第一层。在更一般的网络中，位于中间的Conv层的输入应该是一个3位数组（多了一个通道维度）。</p>
+</blockquote>
+<p>我们这里主要关心损失关于Filter的梯度。MaxPool层已经提供了Conv层的<span class="math inline">\(\partial L / \partial o u t\)</span>，所以这里我们只需要计算<span class="math inline">\(\partial o u t / \partial f i l t e r s\)</span>。要理清这个梯度的计算方法，我们首先来考虑这个问题：如果我们修改Filter的参数，这会如何影响到Conv层的输出呢？</p>
+<p>事实上修改任意Filter参数都会导致整个输出矩阵（图像）的改变。为了简化问题，我们只考虑输出的一个像素。修改Filter会对一个特定的像素产生什么影响呢？我们来看下面这个非常简单的例子：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/0b9a79552e8bf9951c07d031c8f918c4.png"></p>
+<p>我们有一个 <span class="math inline">\(3 \times 3\)</span>的图像，使用一个 <span class="math inline">\(3 \times 3\)</span> 的Filter来产生一个<span class="math inline">\(1 \times 1\)</span>的输出。如果我们将Filter中心的数字修改为1，那么输出会成为：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/5b827a34812d898a22fa9921d2e17ea1.png"></p>
+<p>细想不难发现，一个输出像素对于一个Filter元素的微分，正是输入图像对应位置上的像素灰度值。用公式表示是：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{out}(\mathrm{i}, \mathrm{j}) &amp;=\text { convolve(image, filter }) \\
+&amp;=\sum_{x=0}^{3} \sum_{y=0}^{3} \operatorname{image}(i+x, j+y) * \text { filter }(x, y) \\
+&amp; \frac{\partial \operatorname{out}(i, j)}{\partial \operatorname{filter}(x, y)}=\operatorname{image}(i+x, j+y)
+\end{aligned}
+\]</span></p>
+<p>那么对于完整的图像来说，</p>
+<p><span class="math display">\[
+\frac{\partial L}{\partial \text { filter }(x, y)}=\sum_{i} \sum_{j} \frac{\partial L}{\partial \text { out }(i, j)} * \frac{\partial \text { out }(i, j)}{\partial \text { filter }(x, y)}
+\]</span></p>
+<p>这样我们就可以做代码实现了：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Conv3x3</span></span></span><br><span class="line"><span class="class">  # ...</span></span><br><span class="line"><span class="class">  <span class="title">def</span> <span class="title">iterate_regions</span><span class="params">(self, image)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Generates all possible 3x3 image regions using valid padding.</span></span><br><span class="line"><span class="string">    - image is a 2d numpy array.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    h, w = image.shape</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(h - <span class="number">2</span>):</span><br><span class="line">      <span class="keyword">for</span> j <span class="keyword">in</span> range(w - <span class="number">2</span>):</span><br><span class="line">        im_region = image[i:(i + <span class="number">3</span>), j:(j + <span class="number">3</span>)]</span><br><span class="line">        <span class="keyword">yield</span> im_region, i, j</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self, d_L_d_out, learn_rate)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    Performs a backward pass of the conv layer.</span></span><br><span class="line"><span class="string">    - d_L_d_out is the loss gradient for this layer's outputs.</span></span><br><span class="line"><span class="string">    - learn_rate is a float.</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    d_L_d_filters = np.zeros(self.filters.shape)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> im_region, i, j <span class="keyword">in</span> self.iterate_regions(self.last_input):</span><br><span class="line">      <span class="keyword">for</span> f <span class="keyword">in</span> range(self.num_filters):</span><br><span class="line">        d_L_d_filters[f] += d_L_d_out[i, j, f] * im_region</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Update filters</span></span><br><span class="line">    self.filters -= learn_rate * d_L_d_filters</span><br><span class="line"></span><br><span class="line">    <span class="comment"># We aren't returning anything here since we use Conv3x3 as</span></span><br><span class="line">    <span class="comment"># the first layer in our CNN. Otherwise, we'd need to return</span></span><br><span class="line">    <span class="comment"># the loss gradient for this layer's inputs, just like every</span></span><br><span class="line">    <span class="comment"># other layer in our CNN.</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br></pre></td></tr></table></figure>
+<p>因为Conv层是第一层，所以这里backprop返回的是None。</p>
+<h2 id="训练cnn">训练CNN</h2>
+<p>至此我们的模型完整了。我们可以用下面的代码来训练模型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> mnist</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> conv <span class="keyword">import</span> Conv3x3</span><br><span class="line"><span class="keyword">from</span> maxpool <span class="keyword">import</span> MaxPool2</span><br><span class="line"><span class="keyword">from</span> softmax <span class="keyword">import</span> Softmax</span><br><span class="line"></span><br><span class="line"><span class="comment"># We only use the first 1k examples of each set in the interest of time.</span></span><br><span class="line"><span class="comment"># Feel free to change this if you want.</span></span><br><span class="line">train_images = mnist.train_images()[:<span class="number">1000</span>]</span><br><span class="line">train_labels = mnist.train_labels()[:<span class="number">1000</span>]</span><br><span class="line">test_images = mnist.test_images()[:<span class="number">1000</span>]</span><br><span class="line">test_labels = mnist.test_labels()[:<span class="number">1000</span>]</span><br><span class="line"></span><br><span class="line">conv = Conv3x3(<span class="number">8</span>)                  <span class="comment"># 28x28x1 -&gt; 26x26x8</span></span><br><span class="line">pool = MaxPool2()                  <span class="comment"># 26x26x8 -&gt; 13x13x8</span></span><br><span class="line">softmax = Softmax(<span class="number">13</span> * <span class="number">13</span> * <span class="number">8</span>, <span class="number">10</span>) <span class="comment"># 13x13x8 -&gt; 10</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(image, label)</span>:</span></span><br><span class="line">  <span class="string">'''</span></span><br><span class="line"><span class="string">  Completes a forward pass of the CNN and calculates the accuracy and</span></span><br><span class="line"><span class="string">  cross-entropy loss.</span></span><br><span class="line"><span class="string">  - image is a 2d numpy array</span></span><br><span class="line"><span class="string">  - label is a digit</span></span><br><span class="line"><span class="string">  '''</span></span><br><span class="line">  <span class="comment"># We transform the image from [0, 255] to [-0.5, 0.5] to make it easier</span></span><br><span class="line">  <span class="comment"># to work with. This is standard practice.</span></span><br><span class="line">  out = conv.forward((image / <span class="number">255</span>) - <span class="number">0.5</span>)</span><br><span class="line">  out = pool.forward(out)</span><br><span class="line">  out = softmax.forward(out)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Calculate cross-entropy loss and accuracy. np.log() is the natural log.</span></span><br><span class="line">  loss = -np.log(out[label])</span><br><span class="line">  acc = <span class="number">1</span> <span class="keyword">if</span> np.argmax(out) == label <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> out, loss, acc</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(im, label, lr=<span class="number">.005</span>)</span>:</span></span><br><span class="line">  <span class="string">'''</span></span><br><span class="line"><span class="string">  Completes a full training step on the given image and label.</span></span><br><span class="line"><span class="string">  Returns the cross-entropy loss and accuracy.</span></span><br><span class="line"><span class="string">  - image is a 2d numpy array</span></span><br><span class="line"><span class="string">  - label is a digit</span></span><br><span class="line"><span class="string">  - lr is the learning rate</span></span><br><span class="line"><span class="string">  '''</span></span><br><span class="line">  <span class="comment"># Forward</span></span><br><span class="line">  out, loss, acc = forward(im, label)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Calculate initial gradient</span></span><br><span class="line">  gradient = np.zeros(<span class="number">10</span>)</span><br><span class="line">  gradient[label] = <span class="number">-1</span> / out[label]</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Backprop</span></span><br><span class="line">  gradient = softmax.backprop(gradient, lr)</span><br><span class="line">  gradient = pool.backprop(gradient)</span><br><span class="line">  gradient = conv.backprop(gradient, lr)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> loss, acc</span><br><span class="line"></span><br><span class="line">print(<span class="string">'MNIST CNN initialized!'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Train the CNN for 3 epochs</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">  print(<span class="string">'--- Epoch %d ---'</span> % (epoch + <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Shuffle the training data</span></span><br><span class="line">  permutation = np.random.permutation(len(train_images))</span><br><span class="line">  train_images = train_images[permutation]</span><br><span class="line">  train_labels = train_labels[permutation]</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Train!</span></span><br><span class="line">  loss = <span class="number">0</span></span><br><span class="line">  num_correct = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> i, (im, label) <span class="keyword">in</span> enumerate(zip(train_images, train_labels)):</span><br><span class="line">    <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> i % <span class="number">100</span> == <span class="number">99</span>:</span><br><span class="line">      print(</span><br><span class="line">        <span class="string">'[Step %d] Past 100 steps: Average Loss %.3f | Accuracy: %d%%'</span> %</span><br><span class="line">        (i + <span class="number">1</span>, loss / <span class="number">100</span>, num_correct)</span><br><span class="line">      )</span><br><span class="line">      loss = <span class="number">0</span></span><br><span class="line">      num_correct = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    l, acc = train(im, label)</span><br><span class="line">    loss += l</span><br><span class="line">    num_correct += acc</span><br><span class="line"></span><br><span class="line"><span class="comment"># Test the CNN</span></span><br><span class="line">print(<span class="string">'\n--- Testing the CNN ---'</span>)</span><br><span class="line">loss = <span class="number">0</span></span><br><span class="line">num_correct = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> im, label <span class="keyword">in</span> zip(test_images, test_labels):</span><br><span class="line">  _, l, acc = forward(im, label)</span><br><span class="line">  loss += l</span><br><span class="line">  num_correct += acc</span><br><span class="line"></span><br><span class="line">num_tests = len(test_images)</span><br><span class="line">print(<span class="string">'Test Loss:'</span>, loss / num_tests)</span><br><span class="line">print(<span class="string">'Test Accuracy:'</span>, num_correct / num_tests)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">MNIST CNN initialized!</span><br><span class="line">--- Epoch 1 ---</span><br><span class="line">[Step 100] Past 100 steps: Average Loss 2.254 | Accuracy: 18%</span><br><span class="line">[Step 200] Past 100 steps: Average Loss 2.167 | Accuracy: 30%</span><br><span class="line">[Step 300] Past 100 steps: Average Loss 1.676 | Accuracy: 52%</span><br><span class="line">[Step 400] Past 100 steps: Average Loss 1.212 | Accuracy: 63%</span><br><span class="line">[Step 500] Past 100 steps: Average Loss 0.949 | Accuracy: 72%</span><br><span class="line">[Step 600] Past 100 steps: Average Loss 0.848 | Accuracy: 74%</span><br><span class="line">[Step 700] Past 100 steps: Average Loss 0.954 | Accuracy: 68%</span><br><span class="line">[Step 800] Past 100 steps: Average Loss 0.671 | Accuracy: 81%</span><br><span class="line">[Step 900] Past 100 steps: Average Loss 0.923 | Accuracy: 67%</span><br><span class="line">[Step 1000] Past 100 steps: Average Loss 0.571 | Accuracy: 83%</span><br><span class="line">--- Epoch 2 ---</span><br><span class="line">[Step 100] Past 100 steps: Average Loss 0.447 | Accuracy: 89%</span><br><span class="line">[Step 200] Past 100 steps: Average Loss 0.401 | Accuracy: 86%</span><br><span class="line">[Step 300] Past 100 steps: Average Loss 0.608 | Accuracy: 81%</span><br><span class="line">[Step 400] Past 100 steps: Average Loss 0.511 | Accuracy: 83%</span><br><span class="line">[Step 500] Past 100 steps: Average Loss 0.584 | Accuracy: 89%</span><br><span class="line">[Step 600] Past 100 steps: Average Loss 0.782 | Accuracy: 72%</span><br><span class="line">[Step 700] Past 100 steps: Average Loss 0.397 | Accuracy: 84%</span><br><span class="line">[Step 800] Past 100 steps: Average Loss 0.560 | Accuracy: 80%</span><br><span class="line">[Step 900] Past 100 steps: Average Loss 0.356 | Accuracy: 92%</span><br><span class="line">[Step 1000] Past 100 steps: Average Loss 0.576 | Accuracy: 85%</span><br><span class="line">--- Epoch 3 ---</span><br><span class="line">[Step 100] Past 100 steps: Average Loss 0.367 | Accuracy: 89%</span><br><span class="line">[Step 200] Past 100 steps: Average Loss 0.370 | Accuracy: 89%</span><br><span class="line">[Step 300] Past 100 steps: Average Loss 0.464 | Accuracy: 84%</span><br><span class="line">[Step 400] Past 100 steps: Average Loss 0.254 | Accuracy: 95%</span><br><span class="line">[Step 500] Past 100 steps: Average Loss 0.366 | Accuracy: 89%</span><br><span class="line">[Step 600] Past 100 steps: Average Loss 0.493 | Accuracy: 89%</span><br><span class="line">[Step 700] Past 100 steps: Average Loss 0.390 | Accuracy: 91%</span><br><span class="line">[Step 800] Past 100 steps: Average Loss 0.459 | Accuracy: 87%</span><br><span class="line">[Step 900] Past 100 steps: Average Loss 0.316 | Accuracy: 92%</span><br><span class="line">[Step 1000] Past 100 steps: Average Loss 0.460 | Accuracy: 87%</span><br><span class="line"></span><br><span class="line">--- Testing the CNN ---</span><br><span class="line">Test Loss: 0.5979384893783474</span><br><span class="line">Test Accuracy: 0.78</span><br></pre></td></tr></table></figure>
+<p>执行输出如上。可以看到最后我们在测试集合上取得了78%的精度。</p>
+<blockquote>
+<p>注意到在训练集上的精度显著高于在测试集合上的精度，这说明出现了过拟合。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+            <a href="/tags/ml/" rel="tag"># ml</a>
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/posts/26817/" rel="next" title="Javascript中的整型问题">
+                <i class="fa fa-chevron-left"></i> Javascript中的整型问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/posts/11710/" rel="prev" title="SSH隧道:访问翻墙服务器的临时性手段">
+                SSH隧道:访问翻墙服务器的临时性手段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg" alt="治部少辅">
+            
+              <p class="site-author-name" itemprop="name">治部少辅</p>
+              <div class="site-description motion-element" itemprop="description">晚来天雨雪，能饮一杯无？</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">117</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/huangy10" title="GitHub &rarr; https://github.com/huangy10" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.zhihu.com/people/woody-huang" title="知乎 &rarr; https://www.zhihu.com/people/woody-huang" rel="noopener" target="_blank"><i class="fa fa-fw fa-zhihu"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://www.jianshu.com/u/927273827560" title="简书 &rarr; https://www.jianshu.com/u/927273827560" rel="noopener" target="_blank"><i class="fa fa-fw fa-jianshu"></i>简书</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建环境"><span class="nav-number">1.</span> <span class="nav-text">搭建环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型训练"><span class="nav-number">2.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#backprop-softmax"><span class="nav-number">3.</span> <span class="nav-text">Backprop: Softmax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#backprop-max-pooling"><span class="nav-number">4.</span> <span class="nav-text">Backprop: Max Pooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#backprop-conv"><span class="nav-number">5.</span> <span class="nav-text">Backprop: Conv</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练cnn"><span class="nav-number">6.</span> <span class="nav-text">训练CNN</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">治部少辅</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.0</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="Total Visitors">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="Total Views">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.0"></script>
+
+  <script src="/js/motion.js?v=7.1.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.0"></script>
+<script src="/js/post-details.js?v=7.1.0"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.0"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+  <script id="dsq-count-scr" src="https://codewoody.disqus.com/count.js" async></script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://www.codewoody.com/posts/59775/";
+    this.page.identifier = "posts/59775/";
+    this.page.title = '[翻译]从头开始训练一个卷积神经网络';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://codewoody.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    loadComments();
+  
+</script>
+
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      },
+      
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script>
+  $('.highlight').each(function(i, e) {
+    var $wrap = $('<div>').addClass('highlight-wrap');
+    $(e).after($wrap);
+    $wrap.append($('<button>').addClass('copy-btn').append('Copy').on('click', function(e) {
+      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
+        return $(e).text();
+      }).toArray().join('\n');
+      var ta = document.createElement('textarea');
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      ta.style.top = yPosition + 'px'; // Prevent page scroll
+      ta.style.position = 'absolute';
+      ta.style.opacity = '0';
+      ta.readOnly = true;
+      ta.value = code;
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, code.length);
+      ta.readOnly = false;
+      var result = document.execCommand('copy');
+      
+      ta.blur(); // For iOS
+      $(this).blur();
+    })).on('mouseleave', function(e) {
+      var $b = $(this).find('.copy-btn');
+      setTimeout(function() {
+        $b.text('Copy');
+      }, 300);
+    }).append(e);
+  })
+</script>
+
+
+  
+
+  
+
+
+  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  
+  <script>
+    void function(){
+      // window.hinst = Han(document.querySelector('.post-body')).setRoutine([
+      //   'initCond',
+      //   'renderElem',
+      //   'renderJiya',
+      //   'renderHanging',
+      //   'renderHWS',
+      //   'correctBasicBD',
+      //   'substCombLigaWithPUA'
+      // ]).render()
+      document.getElementById("refs")
+          .setAttribute("lang", "en_US");
+    }()
+
+    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

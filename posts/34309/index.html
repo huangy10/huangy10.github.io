@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者">
+  <meta name="description" content="概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求">
 <meta name="keywords" content="读论文,车联网">
 <meta property="og:type" content="article">
 <meta property="og:title" content="读论文-增强学习与车联网通信资源分配">
 <meta property="og:url" content="http://www.codewoody.com/posts/34309/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者">
+<meta property="og:description" content="概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-24T06:36:35.513Z">
+<meta property="og:updated_time" content="2020-02-27T15:03:08.028Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-增强学习与车联网通信资源分配">
-<meta name="twitter:description" content="本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者">
+<meta name="twitter:description" content="概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求">
 
 
 
@@ -481,12 +481,24 @@
                 
               
 
-              <time title="Created: 2020-02-24 12:15:59 / Modified: 14:36:35" itemprop="dateCreated datePublished" datetime="2020-02-24T12:15:59+08:00">2020-02-24</time>
+              <time title="Created: 2020-02-24 12:15:59" itemprop="dateCreated datePublished" datetime="2020-02-24T12:15:59+08:00">2020-02-24</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-02-27 23:03:08" itemprop="dateModified" datetime="2020-02-27T23:03:08+08:00">2020-02-27</time>
               
             
           </span>
@@ -558,7 +570,8 @@
       
 
       
-        <p>本次要读的论文是<a href="https://ieeexplore.ieee.org/document/8633948" target="_blank" rel="noopener">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做<strong>分布式</strong>的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者掌握全局信息。</p>
+        <h2 id="概述">概述</h2>
+<p>本次要读的论文是<a href="https://ieeexplore.ieee.org/document/8633948" target="_blank" rel="noopener">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做<strong>分布式</strong>的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者掌握全局信息。</p>
 <p>对于任何一个「资源分配」机制来说，首先要明确定义待分配的资源是何种形式，以及执行分配的主体为何。在文章的 Abstract 中提到，分配的资源是：</p>
 <blockquote>
 <p>An autonomous &quot;agent&quot;, a V2V link or a vehicle, make its decisions to find the optimal sub-band and power-level for transmission without requiring or having to wait for global information. ... . each agent can effectively learn to satisfy the stringent latency constraints on V2V links while minimizing the interference to vehicle-to-infrastructure communications.</p>
@@ -570,8 +583,12 @@
 <li>资源分配的目标是满足延时要求，以及最小化 V2I 通信需求</li>
 <li>这里车间通信使用的是 5G D2D</li>
 </ol>
+<h2 id="研究背景">研究背景</h2>
 <p>传统的资源分配方式一般是中心式的。这种分配方式要求从每个节点收集局部网络信息（链路状态和干扰信息）。在调度中心，资源分配问题被建模为一个优化问题，限制条件为V2V通信的QoS要求。不过这种优化问题一般是 NP 难问题。这种问题一般会用一些启发式算法来求局部最优解或者次优解。这类方法的首要问题是信息收集汇总的过程开销太大了，且随着网络规模的扩大会显著地增长。故这篇文章寻求使用分布式的分配方案。</p>
-<p>现存的一些分布式的资源分配方式的问题是他们考虑的一半是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。</p>
+<p>现存的一些分布式的资源分配方式的问题是他们考虑的一半是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。传统的方法一般用随机转发或者是基于拓扑信息管理转发的方法来解决这个问题。</p>
+<p>上面讨论的是中心时和分布式的资源分配方式存在的问题。下面讨论的是更加细节的问题。</p>
+<p>在现有的研究中，V2V链路的QoS值包含了SINR这一个指标，延时限制这个指标不太好建模进入优化问题，因此没有被充分考虑。</p>
+<p>为了解决上述这些问题，作者提出使用深度增强学习来解决单播和广播通信中的资源分配问题。作者主要用深度增强学习来研究从本地观测量，如CSI（信道状态信息），干扰水平等，和资源分配和调度方案之间的映射关系。在单播通信中，每个V2V链路被视为一个agent，频谱和传输功率为待控制的量。在广播通信中，每个节点被视为一个agent，待控制量为频谱和消息(messages)。Observation, action还有reward function都根据单播和广播做了单独的设计。</p>
 
       
     </div>
@@ -673,8 +690,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -691,7 +717,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">115</span>
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -871,7 +897,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">59</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -942,6 +972,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#研究背景"><span class="nav-number">2.</span> <span class="nav-text">研究背景</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

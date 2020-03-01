@@ -158,7 +158,11 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1fdd052b84a701c800012616f07bb2b0.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c1b9955b9e458eec9ad9ed366f1e4158.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/050f37998e76ce6a5a93bcbd38fdf9a4.png">
-<meta property="og:updated_time" content="2020-02-26T08:59:58.788Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d33f42725d942021e0fa5eb58445a3bd.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5cfdfdc916869893b0ee6ceb349b6878.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/09285429eed67a385aaf761f863908f0.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/417d6b749fcec5287dfa6a8cdd5595eb.png">
+<meta property="og:updated_time" content="2020-02-28T13:34:21.530Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n 课程笔记">
 <meta name="twitter:description" content="这里记录我看 CS231n 课程的笔记内容，其实内容都比较基础，只是我的习惯是必须得写下来才能记得住，所以做了这个笔记，来涵盖整个课程的核心内容。我看的视频是 2017 年的版本：https://www.youtube.com/watch?v=vT1JzLTH4G4&amp;amp;list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk 在记录课程内容的同时，我也会对课程的内容做重">
@@ -940,6 +944,90 @@ y=f(x)=E_{z}[f(x, z)]=\int p(z) f(x, z) d z
 <p>数据增强这个话题比较多样，有很多数据增强的方法。例如在图像识别中我们可以将所有图片翻转一次作为新的样本。或者调整一下图像的明度，对比度等。这类方法有很多。</p>
 <h4 id="transfer-learning">Transfer Learning</h4>
 <p>用预训练的大模型（解决相似问题的），使用其中的大部分参数，在较小的训练数据集合上训练小部分参数。</p>
+<blockquote>
+<p>奇怪没有走一遍卷积层的back propagation怎么计算，是在作业里面研究？还是交给深度学习框架？</p>
+</blockquote>
+<h3 id="深度学习软件">深度学习软件</h3>
+<h4 id="cpu-vs-gpu">CPU vs GPU</h4>
+<p>这个对于有点技术背景的人都是常识了，就跳过了。</p>
+<h4 id="深度学习框架">深度学习框架</h4>
+<ul>
+<li>Easy build big computational graphs</li>
+<li>Easily compute gradients in computational graphs</li>
+<li>Run it all efficiently on GPUs</li>
+</ul>
+<h3 id="卷积神经网络结构">卷积神经网络结构</h3>
+<blockquote>
+<p>先讲了深度学习框架再讲这个，应该是要用深度学习框架来讲CNN了。</p>
+</blockquote>
+<h4 id="alexnet">AlexNet</h4>
+<p>第一个在图片分类任务上表现突出的大规模的CNN网络(2012年的ILSVRC比赛的冠军)。其结构为：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/d33f42725d942021e0fa5eb58445a3bd.png" alt="" style="width: 30%"></p>
+<p>这个网络的更多的特点如下：</p>
+<ul>
+<li>首先使用了ReLU</li>
+<li>使用Norm层（目前已经比较少见了）</li>
+<li>用了很多的数据增强</li>
+<li>Dropout概率0.5</li>
+<li>Batch size 128</li>
+<li>使用的优化器是 SGD Momentum，参数0.9</li>
+<li>Learning rate为1e-2，当精度达到一定的程度之后手动减少Learning rate</li>
+<li>L2 Weight decay 5e-4</li>
+<li>7 CNN ensemble: 18.2% -&gt; 15.4%</li>
+</ul>
+<h4 id="zfnet">ZFNet</h4>
+<p>改进了AlexNet的超参数，修改了部分层的尺寸。这是2013年的ILSVRC的冠军。</p>
+<h4 id="imagenet">ImageNet</h4>
+<p>更深的网络。</p>
+<h4 id="vggnet">VGGNet</h4>
+<p>相比于8层的AlexNet，VGGNet发展到16 ~ 19层。使用了比较小的卷积层Filter和Pooling Filter。用更小的Filter和更深的网络可以等效于更大的Filter和更浅的网络。但是更深的网络能够引入更多的非线性因素。</p>
+<ul>
+<li>ILSRVC'14 2nd in classification, 1st in localization</li>
+<li>Similar training procedure as Krizhevsky 2012</li>
+<li>No Local Response Normalization (LRN)</li>
+<li>Use ensembles for best results</li>
+<li>FC7 features generalize well to other tasks</li>
+</ul>
+<h4 id="googlenet">GoogLeNet</h4>
+<p>Deeper networks, with computational efficiency.</p>
+<ul>
+<li>22 layers</li>
+<li>Efficient &quot;inception&quot; module</li>
+<li>No FC layers</li>
+<li>Only 5 million parameters! 12x less than AlexNet</li>
+<li>ILSVRC'14 classification winner (6.7% top 5 error)</li>
+</ul>
+<h4 id="resnet">ResNet</h4>
+<p>增长到了152层。这个网络引入了Residual Connections，结构如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/5cfdfdc916869893b0ee6ceb349b6878.png" alt="" style="width: 60%"></p>
+<p>这个模型横扫了2015年的ILSVRC和COCO的classification和detection竞赛。</p>
+<p>考虑：如果我们将简单的CNN结构堆叠到非常深，会出现什么结果呢？实践中观察到这种简单堆叠并不会带来性能提升，甚至会导致性能下降。且这个原因不是过拟合导致的（直观的想法是更深的网络参数更多，模型更复杂，更容易过拟合，但是在实际使用中发现深层网络在训练集上的性能也会比浅层网络差，而过拟合的表现是在训练集上表现很好但是在测试集上很差）。这个现象的解释有：更深的网络更难优化。理论上来讲，我们可以将浅层网络原样复制到深层网络中，然后将深层网络中的其他部分设置为identity mapping，这样能够得到和浅层网络完全等同的结果。</p>
+<blockquote>
+<p>课后面给ResNet的残差节点的作用的解释听不太明白。我的理解是如果网络中的层能够表现为identitiy mapping，那么用深层网络的性能肯定不会差于浅层网络。但是简单的卷积层可能并不能退化为identity mapping。而残差网络的节点有这个能力。</p>
+</blockquote>
+<blockquote>
+<p>残差这个词的理解可以这么阐述：我们将identity mapping作为映射空间原点，对于任意一种映射，我们这里输出的是这种映射和identity mapping的差值。</p>
+</blockquote>
+<p>实践中训练 ResNet 的方法：</p>
+<ul>
+<li>Batch Normalization after every CONV layer</li>
+<li>Xavier/2 initialization from He eta l.</li>
+<li>SGD + Momentum (0.9)</li>
+<li>Learning rate: 0.1, divided by 10 when validation error plateaus</li>
+<li>Mini-batch size 256</li>
+<li>Weight decay of 1e-5</li>
+<li>No dropout used</li>
+</ul>
+<blockquote>
+<p>后面的介绍里介绍ResNet的改进进一步明确了上面的判断，即残差的设计是为了让卷积层能够表现出identity mapping的能力，从而使的深层网络覆盖的范围能够包括浅层网络。</p>
+</blockquote>
+<h4 id="模型对比">模型对比</h4>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/09285429eed67a385aaf761f863908f0.png" alt="右边的图的说明：横轴越向右计算次数越多，纵轴越向上越精确，圆圈越大内存消耗越多"><figcaption>右边的图的说明：横轴越向右计算次数越多，纵轴越向上越精确，圆圈越大内存消耗越多</figcaption>
+</figure>
+<p><img src="https://imgs.codewoody.com/uploads/big/417d6b749fcec5287dfa6a8cdd5595eb.png"></p>
+<h2 id="more">More</h2>
+<p>这个网页已经太长了，我们做一下拆分，剩下的内容在<a href="./2.html">下一页</a></p>
 
         
       </div>
@@ -1068,7 +1156,7 @@ y=f(x)=E_{z}[f(x, z)]=\int p(z) f(x, z) d z
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">115</span>
+                    <span class="site-state-item-count">117</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -1248,7 +1336,11 @@ y=f(x)=E_{z}[f(x, z)]=\int p(z) f(x, z) d z
                     
                       
                     
-                    <span class="site-state-item-count">59</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -1330,7 +1422,7 @@ y=f(x)=E_{z}[f(x, z)]=\int p(z) f(x, z) d z
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算-computational-graphs"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算 (Computational Graphs)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络模型"><span class="nav-number">3.1.</span> <span class="nav-text">神经网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激励函数"><span class="nav-number">3.2.</span> <span class="nav-text">激励函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层"><span class="nav-number">3.3.</span> <span class="nav-text">隐藏层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">4.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层"><span class="nav-number">4.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pooling层"><span class="nav-number">4.2.</span> <span class="nav-text">Pooling层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#max-pooling"><span class="nav-number">4.2.1.</span> <span class="nav-text">Max Pooling</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经卷积网络"><span class="nav-number">4.3.</span> <span class="nav-text">神经卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#one-time-setup"><span class="nav-number">4.3.1.</span> <span class="nav-text">One time setup</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#activation-functions"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">Activation Functions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#data-preprocessing"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">Data Preprocessing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#weight-initialization"><span class="nav-number">4.3.1.3.</span> <span class="nav-text">Weight Initialization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#batch-normalization"><span class="nav-number">4.3.1.4.</span> <span class="nav-text">Batch Normalization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#babysitting-the-training-process"><span class="nav-number">4.3.1.5.</span> <span class="nav-text">Babysitting the training process</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hyperparameter-optimization"><span class="nav-number">4.3.1.6.</span> <span class="nav-text">Hyperparameter Optimization</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#optimizationfancier"><span class="nav-number">4.3.2.</span> <span class="nav-text">Optimization(Fancier)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#随机梯度下降算法的问题"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">随机梯度下降算法的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#改进"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">改进</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regularization"><span class="nav-number">4.3.3.</span> <span class="nav-text">Regularization</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#dropout"><span class="nav-number">4.3.3.1.</span> <span class="nav-text">Dropout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#data-augmentation"><span class="nav-number">4.3.3.2.</span> <span class="nav-text">Data Augmentation</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-learning"><span class="nav-number">4.3.4.</span> <span class="nav-text">Transfer Learning</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-machine-learning"><span class="nav-number">1.</span> <span class="nav-text">关于 Machine Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据集与数据建模"><span class="nav-number">1.1.</span> <span class="nav-text">数据集与数据建模</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nearest-neighbor"><span class="nav-number">1.2.</span> <span class="nav-text">Nearest Neighbor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#k-nn"><span class="nav-number">1.3.</span> <span class="nav-text">K-NN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更多不同类型的距离定义"><span class="nav-number">1.4.</span> <span class="nav-text">更多不同类型的距离定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超参数与-validation"><span class="nav-number">1.5.</span> <span class="nav-text">超参数与 Validation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性分类"><span class="nav-number">2.</span> <span class="nav-text">线性分类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类器的形式"><span class="nav-number">2.1.</span> <span class="nav-text">分类器的形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">2.2.</span> <span class="nav-text">损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svm-loss"><span class="nav-number">2.2.1.</span> <span class="nav-text">SVM Loss</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#softmax"><span class="nav-number">2.2.2.</span> <span class="nav-text">Softmax</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合与正则化"><span class="nav-number">2.3.</span> <span class="nav-text">过拟合与正则化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">2.4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度下降"><span class="nav-number">2.5.</span> <span class="nav-text">梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#随机梯度下降"><span class="nav-number">2.5.1.</span> <span class="nav-text">随机梯度下降</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#梯度的计算-computational-graphs"><span class="nav-number">2.5.2.</span> <span class="nav-text">梯度的计算 (Computational Graphs)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#神经网络"><span class="nav-number">3.</span> <span class="nav-text">神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#神经网络模型"><span class="nav-number">3.1.</span> <span class="nav-text">神经网络模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#激励函数"><span class="nav-number">3.2.</span> <span class="nav-text">激励函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐藏层"><span class="nav-number">3.3.</span> <span class="nav-text">隐藏层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#卷积神经网络"><span class="nav-number">4.</span> <span class="nav-text">卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积层"><span class="nav-number">4.1.</span> <span class="nav-text">卷积层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pooling层"><span class="nav-number">4.2.</span> <span class="nav-text">Pooling层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#max-pooling"><span class="nav-number">4.2.1.</span> <span class="nav-text">Max Pooling</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#神经卷积网络"><span class="nav-number">4.3.</span> <span class="nav-text">神经卷积网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#one-time-setup"><span class="nav-number">4.3.1.</span> <span class="nav-text">One time setup</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#activation-functions"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">Activation Functions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#data-preprocessing"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">Data Preprocessing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#weight-initialization"><span class="nav-number">4.3.1.3.</span> <span class="nav-text">Weight Initialization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#batch-normalization"><span class="nav-number">4.3.1.4.</span> <span class="nav-text">Batch Normalization</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#babysitting-the-training-process"><span class="nav-number">4.3.1.5.</span> <span class="nav-text">Babysitting the training process</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#hyperparameter-optimization"><span class="nav-number">4.3.1.6.</span> <span class="nav-text">Hyperparameter Optimization</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#optimizationfancier"><span class="nav-number">4.3.2.</span> <span class="nav-text">Optimization(Fancier)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#随机梯度下降算法的问题"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">随机梯度下降算法的问题</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#改进"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">改进</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regularization"><span class="nav-number">4.3.3.</span> <span class="nav-text">Regularization</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#dropout"><span class="nav-number">4.3.3.1.</span> <span class="nav-text">Dropout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#data-augmentation"><span class="nav-number">4.3.3.2.</span> <span class="nav-text">Data Augmentation</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transfer-learning"><span class="nav-number">4.3.4.</span> <span class="nav-text">Transfer Learning</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度学习软件"><span class="nav-number">4.4.</span> <span class="nav-text">深度学习软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cpu-vs-gpu"><span class="nav-number">4.4.1.</span> <span class="nav-text">CPU vs GPU</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#深度学习框架"><span class="nav-number">4.4.2.</span> <span class="nav-text">深度学习框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#卷积神经网络结构"><span class="nav-number">4.5.</span> <span class="nav-text">卷积神经网络结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#alexnet"><span class="nav-number">4.5.1.</span> <span class="nav-text">AlexNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#zfnet"><span class="nav-number">4.5.2.</span> <span class="nav-text">ZFNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#imagenet"><span class="nav-number">4.5.3.</span> <span class="nav-text">ImageNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#vggnet"><span class="nav-number">4.5.4.</span> <span class="nav-text">VGGNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#googlenet"><span class="nav-number">4.5.5.</span> <span class="nav-text">GoogLeNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#resnet"><span class="nav-number">4.5.6.</span> <span class="nav-text">ResNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型对比"><span class="nav-number">4.5.7.</span> <span class="nav-text">模型对比</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#more"><span class="nav-number">5.</span> <span class="nav-text">More</span></a></li></ol></div>
             
 
           </div>
