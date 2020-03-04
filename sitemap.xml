@@ -2,16 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.codewoody.com/posts/11710/</loc>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/yong2019ai-agent.html</loc>
     
-    <lastmod>2020-03-01T02:17:48.324Z</lastmod>
+    <lastmod>2020-03-04T16:03:39.529Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
+    
+    <lastmod>2020-03-03T16:54:08.930Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/ml/reinforcement-learning/index.html</loc>
+    
+    <lastmod>2020-03-03T09:48:03.282Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.codewoody.com/posts/59775/</loc>
     
-    <lastmod>2020-03-01T02:02:48.779Z</lastmod>
+    <lastmod>2020-03-03T08:51:20.078Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
+    
+    <lastmod>2020-03-02T08:55:32.841Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/posts/11710/</loc>
+    
+    <lastmod>2020-03-01T02:17:48.324Z</lastmod>
     
   </url>
   
@@ -33,13 +61,6 @@
     <loc>http://www.codewoody.com/posts/34309/</loc>
     
     <lastmod>2020-02-27T15:03:08.028Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
-    
-    <lastmod>2020-02-27T14:54:13.557Z</lastmod>
     
   </url>
   
@@ -86,13 +107,6 @@
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
-    
-    <lastmod>2020-02-24T04:13:47.517Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.codewoody.com/knowledge-base/programming/linux-shell/socat.html</loc>
     
     <lastmod>2020-02-10T13:00:37.123Z</lastmod>
@@ -121,14 +135,14 @@
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/index.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/nodejs.html</loc>
     
     <lastmod>2020-01-22T05:23:13.931Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/nodejs.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/index.html</loc>
     
     <lastmod>2020-01-22T05:23:13.931Z</lastmod>
     
