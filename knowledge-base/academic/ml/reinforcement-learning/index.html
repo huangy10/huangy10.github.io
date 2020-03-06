@@ -130,10 +130,14 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="首先我们要解决的是「什么是增强学习」，即Reinforcement Learning，的问题。为了学习这一点我选择了比较权威的增强学习教材，Reinforcement Learning: An Introduction。这本书是增强学习的开创者安德鲁·巴托和理查德·S·萨顿所撰写。 之前接触过的典型的神经网络，比如用于处理图像输入的卷积神经网络(CNN)和擅长处理自然语言的递归神经网络(RNN)，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-03T09:48:03.282Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/026c46d807fe6b3416d4b736dbe7a3fe.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bca0560bf5558327eff54e3e0c1cada6.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/4d2725e97cfc8038c1a27710ae082c0b.png">
+<meta property="og:updated_time" content="2020-03-05T15:52:46.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="增强学习">
 <meta name="twitter:description" content="首先我们要解决的是「什么是增强学习」，即Reinforcement Learning，的问题。为了学习这一点我选择了比较权威的增强学习教材，Reinforcement Learning: An Introduction。这本书是增强学习的开创者安德鲁·巴托和理查德·S·萨顿所撰写。 之前接触过的典型的神经网络，比如用于处理图像输入的卷积神经网络(CNN)和擅长处理自然语言的递归神经网络(RNN)，">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/026c46d807fe6b3416d4b736dbe7a3fe.png">
 
 
 
@@ -576,8 +580,108 @@
 <p>为了准确性，之后术语部分还是直接使用英文记录</p>
 </blockquote>
 <p>在这个部分通过一些比较简单的问题形式来探讨Reinforcement Learning的核心概念。在这些例子中，State和Action空间足够小，可以表示为数组或者表(tables)。这种情况下，理论上的我们是可以找到精确的最优解的。这和后面我们要说的Approximiate methods不同。</p>
-<h3 id="多臂强盗问题multi-armed-bandits">多臂强盗问题(Multi-armed Bandits)</h3>
+<h3 id="多臂老虎机问题multi-armed-bandits">多臂老虎机问题(Multi-armed Bandits)</h3>
 <p>考虑下面的学习问题。你不断重复地面临一个有<span class="math inline">\(k\)</span>个不同选项（即Actions)的选择问题。在每轮选择之后你会获得一个量化的Reward，Reward的分布是一个依赖于你的决策的平稳分布<span class="foot-note-span">【平稳分布即这个分布不是时变的，强调只依赖于你的决策本身】</span>。你的目的是最大化一段时间（比如1000轮选择）的总收益。</p>
+<p>这是多臂老虎机问题的的原始形式。多臂老虎机问题是对<a href="https://zh.wikipedia.org/wiki/%E8%A7%92%E5%AD%90%E6%A9%9F" target="_blank" rel="noopener">老虎机</a>的一个类比，只不过在这个问题中，有<span class="math inline">\(k\)</span>个拉杆。每个动作的选择都像是拉动老虎机的拉杆，而奖励就是击中奖的收益。 通过反复的动作选择，您可以将动作集中在最佳杠杆上，从而最大程度地赢取奖金。 另一个比喻是，医生为一系列重病患者选择实验治疗。 每个动作都是治疗的选择，每个奖励都是患者的生存或福祉。 如今赌博机问题有时会指代更加泛化的问题集合，但是在这里我们只用来称呼这个简单的版本。</p>
+<p>在我们的K臂老虎机问题中，<span class="math inline">\(k\)</span>种行动中的每一种都有一个期望奖励。我们称之为这种行动的<i>value</i>。我们记在时刻<span class="math inline">\(t\)</span>选择的行为时<span class="math inline">\(A_t\)</span>，对应的奖励是<span class="math inline">\(R_t\)</span><span class="foot-note-span">【注意区分这里是时刻的奖励，前面说的value是期望】</span>，对于任意行为<span class="math inline">\(a\)</span>的value，我们记为$q_*(a)，这是一个期望值：</p>
+<p><span class="math display">\[
+q_{*}(a) \doteq \mathbb{E}\left[R_{t} | A_{t}=a\right]
+\]</span></p>
+<p>如果你能够知道每个行为的value值，那么解决k臂老虎机问题就非常简单了，只需要总是选择value最高的行为即可。我们假设你并不确定知道每个行为的value值，但是你可以对其有一个估计。我们记在时刻<span class="math inline">\(t\)</span>的估计值为<span class="math inline">\(Q_t(a)\)</span>。我们希望<span class="math inline">\(Q_t(a)\)</span>能够接近<span class="math inline">\(q_*(a)\)</span>。</p>
+<p>如果你始终维护对行为value值的估计，那么在任何时刻你总是能找到估计值最大的那个行为。我们将这些行为成为贪婪行为(Greedy Actions)。当你选择这些行为时，我们称你正在利用(Exploiting)对于这些行为的value的现有知识。如果你没有选择这些贪婪行为，则表示你正在进行探索(Exploring)，因为这可以使你改善对非贪婪行为的value值的估计。利用现有知识的选择可以让你在单步操作中最大化期望奖励，但是探索可以在长期的尺度上产生更大的value总量。例如，假设贪婪行动的价值是确定的，而其他几项行动的评估结果几乎相同，但存在很大的不确定性。这种不确定性使得这些其他动作中的至少一个实际上可能比贪婪的动作要好，但是您不知道哪个。如果你在决策前还有很多时间，那么探索非贪婪的行动并发现其中哪个比贪婪的行动更好。在短期内，探索过程中的奖励较低，但从长期来看，奖励较高，因为发现更好的操作后，您可以多次使用它们。由于不可能通过任何一个单一的动作选择来进行探索和利用，因此人们经常提到探索与利用之间的“冲突”。</p>
+<p>在任何特殊的场景下，探索还是利用哪个更好，会以一种很复杂的方式依赖于value估计精确值，不确定性，以及剩余的时间步骤。对于特定的k臂匪徒问题的数学形式，有很多复杂的方法可以平衡探索和利用。不过这些方法对于平稳性和先验证知识有很强的假设，这些假设要么难以实现，要么很难获取。</p>
+<p>在这里我们无需担心需要以很复杂的方式去平衡探索和利用，我们只需要关注在整体上的平衡问题。在本章中，我们介绍了几种用于解决K臂强盗问题的简单平衡方法，并表明它们比总是利用的方法好得多。 平衡探索与开发的需要是强化学习中出现的一个独特挑战。我们的第K臂强盗问题的简单性使我们能够以特别清晰的形式展示这一点。</p>
+<h3 id="行动-价值方法">行动-价值方法</h3>
+<p>我们从研究对行为的value估计，及基于这些估计做出行为决策的方法开始。这类方法我们称为行动-价值(Action-Value)方法。一个行为的value的真值是行为被选择时产生的平均回报。一个直接的方法直接对于我们已经取得的奖励取平均。</p>
+<p><span class="math display">\[
+Q_t(a) \doteq \frac{\text{sum of rewards when} a \text{taken prior to} t}{\text{number of times} a \text{taken prior to} t} = \frac{\sum_{i=1}^{t-1} R_{i} \cdot \mathbb{1}_{A_{i}=a}}{\sum_{i=1}^{t-1} \mathbb{1}_{A_{i}=a}}
+\]</span></p>
+<p>其中<span class="math inline">\(\mathbb{1}_{predicte}\)</span>为指示函数，当下面的条件为真时取1，否则为0。当上式中分母为0时，<span class="math inline">\(Q_t(a)\)</span>为默认值，例如0。当分母为无穷大时，理论上上式就会收敛到<span class="math inline">\(q_*(a)\)</span>。我们把这种估计行为value值的方法称为<i>sample-average</i>方法。 当然，这只是估计行动价值的一种方法，不一定是最佳方法。 尽管如此，现在让我们继续使用这种简单的估算方法，然后转向如何将估算值用于选择行动的问题。</p>
+<p>最简单的行动选择策略是选择value估计值最高的行动，即上一节中定义的贪婪策略。如果贪婪策略给出选项不只一种，则在其中随机选择。这种贪婪选择策略可以表示为:</p>
+<p><span class="math display">\[
+A_{t} \doteq \underset{a}{\arg \max } Q_{t}(a)
+\]</span></p>
+<p>贪婪策略总是利用现有的知识来最大化当即的收益，其并不花费任何时间来尝试哪些明显更差一些的行为来看看这些行为会不会产生更好的结果。一个简单的改进策略是在大多数时候采用贪婪策略，但是偶尔，例如以概率<span class="math inline">\(\varepsilon\)</span>，在所有行为中以均等的概率随机选择。我们将这种策略称为<span class="math inline">\(\varepsilon\)</span>-<i>greedy</i>方法。这种方法的好处是，随着步骤的增加，所有的行为都可以被尝试无限次， 从而确保所有的<span class="math inline">\(Q_t(a)\)</span>都会收敛到<span class="math inline">\(q_*(a)\)</span>。这也意味着选中最优的行为的概率会收敛到超过<span class="math inline">\(1-\epsilon\)</span>的水平的，接近于1。上面这些都是理论上渐进收敛的保证，在实际使用中是什么效果还有待考察。</p>
+<h3 id="臂测试问题">10臂测试问题</h3>
+<p>我们用一个具体的尝试来看看贪婪策略和<span class="math inline">\(\varepsilon\)</span>-<i>greedy</i>方法的效果，并进行对比。这里使用到的测试数据是2000个随机生成的10臂老虎机问题，即<span class="math inline">\(k=10\)</span>。对于每个老虎机问题，例如如下图所示，每个行为的的value值<span class="math inline">\(q_*(a), a = 1, 2, \dots, 10\)</span>，基于一个<span class="math inline">\(N(0,1)\)</span>的正态分布随机选出。实际的奖励值<span class="math inline">\(R_t\)</span>则是以<span class="math inline">\(q_*(A_t)\)</span>为均值，方差为1的正态分布。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/026c46d807fe6b3416d4b736dbe7a3fe.png"></p>
+<p>在这个测试集合的基础上我们可以评估学习方法的性能。对于每一个赌博机问题，我们执行1000步以观察模型的改善情况。然后我们尝试2000组不同参数定义的赌博机问题，从而得到一个平均的性能评估结果。</p>
+<p>下图比较了贪婪策略和两个<span class="math inline">\(\varepsilon\)</span>-<i>greedy</i>策略(<span class="math inline">\(\varepsilon = 0.01\)</span>和<span class="math inline">\(\epsilon= 0.1\)</span>)。其中上面的图给出了随着训练步数的增加，获得期望奖励的增长情况。贪婪策略在初期能够有更快的增长，但是最终的水平要更低一些。理论上每一步的最佳改进是1.55，但是的贪婪策略之取得了大约1的增益。贪婪策略失败的原因在于其常常被困在次优行为附近。下面的图显示了贪婪策略大约只在三分之一的任务中选中了最优的行为，在其他三分之二的情形下，最优行为的初始采样结果可能不佳，因此贪婪策略就再不会尝试选择这一选项。<span class="math inline">\(\varepsilon\)</span>-<i>greedy</i>方法最终表现的更好，因为其总是尝试新的行为并提升其发现最优行为的能力。当<span class="math inline">\(\varepsilon=0.1\)</span>时，由于尝试的比例更多，所以可以更快速地发现最佳的方法。但是选中最优行为的概率被局限为<span class="math inline">\(91%\)</span>。<span class="math inline">\(\varepsion=0.01\)</span>时，发现最优策略会比较慢，但最终的稳定的性能表现会优于<span class="math inline">\(\varepsilon=0.1\)</span>的情形。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/bca0560bf5558327eff54e3e0c1cada6.png"></p>
+<p>不过，<span class="math inline">\(\varepsilon\)</span>-<i>greedy</i>方法和贪婪策略的区别还是取决于任务类型。设想如果奖励分布的方差非常大，那么噪声水平会带来更大的影响，使得贪婪策略更难选中最优的行动。但是反过来如果奖励分布的方差为0，那么贪婪策略总是可以在第一时间选中最优的行为。即便在这种确定性的情形中，如果我们弱化其他的假设，使用探索功能也会带来更大的优势。例如假设赌博任务是非平稳的，即行为的value真值会随着时间变化而变化。</p>
+<h3 id="增量计算实现">增量计算实现</h3>
+<p>这部介绍的是如何将之前提到的行动-价值方法的计算过程优化。为了简化问题表达我们先关注一个单独的行为。令<span class="math inline">\(R_i\)</span>表示第<span class="math inline">\(i\)</span>次选中这个行为的奖励，让<span class="math inline">\(Q_n\)</span>表示这这个行为已经被选中<span class="math inline">\(n - 1\)</span>次以后的行为value的估计值。那么</p>
+<p><span class="math display">\[
+Q_{n} \doteq \frac{R_{1}+R_{2}+\cdots+R_{n-1}}{n-1}
+\]</span></p>
+<p>直接的实现方法是把所有的<span class="math inline">\(R_i\)</span>存下来，然后计算均值。但是这样在大规模的问题中会消耗非常多的计算资源。下面我们推到递推的计算方法：</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q_{n+1} &amp;=\frac{1}{n} \sum_{i=1}^{n} R_{i} \\
+&amp;=\frac{1}{n}\left(R_{n}+\sum_{i=1}^{n-1} R_{i}\right) \\
+&amp;=\frac{1}{n}\left(R_{n}+(n-1) \frac{1}{n-1} \sum_{i=1}^{n-1} R_{i}\right) \\
+&amp;=\frac{1}{n}\left(R_{n}+(n-1) Q_{n}\right) \\
+&amp;=\frac{1}{n}\left(R_{n}+n Q_{n}-Q_{n}\right) \\
+&amp;=Q_{n}+\frac{1}{n}\left[R_{n}-Q_{n}\right]
+\end{aligned}
+\]</span></p>
+<p>这种递推方式在后续还会非常常见，其一般形式为</p>
+<p><span class="math display">\[
+NewEstimate \leftarrow OldEstimate + StepSize [Target - OldEstimate]
+\]</span></p>
+<p>这里的<span class="math inline">\(StepSize\)</span>一般记为的<span class="math inline">\(\alpha\)</span>，或者<span class="math inline">\(\alpha_t(a)\)</span></p>
+<h3 id="追踪非平稳问题">追踪非平稳问题</h3>
+<p>上面说的用平均方法估计value的方法只适用于平稳的老虎机问题，即奖励的分布要是不变的。这个部分我们来讨论非平稳问题的处理。</p>
+<p>非平稳问题的处理方法一般是使用一个常量的<span class="math inline">\(StepSize\)</span>参数</p>
+<p><span class="math display">\[
+Q_{n+1} \doteq Q_{n}+\alpha\left[R_{n}-Q_{n}\right]
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha \in (0, 1]\)</span>为一个常数，<span class="math inline">\(Q_{n + 1}\)</span>为过去的奖励的加权平均。注意到</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q_{n+1} &amp;=Q_{n}+\alpha\left[R_{n}-Q_{n}\right] \\
+&amp;=\alpha R_{n}+(1-\alpha) Q_{n} \\
+&amp;=\alpha R_{n}+(1-\alpha)\left[\alpha R_{n-1}+(1-\alpha) Q_{n-1}\right] \\
+&amp;=\alpha R_{n}+(1-\alpha) \alpha R_{n-1}+(1-\alpha)^{2} Q_{n-1} \\
+&amp;=\alpha R_{n}+(1-\alpha) \alpha R_{n-1}+(1-\alpha)^{2} \alpha R_{n-2}+\\
+&amp; \cdots+(1-\alpha)^{n-1} \alpha R_{1}+(1-\alpha)^{n} Q_{1} \\
+&amp;=(1-\alpha)^{n} Q_{1}+\sum_{i=1}^{n} \alpha(1-\alpha)^{n-i} R_{i}
+\end{aligned}
+\]</span></p>
+<p>且<span class="math inline">\((1 - \alpha)^n + \sum_{i = 1}^{n}\alpha(1 - \alpha)^{n - i} = 1\)</span>，因此<span class="math inline">\(Q_{n+1}\)</span>可以被称为<span class="math inline">\(R_i\)</span>的加权平均。且加权系数的值决定了时间上越近的奖励权重越高，过去的奖励在新的行动中的贡献会指数下降。故这种方法也被称为<i>exponential recency-weighted average</i>。</p>
+<p><span class="math inline">\(\alpha\)</span>也可以随时间变化，记为<span class="math inline">\(\alpha_n(a)\)</span>。当<span class="math inline">\(\alpha_n(a) = 1 / n\)</span>时，表达式退化成简单平均，这意味着在样本数量足够大时可以收敛到真值。随机过程理论给出了这样的结论：当<span class="math inline">\(\{\alpha_n(a)\}\)</span>序列符合下面的要求时，基于这一些结算的<span class="math inline">\(Q_{n}\)</span>收敛到value的真值:</p>
+<p><span class="math display">\[
+\sum_{n=1}^{\infty} \alpha_{n}(a)=\infty \quad \text { and } \quad \sum_{n=1}^{\infty} \alpha_{n}^{2}(a)&lt;\infty
+\]</span></p>
+<p>第一个条件表明<span class="math inline">\(StepSize\)</span>足够大，以克服任何初始条件和随机波动的影响；第二个条件表明步长足够小以使得最后的和收敛。</p>
+<p>注意到对于简单平均算法，即<span class="math inline">\(\alpha_n(a) = 1 / n\)</span>时，这两个条件都能得到满足，但是当<span class="math inline">\(\alpha_n(a)\)</span>为常数时，第二个条件显然无法满足，这意味着采用这种计算方法，最终的估计值无法收敛，而是会持续波动。由于问题本身是非平稳的，这种不收敛的特性反而是符合我们的要求的。</p>
+<h3 id="乐观初始值">乐观初始值</h3>
+<p>上面讨论的方法都依赖与如何确认最初的行为Value估计值，<span class="math inline">\(Q_1(a)\)</span>。用统计学的语言来说，这些方法由于其初始估计值的选择是有偏的(<i>biased</i>)。对于<i>sample-average</i>方法来说，如果所有的行为都被选择了至少一次，那么这种偏差是可以消除的。但是当我们使用了常量的<span class="math inline">\(\alpha\)</span>值时，初始值引入的偏差就会一直存在（虽然会不断减少）。在实践中，这种偏差一般不是问题，有时候也会显得非常有用。不过，缺点是这里的初始值选择会成为用户不得不设置了的初始超参数。不过好处是这也让我们能够为模型提前注入一些先验信息（奖励的期望水平）。</p>
+<p>初始值的设置也可以被用来促进探索过程。假设不把这些初始值设置为0，而是设置成<span class="math inline">\(+5\)</span>。注意到的<span class="math inline">\(q_*(a)\)</span>是从<span class="math inline">\(N(0,1)\)</span>的正态分布中生成的，那么<span class="math inline">\(+5\)</span>的奖励就是一个非常高（或者说乐观，Optimistic）的值，这会促使模型去执行探索：在初始阶段，无论选择什么样的行为都会让模型失望，故促使模型多次尝试不同的行为。而随着不断迭代，初始注入的这个很高的奖励值会被「平均掉」，故使得真实的行为奖励能够被正确地选择出来。下图给出了性能对比：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/4d2725e97cfc8038c1a27710ae082c0b.png"></p>
+<p>在初始阶段，采用了乐观的初始值的方法性能比价差，因为这种方法进行了更多的探索。不过这些探索工作使得这种方法的性能可以后来居上。不过注意这种乐观初始值的方法并不是一种广泛有用的鼓励探索的方案，例如这种方法并不适合非平稳问题。</p>
+<h3 id="置信区间上界行为选择">置信区间上界行为选择</h3>
+<p>需要进行探索，因为操作值估计的准确性始终存在不确定性。贪婪的行为是目前看来最好的行为，但其他一些行为实际上可能会更好。<span class="math inline">\(\varepsilon\)</span>-<i>greedy</i>行为选择策迫使用户选择一些非贪婪的策略，不过这种策略会平等地尝试所有可能的行为选项，并没有对于次优选项和不确定性<span class="foot-note-span">【这里指value估计值的不确定性】</span>的偏好。更好的方法是一些更有潜力成为最优的行为中进行选择。这里的说的「潜力」取决于这些行为的value估计接近于最大值的程度，或者估计值中的不确定性的多少。一个有效的方法是根据下面的标准选择</p>
+<p><span class="math display">\[
+A_{t} \doteq \underset{a}{\arg \max }\left[Q_{t}(a)+c \sqrt{\frac{\ln t}{N_{t}(a)}}\right]
+\]</span></p>
+<p>其中<span class="math inline">\(\ln t\)</span>是自然对数，<span class="math inline">\(N_t(a)\)</span>代表 <span class="math inline">\(a\)</span> 在时刻<span class="math inline">\(t\)</span>之前已经被选择的次数，变量<span class="math inline">\(c\)</span>则控制了探索的偏好程度。如果<span class="math inline">\(N_t(a) = 0\)</span>，则<span class="math inline">\(a\)</span>被认为是最大化的行为选项。</p>
+<p>置信区间上界(Upper confidence bound)行为选择的概念，上面的平方根项是对<span class="math inline">\(a\)</span>的value值的估计的不确定性（方差）度量。上面的式子中待最大化的项是一系列的<span class="math inline">\(a\)</span>的value的可能真值的上界，其中<span class="math inline">\(c\)</span>决定了置信度水平。每次<span class="math inline">\(a\)</span>被选择时，不确定性下降。另一方面，如果别的行为被选择，会导致<span class="math inline">\(a\)</span>的不确定性上升。在这个定义下，不同的选项的被选择的概率得到了均衡。在充分长的训练时间内，所有的行为都可以被选择。</p>
+<h3 id="梯度赌博机算法">梯度赌博机算法</h3>
+<p>到目前为止，在本章中，我们已经考虑了估计行为的value值并使用这些估计值选择行为的方法。 这通常是一种好方法，但并非唯一可行的方法。在本部分我们为每种行为<span class="math inline">\(a\)</span>学习一个量化的偏好值、<span class="math inline">\(H_t(a)\)</span>。这个偏好值越大，对应的行为被选择的几率就越大。偏好值没法从奖励的角度解释。偏好值的绝对大小没有意义，重要的是相对值。最终这些偏好值使用Softmax函数处理给出选择概率:</p>
+<p><span class="math display">\[
+\operatorname{Pr}\left\{A_{t}=a\right\} \doteq \frac{e^{H_{t}(a)}}{\sum_{b=1}^{k} e^{H_{t}(b)}} \doteq \pi_{t}(a)
+\]</span></p>
+<p>这里我们还引入了一个新的标记 <span class="math inline">\(\pi_t(a)\)</span>，为在时刻<span class="math inline">\(t\)</span>选择行动<span class="math inline">\(a\)</span>的概率。在初始状态下，所有的行为的偏好都是相同，故每个行为被选择的概率是均等的。</p>
+<p>在Softmax形式定义的问题上我们可以使用随机梯度下降法进行学习。在每一步选择<span class="math inline">\(A_t\)</span>行为后，收到奖励<span class="math inline">\(R_t\)</span>，则行为偏好按照如下的方式进行更新：</p>
+<p><span class="math display">\[
+\begin{array}{cc}
+H_{t+1}\left(A_{t}\right) \doteq H_{t}\left(A_{t}\right)+\alpha\left(R_{t}-\bar{R}_{t}\right)\left(1-\pi_{t}\left(A_{t}\right)\right), &amp; \text { and } \\
+H_{t+1}(a) \doteq H_{t}(a)-\alpha\left(R_{t}-\bar{R}_{t}\right) \pi_{t}(a), &amp; \text { for all } a \neq A_{t}
+\end{array}
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha &gt; 0\)</span>为前面提到的<span class="math inline">\(StepSize\)</span>参数，<span class="math inline">\(\bar{R}_t \in \mathbb{R}\)</span>为所有到<span class="math inline">\(t\)</span>时刻位置的奖励的平均值（注意不包括<span class="math inline">\(R_t\)</span>)，这个平均值也可以用前面的章节提到的增量方法进行计算。上面的计算的基本原理是如果某个行为产生的奖励高于平均值，就增加这个行为的概率，反之降低这个概率。</p>
+<h3 id="关联搜索contextual-bandits">关联搜索(Contextual Bandits)</h3>
 
         
       </div>
@@ -972,7 +1076,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#reinforcement-learning"><span class="nav-number">1.</span> <span class="nav-text">Reinforcement Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习和监督学习的区别"><span class="nav-number">1.1.</span> <span class="nav-text">增强学习和监督学习的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习与非监督学习的区别"><span class="nav-number">1.2.</span> <span class="nav-text">增强学习与非监督学习的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习面临的挑战"><span class="nav-number">1.3.</span> <span class="nav-text">增强学习面临的挑战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习元素"><span class="nav-number">1.4.</span> <span class="nav-text">增强学习元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-policy"><span class="nav-number">1.4.1.</span> <span class="nav-text">A Policy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-reward-signal"><span class="nav-number">1.4.2.</span> <span class="nav-text">A Reward Signal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-value-function"><span class="nav-number">1.4.3.</span> <span class="nav-text">A Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-model-of-the-environment"><span class="nav-number">1.4.4.</span> <span class="nav-text">A Model of the Environment</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tabular-soluation-methods"><span class="nav-number">2.</span> <span class="nav-text">Tabular Soluation Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多臂强盗问题multi-armed-bandits"><span class="nav-number">2.1.</span> <span class="nav-text">多臂强盗问题(Multi-armed Bandits)</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#reinforcement-learning"><span class="nav-number">1.</span> <span class="nav-text">Reinforcement Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习和监督学习的区别"><span class="nav-number">1.1.</span> <span class="nav-text">增强学习和监督学习的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习与非监督学习的区别"><span class="nav-number">1.2.</span> <span class="nav-text">增强学习与非监督学习的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习面临的挑战"><span class="nav-number">1.3.</span> <span class="nav-text">增强学习面临的挑战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增强学习元素"><span class="nav-number">1.4.</span> <span class="nav-text">增强学习元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#a-policy"><span class="nav-number">1.4.1.</span> <span class="nav-text">A Policy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-reward-signal"><span class="nav-number">1.4.2.</span> <span class="nav-text">A Reward Signal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-value-function"><span class="nav-number">1.4.3.</span> <span class="nav-text">A Value Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#a-model-of-the-environment"><span class="nav-number">1.4.4.</span> <span class="nav-text">A Model of the Environment</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tabular-soluation-methods"><span class="nav-number">2.</span> <span class="nav-text">Tabular Soluation Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多臂老虎机问题multi-armed-bandits"><span class="nav-number">2.1.</span> <span class="nav-text">多臂老虎机问题(Multi-armed Bandits)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行动-价值方法"><span class="nav-number">2.2.</span> <span class="nav-text">行动-价值方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#臂测试问题"><span class="nav-number">2.3.</span> <span class="nav-text">10臂测试问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#增量计算实现"><span class="nav-number">2.4.</span> <span class="nav-text">增量计算实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#追踪非平稳问题"><span class="nav-number">2.5.</span> <span class="nav-text">追踪非平稳问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#乐观初始值"><span class="nav-number">2.6.</span> <span class="nav-text">乐观初始值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#置信区间上界行为选择"><span class="nav-number">2.7.</span> <span class="nav-text">置信区间上界行为选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度赌博机算法"><span class="nav-number">2.8.</span> <span class="nav-text">梯度赌博机算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关联搜索contextual-bandits"><span class="nav-number">2.9.</span> <span class="nav-text">关联搜索(Contextual Bandits)</span></a></li></ol></li></ol></div>
             
 
           </div>
