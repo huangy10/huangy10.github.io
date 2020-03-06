@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/gao2020pora.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/academic/ml/reinforcement-learning/index.html</loc>
     
-    <lastmod>2020-03-06T06:40:13.316Z</lastmod>
+    <lastmod>2020-03-06T07:08:13.351Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/ml/reinforcement-learning/index.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
     
-    <lastmod>2020-03-05T15:52:46.621Z</lastmod>
+    <lastmod>2020-03-06T07:05:39.119Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/gao2020pora.html</loc>
+    
+    <lastmod>2020-03-06T07:04:27.390Z</lastmod>
     
   </url>
   
@@ -26,13 +33,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/yong2019ai-agent.html</loc>
     
     <lastmod>2020-03-04T16:03:39.529Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
-    
-    <lastmod>2020-03-03T16:54:08.930Z</lastmod>
     
   </url>
   
@@ -142,14 +142,14 @@
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/nodejs.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/index.html</loc>
     
     <lastmod>2020-01-22T05:23:13.931Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/index.html</loc>
+    <loc>http://www.codewoody.com/knowledge-base/programming/how-to-install/nodejs.html</loc>
     
     <lastmod>2020-01-22T05:23:13.931Z</lastmod>
     

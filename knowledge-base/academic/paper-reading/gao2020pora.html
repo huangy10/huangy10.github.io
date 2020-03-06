@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="这篇论文全名是: PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems，是2020年发表在IEEE IoT上的文章。 这里将的多层级的计算卸载问题。在这篇文章中作者重点研究多层雾计算中流量预测的动态卸载和资源分配问题。通过将问题表述为随机网络优化问题，我们旨在通过为系统中的所有队列提">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-06T06:40:13.316Z">
+<meta property="og:updated_time" content="2020-03-06T07:04:27.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-计算卸载、资源分配与雾计算">
 <meta name="twitter:description" content="这篇论文全名是: PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems，是2020年发表在IEEE IoT上的文章。 这里将的多层级的计算卸载问题。在这篇文章中作者重点研究多层雾计算中流量预测的动态卸载和资源分配问题。通过将问题表述为随机网络优化问题，我们旨在通过为系统中的所有队列提">
@@ -529,6 +529,21 @@
         
           <p>这篇论文全名是: PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems，是2020年发表在IEEE IoT上的文章。</p>
 <p>这里将的多层级的计算卸载问题。在这篇文章中作者重点研究多层雾计算中流量预测的动态卸载和资源分配问题。通过将问题表述为随机网络优化问题，我们旨在通过为系统中的所有队列提供稳定性保证来最小化时间尺度上的<strong>平均功耗</strong>。文章提出的是预测性卸载和资源分配(PORA)，这是一种<strong>分布式</strong>方案。另外，PORA只需要适度的预测信息就可以显著降低延时<span class="foot-note-span">【应该是减少排队引入的延时】</span>。</p>
+<h2 id="研究背景">研究背景</h2>
+<p>着眼于IoT设备的爆发性增长，为了满足延时需求和计算需求，将云端资源下沉到边缘，构成了雾计算的基本框架。雾节点具有包含存储、计算和网络带宽等多种弹性资源。根据距离终端设备的距离不同，雾节点以分层网络的方式进行组织，每一层称为一个「雾层」(Fog tier)。这样节点在工作时可以将计算年内容卸载到临近的雾节点，而雾节点也可以将工作负载卸载到更上层的雾节点。不过每次卸载都会引入额外的延时和额外的功耗。这一个Tradeoff问题包含了两个子问题：一种是在连续的雾层之间卸载的位置和负载量<span class="foot-note-span">【即这样一个多级卸载网络，应该卸载到多少层，卸载多少的计算量】</span>。另一个是如何分配资源以进行工作负载处理和卸载。</p>
+<p>动态卸载和资源分配的主要挑战如下：</p>
+<ol type="1">
+<li>系统动态特征与功耗-延时矛盾，即基本的系统模型</li>
+<li>高效的在线决策</li>
+<li>理解预测性卸载的好处</li>
+</ol>
+<p>我们通过开发可精确描述此类系统的细粒度排队模型并提出一种有效的在线方案来在时隙基础上进行卸载来解决上述挑战。 据我们所知，我们是第一个对雾系统的预测卸载进行系统研究的人。文章的Contribution包括</p>
+<ol type="1">
+<li>问题建模：将动态卸载和资源分配问题建模为随机优化问题，通过队列稳定性保证来优化目标为最小化长期的平均功耗。</li>
+<li>算法设计: 通过非平凡的变换，将问题分解为一系列时隙上的子问题。通过利用他们的独特结构，提出了PORA，一种通基于在线决策的预测调度方法</li>
+<li>理论分析和实验验证</li>
+<li>雾系统设计中引入新的设计维度</li>
+</ol>
 
         
       </div>
@@ -632,8 +647,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -905,6 +929,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#研究背景"><span class="nav-number">1.</span> <span class="nav-text">研究背景</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
