@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/posts/11710/</loc>
+    
+    <lastmod>2020-03-09T10:27:00.877Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/ml/reinforcement-learning/index.html</loc>
     
-    <lastmod>2020-03-06T07:08:13.351Z</lastmod>
+    <lastmod>2020-03-07T15:56:36.803Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/gao2020pora.html</loc>
+    
+    <lastmod>2020-03-06T07:17:52.547Z</lastmod>
     
   </url>
   
@@ -12,13 +26,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
     
     <lastmod>2020-03-06T07:05:39.119Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/gao2020pora.html</loc>
-    
-    <lastmod>2020-03-06T07:04:27.390Z</lastmod>
     
   </url>
   
@@ -47,13 +54,6 @@
     <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
     
     <lastmod>2020-03-02T08:55:32.841Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/posts/11710/</loc>
-    
-    <lastmod>2020-03-01T02:17:48.324Z</lastmod>
     
   </url>
   
