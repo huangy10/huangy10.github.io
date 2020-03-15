@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/0d2ad02ca2dbe1f4fc108dc174876b52.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7f04072f1ae28185018be8e0f17b147e.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/265a6e9c0c07ef2cce6be698db08846a.png">
-<meta property="og:updated_time" content="2020-03-07T15:56:36.803Z">
+<meta property="og:updated_time" content="2020-03-13T14:39:41.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="增强学习">
 <meta name="twitter:description" content="文档还在动态更新维护中  首先我们要解决的是「什么是增强学习」，即Reinforcement Learning，的问题。为了学习这一点我选择了比较权威的增强学习教材，Reinforcement Learning: An Introduction。这本书是增强学习的开创者安德鲁·巴托和理查德·S·萨顿所撰写。 之前接触过的典型的神经网络，比如用于处理图像输入的卷积神经网络(CNN)和擅长处理自然语">
@@ -802,8 +802,17 @@ q_*(s, a) \doteq \max_{\pi} q_{\pi} (s, a)
 q_*(s, a) = \mathbb{E}[R_{t+1} + \gamma v_*(S_{t+1}) | S_t = s, A_t = a]
 \]</span></p>
 <p><span class="math inline">\(v_*\)</span>这个函数同样需要满足<span class="math inline">\(\eqref{eq:value_function_1}\)</span>指定的一致性条件。不过由于经过最优化计算遍历了政策空间。所以最优价值函数的一致性条件可以写成不包含政策函数的形式。这个方程被称为最优Bellman方程：</p>
-<p>$$ \begin{aligned} v_*(s) &amp;= <em>{a (s)} q</em>{_*}(s, a) \ &amp;= <em>{a} </em>{_*}[G_t | S_t = s, A_t = a] \ &amp;= <em>{a} </em>{_*}[R_{t+1} + G_{t+1} | S_t = s, A_t = a] \ &amp;= <em>{a} [R_{t+1} + v_*(S_{t+1}) | S_t = s, A_t = a] \ &amp;= </em>{a} _{s', r}p(s', r | s, a)[r + v_*(s')] \end{aligned}</p>
-<p> $$</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+v_*(s) &amp;= \max_{a \in \mathcal{A}(s)} q_{\pi_*}(s, a) \\
+&amp;= \max_{a} \mathbb{E}_{\pi_*}[G_t | S_t = s, A_t = a] \\
+&amp;= \max_{a} \mathbb{E}_{\pi_*}[R_{t+1} + \gamma G_{t+1} | S_t = s, A_t = a] \\
+&amp;= \max_{a} \mathbb{E}[R_{t+1} + \gamma v_*(S_{t+1}) | S_t = s, A_t = a] \\
+&amp;= \max_{a} \sum_{s&#39;, r}p(s&#39;, r | s, a)[r + \gamma v_*(s&#39;)]
+\end{aligned}
+
+\label{eq:value_function_optimal}
+\end{equation}\]</span></p>
 <blockquote>
 <p>Emmm，上面这个式子的头一步推导是行为选择总是选择q值最大的那个决策，这不是实际上已经决定了<span class="math inline">\(\pi\)</span>的形式了么？？？</p>
 </blockquote>
@@ -854,8 +863,8 @@ v_{k+1}(s) &amp; \doteq \mathbb{E}_{\pi}\left[R_{t+1}+\gamma v_{k}\left(S_{t+1}\
 <p>我们计算价值函数的目的在于得到更好的政策。假设我们已经就任一种确定性的政策<span class="math inline">\(\pi\)</span>给出了价值函数<span class="math inline">\(v_\pi\)</span>。对于某种状态<span class="math inline">\(s\)</span>，我们希望知道是否我们应该调整政策以选择另一种行为<span class="math inline">\(a \neq \pi(s)\)</span>。我们已知了如果在当前状态下遵循当前政策有多好 -- 即<span class="math inline">\(v_\pi(s)\)</span>的含义，但是如果调整政策是否会得到更好的结果呢？一种做法是走状态<span class="math inline">\(s\)</span>下选择<span class="math inline">\(a\)</span>而非<span class="math inline">\(\pi(s)\)</span>，尔后在继续遵守政策<span class="math inline">\(\pi\)</span>。这种方式得到行为-状态价值是</p>
 <p><span class="math display">\[
 \begin{aligned}
-q_\pi (s, a) &amp;\doteq \mathcal{E}[R_{t+1} + \gamma v_{\pi} (S_{t+1}) | S_t = s, A_t = a] \\
-&amp;= sum_{s&#39;, r} p(s&#39;, r | s, a)\left[
+q_\pi (s, a) &amp;\doteq \mathbb{E}[R_{t+1} + \gamma v_{\pi} (S_{t+1}) | S_t = s, A_t = a] \\
+&amp;= \sum_{s&#39;, r} p(s&#39;, r | s, a)\left[
     r + \gamma v_\pi (s&#39;)
   \right]
 \end{aligned}
@@ -895,7 +904,15 @@ v_{\pi}(s) &amp; \leq q_{\pi}\left(s, \pi^{\prime}(s)\right) \\
 \end{aligned}
 \label{eq:temp-4.9}
 \end{equation}\]</span></p>
-<p>这种逐步改善政策的方法称为<i>policy improvement</i>。不过这种逐步迭代的方法还缺少一个停止条件。假设迭代过程中，<span class="math inline">\(\pi&#39;\)</span>政策和迭代前的政策<span class="math inline">\(\pi\)</span>是同等好的。那么根据<span class="math inline">\(\eqref{eq:temp-4.9}\)</span>，有</p>
+<p>这种逐步改善政策的方法称为<i>policy improvement</i>。不过这种逐步迭代的方法还缺少一个停止条件。假设迭代过程中，<span class="math inline">\(\pi&#39;\)</span>政策和迭代前的政策<span class="math inline">\(\pi\)</span>是同等好的。那么<span class="math inline">\(v_{\pi} = v_{\pi&#39;}\)</span>，且根据<span class="math inline">\(\eqref{eq:temp-4.9}\)</span>，有对于所有的<span class="math inline">\(s \in \mathcal{S}\)</span>，有</p>
+<p><span class="math display">\[
+\begin{aligned}
+v_{\pi&#39;}(s) &amp;= \max_{a}\mathbb{E}[R_{t+1} + \gamma v_{\pi &#39;}(S_{t+1}) | S_t = s, A_t = a] \\
+&amp;= \max_{a}\sum_{s&#39;, r} p(s&#39;, r | s, a)\left[ r + \gamma v_{\pi&#39;}(s&#39;) \right]
+\end{aligned}
+\]</span></p>
+<p>注意到这个等式和<span class="math inline">\(\eqref{eq:value_function_optimal}\)</span>中给出的Bellman方程具有相同的形式，这意味<span class="math inline">\(v_{\pi&#39;} = v_{*}\)</span>，即为最优政策。这个结论给出了上述迭代过程的停止条件。</p>
+<p>到这里我们讨论的都是确定性政策。在更加一般的情况下，随机政策<span class="math inline">\(\pi\)</span>给出的是行为选择概率<span class="math inline">\(\pi(a | s)\)</span>。我们这里不再深入到随机政策的细节研讨，不过这里可以给出的结论是本章节给出的概念都可以很容易地推广到随机政策的场景。</p>
 
         
       </div>

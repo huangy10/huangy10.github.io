@@ -123,23 +123,24 @@
 
 
 
-  <meta name="description" content="网络数据包如果一次发送太多，就会造成网络拥堵；如果发送太少，就浪费了带宽，延长了通信时间。TCP 协议有一个拥堵窗口机制，负责动态调整每次发送数据包的数量。本文通俗地解释了这种算法的细节。 本文翻译自Intro to Congestion Control">
-<meta name="keywords" content="翻译,网络,TCP&#x2F;IP">
-<meta property="og:type" content="article">
-<meta property="og:title" content="TCP:拥堵控制">
-<meta property="og:url" content="http://www.codewoody.com/posts/60823/index.html">
+  <meta name="description" content="原文链接   /* *{margin:0 auto; padding: 0;} a{color:#576b95;text-decoration:none;} img{max-width:100%;} */ #mp{padding:10px;background:#ffffff;color:#333333;text-align:justify;font-family:Arial,sans-serif">
+<meta property="og:type" content="website">
+<meta property="og:title" content="发哨子的人">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/backups/发哨子的人.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="网络数据包如果一次发送太多，就会造成网络拥堵；如果发送太少，就浪费了带宽，延长了通信时间。TCP 协议有一个拥堵窗口机制，负责动态调整每次发送数据包的数量。本文通俗地解释了这种算法的细节。 本文翻译自Intro to Congestion Control">
+<meta property="og:description" content="原文链接   /* *{margin:0 auto; padding: 0;} a{color:#576b95;text-decoration:none;} img{max-width:100%;} */ #mp{padding:10px;background:#ffffff;color:#333333;text-align:justify;font-family:Arial,sans-serif">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/425ffff00e7427abb333fbfe203f54fe.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/41a5dc5f5cc16669201e09c56522c2e6.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3f08678913f4a2d53eebcbc0d9f483b2.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5e69012dbb6b7ebb8e7d137e0d70bf61.png">
-<meta property="og:updated_time" content="2019-05-15T05:43:29.366Z">
+<meta property="og:image" content="http://im.digbo.org/kancn002.01.jpg">
+<meta property="og:image" content="http://im.digbo.org/kancn002.02.jpg">
+<meta property="og:image" content="http://im.digbo.org/kancn002.03.jpg">
+<meta property="og:image" content="http://im.digbo.org/kancn002.04.jpg">
+<meta property="og:image" content="http://im.digbo.org/kancn002.06.jpg">
+<meta property="og:image" content="http://im.digbo.org/kancn002.05.jpg">
+<meta property="og:updated_time" content="2020-03-12T09:24:34.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TCP:拥堵控制">
-<meta name="twitter:description" content="网络数据包如果一次发送太多，就会造成网络拥堵；如果发送太少，就浪费了带宽，延长了通信时间。TCP 协议有一个拥堵窗口机制，负责动态调整每次发送数据包的数量。本文通俗地解释了这种算法的细节。 本文翻译自Intro to Congestion Control">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/425ffff00e7427abb333fbfe203f54fe.png">
+<meta name="twitter:title" content="发哨子的人">
+<meta name="twitter:description" content="原文链接   /* *{margin:0 auto; padding: 0;} a{color:#576b95;text-decoration:none;} img{max-width:100%;} */ #mp{padding:10px;background:#ffffff;color:#333333;text-align:justify;font-family:Arial,sans-serif">
+<meta name="twitter:image" content="http://im.digbo.org/kancn002.01.jpg">
 
 
 
@@ -149,7 +150,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/posts/60823/">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/backups/发哨子的人">
 
 
 
@@ -159,7 +160,7 @@
   };
 </script>
 
-  <title>TCP:拥堵控制 | 治部少辅</title>
+  <title>发哨子的人 | 治部少辅</title>
   
 
 
@@ -277,7 +278,7 @@
         
         
           
-          <li class="menu-item menu-item-knowledge">
+          <li class="menu-item menu-item-knowledge menu-item-active">
 
     
     
@@ -423,303 +424,218 @@
           
             
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
           
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.codewoody.com/posts/60823/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="治部少辅">
-      <meta itemprop="description" content="晚来天雨雪，能饮一杯无？">
-      <meta itemprop="image" content="https://imgs.codewoody.com/uploads/big/0330eb8242d9bfc4873c11450f0ab691.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="治部少辅">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
+<h2 class="post-title" itemprop="name headline">发哨子的人
+
+</h2>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
         
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
         
-          <h2 class="post-title" itemprop="name headline">TCP:拥堵控制
-
-              
-            
-          </h2>
+      
+    
+      
+      
         
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-05 16:01:45" itemprop="dateCreated datePublished" datetime="2018-12-05T16:01:45+08:00">2018-12-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-05-15 13:43:29" itemprop="dateModified" datetime="2019-05-15T13:43:29+08:00">2019-05-15</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/形而上/" itemprop="url" rel="index"><span itemprop="name">形而上</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
           
             
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/posts/60823/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="posts/60823/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
           
           
-
+            <li><a href="/knowledge-base/backups/">BACKUPS</a></li>
           
-            <span class="post-meta-divider">|</span>
-            <span class="post-meta-item-icon">
-            <i class="fa fa-eye"></i>
-             Views:  
-            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-
-          
-
-          
-
-        </div>
-      </header>
+        
+      
     
+      
+      
+        
+          
+            
+          
+          
+            <li>发哨子的人</li>
+          
+        
+      
+    
+  </ul>
 
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
+
+</div>
+
+</header>
 
       
       
-
       
-        <p>网络数据包如果一次发送太多，就会造成网络拥堵；如果发送太少，就浪费了带宽，延长了通信时间。TCP 协议有一个拥堵窗口机制，负责动态调整每次发送数据包的数量。本文通俗地解释了这种算法的细节。</p>
-<p>本文翻译自<a href="http://squidarth.com/rc/programming/networking/2018/07/18/intro-congestion.html" target="_blank" rel="noopener">Intro to Congestion Control</a> <a id="more"></a></p>
-<p>这个夏天，我一直在思考更好地解决网络拥塞问题的方法。在这篇文章中，我将会讨论为什么网络拥塞问题会出现，以及一些传统的解决办法。如果你有更深厚的兴趣，这个<a href="http://squidarth.com/demonstrating-congestion-control.html" target="_blank" rel="noopener">Juptier notebook</a>包含了我用来获取相应结果的代码，以及对这些结果的分析。</p>
-<h2 id="什么是tcp">什么是TCP</h2>
-<p>在我们开始正文讨论之前，我来先简要介绍一些信息在网络上流通的细节。</p>
-<p><a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol" target="_blank" rel="noopener">TCP</a>协议被用来将信息从一台电脑经过英特网传输给另一台电脑。这个协议也是这篇文章所关注的协议。把TCP协议同其他协议（如UDP）区分开来的特征是，TCP确保了100%的传输成功率。也就是说如果你从一台电脑上发送了100kb的数据，那么你会在接收端准确地收到这100kb的数据。</p>
-<p>TCP的这个特性非常强大，而这一特性也是很多网络应用采用TCP协议的原因。现有的Web应用和Email都是构筑于TCP协议之上。</p>
-<p>TCP实现所有数据的可靠传输的核心原理是，对于从A端发送到B端的数据，B端会发送回一个ACK(Acknowlegement)信息给A端来告知自己收到了对应的信息。</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/425ffff00e7427abb333fbfe203f54fe.png" alt="TCP传输"><figcaption>TCP传输</figcaption>
-</figure>
-<p>另外还值得注意的是，TCP工作在IP协议之上，IP协议最多允许在一个包中包含1500个字节的数据，因此要发送100kb的数据，需要拆分成多个分段。根据TCP协议，每个分段都会收到对应的ACK。</p>
-<p>如果发送者没有收到一个数据分段的ACK，其会重新发送这个分段。</p>
-<h2 id="什么时候会还产生拥塞">什么时候会还产生拥塞</h2>
-<p>拥塞（Congestion）问题是由于网络传输延时导致的。信息传输速率会收到物理信道，如以太网线，蜂窝网络等，的制约。在因特网中，大部分独立设备都连接到这些信道上。</p>
-<p>下图是一个典型场景：</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/41a5dc5f5cc16669201e09c56522c2e6.png" alt="拥塞产生的场景"><figcaption>拥塞产生的场景</figcaption>
-</figure>
-<p>在上面的示意图中，两个发送者要各自要传输1GB的数据。然而这两个发送者最终接入到了一个1GB的链接中。第二个链接的传输能力无法匹配上前两个链接的输入，故而不得不丢弃一部分数据包。如果发送者不主动调整自己的发送速度，那么会产生非常坏的情况。在TCP协议中，如果发送者发现一个数据分段没有送达，会重新发送这个数据包。那么拥塞情况会持续，两个发送者会无法完成发送过程。</p>
-<p>为了让两个发送者能够成功传输各自的数据，他们需要共同减少发送数据的速率。如果只有一个发送者减少了发送的数据，而另一个仍然维持1GB的发送量，那么仍然会产生拥塞。在因特网的架构中，不会有一个中央控制系统来协调两者的发送速率。</p>
-<h2 id="迂回什么是链接link">迂回：什么是链接(link)？</h2>
-<p>在我们深入到这个问题的解决方案前，我还想进一步讨论链接（link）的属性。关于网络链接，有下面三个重要的细节问题你需要知道：</p>
-<ul>
-<li>延时（毫秒）：一个包从链接的一端发送到另一端需要的时间</li>
-<li>带宽（mb/s）：链接每秒能够通过的比特数</li>
-<li>队列：在链接正在工作时，等候发送包的队列的长度，以及在队列满时管理队列的策略</li>
-</ul>
-<p>如果把链接比喻成水管，那么延时可以理解为管道的长度，带宽就是水管的周长。</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/3f08678913f4a2d53eebcbc0d9f483b2.png" alt="链接模型"><figcaption>链接模型</figcaption>
-</figure>
-<p>关于链接还有一个重要的统计参数时带宽延时积（bandwidth-delay product, BDP）。这个参数表现了体现了停留在链接中的数据量，可以理解为管道本身的容量。当链接中传输的数据量达到了BDP时，就可以说链接被充分利用了。如果发送端尝试发送比BDP更多的数据，那么链接的队列将会填满，并最终开始丢包。</p>
-<h2 id="方法">方法</h2>
-<p>在给出方法之前，我们要思考一个问题：发送者如何知道产生了拥塞呢？如同我们之前提到的，因特网是一个分布式的系统，故而并没有一个位于中央的协调者来在下游链接产生拥塞的时候提醒发送者要减慢发送速度。</p>
-<p>主要有两个指标：<strong>丢包率</strong>和<strong>传输往返时间</strong>。在拥塞发生时，链接的队列逐渐填满，开始发生丢包。如果一个发送者注意到了丢包现象，这就很可能意味着发生了丢包。另一个队列满负荷的现象是数据包在队列中等待的时间增加了，这会导致传输往返时间，即发送包到收到ACK的时间增加。</p>
-<p>今天的一些拥塞控制机制考虑了上面两个指标，不过在一些比较早期的设计中，只使用到了丢包率这一个指标。</p>
-<p>还需要注意的是，发送者可能并不提前知道传输链接的特性参数。例如，如果你访问&quot;<a href="http://www.google.com" target="_blank" rel="noopener">http://www.google.com</a>&quot;，那么你发送的数据包可能要经过很多不同性质的链接才能到达Google的服务器，而你的传输速率是收到其中最慢的链接的制约的。</p>
-<p>因此，出了规避网络拥塞的能力，拥塞控制机制还需要能够探索可用带宽的具体大小。</p>
-<h2 id="拥塞窗口congestion-window">拥塞窗口（Congestion Window）</h2>
-<p>理解任何拥塞控制机制的关键在于理解拥塞窗口的概念。拥塞窗口指的是在收到一个ACK前发送者能发送的包的数量。如果一个发送者的拥塞窗口被设置为2，这意味着在发送了两个包之后，它必须等到接收端回复的ACK之后才能继续发送。</p>
-<p>拥塞窗口越大，发送者就能在相通的时间间隔内向接收端发送更多的数据包。为了更加直观的理解，假设网络传输的延时是88ms，拥塞窗口设置为10，那么在一轮往返传输（88 * 2 = 176ms）时间内可以发送10个数据包。而如果拥塞窗口设置为20，则相同的时间间隔内可以发送20个数据包。</p>
-<p>不过当然，提升拥塞窗口的大小，也会提高发生拥塞的概率。拥塞控制算法的目标，就是计算出合适的拥塞窗口大小。</p>
-<p>从理论角度来看，拥塞窗口的大小应当就是链接的BDP。</p>
-<h2 id="tcp-tahoe">TCP Tahoe</h2>
-<p>TCP Tahoe是在80年代设计出来的拥塞控制算法。那是拥塞问题才刚刚在因特网上出现。算法本身非常简单。增加拥塞窗口分为两个阶段：</p>
-<p><strong>第一阶段： Slow Start</strong>：算法的开始状态是Slow Start。在这个阶段拥塞窗口在每收到一个ACK就增加1。这种机制有效地在每轮往返传输成功后，将拥塞窗口的大小翻倍。如果拥塞窗口的大小是4，那么在同时会有4个包在传输路途中。当每个包的ACK返回时，拥塞窗口加一，即当这四个包的ACK都收到后，拥塞窗口会翻倍成为8。这个过程会一直持续到拥塞窗口达到阈值，<code>ssthresh</code>。</p>
-<p><strong>第二阶段：Congestion Avoidance</strong>：当拥塞窗口达到阈值<code>ssthresh</code>时，进入Congestion Avoidance阶段。在这一阶段，每轮往返传输后拥塞窗口加一。也就是说，在上面的例子中，当所有4个包的ACK收到后，拥塞窗口只会加1. 在这个阶段拥塞窗口的大小会大大减小。</p>
-<p>当Tahoe检测到丢包后，会把<code>ssthresh</code>设置为当前拥塞窗口的一半，然后将拥塞窗口设置为1，算法重新回到Slow Start阶段。</p>
-<h3 id="丢包检测与快速重传">丢包检测与快速重传</h3>
-<p>TCP发送端有两种方法来检测丢包现象：</p>
-<ol type="1">
-<li>发送端超时。发送端会给每个发送出去的数据包设置一个超时。如果在超时时限达到时尚未收到该包的ACK，则认为发生丢包，并重传改数据包，将拥塞窗口设置为1.</li>
-<li>接受者发送回重复的ACK。在TCP中，接收端只会接收按照顺序发送的包。如果收到了不合顺序的包，接收端会返回他收到的最后一个符合顺序的包的ACK。例如，接收端收到了1，2，3，其后又收到了包5，那么接收端会再次回复3的ACK。在Tahoe中，如果发送端检测到重复的ACK，就意味着发生了丢包。这种机制被称为快速重传(Fast Retransmit)，因为这种机制不一定要等待到传输超时。</li>
-</ol>
-<h3 id="一些思考">一些思考</h3>
-<p>在开头提到的<a href="http://squidarth.com/demonstrating-congestion-control.html" target="_blank" rel="noopener">Jupitor Notebook</a>中，我实现了Tahoe，下图是拥塞窗口随着时间变化的曲线：</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/5e69012dbb6b7ebb8e7d137e0d70bf61.png" alt="Tahoe的拥塞窗口曲线"><figcaption>Tahoe的拥塞窗口曲线</figcaption>
-</figure>
-<p>注意到上图的中变化曲线存在锯齿形的行为。开始的突增为Slow-Start阶段，后面的平缓部分为Congestion Avoidance阶段。急遽掉落到1则是由于丢包导致的。</p>
-<h3 id="为什么tahoe要如此工作">为什么Tahoe要如此工作？</h3>
-<p>Tahoe在工作过程中不断增加拥塞门限的原因是因为网络条件会随着时间不断变化。例如如果另一个发送者开始在同一个信道上发送数据，这会导致可用带宽的降低，其他的发送者需要按照实际情况调整。相反，如果有一个发送者停止发送数据了，可用带宽会增加，这也需要其他发送者根据实际情况来调整。</p>
-<p>这种方法其实还是存在很多问题，这也是Tahoe目前已经基本没人使用了。特别的，Tahoe需要很长的时间，尤其是在高带宽网络上，才能全面有效地利用可用带宽。这是因为在拥塞窗口增长到Slow Start门限以后，其增长就变得非常缓慢了。</p>
-<p>另外一个问题是，发生丢包并不一定意味着网络发生了拥塞，例如Wifi信道下，本身信道就是可能发送丢失的。对于丢包产生剧烈的将拥塞窗口砍到1并不总是合适的做法。</p>
-<p>最后一个问题是，Tahoe使用丢包这个因子来作为判断是否发生丢包的依据。然而由于拥塞发生了丢包，此时调整拥塞窗口已经太晚了。</p>
-<h2 id="其他的方法">其他的方法</h2>
-<p>80年代以后，涌现了不少新的算法来解决上面这些问题。我会在将来的文章中详细讨论这些方法：</p>
-<ol type="1">
-<li><p>CUBIC：这个算法在2005年实现，目前是Linux系统的默认拥塞控制算法。如同Tahoe，这个CUBIC也是用丢包作为判断拥塞是否发生的依据。不同的是，CUBIC在高带宽网络下的性能要远高于Tahoe。不同于Tahoe在每一轮往返传输后将拥塞窗口增加1的做法，CUBIC如同其名，使用一个立方函数来确定窗口大小，从而实现拥塞窗口的快速增长。</p></li>
-<li><p>BBR(Bufferbloat)：这是最近才被Google提出的新的算法。不同于CUBIC和Tahoe，这个算法使用延时来作为判断拥塞是否发生的标识。这背后的思路是延时是拥塞在导致丢包前就能起作用的判断因子。在实际丢包发生前就开始减少发送速率能够带来更高的吞吐率。</p></li>
-</ol>
-<h2 id="公平性">公平性</h2>
-<p>在研究拥塞控制算法时，一个有意思的问题是考虑不同的算法对于同一网络链接上的各个发送者是否公平。如果一个算法在发生拥塞时，没有缩减发送规模，而是按照之前相同的速率继续发送，那么这个算法就是不公平的。在<a href="http://squidarth.com/demonstrating-congestion-control.html#Low-Bandwidth,-1-Fixed-Window,-1-Tahoe" target="_blank" rel="noopener">这个结果</a>中，如果同一个链接上 有一个发送者没有采用拥塞窗口控制，而另一个发送者使用Tahoe。从结果可以看到，在一分钟的时间内，Tahoe发送者几乎没法发送任何数据，因为它没有机会增加它的拥塞窗口。而固定窗口的发送者全占了发送信道。</p>
-<p>尽管固定窗口发送者是一个不好的情形，这种算法可能具有对其他的算法的不公平地位，从而占据更多带宽。由于缺乏中央控制这，可能有贪婪的发送者蓄意采用固定窗口来谋取更大的带宽。这就是需要从博弈论的角度来研究拥塞控制算法了。</p>
-<h2 id="结论">结论</h2>
-<p>拥塞控制算法是互联网的基础，同时也是在有限信息条件下进行分布式决策的一种迷人的实践。</p>
+      <div class="post-body han-init-context">
+        
+        
+          <p><a href="http://mp.digbo.org/kancn002?sn=5693bff67750af114ca0da4927e1422a53d7cb53&amp;from=timeline&amp;isappinstalled=0" target="_blank" rel="noopener">原文链接</a></p>
+<!-- <title>发哨子的人</title> -->
+<style type="text/css">
+/* *{margin:0 auto; padding: 0;}
+a{color:#576b95;text-decoration:none;}
+img{max-width:100%;} */
+#mp{padding:10px;background:#ffffff;color:#333333;text-align:justify;font-family:Arial,sans-serif;font-size:16px;line-height:0px;}
+</style>
+<!-- <script type="text/javascript">
+window.onload = function(){if(navigator.userAgent.toLowerCase().match(/(ipod|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|win ce)/i) == null){document.getElementById("mp").style.width="720px";}}
+</script> -->
+<!-- </head> -->
+<div id="mp">
+<p style="margin:0 auto;padding:24px 0px 10px 10px;line-height:22px;font-size:22px;">
+发哨子的人
+</p>
+<p style="margin:0 auto; padding:10px;color:#b4b4b4;line-height:15px;font-size:15px;">
+人物记者　<a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MjEwMzA5NTcyMQ==#wechat_redirect" target="_blank" rel="noopener">人物</a>　前天
+</p>
+<p style="margin:0 auto;padding:20px 10px 0px 10px;line-height:0;">
+<img style="width:100%;" src="http://im.digbo.org/kancn002.01.jpg">
+</p>
+<section style="margin:20px  8px;padding:20px;background:#efefef;line-height:32px;font-size:16px;">
+2019年12月30日，艾芬曾拿到过一份不明肺炎病人的病毒检测报告，她用红色圈出「SARS冠状病毒」字样，当大学同学问起时，她将这份报告拍下来传给了这位同是医生的同学。当晚，这份报告传遍了武汉的医生圈，转发这份报告的人就包括那8位被警方训诫的医生。 <br> <br>这给艾芬带来了麻烦，作为传播的源头，她被医院纪委约谈，遭受了「前所未有的、严厉的斥责」，称她是作为专业人士在造谣。 <br> <br>此前的一些报道，艾芬被称为「又一个被训诫的女医生浮出水面」，也有人将她称为「吹哨人」，艾芬纠正了这个说法，她说自己不是吹哨人，是那个「发哨子的人」。 <br> <br>这是《人物》3月刊封面《武汉医生》的第二篇报道。
+</section>
+<section style="margin:32px  0px;padding:20px;line-height:32px;font-size:16px;">
+<p style="margin:20px 0px;text-align:right;line-height:32px;">
+文｜龚菁琦 <br>编辑｜金石 <br>摄影｜尹夕远
+</p>
+<p style="padding:32px 0px;">
+接到武汉市中心医院急诊科主任艾芬同意采访的短信是3月1日凌晨5点，大约半小时后，3月1日凌晨5点32分，她的同事、甲状腺乳腺外科主任江学庆因感染新冠肺炎去世。两天后，该院眼科副主任梅仲明过世，他和李文亮是同一科室。 <br> <br>截止2020年3月9日，武汉市中心医院已有4位医护人员因感染新冠肺炎去世——疫情发生以来，这家离华南海鲜市场只几公里的医院成为了武汉市职工感染人数最多的医院之一，据媒体报道医院超过200人被感染，其中包括三个副院长和多名职能部门主任，多个科室主任目前正在用ECMO维持。 <br> <br>死亡的阴影笼罩着这家武汉市最大的三甲医院，有医生告诉《人物》，在医院的大群里，几乎没有人说话，只在私下默默悼念、讨论。 <br> <br>悲剧原本有机会避免。2019年12月30日，艾芬曾拿到过一份不明肺炎病人的病毒检测报告，她用红色圈出「SARS冠状病毒」字样，当大学同学问起时，她将这份报告拍下来传给了这位同是医生的同学。当晚，这份报告传遍了武汉的医生圈，转发这份报告的人就包括那8位被警方训诫的医生。 <br> <br>这给艾芬带来了麻烦，作为传播的源头，她被医院纪委约谈，遭受了「前所未有的、严厉的斥责」，称她是作为专业人士在造谣。 <br> <br>3月2日下午，艾芬在武汉市中心医院南京路院区接受了《人物》的专访。她一个人坐在急诊室办公室中，曾经一天接诊超过1500位患者的急诊科此时已恢复了安静，急诊大厅里只躺着一名流浪汉。 <br> <br>此前的一些报道，艾芬被称为「又一个被训诫的女医生浮出水面」，也有人将她称为「吹哨人」，艾芬纠正了这个说法，她说自己不是吹哨人，是那个「发哨子的人」。采访中，艾芬数次提起「后悔」这个词，她后悔当初被约谈后没有继续吹响哨声，特别是对于过世的同事，「早知道有今天，我管他批评不批评，『老子』到处说，是不是？」 <br> <br>关于武汉市中心医院和艾芬本人在过去的两个多月中到底经历了什么？以下，是艾芬的讲述——
+</p>
+<p style="margin:0 auto;padding:0;line-height:0;">
+<img style="width:100%;" src="http://im.digbo.org/kancn002.02.jpg">
+</p>
+<p style="margin:5px 0px;text-align:right;">
+<content style="padding:8px;line-height:32px;widht:20px;background:#808080;color:#ffffff;">艾 芬</content>
+</p>
+<p style="padding:32px 0px;">
+<br><b>前所未有的训斥</b> <br> <br>去年12月16日，我们南京路院区急诊科接诊了一位病人。莫名其妙高烧，一直用药都不好，体温动都不动一下。22号就转到了呼吸科，做了纤维支气管镜取了肺泡灌洗液，送去外面做高通量测序，后来口头报出来是冠状病毒。当时，具体管床的同事在我耳边嚼了几遍：艾主任，那个人报的是冠状病毒。后来我们才知道那个病人是在华南海鲜做事的。 <br> <br>紧接着12月27日，南京路院区又来了一个病人，是我们科一位医生的侄儿，40多岁，没有任何基础疾病，肺部一塌糊涂，血氧饱和只有90%，在下面其他医院已经治疗了将近10天左右都没有任何好转，病人收到了呼吸科监护室住院。同样做了纤维支气管镜取了肺泡灌洗液送去检测。 <br> <br>12月30日那天中午，我在同济医院工作的同学发了一张微信对话截图给我，截图上写着：「最近不要去华南啊，那里蛮多人高烧……」他问我是不是真的，当时，我正在电脑上看一个很典型的肺部感染患者的CT，我就把CT录了一段11秒钟的视频传给他，告诉他这是上午来我们急诊的一个病人，也是华南海鲜市场的。 <br> <br>当天下午4点刚过，同事给我看了一份报告，上面写的是：SARS冠状病毒、绿脓假单胞菌、46种口腔/呼吸道定植菌。我仔细看了很多遍报告，下面的注释写着：SARS冠状病毒是一种单股正链RNA病毒。该病毒主要传播方式为近距离飞沫传播或接触患者呼吸道分泌物，可引起的一种具有明显传染性，可累及多个脏器系统的特殊肺炎，也称非典型肺炎。 <br> <br>当时，我吓出了一身冷汗，这是一个很可怕的东西。病人收在呼吸科，按道理应该呼吸科上报这个情况，但是为了保险和重视起见，我还是立刻打电话上报给了医院公共卫生科和院感科。当时我们医院呼吸科主任正好从我门口过，他是参加过非典的人，我把他抓住，说，我们有个病人收到你们科室，发现了这个东西。他当时一看就说，那就麻烦了。我就知道这个事情麻烦了。 <br> <br>给医院打完电话，我也给我同学传了这份报告，特意在「SARS冠状病毒、绿脓假单胞菌、46种口腔/呼吸道定植菌」这一排字上画了个红圈，目的是提醒他注意、重视。我也把报告发在了科室医生群里面，提醒大家注意防范。 <br> <br>当天晚上，这个东西就传遍了，各处传的截屏都是我画红圈的那个照片，包括后来知道李文亮传在群里的也是那份。我心里当时就想可能坏事儿了。10点20，医院发来了信息，是转市卫健委的通知，大意就是关于不明原因肺炎，不要随意对外发布，避免引起群众恐慌，如果因为信息泄露引发恐慌，要追责。 <br> <br>我当时心里就很害怕，立刻把这条信息转给了我同学。过了大概一个小时，医院又来了一份通知，再次强调群内的相关消息不能外传。一天后，1月1日晚上11点46分，医院监察科科长给我发了条消息，让我第二天早上过去一下。 <br> <br>那一晚上我都没有睡着，很担忧，翻来覆去地想，但又觉得凡事总有两面性，即便造成不良影响，但提醒武汉的医务人员注意防范也不一定是个坏事。第二天早上8点多一点，还没有等我交完班，催我过去的电话就打来了。 <br> <br>之后的约谈，我遭受了前所未有的、非常严厉的斥责。 <br> <br>当时，谈话的领导说，「我们出去开会都抬不起头，某某某主任批评我们医院那个艾芬，作为武汉市中心医院急诊科主任，你是专业人士，怎么能够没有原则没有组织纪律造谣生事？」这是原话。让我回去跟科室的200多号人一个个地口头传达到位，不能发微信、短信传达，只能当面聊或者打电话，不许说关于这个肺炎的任何事情，「连自己的老公都不能说」…… <br> <br>我整个人一下子就懵了，他不是批评你这个人工作不努力，而是好像整个武汉市发展的大好局面被我一个人破坏了。我当时有一种很绝望的感觉，我是一个平时认认真真、勤勤恳恳工作的人，我觉得自己做的事情都是按规矩来的，都是有道理的，我犯了什么错？我看到了这个报告，我也上报医院了，我和我的同学，同行之间对于某一个病人的情况进行交流，没有透露病人的任何私人信息，就相当于是医学生之间讨论一个病案，当你作为一个临床的医生，已经知道在病人身上发现了一种很重要的病毒，别的医生问起，你怎么可能不说呢？这是你当医生的本能，对不对？我做错什么了？我做了一个医生、一个人正常应该做的事情，换作是任何人我觉得都会这么做。 <br> <br>我当时的情绪也很激动，说，这个事是我做的，跟其余人都没有关系，你们干脆把我抓去坐牢吧。我说我现在这个状态不适合在这个岗位上继续工作了，想要休息一段时间。领导没有同意，说这个时候正是考验我的时候。 <br> <br>当天晚上回家，我记得蛮清楚，进门后就跟我老公讲，我要是出了什么事情，你就好好地把孩子带大。因为我的二宝还很小，才1岁多。他当时觉得莫名其妙，我没有跟他说自己被训话的事，1月20号，钟南山说了人传人之后，我才跟他说那天发生了什么。那期间，我只是提醒家人不要去人多的地方，出门要戴口罩。 <br> <br><b>外围科室</b> <br> <br>很多人担心我也是那8个人之一被叫去训诫。实际上我没有被公安局训诫，后来有好朋友问我，你是不是吹哨人？我说我不是吹哨人，我是那个发哨子的人。 <br> <br>但那次约谈对我的打击很大，非常大。回来后我感觉整个人心都垮了，真的是强打着精神，认真做事，后来所有的人再来问我，我就不能回答了。 <br> <br>我能做的就是先让急诊科重视防护。我们急诊科200多人，从1月1号开始，我就叫大家加强防护，所有的人必须戴口罩、戴帽子、用手快消。记得有一天交班有个男护士没戴口罩，我马上就当场骂他「以后不戴口罩就不要来上班了」。 <br> <br>1月9号，我下班时看见预检台一个病人对着大家咳，从那天后，我就要求他们必须给来看病的病人发口罩，一人发一个，这个时候不要节约钱，当时外面在说没有人传人，我又要在这里强调戴口罩加强防护，都是很矛盾的。 <br> <br>那段时间确实很压抑，非常痛苦。有医生提出来要把隔离衣穿外头，医院里开会说不让，说隔离衣穿外头会造成恐慌。我就让科室的人把隔离服穿白大褂里面，这是不符合规范的，很荒谬的。 <br> <br>我们眼睁睁地看着病人越来越多，传播区域的半径越来越大，先是华南海鲜市场附近可能跟它有关系，然后就传传传，半径越来越大。很多是家庭传染的，最先的7个人当中就有妈妈给儿子送饭得的病。有诊所的老板得病，也是来打针的病人传给他的，都是重得不得了。我就知道肯定有人传人。如果没有人传人，华南海鲜市场1月1日就关闭了，怎么病人会越来越多呢？ <br> <br>很多时候我都在想，如果他们当时不那样训斥我，心平气和地问一下这件事情的来龙去脉，再请别的呼吸科专家一起沟通一下，也许局面会好一些，我至少可以在医院内部多交流一下。如果是1月1号大家都这样引起警惕，就不会有那么多悲剧了。 <br> <br>1月3号下午，在南京路院区，泌尿外科的医生们聚集在一起回顾老主任的工作历程，参会的胡卫峰医生今年43岁，现在正在抢救；1月8号下午，南京路院区22楼，江学庆主任还组织了武汉市甲乳患者康复联欢会；1月11号早上，科室跟我汇报急诊科抢救室护士胡紫薇感染，她应该是中心医院第一个被感染的护士，我第一时间给医务科科长打电话汇报，然后医院紧急开了会，会上指示把「两下肺感染，病毒性肺炎？」的报告改成「两肺散在感染」；1月16号最后一次周会上，一位副院长还在说：「大家都要有一点医学常识，某些高年资的医生不要自己把自己搞得吓死人的。」另一位领导上台继续说：「没有人传人，可防可治可控。」一天后，1月17号，江学庆住院，10天后插管、上ECMO。 <br> <br>中心医院的代价这么大，就是跟我们的医务人员没有信息透明化有关。你看倒下的人，急诊科和呼吸科的倒是没有那么重的，因为我们有防护意识，并且一生病就赶紧休息治疗。重的都是外围科室，李文亮是眼科的，江学庆是甲乳科的。 <br> <br>江学庆真的非常好的一个人，医术很高，全院的两个中国医师奖之一。而且我们还是邻居，我们一个单元，我住四十几楼，他住三十几楼，关系都很好，但是平时因为工作太忙，就只能开会、搞医院活动时候见见面。他是个工作狂，要么就在手术室，要么就在看门诊。谁也不会特意跑去跟他说，江主任，你要注意，戴口罩。他也没有时间和精力打听这些事，他肯定就大意了：「有什么关系？就是个肺炎。」这个是他们科室的人告诉我的。 <br> <br>如果这些医生都能够得到及时的提醒，或许就不会有这一天。所以，作为当事人的我非常后悔，早知道有今天，我管他批评不批评我，「老子」到处说，是不是？ <br> <br>虽然和李文亮同在一个医院，一直到去世之前我都不认得他，因为医院4000多号人太多了，平时也忙。他去世前的那天晚上，ICU的主任跟我打电话借急诊科的心脏按压器，说李文亮要抢救，我一听这个消息大吃一惊，李文亮这个事整个过程我不了解，但是他的病情跟他受训斥之后心情不好有没有关系？这我要打个问号，因为受训的感觉我感同身受。 <br> <br>后来，事情发展到这一步，证明李文亮是对的时候，他的心情我非常能理解，可能跟我的心情一样，不是激动、高兴，而是后悔，后悔当初就应该继续大声疾呼，应该在所有的人问我们的时候，继续说。很多很多次我都在想，如果时间能够倒回来该多好。
+</p>
+<p style="margin:0 auto;padding:0;line-height:0;">
+<img style="width:100%;" src="http://im.digbo.org/kancn002.03.jpg">
+</p>
+<p style="padding:32px 0px;">
+<br><b>活着就是好的</b> <br> <br>在1月23日封城前一天的晚上，有相关部门的朋友打电话问我武汉市急诊病人的真实情况。我说你代表私人，还是代表公家。他说我代表私人。我说代表个人就告诉你真话，1月21号，我们急诊科接诊1523个病人，是往常最多时的3倍，其中发烧的有655个人。 <br> <br>那段时间急诊科的状况，经历过的人一辈子都忘不了，甚至会颠覆你的所有人生观。 <br> <br>如果说这是打仗，急诊科就在最前线。但当时的情况是，后面的病区已经饱和了，基本上一个病人都不收，ICU也坚决不收，说里面有干净的病人，一进去就污染了。病人不断地往急诊科涌，后面的路又不通，就全部堆在急诊科。病人来看病，一排队随便就是几个小时，我们也完全没法下班，发热门诊和急诊也都不分了，大厅里堆满了病人，抢救室输液室里到处都是病人。 <br> <br>还有的病人家属来了，说要一张床，我的爸爸在汽车里面不行了，因为那时候地下车库已封，他车子也堵着开不进来。我没办法，带着人和设备跑去汽车里去，一看，人已经死了，你说是什么感受，很难受很难受。这个人就死在汽车里，连下车的机会都没有。 <br> <br>还有一位老人，老伴刚在金银潭医院去世了，她的儿子、女儿都被感染了，在打针，照顾她的是女婿，一来我看她病得非常重，联系呼吸科给收进去住院，她女婿一看就是个有文化有素质的人，过来跟我说谢谢医生等等的，我心里一紧，说快去，根本耽误不了了。结果送去就去世了。一句谢谢虽然几秒钟，但也耽误了几秒。这句谢谢压得我很沉重。 <br> <br>还有很多人把自己的家人送到监护室的时候，就是他们见的最后一面，你永远见不着了。 <br> <br>我记得大年三十的早上我来交班，我说我们来照个相，纪念一下这个大年三十，还发了个朋友圈。那天，大家都没有说什么祝福，这种时候，活着就是好的。 <br> <br>以前，你如果有一点失误，比如没有及时打针，病人都可能还去闹，现在没人了，没有人跟你吵，没有人跟你闹了，所有人都被这种突然来的打击击垮了，搞蒙了。 <br> <br>病人死了，很少看到家属有很伤心地哭的，因为太多了，太多了。有些家属也不会说医生求求你救救我的家人，而是跟医生说，唉，那就快点解脱吧，已经到了这个地步。因为这时候每个人怕的都是自己被感染。 <br> <br>一天发热门诊门口的排队，要排5个小时。正排着一个女的倒下了，看她穿着皮衣，背着包包，穿着高跟鞋，应该是很讲究的一个中年女性，可是没有人敢上前去扶她，就在地上躺了很久。只得我去喊护士、医生来去扶她。 <br> <br>1月30号我早上来上班，一个白发老人的儿子32岁死了，他就盯着看医生给他开死亡证明。根本没有眼泪，怎么哭？没办法哭。看他的打扮，可能就是一个外来的打工的，没有任何渠道去反映。没有确诊，他的儿子，就变成了一张死亡证明。 <br> <br>这也是我想要去呼吁一下的。在急诊科死亡的病人都是没有诊断、没办法确诊的病例，等这个疫情过去之后，我希望能给他们一个交代，给他们的家庭一些安抚，我们的病人很可怜的，很可怜。 <br> <br><b>「幸运」</b> <br> <br>做了这么多年医生，我一直觉得没有什么困难能够打倒我，这也和我的经历、个性有关。 <br> <br>9岁那年我爸爸就胃癌去世了，那个时候我就想着长大了当个医生去救别人的命。后来高考的时候，我的志愿填的全部都是医学专业，最后考取了同济医学院。1997年我大学毕业，就到了中心医院，之前在心血管内科工作，2010年到急诊科当主任的。 <br> <br>我觉得急诊科就像我的一个孩子一样，我把它搞成这么大，搞得大家团结起来，做成这个局面不容易，所以很珍惜，非常珍惜这个集体。 <br> <br>前几天，我的一个护士发朋友圈说，好怀念以前忙碌的大急诊，那种忙跟这种忙完全是两个概念。 <br> <br>在这次疫情之前，心梗、脑梗、消化道出血、外伤等等这些才是我们急诊的范畴。那种忙是有成就感的忙，目的明确，针对各种类型的病人都有很通畅的流程，很成熟，下一步干什么，怎么做，出了问题找哪一个。而这一次是这么多危重病人没办法去处理，没办法收住院，而且我们医务人员还在这种风险之中，这种忙真的很无奈，很痛心。 <br> <br>有一天早上8点，我们科一个年轻医生跟我发微信，也是蛮有性格的，说我今天不来上班了，不舒服。因为我们这里都有规矩的，你不舒服要提前跟我说好安排，你到8点钟跟我说，我到哪里去找人。他在微信中对我发脾气，说大量的高度疑似病例被你领导的急诊科放回社会，我们这是作孽！我理解他是因为作为医生的良知，但我也急了，我说你可以去告我，如果你是急诊科主任，你该怎么办？ <br> <br>后来，这个医生休息了几天后，还是照样来工作。他不是说怕死怕累，而是遇到这种情况，一下子面对这么多病人感到很崩溃。 <br> <br>作为医生来说，特别是后面很多来支援的医生，根本心理上受不了，碰到这种情况懵了，有的医生、护士就哭。一个是哭别人，再一个也是哭自己，因为每个人都不知道什么时候就轮到自己感染。 <br> <br>大概在1月中下旬，医院的领导也陆陆续续地都病倒了，包括我们的门办主任，三位副院长。医务科科长的女儿也病了，他也在家里休息。所以基本上那一段时间是没有人管你，你就在那儿战斗吧，就是那种感觉。 <br> <br>我身边的人也开始一个接一个地倒掉。1月18日，早上8点半，我们倒的第一个医生，他说主任我中招了，不烧，只做了CT，肺部一大坨磨玻璃。不一会儿，隔离病房负责的一个责任护士，告诉我说他也倒了。晚上，我们的护士长也倒了。我当时非常真实的第一感觉是——幸运，因为倒得早，可以早点下战场。 <br> <br>这三个人我都密切接触过，我就是抱着必倒的信念每天在工作，结果一直没倒。全院的人都觉得我是个奇迹。我自己分析了一下，可能是因为我本身有哮喘，在用一些吸入性的激素，可能会抑制这些病毒在肺内沉积。 <br> <br>我总觉得我们做急诊的人都算是有情怀的人——在中国的医院，急诊科的地位在所有科室当中应该是比较低的，因为大家觉得急诊，无非就是个通道，把病人收进去就行了。这次抗疫中，这种忽视也一直都存在。 <br> <br>早期的时候，物资不够，有时候分给急诊科的防护服质量非常差，看到我们的护士竟然穿着这种衣服上班，我很生气，在周会群里面发脾气。后来还是好多主任把他们自己科室藏的衣服都给我了。 <br> <br>还有吃饭问题。病人多的时候管理混乱，他们根本想不到急诊科还差东西吃，很多科室下班了都有吃的喝的，摆一大排，我们这里什么都没有，发热门诊的微信群里，有医生抱怨，「我们急诊科只有纸尿裤……」我们在最前线战斗，结果是这样，有时候心里真的很气。 <br> <br>我们这个集体真的是很好，大家都是只有生病了才下火线。这次，我们急诊科有40多个人感染了。我把所有生病的人建了一个群，本来叫「急诊生病群」，护士长说不吉利，改成「急诊加油群」。就是生病的人也没有很悲伤、很绝望、很抱怨的心态，都是蛮积极的，就是大家互相帮助，共度难关那种心态。 <br> <br>这些孩子们、年轻人都非常好，就是跟着我受委屈了。我也希望这次疫情过后，国家能加大对急诊科的投入，在很多国家的医疗体系中，急诊专业都是非常受重视的。
+</p>
+<p style="margin:0 auto;padding:0;line-height:0;">
+<img style="width:100%;" src="http://im.digbo.org/kancn002.04.jpg">
+</p>
+<p style="padding:32px 0px;">
+<br><b>不能达到的幸福</b> <br> <br>2月17号，我收到了一条微信，是那个同济医院的同学发给我的，他跟我说「对不起」，我说：幸好你传出去了，及时提醒了一部分人。他如果不传出去的话，可能就没有李文亮他们这8个人，知道的人可能就会更少。 <br> <br>这次，我们有三个女医生全家感染。两个女医生的公公、婆婆加老公感染，一个女医生的爸爸、妈妈、姐姐、老公，加她自己5个人感染。大家都觉得这么早就发现这个病毒，结果却是这样，造成这么大的损失，代价太惨重了。 <br> <br>这种代价体现在方方面面。除了去世的人，患病的人也在承受。 <br> <br>我们「急诊加油群」里，大家经常会交流身体状况，有人问心率总在120次/分，要不要紧？那肯定要紧，一动就心慌，这对他们终身都会有影响的，以后年纪大了会不会心衰？这都不好说。以后别人可以去爬山，出去旅游，他们可能就不行，那都是有可能的。 <br> <br>还有武汉。你说我们武汉是个多热闹的地方，现在一路上都是安安静静的，很多东西买不到，还搞得全国都来支援。前几天广西的一个医疗队的护士在工作的时候突然昏迷了，抢救，后来人心跳有了，但还是在昏迷。她如果不来的话，在家里可以过得好好的，也不会出这种意外。所以，我觉得我们欠大家的人情，真的是。 <br> <br>经历过这次的疫情，对医院里很多人的打击都非常大。我下面好几个医务人员都有了辞职的想法，包括一些骨干。大家之前对于这个职业的那些观念、常识都难免有点动摇——就是你这么努力工作到底对不对？就像江学庆一样，他工作太认真，太对病人好，每一年的过年过节都在做手术。今天有人发一个江学庆女儿写的微信，说她爸爸的时间全部给了病人。 <br> <br>我自己也有过无数次的念头，是不是也回到家做个家庭主妇？疫情之后，我基本上没回家，和我老公住在外面，我妹妹在家帮我照顾孩子。我的二宝都不认得我了，他看视频对我没感觉，我很失落，我生这个二胎不容易，出生的时候他有10斤，妊娠糖尿病我也得了，原本我还一直喂奶的，这一次也断了奶——做这个决定的时候，我有点难过，我老公就跟我说，他说人的一生能够遇到一件这样的事情，并且你不光是参与者，你还要带一个团队去打这场仗，那也是一件很有意义的事情，等将来一切都恢复正常以后大家再去回忆，也是一个很宝贵的经历。 <br> <br>2月21号早上领导和我谈话，其实我想问几个问题，比如有没有觉得那天批评我批评错了？我希望能够给我一个道歉。但是我不敢问。没有人在任何场合跟我说表示抱歉这句话。但我依然觉得，这次的事情更加说明了每个人还是要坚持自己独立的思想，因为要有人站出来说真话，必须要有人，这个世界必须要有不同的声音，是吧？ <br> <br>作为武汉人，我们哪一个不热爱自己的城市？我们现在回想起来以前过得那种最普通的生活，是多么奢侈的幸福。我现在觉得把宝宝抱着，陪他出去玩一下滑梯或者跟老公出去看个电影，在以前再平常都不过，到现在来说都是一种幸福，都是不能达到的幸福。 <img src="http://im.digbo.org/kancn002.06.jpg">
+</p>
+</section>
+<p style="margin:0 auto;padding:0;line-height:0;">
+<img style="width:100%;" src="http://im.digbo.org/kancn002.05.jpg">
+</p>
+</div>
 
+        
+      </div>
+      
+      
       
     </div>
-
     
 
-    
-    
-    
 
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/翻译/" rel="tag"># 翻译</a>
-          
-            <a href="/tags/网络/" rel="tag"># 网络</a>
-          
-            <a href="/tags/TCP-IP/" rel="tag"># TCP/IP</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/posts/56042/" rel="next" title="Make|自动生成依赖关系">
-                <i class="fa fa-chevron-left"></i> Make|自动生成依赖关系
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/posts/25664/" rel="prev" title="Gitlab|安装-迁移-删除">
-                Gitlab|安装-迁移-删除 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
   
   
-  
-  </article>
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/">KNOWLEDGE-BASE</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li><a href="/knowledge-base/backups/">BACKUPS</a></li>
+          
+        
+      
+    
+      
+      
+        
+          
+            
+          
+          
+            <li>发哨子的人</li>
+          
+        
+      
+    
+  </ul>
 
 
+    
+    
+    
   </div>
 
 
@@ -755,17 +671,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1038,23 +945,6 @@
       </div>
 
       
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是tcp"><span class="nav-number">1.</span> <span class="nav-text">什么是TCP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候会还产生拥塞"><span class="nav-number">2.</span> <span class="nav-text">什么时候会还产生拥塞</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迂回什么是链接link"><span class="nav-number">3.</span> <span class="nav-text">迂回：什么是链接(link)？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞窗口congestion-window"><span class="nav-number">5.</span> <span class="nav-text">拥塞窗口（Congestion Window）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tcp-tahoe"><span class="nav-number">6.</span> <span class="nav-text">TCP Tahoe</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#丢包检测与快速重传"><span class="nav-number">6.1.</span> <span class="nav-text">丢包检测与快速重传</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些思考"><span class="nav-number">6.2.</span> <span class="nav-text">一些思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么tahoe要如此工作"><span class="nav-number">6.3.</span> <span class="nav-text">为什么Tahoe要如此工作？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他的方法"><span class="nav-number">7.</span> <span class="nav-text">其他的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公平性"><span class="nav-number">8.</span> <span class="nav-text">公平性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">9.</span> <span class="nav-text">结论</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
       
 
@@ -1234,9 +1124,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/posts/60823/";
-    this.page.identifier = "posts/60823/";
-    this.page.title = 'TCP:拥堵控制';
+    this.page.url = "http://www.codewoody.com/knowledge-base/backups/发哨子的人.html";
+    this.page.identifier = "knowledge-base/backups/发哨子的人.html";
+    this.page.title = '发哨子的人';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');

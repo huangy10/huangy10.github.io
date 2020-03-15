@@ -134,7 +134,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9481da177c540367f38733d6c371d2a6.PNG">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a67c5007eed2f8229369e8450ab3b148.PNG">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/cb3448748978270c4dcc48ca48694f68.PNG">
-<meta property="og:updated_time" content="2020-03-09T10:27:00.877Z">
+<meta property="og:updated_time" content="2020-03-09T12:27:17.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSH隧道:访问翻墙服务器的临时性手段">
 <meta name="twitter:description" content="现在GFW不断加高，翻墙的服务搞不好什么时候就挂了，之前我在文章里介绍过比较稳定的方法是使用一台能够从ipv4到ipv6的跳板机。但跳板机挂了就糟糕了。这篇文章就是我昨天遇到这个问题时弄的一个临时性办法，可以在Shadowsocks流量被拦截，跳板机挂掉的情况下，使用SSH隧道连接翻墙服务器以使用Shadowsocks的服务。 最近因为新冠肺炎疫情的关系，GFW对于翻墙流量的审查更加严格了，基于I">
@@ -502,7 +502,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-09 18:27:00" itemprop="dateModified" datetime="2020-03-09T18:27:00+08:00">2020-03-09</time>
+                <time title="Modified: 2020-03-09 20:27:17" itemprop="dateModified" datetime="2020-03-09T20:27:17+08:00">2020-03-09</time>
               
             
           </span>
@@ -590,7 +590,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew instal autossh</span><br></pre></td></tr></table></figure>
 <p>其使用方式非常简单，命令形式是</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh [-V] [-M monitor_port[:echo_port]] [-f] [SSH_OPTIONS]</span><br></pre></td></tr></table></figure>
-<p>其中<code>-V</code>是查看版本，不用管。<code>-M</code>是指定检测端口，实际上就是用来检测连接是否可用的。只是使用你不需要了解太多，随意指定一个本地高位端口（地位端口容易被占用）即可，例如20000。<code>-f</code>会让程序在后台运行。而后跟上ssh的选项即可。注意因为autossh会管理ssh进程，我们不需要在后面在引入<code>-f</code>来告诉ssh进入后台运行。那么</p>
+<p>其中<code>-V</code>是查看版本，不用管。<code>-M</code>是指定检测端口，实际上就是用来检测连接是否可用的。只是使用你不需要了解太多，随意指定一个本地高位端口（地位端口容易被占用）即可，例如20000（关于<code>-M</code>的地址参加<a href="http://www.debianadmin.com/autossh-automatically-restart-ssh-sessions-and-tunnels.html" target="_blank" rel="noopener">这个链接</a>）。<code>-f</code>会让程序在后台运行。而后跟上ssh的选项即可。注意因为autossh会管理ssh进程，我们不需要在后面在引入<code>-f</code>来告诉ssh进入后台运行。那么</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
 <p>这个命令用<code>autossh</code>改写为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh -M 20000 -f -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
@@ -611,6 +611,10 @@
 <li>Dest. Port 为服务器端shadowsocks服务的端口</li>
 </ul>
 <p>上面的配置完成以后点击Log in即可建立连接。注意右上角有一个&quot;Closing and minimization&quot;的按钮，点开这个按钮可以选择点击右上角关闭按钮之后的程序行为，我们可以选择的&quot;Hide to notification area if connected, exit otherwise&quot;，这样可以关闭窗口同时保证程序继续在后台运行。</p>
+<h2 id="稳定性讨论">稳定性讨论</h2>
+<p>用SSH隧道来实现翻墙，连接本身就是不太稳定的，在<a href="https://unix.stackexchange.com/questions/275681/ssh-connection-through-ssh-tunnel-keeps-closing" target="_blank" rel="noopener">这个链接</a>，答主提到使用<code>-M</code>选项来让autossh负责检查连接的可用性会比较不可靠，推荐使用ssh自己来负责监控连接。具体方式是设置<code>-M 0</code>，同时为ssh传递<code>-o &quot;ServerAliveInterval 30&quot; -o &quot;TCPKeepAlive yes&quot;</code>参数。完整的命令为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh -M 0 -f -N -f -L 8000:localhost:111111 ss@jump.server.com -o "ServerAliveInterval 30" -o "TCPKeepAlive yes"</span><br></pre></td></tr></table></figure>
+<p>当<code>-M 0</code>时，autossh只会在ssh进程退出时重启进程，而不会检测联机本身的是否可用。关于<code>ServerAliveInterval</code>作用的细节，参见<a href="http://einverne.github.io/post/2017/05/ssh-keep-alive.html" target="_blank" rel="noopener">这篇文章</a>。</p>
 
       
     </div>
@@ -1003,7 +1007,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh隧道"><span class="nav-number">1.</span> <span class="nav-text">ssh隧道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#autossh"><span class="nav-number">2.</span> <span class="nav-text">autossh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows的支持"><span class="nav-number">3.</span> <span class="nav-text">Windows的支持</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh隧道"><span class="nav-number">1.</span> <span class="nav-text">ssh隧道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#autossh"><span class="nav-number">2.</span> <span class="nav-text">autossh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows的支持"><span class="nav-number">3.</span> <span class="nav-text">Windows的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稳定性讨论"><span class="nav-number">4.</span> <span class="nav-text">稳定性讨论</span></a></li></ol></div>
             
 
           </div>

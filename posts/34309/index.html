@@ -131,10 +131,16 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-27T15:03:08.028Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e98332816ed0c02b3cd7e6e8185d676a.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/cc6e152d9b1b8a14c4407e573c966496.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9fe6971082bdeb85a3859cc580a2c68d.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/54bc27c9a000ea8c25fe505f15401975.png">
+<meta property="og:updated_time" content="2020-03-15T10:33:27.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-增强学习与车联网通信资源分配">
 <meta name="twitter:description" content="概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/e98332816ed0c02b3cd7e6e8185d676a.png">
 
 
 
@@ -498,7 +504,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-02-27 23:03:08" itemprop="dateModified" datetime="2020-02-27T23:03:08+08:00">2020-02-27</time>
+                <time title="Modified: 2020-03-15 18:33:27" itemprop="dateModified" datetime="2020-03-15T18:33:27+08:00">2020-03-15</time>
               
             
           </span>
@@ -574,7 +580,7 @@
 <p>本次要读的论文是<a href="https://ieeexplore.ieee.org/document/8633948" target="_blank" rel="noopener">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做<strong>分布式</strong>的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者掌握全局信息。</p>
 <p>对于任何一个「资源分配」机制来说，首先要明确定义待分配的资源是何种形式，以及执行分配的主体为何。在文章的 Abstract 中提到，分配的资源是：</p>
 <blockquote>
-<p>An autonomous &quot;agent&quot;, a V2V link or a vehicle, make its decisions to find the optimal sub-band and power-level for transmission without requiring or having to wait for global information. ... . each agent can effectively learn to satisfy the stringent latency constraints on V2V links while minimizing the interference to vehicle-to-infrastructure communications.</p>
+<p><i>An autonomous &quot;agent&quot;, a V2V link or a vehicle, make its decisions to find the optimal sub-band and power-level for transmission without requiring or having to wait for global information. ... . each agent can effectively learn to satisfy the stringent latency constraints on V2V links while minimizing the interference to vehicle-to-infrastructure communications.</i></p>
 </blockquote>
 <p>从上面的论述我们可以总结如下的信息：</p>
 <ol type="1">
@@ -585,10 +591,108 @@
 </ol>
 <h2 id="研究背景">研究背景</h2>
 <p>传统的资源分配方式一般是中心式的。这种分配方式要求从每个节点收集局部网络信息（链路状态和干扰信息）。在调度中心，资源分配问题被建模为一个优化问题，限制条件为V2V通信的QoS要求。不过这种优化问题一般是 NP 难问题。这种问题一般会用一些启发式算法来求局部最优解或者次优解。这类方法的首要问题是信息收集汇总的过程开销太大了，且随着网络规模的扩大会显著地增长。故这篇文章寻求使用分布式的分配方案。</p>
-<p>现存的一些分布式的资源分配方式的问题是他们考虑的一半是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。传统的方法一般用随机转发或者是基于拓扑信息管理转发的方法来解决这个问题。</p>
+<p>现存的一些分布式的资源分配方式的问题是他们考虑的一般是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。传统的方法一般用随机转发或者是基于拓扑信息管理转发的方法来解决这个问题。</p>
 <p>上面讨论的是中心时和分布式的资源分配方式存在的问题。下面讨论的是更加细节的问题。</p>
 <p>在现有的研究中，V2V链路的QoS值包含了SINR这一个指标，延时限制这个指标不太好建模进入优化问题，因此没有被充分考虑。</p>
-<p>为了解决上述这些问题，作者提出使用深度增强学习来解决单播和广播通信中的资源分配问题。作者主要用深度增强学习来研究从本地观测量，如CSI（信道状态信息），干扰水平等，和资源分配和调度方案之间的映射关系。在单播通信中，每个V2V链路被视为一个agent，频谱和传输功率为待控制的量。在广播通信中，每个节点被视为一个agent，待控制量为频谱和消息(messages)。Observation, action还有reward function都根据单播和广播做了单独的设计。</p>
+<p>为了解决上述这些问题，作者提出使用深度增强学习来解决单播和广播通信中的资源分配问题。作者主要用深度增强学习来研究从本地观测量，如CSI（信道状态信息），干扰水平等，和资源分配和调度方案之间的映射关系。在单播通信中，每个V2V链路被视为一个agent(代理)，频谱和传输功率为待控制的量。在广播通信中，每个节点被视为一个agent，待控制量为频谱和消息(messages)。Observation, action还有reward function都根据单播和广播做了单独的设计。</p>
+<h2 id="系统模型unicast">系统模型(Unicast)</h2>
+<p><img src="https://imgs.codewoody.com/uploads/big/e98332816ed0c02b3cd7e6e8185d676a.png"></p>
+<p>如上图所示，车联网中包含 <span class="math inline">\(M\)</span> 个基站用户(CUEs)，标记为<span class="math inline">\(\mathcal{M} = \{1, 2, \dots, M\}\)</span>以<span class="math inline">\(K\)</span>对V2V用户(VUEs)，记为<span class="math inline">\(\mathcal{K} = \{1, 2, \dots, K\}\)</span>，CUEs需要V2I链路来支撑和基站(BS)的通信，而VUEs需要V2V连接来共享交通安全管理相关的信息。为了改善频谱利用效率，我们假设为V2I上行链路正交分配的频谱是和V2V链路共享的，这是因为在基站处的干扰情况要更加可控一些，而且上行链路的负载要低很多。</p>
+<p>第<span class="math inline">\(m^{th}\)</span>个CUE的SINR为</p>
+<p><span class="math display">\[
+\gamma^{c}[m] = \frac{P_m^c h_m}{\sigma^2 + \sum_{k \in \mathcal{K}}\rho_k[m]P_{k}^{v}h_k}
+\]</span></p>
+<p>其中<span class="math inline">\(P_{m}^c\)</span>和<span class="math inline">\(P_{k}^{v}\)</span>表示第<span class="math inline">\(m^{th}\)</span>个CUE和第<span class="math inline">\(k^{th}\)</span>个VUE设备的发射功率，<span class="math inline">\(\sigma^2\)</span>为噪声功率，<span class="math inline">\(h_m\)</span>为对<span class="math inline">\(m^{th}\)</span>CUE的信道增益。<span class="math inline">\(\rho_{k}[m]\)</span>为表示频谱分配的指示函数。如果<span class="math inline">\(k^{th}\)</span> VUE使用了<span class="math inline">\(m^{th}\)</span> CUE的频谱，那么<span class="math inline">\(\rho_k[m] = 1\)</span>。那么根据香农定义，<span class="math inline">\(m^{th}\)</span> CUE的信道容量是</p>
+<p><span class="math display">\[
+C^{c}[m] = W \cdot \log (1 + \gamma^c[m])
+\]</span></p>
+<p>其中<span class="math inline">\(W\)</span>为信道带宽。</p>
+<p>类似对于<span class="math inline">\(k^{th}\)</span> VUE也可以给出其SINR</p>
+<p><span class="math display">\[
+\gamma^v[k] = \frac{P_k^v \cdot g_k}{\sigma^2 + G_c + G_d}
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+G_c = \sum_{m \in \mathcal{M}} \rho_{k}[m] P_m^c \tilde{g}_{m, k}
+\]</span></p>
+<p>为CUE的V2I上行链路对VUE的干扰。</p>
+<p><span class="math display">\[
+G_d = \sum_{m \in \mathcal{M}} \sum_{k&#39; \in \mathcal{K}  k \neq k&#39;} \rho_{k}[m] \rho_{k&#39;}[m] P_{k&#39;}^v \tilde{g}_{k&#39;,k}^{v}
+\]</span></p>
+<p>这个是V2V链路的整体干扰水平。<span class="math inline">\(g_k\)</span>为<span class="math inline">\(k^{th}\)</span>的功率增益，<span class="math inline">\(\tilde{g}_{k, m}\)</span>为 <span class="math inline">\(m^{th}\)</span> CUE的干扰功率增益。<span class="math inline">\(\tilde{g}^v_{k&#39;, k}\)</span>为<span class="math inline">\(k^{th}\)</span>的干扰功率增益。那么类似的通过香农公式，我们可以得到<span class="math inline">\(k%{thi}\)</span> VUE的信道容量。</p>
+<p><span class="math display">\[
+C^{v}[k] = W \cdot \log (1 + \gamma^{v}[k])
+\]</span></p>
+<p>V2V的通信具有比较严格的延时和可靠性要求，而数据率则并没有那么重要。这里延时和可靠性要求被转化成中断概率(<i>Outage probabilities</i>)。通过深度学习，这些限制因素被直接转化成奖励函数。相反，对于V2I通信来说，蜂窝通信中延时的重要性没有那么高，传统的分配策略中强调最大化吞吐率的思想仍然适用。故V2I的数据率总和仍然会体现在奖励函数中。</p>
+<p>由于BS没有V2V链路的信息，因此V2I的资源分配流程要和V2V的资源管理流程独立。在给定V2I的链路分配的情况下，这篇文章提出的资源管理机制的目标是确保满足V2V链路的延时要求，同时最小化V2V通信对于V2I链路的影响。在分布式的场景下，V2V链路只能根据本地信息来选择RB并设置传输功率。</p>
+<p>这些本地信息中，第一种是对于信道和干扰信息的观测。这里假设sub-channel的数量和V2I的链路的数量<span class="math inline">\(M\)</span>相等。对应的V2V链路的瞬时信道信息, <span class="math inline">\(G_{t}[m], m \in \mathcal{M}\)</span>，为对应的sub-channel的功率增益。上一个时时隙收到的信号强度是 <span class="math inline">\(I_{t - 1}[m], m \in \mathcal{M}\)</span>, 代表了在每个信道上的干扰强度。每个链路的本地观测信息还包含了邻居节点之间共享的信息，例如在前一个时隙上邻居节点选择的信道<span class="math inline">\(N_{t - 1}[m]\)</span>，这个数值代表了邻居节点选用了某个子信道的次数。另外，本地观测还需要包含已经传输的消息的状态信息，例如还未发送完消息载荷<span class="math inline">\(L_t\)</span>（代表剩余比特数的百分比），以及距离违反延时限制还剩余的时间窗口<span class="math inline">\(U_t\)</span>。上述的本地信息包括<span class="math inline">\(H_t[m], I_{t - 1}[m], N_{t - 1}[m], L_t, U_t\)</span>， 这些消息在之后的广播通信场景中也会使用。</p>
+<p>现在的问题就是如何从这些观测量出发得到最优的资源分配策略。这篇文章在这个问题上使用了深度强化学习工具。</p>
+<h2 id="深度强化学习">深度强化学习</h2>
+<h3 id="强化学习">强化学习</h3>
+<p><img src="https://imgs.codewoody.com/uploads/big/cc6e152d9b1b8a14c4407e573c966496.png"></p>
+<p>如上图所示，一个典型的强化学习的框架包括代理(Agent)与环境，及其交互。在本文的模型中，每个V2V链路被视为一个代理，除此之外都是环境的一部分。在去中心化场景中别的代理的决策是不可控的，因此每个代理的行为只基于其本身的状态集。</p>
+<p>在上图中，在每个时刻<span class="math inline">\(t\)</span>，V2V链路，即代理，观察得到一个状态值<span class="math inline">\(\mathbf{s}_{t}\)</span>，并从行为空间<span class="math inline">\(\mathcal{A}\)</span>中，基于政策<span class="math inline">\(\pi\)</span>选择一个sub-band和一个传输功率。这里政策<span class="math inline">\(\pi\)</span>可以通过状态-行为函数来确定，这个函数也被称为Q函数，<span class="math inline">\(Q(\mathbf{s}_t, a_t)\)</span>，这个函数可以通过深度学习来估计。基于代理选择的行为，环境会反馈新的状态，<span class="math inline">\(\mathbf{s}_{t+1}\)</span>，而每个代理会收到一个奖励<span class="math inline">\(r_t\)</span>。在本文的场景下，奖励取决于V2I和V2V的传输能力以及V2V链路是否满足了延时要求。</p>
+<p>在前一个部分的讨论中提到，环境中可观测的要素包括如下几部分：即时信道信息, <span class="math inline">\(\mathbf{G}_t = (G_t[1], \dots, G_{t}[M])\)</span>，前一个时刻干扰功率，<span class="math inline">\(\mathbf{I}_{t - 1} = (I_{t - 1}[1], \dots, I_{t - 1}[M])\)</span>，V2I链路的信道信息<span class="math inline">\(\mathbf{H}_t = (H_t[1], \dots, H_t[M])\)</span>，邻居节点选择的信道信息<span class="math inline">\(\mathbf{N}_{t - 1} = (N_{t - 1}[1], \dots, N_{t - 1}[M])\)</span>，当前尚未传输完成的业务负载<span class="math inline">\(L_{t}\)</span>，以及距离超出延时限制还剩下的时间<span class="math inline">\(U_t\)</span>。尽管状态信息包含了异构的数据，后面我们可以看到使用深度神经网络，我们可以从异构数据中提取出有用的信息，并用于学习出最优的政策。综上，状态向量可以表示成</p>
+<p><span class="math display">\[
+\mathbf{s}_{\mathbf{t}}=\left\{\boldsymbol{I}_{\boldsymbol{t}-\mathbf{1}}, \boldsymbol{H}_{\boldsymbol{t}}, \boldsymbol{N}_{\boldsymbol{t}-\mathbf{1}}, \boldsymbol{G}_{\boldsymbol{t}}, U_{t}, L_{t}\right\}
+\]</span></p>
+<p>这里传输功率被离散化为三个档，因此行为空间的大小为<span class="math inline">\(3 \times N_{RB}\)</span>，其中<span class="math inline">\(N_{RB}\)</span>为RB资源的数量。</p>
+<p>V2V资源调度的目标如下：</p>
+<p>一个代理(V2V链路)选择频带和传输功率，使其对所有的V2I链路和其他V2V的链路干扰很小，同时保留足够的资源以满足延时要求。因此，用来指导学习过程的奖励函数设计应该与这一目标保持一致。在本文的框架中，奖励函数由三部分组成，分别是V2I链路的能力，V2V链路的能力，以及延时条件。V2V和V2I链路能力的总和用来度量代理的选择对于V2I和其他V2V链路的干扰。延时条件被构建为一个惩罚项目。具体而言，奖励函数如下：</p>
+<div style="border: 1px solid black; padding-top: 15px">
+<p><span class="math display">\[
+r_{t}=\lambda_{c} \sum_{m \in \mathcal{M}} C^{c}[m]+\lambda_{d} \sum_{k \in \mathcal{K}} C^{v}[k]-\lambda_{p}\left(T_{0}-U_{t}\right)
+\]</span></p>
+</div>
+<p>其中<span class="math inline">\(T_{0}\)</span>为最大容许延时。<span class="math inline">\(\lambda_c, \lambda_d\)</span>和<span class="math inline">\(\lambda_p\)</span>为三部分的权重值。<span class="math inline">\(T_0 - U_t\)</span>为已经用于传输的时间长度，即惩罚项目会随着传输时间的增长而增长。为了在长时间尺度上获得好的表现，需要同时考虑即时收益与未来的收益。因此，这里的强化学习优化的目标是寻找是的下面的累积奖励最大化</p>
+<p><span class="math display">\[
+R_{t} = \mathbb{E}\left[
+  \sum_{n = 0}^{\infty} \beta^n r_{t + n}
+  \right]
+\]</span></p>
+<p>其中<span class="math inline">\(\beta \in [0, 1]\)</span>为述案件系数。</p>
+<p>这里系统模型为<a href="/knowledge-base/academic/ml/reinforcement-learning/#%E6%9C%89%E9%99%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B">MDP模型</a>。状态<span class="math inline">\(\mathbf{s}_t\)</span> 在行为<span class="math inline">\(a_t\)</span>下转移到<span class="math inline">\(\mathbf{s}_{t+1}\)</span>并获得奖励<span class="math inline">\(r_t\)</span>的概率为<span class="math inline">\(p(\mathbf{s}_{t+1}, r_t|\mathbf{s}_t, a_t)\)</span>。注意代理能够控制行为选择，但是对于这个转移概率<span class="math inline">\(\mathbf{P} = \{\mathbf{s}_{t+1}, r_t|\mathbf{s}_t, a_t)\}\)</span>没有先验信息，这一概率完全由环境因素决定</p>
+<h3 id="深度q学习">深度Q学习</h3>
+<p>代理基于政策<span class="math inline">\(\pi\)</span>选择合适的行为，政策是从状态空间<span class="math inline">\(\mathcal{S}\)</span>到行为空间<span class="math inline">\(\mathcal{A}\)</span>的映射：<span class="math inline">\(\pi: \mathbf{s}_t \in \mathcal{S} \rightarrow a_t \in \mathcal{A}\)</span>。Q学习算法可以用来获取最优的政策。对于给定的状态行为对<span class="math inline">\((\mathbf{s}_t, a_t)\)</span>，<span class="math inline">\(Q(\mathbf{s}_t, a_t)\)</span>表示累积奖励<span class="math inline">\(R_t\)</span>的期望。因此Q值可以用来评估在某一个状态下采取某一行为的好坏。当<span class="math inline">\(Q(\mathbf{s}_t, a_t)\)</span>已知时，我们可以很容易地改进策略：</p>
+<p><span class="math display">\[
+a_t = \underset{a}{\arg \max } Q(\mathbf{s}_t, a_t)
+\]</span></p>
+<p>具有最佳的Q值<span class="math inline">\(Q^*\)</span>的最优策略可以根据下面的更新策略在不具备关于系统的先验知识的情况下得到：</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q_{n e w}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)=&amp; Q_{\text {old}}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)+\alpha\left[r_{t+1}\right.\\
+&amp;\left.+\beta \max _{\mathbf{s} \in \mathcal{S}} Q_{\text {old}}\left(\mathbf{s}, a_{t}\right)-Q_{\text {old}}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)\right]
+\end{aligned}
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha\)</span>为Learning rate。上式中的第二项为更新Q值的差值，当<span class="math inline">\(Q\)</span>已经是最优时，这一项会为0。根据Sutton的<i>Reinoforcement Learning: An Introduction</i>这本书，如果在无限迭代中，如果在每个状态下每个行为都能够被执行无限次，且Learning rate适当的进行衰减，那么上式一定能够收敛到<span class="math inline">\(Q^*\)</span>。而当<span class="math inline">\(Q^*\)</span>确定以后，即可确定最优的政策。</p>
+<p>当行为-状态空间比较小时，可以使用一些经典的方法来解决Q学习问题，甚至可以用列表的方法来维护Q函数。不过如果状态空间非常大，甚至是无限时，这种经典的方法就不可用了。除了计算成本方面的考虑，由于行为-状态空间很大，为了充分遍历需要更长的迭代时间才能确保Q函数收敛。为了解决这个问题在Q学习中，将的深度神经网络技术结合进来。如下图所示</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/9fe6971082bdeb85a3859cc580a2c68d.png"></p>
+<p>这里使用一个深度神经网络来估计实际的Q函数，这个深度神经网络称为Q网络，参数集合为<span class="math inline">\(\mathbf{\theta}\)</span>，网络接受状态输入，并输出在该状态下每个行为选择对应的Q值。剩下的问题是如何更新网络的参数。定义损失函数：</p>
+<p><span class="math display">\[
+Loss(\mathbf{\theta}) = \sum_{(\mathbf{s}_t, a_t) \in D} (y - Q(\mathbf{s}_t, a_t, \mathbf{\theta}))^2
+\]</span></p>
+<p>这里<span class="math inline">\(D\)</span>为数据集，</p>
+<p><span class="math display">\[
+y = r_t + \max_{a \in \mathcal{A}} Q_{old} (\mathbf{s}_t, a, \mathbf{\theta})
+\]</span></p>
+<h3 id="模型训练与测试">模型训练与测试</h3>
+<p>如同众多的机器学习算法，这里的方法的也分为训练和测试两个阶段。训练数据和测试数据都是通过环境（仿真系统模拟出来的）和代理的交互过程中产生的。每个训练样本包括<span class="math inline">\(\mathbf{s}_t, \mathbf{s}_{t+1}, a_t, r_t\)</span>。环境模拟器包括VUE，CUE及信道，车联的位置随机生成。V2V以及V2I的链路的CSI信息根据车辆的位置生成。在给定V2V的频谱和功率选择之后，环境模拟器负责给出<span class="math inline">\(\mathbf{s}_{t+1}\)</span>和<span class="math inline">\(r_t\)</span>。在训练阶段，深度Q学习使用了经验回放(Experience replay)功能，其中训练数据被生成并存储到内存中。如下面的算法所示：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png"></p>
+<p>在每轮迭代中，从内存中提取一个mini-batch用于更新Q网络。这种方法可以消除生成训练数据的时间相关性。</p>
+<blockquote>
+<p>Q 函数的输入是状态和代理的行为，输出是奖励和下一个状态。因此本质上来讲 Q 函数是对于环境特征的估计。基于MDP假设，Q函数应该是和时间无关的，只取决于当前的系统状态。因此这里mini-batch的做法应该是从历史数据中随机提取任意时间片采样的组合进行训练，从而避免连续的生成数据对于模型产生影响。</p>
+<p>MDP看起来是一个比较特殊的问题类型，但是事实上只要状态向量定义合适，理论上可以把任意问题建模成MDP问题，当然，不同的问题的复杂度会截然不同。例如AlphaGo这种算法，用MDP建模就会非常复杂。</p>
+<p>之前在看一个介绍强化学习的视频的时候听过，强化学习的一个主要挑战是奖励的稀疏性。这个稀疏性是指代理并非能在每个行为选择后才能获得奖励，可能要非常多步数之后才能获得奖励。那么在实际的奖励之间的空挡如何引导模型就是一个大问题。不过这篇文章面临的问题要简单很多，奖励都是即时的。</p>
+</blockquote>
+<p>测试阶段的算法如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/54bc27c9a000ea8c25fe505f15401975.png"></p>
+<p>在测试过程中，代理总是选择Q网络给出的Q值最大的行为。</p>
+<p>由于每个代理是使用自己的本地信息独立的选择的行为，因此每个V2V链路观察到的状态就无法充分的代表环境的特点<span class="foot-note-span">【应该是每个节点的选择会影响到其他节点的观测】</span>。为了解决这个问题，文章这里要求每个节点只能异步地更新其行为，即同时只有一个或者小部分节点能够同时更新其政策。</p>
+<p>另外，异步决策可以让节点之间能够互相观测对方的行为，可以降低冲突的概率。</p>
+<blockquote>
+<p>这种轮流决策的方式在节点较多时会非常的低效。</p>
+<p>另外这里作者选择的策略模型是确定性策略，如果使用随机政策模型，然后使用分布式决策，是否可以实现同步决策呢？</p>
+</blockquote>
 
       
     </div>
@@ -983,7 +1087,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#研究背景"><span class="nav-number">2.</span> <span class="nav-text">研究背景</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#研究背景"><span class="nav-number">2.</span> <span class="nav-text">研究背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型unicast"><span class="nav-number">3.</span> <span class="nav-text">系统模型(Unicast)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度强化学习"><span class="nav-number">4.</span> <span class="nav-text">深度强化学习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强化学习"><span class="nav-number">4.1.</span> <span class="nav-text">强化学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#深度q学习"><span class="nav-number">4.2.</span> <span class="nav-text">深度Q学习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型训练与测试"><span class="nav-number">4.3.</span> <span class="nav-text">模型训练与测试</span></a></li></ol></li></ol></div>
             
 
           </div>

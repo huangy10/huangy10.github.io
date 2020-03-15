@@ -2,16 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.codewoody.com/posts/11710/</loc>
+    <loc>http://www.codewoody.com/posts/34309/</loc>
     
-    <lastmod>2020-03-09T10:27:00.877Z</lastmod>
+    <lastmod>2020-03-15T10:33:27.925Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/ml/reinforcement-learning/index.html</loc>
     
-    <lastmod>2020-03-07T15:56:36.803Z</lastmod>
+    <lastmod>2020-03-13T14:39:41.864Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/song2009selfsimilarity.html</loc>
+    
+    <lastmod>2020-03-12T15:58:38.294Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/backups/%E5%8F%91%E5%93%A8%E5%AD%90%E7%9A%84%E4%BA%BA.html</loc>
+    
+    <lastmod>2020-03-12T09:24:34.009Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/container/docker.html</loc>
+    
+    <lastmod>2020-03-12T09:16:33.299Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/container/dockerfile.html</loc>
+    
+    <lastmod>2020-03-11T15:22:20.164Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
+    
+    <lastmod>2020-03-10T08:17:53.222Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/posts/11710/</loc>
+    
+    <lastmod>2020-03-09T12:27:17.835Z</lastmod>
     
   </url>
   
@@ -51,13 +93,6 @@
   </url>
   
   <url>
-    <loc>http://www.codewoody.com/knowledge-base/programming/index.html</loc>
-    
-    <lastmod>2020-03-02T08:55:32.841Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.codewoody.com/knowledge-base/academic/ml/cs231n/2.html</loc>
     
     <lastmod>2020-02-29T08:39:51.109Z</lastmod>
@@ -68,13 +103,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/ml/cs231n/index.html</loc>
     
     <lastmod>2020-02-28T13:34:21.530Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/posts/34309/</loc>
-    
-    <lastmod>2020-02-27T15:03:08.028Z</lastmod>
     
   </url>
   
