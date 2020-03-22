@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="未分类资源(待读) 编程思想  易于修改原则 分布式系统领域经典论文翻译集 软件架构编年史  专业领域  阮一峰·Python异步编程入门 容错，高可用和灾备: 与云计算有关 React Hook 的原理 GraphQL相对REST的优势 阮一峰·如何识别文件的真假 HTTPS背后的「安检员」：CA认证如何让网络世界更安全 DNS基础知识与dig命令 [x] 恶意的 SSH 访问分析 Web 图标">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-10T08:17:53.222Z">
+<meta property="og:updated_time" content="2020-03-20T11:06:22.130Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编程">
 <meta name="twitter:description" content="未分类资源(待读) 编程思想  易于修改原则 分布式系统领域经典论文翻译集 软件架构编年史  专业领域  阮一峰·Python异步编程入门 容错，高可用和灾备: 与云计算有关 React Hook 的原理 GraphQL相对REST的优势 阮一峰·如何识别文件的真假 HTTPS背后的「安检员」：CA认证如何让网络世界更安全 DNS基础知识与dig命令 [x] 恶意的 SSH 访问分析 Web 图标">
@@ -549,6 +549,7 @@
 <li><a href="http://www.ruanyifeng.com/blog/2019/12/git-undo.html" target="_blank" rel="noopener">如何撤销 Git 操作</a></li>
 <li><a href="https://github.com/xindoo/eng-practices-cn" target="_blank" rel="noopener">Google 工程时间文档</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/89205738" target="_blank" rel="noopener">网站后台爆破工具: WebCrack</a></li>
+<li><a href="https://www.debugbear.com/blog/performant-front-end-architecture" target="_blank" rel="noopener">高性能前端架构</a></li>
 </ul>
 <h3 id="工具">工具</h3>
 <ul>
@@ -563,6 +564,8 @@
 <li><a href="http://www.ruanyifeng.com/blog/2020/01/ffmpeg.html" target="_blank" rel="noopener">FFmpeg入门教程</a></li>
 <li><a href="https://github.com/FiloSottile/age" target="_blank" rel="noopener">age</a>：一款方便使用的命令行文件加密/解密工具</li>
 <li><a href="https://github.com/star7th/showdoc" target="_blank" rel="noopener">showDoc</a>: ShowDoc is a tool greatly applicable for an IT team to share documents online一个非常适合IT团队的在线API文档、技术文档工具</li>
+<li><a href="https://github.com/oldboyxx/jira_clone" target="_blank" rel="noopener">Jira的克隆</a></li>
+<li><a href="https://generative-placeholders.glitch.me/" target="_blank" rel="noopener">生成几何图像占位符</a></li>
 </ul>
 <h4 id="uml相关">UML相关</h4>
 <ul>
@@ -1507,6 +1510,42 @@
 
 
   
+<script>
+// 加入重试机制
+if ($('body').find('div.pdf').length) {
+  let retry = 3
+  const reqFile = function (onFail) {
+    if (retry === 0) return
+    retry --
+    $.ajax({
+      type: 'GET',
+      url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
+      dataType: 'script',
+      cache: true,
+      success: function() {
+        $('body').find('div.pdf').each(function(i, o) {
+          PDFObject.embed($(o).attr('target'), $(o), {
+            pdfOpenParams: {
+              navpanes: 0,
+              toolbar: 0,
+              statusbar: 0,
+              pagemode: 'thumbs',
+              view: 'FitH'
+            },
+            PDFJS_URL: '/lib/pdf/web/viewer.html',
+            height: $(o).attr('height') || '500px'
+          });
+        });
+      },
+      error: onFail
+    });
+  }
+  reqFile(function() {
+    setTimeout(reqFile, 100)
+  })
+}
+</script>
+
 
   
 
@@ -1574,8 +1613,10 @@
       //   'correctBasicBD',
       //   'substCombLigaWithPUA'
       // ]).render()
-      document.getElementById("refs")
-          .setAttribute("lang", "en_US");
+      const ele = document.getElementById("refs")
+      if (ele) {
+        ele.setAttribute("lang", "en_US");
+      }
     }()
 
     </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
