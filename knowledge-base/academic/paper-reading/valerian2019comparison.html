@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -132,7 +132,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/521c0e4a78c96e0e7d98fd0fef0349c3.png">
-<meta property="og:updated_time" content="2020-03-21T09:12:28.217Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ITS-G5和C-V2X的性能对比">
 <meta name="twitter:description" content="这里的ITS-G5标准，就是指的IEEE802.11p。 文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。 这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的这个链接里面有比较多的">
@@ -569,7 +569,7 @@
 </ul>
 <p>这篇文章尝试了下图中的配置。</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/521c0e4a78c96e0e7d98fd0fef0349c3.png"></p>
-<p>从MAC的角度来看，根据模式4，C-V2X采用了基于感知的半持久调度(Sensing-Based Semi-Persistent Scheduling, SB-SPS机制。这个机制通过对通信媒介的估计，来预测可用资源。当车辆占用子信道时，对子信道占据会持续Reselection Counter(RC)次传输【~即在接下来的这么多次传输都是使用同样的资源，这里资源的占用是按照次数来进行，而非时间】。RC的值从<span class="math inline">\([5, 15]\)</span>之间随机选出。每次传输之后RC减一。当RC为零时，以概率<span class="math inline">\(P\)</span>继续使用当前的资源，即以概率<span class="math inline">\(1 - P\)</span>重新选择资源。<span class="math inline">\(P \in [0, 0.8]\)</span>。</p>
+<p>从MAC的角度来看，根据模式4，C-V2X采用了基于感知的半持久调度(Sensing-Based Semi-Persistent Scheduling, SB-SPS机制。这个机制通过对通信媒介的估计，来预测可用资源。当车辆占用子信道时，对子信道占据会持续Reselection Counter(RC)次传输<span class="foot-note-span">【即在接下来的这么多次传输都是使用同样的资源，这里资源的占用是按照次数来进行，而非时间】</span>。RC的值从<span class="math inline">\([5, 15]\)</span>之间随机选出。每次传输之后RC减一。当RC为零时，以概率<span class="math inline">\(P\)</span>继续使用当前的资源，即以概率<span class="math inline">\(1 - P\)</span>重新选择资源。<span class="math inline">\(P \in [0, 0.8]\)</span>。</p>
 <p>RC的值包含在SCI信息中，因此别的节点可以预测未来某个资源是否可用，从而避免碰撞。</p>
 <p>传输的可靠性通过HARQ重传来保证。</p>
 <h2 id="对比结论">对比结论</h2>
@@ -724,8 +724,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1537,7 +1535,12 @@
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1558,7 +1561,7 @@
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1655,7 +1658,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

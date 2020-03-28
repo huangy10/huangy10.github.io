@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -137,7 +137,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/001cf17378733ee19156be1278bc3636.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/0b9a79552e8bf9951c07d031c8f918c4.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/5b827a34812d898a22fa9921d2e17ea1.png">
-<meta property="og:updated_time" content="2020-03-03T08:51:20.078Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[翻译]从头开始训练一个卷积神经网络">
 <meta name="twitter:description" content="原文地址是: Training a Convolutional Neural Network from scratch。原文的撰写时间是2019年6月7日。 在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整">
@@ -505,7 +505,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-03 16:51:20" itemprop="dateModified" datetime="2020-03-03T16:51:20+08:00">2020-03-03</time>
+                <time title="Modified: 2020-03-23 01:25:00" itemprop="dateModified" datetime="2020-03-23T01:25:00+08:00">2020-03-23</time>
               
             
           </span>
@@ -884,8 +884,6 @@ t=w \cdot input +b
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1697,7 +1695,12 @@ t=w \cdot input +b
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1718,7 +1721,7 @@ t=w \cdot input +b
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1815,7 +1818,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

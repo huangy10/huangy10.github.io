@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/46c240bcbe5734e0c5417737361e92c1.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/f8b4f21722d3491fa881b57f3693c9ab.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3920cc12844d03b77233a62836776871.png">
-<meta property="og:updated_time" content="2020-02-29T08:39:51.109Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n笔记 - 2">
 <meta name="twitter:description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意思的">
@@ -733,8 +733,6 @@ y_{t}=W_{h y} h_{t}
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1546,7 +1544,12 @@ y_{t}=W_{h y} h_{t}
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1567,7 +1570,7 @@ y_{t}=W_{h y} h_{t}
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1664,7 +1667,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

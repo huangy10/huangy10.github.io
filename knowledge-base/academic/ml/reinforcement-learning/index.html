@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -140,7 +140,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/0d2ad02ca2dbe1f4fc108dc174876b52.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7f04072f1ae28185018be8e0f17b147e.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/265a6e9c0c07ef2cce6be698db08846a.png">
-<meta property="og:updated_time" content="2020-03-13T14:39:41.864Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.496Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="增强学习">
 <meta name="twitter:description" content="文档还在动态更新维护中  首先我们要解决的是「什么是增强学习」，即Reinforcement Learning，的问题。为了学习这一点我选择了比较权威的增强学习教材，Reinforcement Learning: An Introduction。这本书是增强学习的开创者安德鲁·巴托和理查德·S·萨顿所撰写。 之前接触过的典型的神经网络，比如用于处理图像输入的卷积神经网络(CNN)和擅长处理自然语">
@@ -1097,8 +1097,6 @@ v_{\pi&#39;}(s) &amp;= \max_{a}\mathbb{E}[R_{t+1} + \gamma v_{\pi &#39;}(S_{t+1}
                     
                       
                     
-                      
-                    
                     <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
@@ -1881,7 +1879,12 @@ v_{\pi&#39;}(s) &amp;= \max_{a}\mathbb{E}[R_{t+1} + \gamma v_{\pi &#39;}(S_{t+1}
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1902,7 +1905,7 @@ v_{\pi&#39;}(s) &amp;= \max_{a}\mathbb{E}[R_{t+1} + \gamma v_{\pi &#39;}(S_{t+1}
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1999,7 +2002,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

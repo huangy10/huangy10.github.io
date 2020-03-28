@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a302ef9d78222499ac3ed8b5d3ee75f9.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3d3c5c3f145c5178817cbe2051a7c6ab.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/14ec39a1df82a5fa8635d8c083f75edb.png">
-<meta property="og:updated_time" content="2020-03-20T08:21:11.643Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动驾车车辆的异构V2X网络">
 <meta name="twitter:description" content=".pdfobject-container {   height: 700px;   padding: 10px;   border: 1px solid black;   margin-bottom: 15px; }  下面给出的这个pdf文件的原始下载地址是这里，从URL来看，这个pdf是IEEE 5G峰会2019年南非场的一部分。 下面的pdf展示如果出现了502 Bad Gateway的错">
@@ -767,8 +767,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1563,7 +1561,12 @@
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1584,7 +1587,7 @@
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1681,7 +1684,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

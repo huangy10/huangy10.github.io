@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="概述 这篇文章的题目时Flexible SDN control in tactical ad hoc network 战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较概念性的内容。 这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路和高">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-25T13:58:47.179Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-SDN与战术自组网">
 <meta name="twitter:description" content="概述 这篇文章的题目时Flexible SDN control in tactical ad hoc network 战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较概念性的内容。 这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路和高">
@@ -712,8 +712,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1525,7 +1523,12 @@
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1546,7 +1549,7 @@
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1643,7 +1646,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

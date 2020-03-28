@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -806,8 +806,6 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1619,7 +1617,12 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1640,7 +1643,7 @@ b_{s, i, k}=\lim _{t \rightarrow \infty}\{s(t)=i, b(t)=k\}, 0 \leq i \leq m, 0 \
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1737,7 +1740,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

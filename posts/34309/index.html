@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -136,7 +136,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9fe6971082bdeb85a3859cc580a2c68d.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/54bc27c9a000ea8c25fe505f15401975.png">
-<meta property="og:updated_time" content="2020-03-15T10:33:27.925Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.486Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-增强学习与车联网通信资源分配">
 <meta name="twitter:description" content="概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求">
@@ -504,7 +504,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-15 18:33:27" itemprop="dateModified" datetime="2020-03-15T18:33:27+08:00">2020-03-15</time>
+                <time title="Modified: 2020-03-23 01:25:00" itemprop="dateModified" datetime="2020-03-23T01:25:00+08:00">2020-03-23</time>
               
             
           </span>
@@ -837,8 +837,6 @@ y = r_t + \max_{a \in \mathcal{A}} Q_{old} (\mathbf{s}_t, a, \mathbf{\theta})
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1650,7 +1648,12 @@ y = r_t + \max_{a \in \mathcal{A}} Q_{old} (\mathbf{s}_t, a, \mathbf{\theta})
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1671,7 +1674,7 @@ y = r_t + \max_{a \in \mathcal{A}} Q_{old} (\mathbf{s}_t, a, \mathbf{\theta})
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1768,7 +1771,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

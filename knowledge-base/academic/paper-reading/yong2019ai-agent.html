@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/847267a8beaa2dedab4afc279c5f7b78.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9f108ea26c896883eac891c303783cee.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/684f6b7556d7876bbd810dd6d5b2dbec.png">
-<meta property="og:updated_time" content="2020-03-04T16:03:39.529Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-AI Agent in SDN">
 <meta name="twitter:description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服务预">
@@ -807,8 +807,6 @@ L_{2}: 0 \leq \delta_{s}^{t_{i}} \leq W
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1620,7 +1618,12 @@ L_{2}: 0 \leq \delta_{s}^{t_{i}} \leq W
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1641,7 +1644,7 @@ L_{2}: 0 \leq \delta_{s}^{t_{i}} \leq W
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1738,7 +1741,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

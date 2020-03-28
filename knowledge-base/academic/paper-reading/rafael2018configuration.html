@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -131,7 +131,7 @@
 <meta property="og:description" content="这篇文章的标题是Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications，2018年的文章，作者是西班牙的。 3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
-<meta property="og:updated_time" content="2020-03-21T10:56:32.311Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X Mode 4">
 <meta name="twitter:description" content="这篇文章的标题是Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications，2018年的文章，作者是西班牙的。 3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支">
@@ -552,7 +552,7 @@
 <p>这篇文章使用的模式4的模拟器来自</p>
 <h2 id="c-v2x-mode-4">C-V2X Mode 4</h2>
 <h3 id="物理层和子信道划分">物理层和子信道划分</h3>
-<p>C-V2X支持10MHz和20MHz信道，使用SF-FDMA(Single-Carrier Frequency-Division Multiple Access)的物理层标准。信道被划分成1ms的子帧(sub-frame)，并整合成带宽180kHz的资源块(Resource Block, RB)【~即每个RB是在180kHz的带宽上传输1ms】。C-V2X语境下的子信道是指同一个子帧下的一组RBs。每一个子信道下面包含的RB的数量取决于包的大小和使用的调制编码制式(Modulation and Coding Scheme, MCS)。子信道用来传输数据和控制信息。</p>
+<p>C-V2X支持10MHz和20MHz信道，使用SF-FDMA(Single-Carrier Frequency-Division Multiple Access)的物理层标准。信道被划分成1ms的子帧(sub-frame)，并整合成带宽180kHz的资源块(Resource Block, RB)<span class="foot-note-span">【即每个RB是在180kHz的带宽上传输1ms】</span>。C-V2X语境下的子信道是指同一个子帧下的一组RBs。每一个子信道下面包含的RB的数量取决于包的大小和使用的调制编码制式(Modulation and Coding Scheme, MCS)。子信道用来传输数据和控制信息。</p>
 <blockquote>
 <p>C-V2X 的带宽最大只有20MHz，这个也太窄了。5G的最大带宽有800MHz，而WAVE的带宽也有10MHz</p>
 </blockquote>
@@ -576,11 +576,11 @@
 <li>每个子信道上RB的数量</li>
 <li>其他</li>
 </ul>
-<p>这些参数的配置3GPP没有给定参考值。在Release 14 中，车辆通过基于感知的半持久调度方法来选择子信道。车辆在接下来的若干个连续的包传输过程中保持使用选定的子信道，这里连续的包传输的数量称为<i>Reselection Counter</i>，即重选计数。重选计数的值在5到15之间随机选择【~考虑到包传输间隔一般是100ms，即10Hz，那么这个重选的间隔大概是秒级别】。在SCI消息中会包含重选计数的值。每轮传输以后重选计数的值减一。当这个计数器到0时，车辆以概率<span class="math inline">\((1 - P)\)</span>重新选择通信资源（子信道）。另外，当车辆当前持有的资源无法满足包传输需求时，也需要重新分配资源。这里的<span class="math inline">\(P\)</span>值在0到0.8之间选择。<span class="math inline">\(P\)</span>值越高，意味着车辆倾向于延长占有资源的时间。</p>
+<p>这些参数的配置3GPP没有给定参考值。在Release 14 中，车辆通过基于感知的半持久调度方法来选择子信道。车辆在接下来的若干个连续的包传输过程中保持使用选定的子信道，这里连续的包传输的数量称为<i>Reselection Counter</i>，即重选计数。重选计数的值在5到15之间随机选择<span class="foot-note-span">【考虑到包传输间隔一般是100ms，即10Hz，那么这个重选的间隔大概是秒级别】</span>。在SCI消息中会包含重选计数的值。每轮传输以后重选计数的值减一。当这个计数器到0时，车辆以概率<span class="math inline">\((1 - P)\)</span>重新选择通信资源（子信道）。另外，当车辆当前持有的资源无法满足包传输需求时，也需要重新分配资源。这里的<span class="math inline">\(P\)</span>值在0到0.8之间选择。<span class="math inline">\(P\)</span>值越高，意味着车辆倾向于延长占有资源的时间。</p>
 <p>资源的重选过程分为三步：</p>
 <ol type="1">
 <li>当需要选择资源时，车辆<span class="math inline">\(V\)</span>可以在时间<span class="math inline">\(T\)</span>内做出决策，这个<span class="math inline">\(T\)</span>为最大的建立延时，一般是100ms或者更低。这个时间段被称为选择窗口(Selection Window)。在选择窗口内，<span class="math inline">\(V\)</span>需要确定候选的单子帧资源(Candidate Single-Subframe Resources, CSR)。具体而言，CSR是同一个子帧上的一组相邻的子信道。</li>
-<li>车辆<span class="math inline">\(V\)</span>在选择窗口<span class="math inline">\(T\)</span>之前监听1000个子帧内（称为感知窗口，Sensing Window）的所有包传输情况。车辆然后建立起一个包含了在感知窗口中所有的CSR的列表<span class="math inline">\(L_1\)</span>，除非【~这里的除非是指如果CSR满足了下面两个条件就不会加入<span class="math inline">\(L_i\)</span>列表】：
+<li>车辆<span class="math inline">\(V\)</span>在选择窗口<span class="math inline">\(T\)</span>之前监听1000个子帧内（称为感知窗口，Sensing Window）的所有包传输情况。车辆然后建立起一个包含了在感知窗口中所有的CSR的列表<span class="math inline">\(L_1\)</span>，除非<span class="foot-note-span">【这里的除非是指如果CSR满足了下面两个条件就不会加入<span class="math inline">\(L_i\)</span>列表】</span>：
 <ol type="1">
 <li><span class="math inline">\(V\)</span> 收到了来自其他车辆的SCI信息，且这一SCI信息表示该车辆将会使用<span class="math inline">\(V\)</span>在接下来要使用的网络资源；</li>
 <li><span class="math inline">\(V\)</span> 从比别的节点使用的RB上检测出来的平均Reference Signal Received Power (RSRP)高于阈值；这里的RSRP阈值是可配置的参数。</li>
@@ -754,8 +754,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1567,7 +1565,12 @@
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1588,7 +1591,7 @@
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1685,7 +1688,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

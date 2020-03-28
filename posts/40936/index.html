@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -599,7 +599,7 @@
 <p>注意在hexo-render-pandoc中默认是没有打开Heading编号的功能的，使用这一功能需要在博客的<code>_config.yml</code>（注意不是主题的）加入 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pandoc:</span></span><br><span class="line"><span class="attr">    extra:</span></span><br><span class="line"><span class="attr">        number-sections:</span> <span class="literal">null</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <p>在Heading后面添加<code>.unnumbered</code>可以阻止对给定的Heading进行编号</p>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># My heading &#123;.unnumbered&#125;</span></span><br><span class="line"></span><br><span class="line">&lt;!--可以简写为--&gt;</span><br><span class="line"><span class="section"># My header &#123;-&#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># My heading &#123;.unnumbered&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!--可以简写为--&gt;</span></span></span><br><span class="line"><span class="section"># My header &#123;-&#125;</span></span><br></pre></td></tr></table></figure>
 <h2 id="代码块">代码块</h2>
 <p>额外的代码块形式</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~~~</span><br><span class="line">code</span><br><span class="line">~~~</span><br></pre></td></tr></table></figure>
@@ -798,8 +798,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1687,7 +1685,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -131,7 +131,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的： 1buf.writeUint32BE(now &amp;amp; 0xffffffff, idx) 其中buf是一个Buffer对象，now是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 buf。不过，当now的第三十二位(自低向高)为 1">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-27T08:41:09.656Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.486Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javascript中的整型问题">
 <meta name="twitter:description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的： 1buf.writeUint32BE(now &amp;amp; 0xffffffff, idx) 其中buf是一个Buffer对象，now是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 buf。不过，当now的第三十二位(自低向高)为 1">
@@ -481,12 +481,24 @@
                 
               
 
-              <time title="Created: 2020-02-27 16:21:42 / Modified: 16:41:09" itemprop="dateCreated datePublished" datetime="2020-02-27T16:21:42+08:00">2020-02-27</time>
+              <time title="Created: 2020-02-27 16:21:42" itemprop="dateCreated datePublished" datetime="2020-02-27T16:21:42+08:00">2020-02-27</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-23 01:25:00" itemprop="dateModified" datetime="2020-03-23T01:25:00+08:00">2020-03-23</time>
               
             
           </span>
@@ -703,8 +715,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1575,7 +1585,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){

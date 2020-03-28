@@ -123,17 +123,20 @@
 
 
 
-  <meta name="description" content="文章标题是A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks，ICC Workshop文章。 这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。 每个车辆周期性地检查自己的包的寿命【应该指的延时限制】，并请求蜂窝网基站(eNodeB)建">
+  <meta name="description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
 <meta property="og:type" content="website">
-<meta property="og:title" content="混合协议 C-V2X &amp; IEE802.11p">
-<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/fakhar2018hybrid.html">
+<meta property="og:title" content="Survey: V2X通信的资源调度问题">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/ahlem2019survey.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章标题是A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks，ICC Workshop文章。 这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。 每个车辆周期性地检查自己的包的寿命【应该指的延时限制】，并请求蜂窝网基站(eNodeB)建">
+<meta property="og:description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-26T13:06:57.374Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2d71899cacf01a8d7d21f6d3bb8d73e4.png">
+<meta property="og:updated_time" content="2020-03-27T07:53:30.353Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="混合协议 C-V2X &amp; IEE802.11p">
-<meta name="twitter:description" content="文章标题是A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks，ICC Workshop文章。 这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。 每个车辆周期性地检查自己的包的寿命【应该指的延时限制】，并请求蜂窝网基站(eNodeB)建">
+<meta name="twitter:title" content="Survey: V2X通信的资源调度问题">
+<meta name="twitter:description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png">
 
 
 
@@ -143,7 +146,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/paper-reading/fakhar2018hybrid">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/paper-reading/ahlem2019survey">
 
 
 
@@ -153,7 +156,7 @@
   };
 </script>
 
-  <title>混合协议 C-V2X & IEE802.11p | 治部少辅</title>
+  <title>Survey: V2X通信的资源调度问题 | 治部少辅</title>
   
 
 
@@ -453,7 +456,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">混合协议 C-V2X & IEE802.11p
+<h2 class="post-title" itemprop="name headline">Survey: V2X通信的资源调度问题
 
 </h2>
 
@@ -509,7 +512,7 @@
             
           
           
-            <li>FAKHAR2018HYBRID</li>
+            <li>AHLEM2019SURVEY</li>
           
         
       
@@ -538,86 +541,100 @@
       <div class="post-body han-init-context">
         
         
-          <p>文章标题是<a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8403512&amp;tag=1" target="_blank" rel="noopener">A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks</a>，ICC Workshop文章。</p>
-<p>这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。</p>
-<p>每个车辆周期性地检查自己的包的寿命<span class="foot-note-span">【应该指的延时限制】</span>，并请求蜂窝网基站(eNodeB)建立D2D链接。在eNodeB上，为车辆分配资源为一个优化问题，目标是优化整体延时。这篇文章提出了建模延时和PDR的期望的方法。文章还提出了一种基于贪婪策略的D2D链路选择方法。</p>
-<h2 id="简介">简介</h2>
-<p>作者强调了LTE的部署能够为车联网提供替代方案，而传统的IEEE802.11p协议的缺点在于由于通信距离受限，信道随机访问的特点（CSMA/CA），因此通信的有效性和可靠性得不到保证。<br>
-LTE D2D通信的核心问题是如何在车联网用户之间分配通信资源，同时不对其他蜂窝网用户产生太大的干扰。<br>
-现有研究关注Throughput性能的比较多。而延时和可靠性考虑的比较少。这篇文章提出以延时为目标建立D2D资源分配框架。</p>
-<p>相比于IEEE802.11p，LTE D2D通信拥有更高的数据率和更远的通信距离。那么使用C-V2X可以让原本断开的链路能够抽芯连接。</p>
-<p>文章中提到基于蜂窝网的D2D通信是无冲突的，因此延时可以消除。<span class="eng-origin">Moreover, since cellular based D2D communications are contention free, the latency can be removed.</span></p>
-<blockquote>
-<p>关于这一点我存疑。是否是竞争与延时的长短没有必然关系，无竞争协议也可能引入结构性的延时。</p>
-</blockquote>
-<p>文章的主要贡献：</p>
+          <p>文章的标题是 <a href="https://www.hindawi.com/journals/wcmc/2019/2430656/" target="_blank" rel="noopener"><span style="font-style:italic">A Survey on Radio Resource Allocation for V2X Communications</span></a>。</p>
+<p>文章的主要内容是：</p>
 <ul>
-<li>提出基于C-V2X和IEEE802.11p的混合协议以改善延时，PDR和吞吐率性能；</li>
-<li>考虑延时最小化的D2D资源分配问题。<span class="eng-origin">A latency-minimized resource allocation problem is considered to select a set of cellular based D2D links and assign them an appropriate channel to maximize the total network weighted latency reduction under the SINR constraints of the selected links, where the weight depends on expected latency and packet tiem period</span></li>
-<li>基于贪婪策略的D2D链路选择算法，并给出了理论上的性能限制。</li>
+<li>描述V2X通信的要求和服务</li>
+<li>C-V2X的工作模式</li>
+<li>现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类</li>
+<li>文章是基于Mode 3的</li>
 </ul>
-<h2 id="系统模型与问题建模">系统模型与问题建模</h2>
-<h3 id="系统模型">系统模型</h3>
+<hr>
+<p>文章提到了Release 16相关的信息。在Release 16中，3GPP关注的内容是New Radio V2X (NR)，。5G NR的内容在Release 15中被标准化。NR V2X能够为V2X通信提供更多的QoS保证。【~NR，从名字来看应该是采用了不同的射频模块】<br>
+NR V2X和C-V2X之间的通信需要要求车辆同时装备有两套射频系统才行。【~从这里的命名可以发现C-V2X专门指Release 14，而NR V2X指Release 16，Release 12则用ProSe来称呼】<br>
+V2X的通信涉及资源分配的问题。<del>一般由基站分配的方式我们成为Overlay Mode，节点之间协商不需要基站参与的方式称为Underlay Mode</del>（Underlay和Overlay的区别在于蜂窝通信与D2D通信的频谱共享方式不同，参加<a href="#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">这里</a>）。资源分配问题英文一般称为RRM (Redio Resource Management)问题，这也是这篇Survey关注的重点。</p>
+<h2 id="v2x-requirements-and-services">V2X Requirements and Services</h2>
+<p>3GPP在Release 14中定义了27中V2X服务的应用场景，这些场景可以划分为安全相关和非安全相关。相应的，V2X消息类型也可以分为安全相关和非安全相关，前者要求可靠性和低延时，后者一般要求更高的数据率。</p>
+<p>这些应用场景中服务需求可以划分为五个类别：<br>
+- 速度: 支持最大绝对速度为160km/h，最大相对速度为280km/h。无最大速度限制的场景中最大支持到500km/h的相对速度。 - 通信距离：有效通信距离需要为驾驶员留足反应时间，显然应该依赖于最大相对速度。 - 延时/可靠性：端到端最大延时为100ms。可靠性方面，应该不需要应用层进行重传，并满足延时和有效通信距离的要求。 - 消息大小：周期性消息的大小大约是50到300字节，事件触发的消息的大小最大是1200字节。 - 消息产生的周期：最小周期是100ms。</p>
+<h3 id="安全相关的v2x服务">安全相关的V2X服务</h3>
+<p>目的是减少事故。消息需要在车辆，RSU，行人之间共享，通常是短小的广播消息。对于延时和可靠性有严格的要求。有两类的安全相关的消息被标准化，分别是周期性消息和时间触发的消息。周期性消息和事件触发消息都可以使用LTE-Uu和PC5接口。</p>
+<p>周期性消息的典型代表是CAM (Cooperative Awareness Messages)消息。事件触发消息的典型代表是DENMs (Decentralized Environmental Notification Messages)。</p>
+<h3 id="非安全相关的v2x服务">非安全相关的V2X服务</h3>
+<p>这个类别很多，比如拥堵控制，娱乐等等。这类数据量很大，且对延时和可靠性的要求不高。</p>
+<h3 id="v2x通信要求">V2X通信要求</h3>
+<h4 id="可靠性要求">可靠性要求</h4>
+<p>可靠性要求的定量表达一般是Outage probability (OP) 或者 Packet Reception Ratio (PRR)。PRR 的定义是成功接收到消息的车辆，占发送者通信范围内的车辆的数量的百分比：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{PRR}_{u}(t) &amp;=\frac{1}{N_{u}(t)} \sum_{j=1}^{N_{u}(t)} 1\left\{\gamma_{j}^{(u)}(t) \geq \gamma_{\operatorname{th}}\right\} \\
+\gamma_{j}^{(u)}(t) &amp;=\sum_{k=1}^{N_{R B}} \frac{s_{k}^{u}(t) P_{u}(t)\left|H_{u j}^{k}(t)\right|^{2}}{\sigma^{2}+\sum_{m=1}^{N_{L}} s_{m}^{u}(t) P_{j}(t)\left|H_{m}^{k}(t)\right|^{2}}
+\end{aligned}
+\]</span></p>
+<p>其中：</p>
 <ul>
-<li><strong>每辆车都装备有两套射频设备：IEEE802.11p和C-V2X</strong>。每当车辆有一个包需要发送时（自己产生的或者需要转发的），车辆会使用两种接口中的一种。或者可以同时使用两个接口进行通信。具体而言，接口选择的规则是如果基站允许使用D2D链路，那么有限使用D2D（作者认为D2D是无竞争的，使用IEEE802.11p会增加对应通信资源的竞争水平），否则使用IEEE802.11p</li>
+<li><span class="math inline">\(N_u(t)\)</span> 为车辆<span class="math inline">\(u^{th}\)</span>，在时刻<span class="math inline">\(t\)</span>的邻居数量</li>
+<li><span class="math inline">\(\gamma^{(u)}_j (t)\)</span> 为接收车辆<span class="math inline">\(j\)</span>处的SINR，<span class="math inline">\(j \in N_{u}(t)\)</span></li>
+<li><span class="math inline">\(\gamma_{th}\)</span>为SINR阈值</li>
+<li><span class="math inline">\(P_{u}(t)\)</span>为车辆<span class="math inline">\(u^{th}\)</span>的阐述功率，<span class="math inline">\(\sigma^2\)</span>为加性白噪声的功率。</li>
+<li><span class="math inline">\(N_L\)</span>为干扰车辆的数量</li>
+<li><span class="math inline">\(s_k^u(t)\)</span>为在时间<span class="math inline">\(t\)</span>处的RB分配，为指示函数。当RB资源<span class="math inline">\(k^{th}\)</span>在时刻<span class="math inline">\(t\)</span>被分配给车辆<span class="math inline">\(u^{th}\)</span>时取1，否则为0</li>
 </ul>
+<p>OP是使用的最多的。OP定义为的无法以任何编码方式无误地传输<span class="math inline">\(N_u\)</span>个比特的概率：</p>
+<p><span class="math display">\[
+p_u^{out} \triangleq Pr \{
+  \sum_{i = 1}^{E_{u}^{all}}\rho \log (1 + \gamma) &lt; N_u
+  \}
+\]</span></p>
 <blockquote>
-<p>这两套设备的频谱范围是重合的，无法同时工作的。不过IEEE802.11p拥有多个10Mhz的信道，要是合适选择信道还是能够错开的。</p>
+<p>公式长的很像香农公式，可以视为是超过信道容量的概率</p>
 </blockquote>
+<p>其中</p>
 <ul>
-<li>考虑多车道的高速公路场景，车辆总数为<span class="math inline">\(N\)</span>，其相对速度服从正态分布。每辆车（车速为<span class="math inline">\(V\)</span>）每次只能请求D2D发送一个包，每次D2D传输的时间是固定的。</li>
-<li><p>车载GPS负责提供运动信息。将运动信息和信道分配过程结合起来，基站负责选择D2D链路并为了链路分配固定数量的RB资源<sup>📒</sup>。<span class="eng-origin">In this sense, along with channel allocation, the system ca be implemented that such taht the cellular eNodeB actually selects D2D links and allocates resource blocks with a fixed number of slots for D2D link</span></p></li>
-<li><p>考虑一个随机的小区，小区覆盖范围内的所有车辆集合为<span class="math inline">\(\Omega_i\)</span>。所有的车辆会周期性地检查他们剩余的包传输时间，保证剩余的时间的长度足够用来发起D2D请求并完成随后的D2D传输。所有的车辆会在检查自己的包传输时间的同时将自己的位置信息更新到基站。 考虑一个随机的周期内，请求D2D链路的车辆的集合为<span class="math inline">\(\Omega_z\)</span>。在收到请求以后，基站决定哪些D2D链路可以建立，这一D2D链路集合为<span class="math inline">\(L\)</span>。选择的标准是这些节点通信时使用D2D要比不使用D2D性能更好（主要是延时）。记<span class="math inline">\(M_{v_i}^u\)</span>为不使用D2D时的延时水平，<span class="math inline">\(M_{v_i}^{d}\)</span>为使用了D2D的延时水平。则延时下降的量为</p>
-<p><span class="math display">\[
-\Delta M_{v_i} = E[M_{v_i}^u] - E[M_{v_i}^d]
-\]</span></p>
-<p>基站调度的目标是最大化</p>
-<p><span class="math display">\[
-\max \sum_{v_i \in \Omega_i} w_{v_i}(L)
-\]</span></p>
-<p>其中<span class="math inline">\(w_{v_i}(L) \approx (1 / t_{v_i}) \Delta M_{v_i}(L)\)</span> 为加权平均延时减小量。<span class="math inline">\(t_{v_{i}}\)</span>应该是剩余包传输时间。即剩余的时间越少，权重越大，基站优先为这些节点分配D2D链路。同时<span class="math inline">\(L\)</span>中的D2D链路还要求满足SINR条件</p>
-<p><span class="math display">\[
-\frac{P_{t_{x}(l)} \beta_{t_{x}(l), r_{x}(l)}^{-1}}{\sum_{l \in L} P_{r_{x}(i)} \beta_{t_{x}(l), r_{x}(l)}^{-1}+u_{r}} \geq \bar{\gamma}
-\]</span></p>
-<p>其中<span class="math inline">\(t_x(l)\)</span>和<span class="math inline">\(r_x(l)\)</span>分别代表链路<span class="math inline">\(l\)</span>的发送者和接受者。<span class="math inline">\(P_x\)</span>代表车辆<span class="math inline">\(v_j\)</span>的发送功率，<span class="math inline">\(\beta_{x, v}\)</span>为从<span class="math inline">\(v_j\)</span>到<span class="math inline">\(v_i\)</span>的传输损耗，<span class="math inline">\(u_r\)</span>为接收端的噪声水平，<span class="math inline">\(\bar{\gamma}\)</span>为SINR阈值。综上基站的优化问题可以表达成:</p>
-<div style="font-size: 120%">
-<p><span class="math display">\[
-\begin{array}{c}
-\max _{L} \sum_{v_{i} \in \Omega_{i}} w_{v_{i}}(L) \\
-\frac{P_{t_{x}(l)} \beta_{t_{x}(l), r_{x}(l)}^{-1}}{\sum_{i \in L} P_{r_{x}(i)} \beta_{t_{x}(i), r_{x}(l)}^{-1}+u_{r}} \geq \bar{\gamma} \text { holds } \forall l \in L \\
-t_{x}(l) \in \Omega_{z} \forall l \in L
-\end{array}
-\]</span></p>
-</div></li>
+<li><span class="math inline">\(E_{u}^{all}\)</span> 为分配给车辆<span class="math inline">\(u^{th}\)</span>的RB的数量</li>
+<li><span class="math inline">\(\rho\)</span> 为RB中复杂符号的数量</li>
+<li><span class="math inline">\(\gamma\)</span>为第<span class="math inline">\(i\)</span>个RB上的SINR</li>
 </ul>
-<h3 id="竞争延时分析">竞争延时分析</h3>
-<p>对于任意车辆<span class="math inline">\(v_x\)</span>，定义<span class="math inline">\(\tau_x\)</span>和<span class="math inline">\(p_x\)</span>分别为信道访问概率和传输成功的概率。(这里应该是采用的经典的Bianchi的分析方法，这个方法我在<a href="/knowledge-base/academic/its/wave/wave.html#mac%E5%B1%82%E6%80%A7%E8%83%BD%E7%9A%84%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC">这里</a>做了梳理)。在任意时刻知道所有车辆的位置之后，对于车辆<span class="math inline">\(v_x\)</span>我们可以定义通信节点集合<span class="math inline">\(N_x\)</span>和干扰车辆集合<span class="math inline">\(T_x\)</span>。根据Bianchi的简单广播模型有</p>
-<p><span class="math display">\[
-\tau_{v_i} = \frac{2p_{v_{i}}}{W_i + 1}
-\]</span></p>
-<p><span class="math display">\[
-p_{v_{i}}=\left(\prod_{v_{x} \in N_{v_{i}}}\left(1-\tau_{v_{x}}\right)\right)\left(\prod_{v_{x} \in N_{v_{j}} \cap N_{v_{i}}}\left(1-\tau_{v_{x}}\right)\right)^{K_{v_{i}}}
-\]</span></p>
-<p>其中<span class="math inline">\(K_{v_i}\)</span>为可能发生隐藏终端问题导致的时间段。因此竞争延时的期望为：</p>
-<p><span class="math display">\[
-E[M_{contention, v_i}] = \frac{T_{slot}, v_i}{\tau_{v_i}, P_{v_i}}
-\]</span></p>
-<p>其中 <span class="math inline">\(E[T_{slot}, v_i]\)</span>为时隙大小（这里的时隙不是TDMA意义上的时隙概念，具体参考Bianchi的论文）。</p>
-<p><span class="math display">\[
-T_{slot, v_i} = p_{ideal, v_i^\sigma} + p_{t_x, v_i}T_z^P{t_x} + p_{coll, v_i} T_{coll}^{t_x}
-\]</span></p>
-<h2 id="算法">算法</h2>
-<p>文章提出的核心问题是如何确定D2D链路集合<span class="math inline">\(L\)</span>。该优化问题是NP难问题。</p>
-<blockquote>
-<p>算法具体问题不太重要，这里不做整理。具体见原论文。</p>
-</blockquote>
-<h2 id="总结">总结</h2>
-<p>这篇论文的总体思路是由基站来调度D2D通信，当D2D无法满足要求时再使用IEEE802.11p做backup。调度的核心标准是延时。文章有如下特点：</p>
+<h4 id="延时要求">延时要求</h4>
+<p>部分研究中将延时限制理解为调度时间单元的数量，大部分则认为延时限制是指端到端延时不应该超过100ms。<span class="eng-origin">The latency requirement in some studies is interpreted by the latency constraint that allows V-UEs to allocate their required RBs before the maximum tolerable latency according to scheduling time unit number. Most of the studies designate that C-V2X can support safety services reliably that required an end-to-end latency of nearby 100 milliseconds (msec)</span></p>
+<h2 id="v2x通信模式">V2X通信模式</h2>
+<p>在LTE-V中3GPP提供了两种射频接口：分别是支持V2I的Uu蜂窝网络接口(e.g. enhanced Multimedia Broadcast Multicast Service (eMBMS))和支持V2V通信的PC5接口(direct LTE Sidelink)</p>
+<h3 id="uu接口">Uu接口</h3>
+<p>一般说蜂窝网通信(Cellular）的时候是在指车辆节点V-UE与基站eNB的通信，适合于低延时容忍度的通信。eNB在接收到某个V-UE的单播消息时，再广播给范围内的所有V-UE。借助多小区协作，MBMS可以改善小区边缘处的性能。</p>
+<h3 id="pc5接口">PC5接口</h3>
+<p>LTE-D2D通信可以绕过基站。适合于低延时应用。</p>
+<p>这里提到Release 12中的D2D是以延时为代价来降低能耗的，因此Mode 1和Mode 2其实不适合V2X应用。<span class="eng-origin">These modes are designed in order to prolong the devices’ battery lifetime at the cost of increasing the latency</span></p>
+<p><strong>这篇文章研究的是Mode 3下的的V2X资源分配问题</strong>。</p>
+<h2 id="lte-v-d2d通信">LTE-V D2D通信</h2>
+<p>D2D通信中的蜂窝网络资源分配可以以正交(Orthogonal)或者非正交(Nonorthogonal)方式进行。</p>
+<h3 id="v2v-based-d2d-通信模式">V2V-Based D2D 通信模式</h3>
+<p>一共有两种V2V通信模式，分别是Overlay和Underlay模式。其中Overlay为资源正交分配，Underlay为资源非正交分配。如 <a href="#fig:underlay-overlay">图 1</a> 所示</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png" alt="图 1: Overlay and Underlay" id="fig:underlay-overlay"><figcaption>图 1: Overlay and Underlay</figcaption>
+</figure>
+<p>在Overlay模式下，D2D通信部分使用一段独立的频谱资源。这会限制基站的性能。不过Overlay的优势在于消除了普通蜂窝设备和车联网设备之间的干扰。</p>
+<p>在Underlay模式下，普通蜂窝设备和车联网设备之间共享频谱。这意味着基站需要管理二者之间的干扰问题。</p>
+<p>Overlay和Underlay模式下都可以使用下行和上行链路子帧。车联网D2D使用的资源是从UL子帧中分配，原因为：</p>
 <ol type="1">
-<li>这里的D2D通信是需要基站来调度的，对应的是3GPP Release 14 Mode 3 或者是 Release 12 Mode 1的模式。而一般C-V2X都是采用Mode 4或者至少Mode 2。</li>
-<li>作者认为D2D通信只有传输延时，至于其他结构性延时要素则没有考虑。</li>
-<li>IEEE802.11p方面采用了经典的Bianchi模型。</li>
+<li>UL具有更低的峰值均值比<span class="eng-orign">peak-to-average power ratio</span>。</li>
+<li>UL的负载一般比较低。</li>
 </ol>
+<h3 id="v-ues间的非正交性">V-UEs间的非正交性</h3>
+<p>目前正交多址技术是现有的蜂窝网的主流技术。正交多址技术的例子包括OFDMA，TDMA等。5G中选用了非正交多址技术（NOMA)，NOMA允许多个用户共享一个资源块（RB），而在正交多址技术中RB只能被独占使用。因此NOMA技术可以达到恒高的吞吐率。NOMA技术还可以被用来改善延时、减少冲突。</p>
+<h2 id="rrm-over-lte">RRM over LTE</h2>
+<p>RRM in LTE包含了很多子问题，入射频资源分配，包调度等。其中资源分配问题是LTE-V中被讨论最多的问题。现有的大多数研究都采用了V-UE和C-UE共享蜂窝网频谱的做法，也即Overlay模式。</p>
+<p>RRM相关的算法分类方式如 <a href="#fig:RRM-classification">图 2</a>：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/2d71899cacf01a8d7d21f6d3bb8d73e4.png" alt="图 2: RRM分类" id="fig:RRM-classification"><figcaption>图 2: RRM分类</figcaption>
+</figure>
+<h3 id="underlaying-resource-allocation-in-v2x-services">Underlaying Resource Allocation in V2X Services</h3>
+<p>这部分将的是使用Underlaying模式，这是大部分现有研究使用的模式。Underlaying模式下的核心问题在于解决C-UE和V-UE之间的干扰问题。</p>
+<h4 id="rbs-sharing-based-user-pairing">RBs Sharing-Based User Pairing</h4>
+<p>大多数Underlaying资源分配算法都允许用户设备的基于用户配对来共享RB。这里的配对是指基站能够找到至少包含两个UE的共享RB的最佳组合。其主要目标是让一个V-UE设备和一个C-UE设备共享同一个RB，或者是让两个V-UE共享一个RB。<span class="eng-origin">The main objective is to allow at least one V-UE using direct link to share the same RB with only one C-UE or with one V-UE using cellular link</span></p>
+<h4 id="rbs-sharing-based-user-clusteringgrouping">RBs Sharing-Based User Clustering/Grouping</h4>
+<p>一般的做法是在不同的簇之前分配非正交的资源，而在簇内分配正交的资源。</p>
+<h4 id="rbs-sharing-based-user-geographics-locaiton">RBs Sharing-Based User Geographics Locaiton</h4>
+<p>基于地理位置共享RB资源。</p>
 
         
       </div>
@@ -675,7 +692,7 @@ T_{slot, v_i} = p_{ideal, v_i^\sigma} + p_{t_x, v_i}T_z^P{t_x} + p_{coll, v_i} T
             
           
           
-            <li>FAKHAR2018HYBRID</li>
+            <li>AHLEM2019SURVEY</li>
           
         
       
@@ -1014,7 +1031,7 @@ T_{slot, v_i} = p_{ideal, v_i^\sigma} + p_{t_x, v_i}T_z^P{t_x} + p_{coll, v_i} T
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型与问题建模"><span class="nav-number">2.</span> <span class="nav-text">系统模型与问题建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统模型"><span class="nav-number">2.1.</span> <span class="nav-text">系统模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#竞争延时分析"><span class="nav-number">2.2.</span> <span class="nav-text">竞争延时分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法"><span class="nav-number">3.</span> <span class="nav-text">算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#v2x-requirements-and-services"><span class="nav-number">1.</span> <span class="nav-text">V2X Requirements and Services</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全相关的v2x服务"><span class="nav-number">1.1.</span> <span class="nav-text">安全相关的V2X服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非安全相关的v2x服务"><span class="nav-number">1.2.</span> <span class="nav-text">非安全相关的V2X服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v2x通信要求"><span class="nav-number">1.3.</span> <span class="nav-text">V2X通信要求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可靠性要求"><span class="nav-number">1.3.1.</span> <span class="nav-text">可靠性要求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#延时要求"><span class="nav-number">1.3.2.</span> <span class="nav-text">延时要求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v2x通信模式"><span class="nav-number">2.</span> <span class="nav-text">V2X通信模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#uu接口"><span class="nav-number">2.1.</span> <span class="nav-text">Uu接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pc5接口"><span class="nav-number">2.2.</span> <span class="nav-text">PC5接口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lte-v-d2d通信"><span class="nav-number">3.</span> <span class="nav-text">LTE-V D2D通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v2v-based-d2d-通信模式"><span class="nav-number">3.1.</span> <span class="nav-text">V2V-Based D2D 通信模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-ues间的非正交性"><span class="nav-number">3.2.</span> <span class="nav-text">V-UEs间的非正交性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rrm-over-lte"><span class="nav-number">4.</span> <span class="nav-text">RRM over LTE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#underlaying-resource-allocation-in-v2x-services"><span class="nav-number">4.1.</span> <span class="nav-text">Underlaying Resource Allocation in V2X Services</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rbs-sharing-based-user-pairing"><span class="nav-number">4.1.1.</span> <span class="nav-text">RBs Sharing-Based User Pairing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rbs-sharing-based-user-clusteringgrouping"><span class="nav-number">4.1.2.</span> <span class="nav-text">RBs Sharing-Based User Clustering/Grouping</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rbs-sharing-based-user-geographics-locaiton"><span class="nav-number">4.1.3.</span> <span class="nav-text">RBs Sharing-Based User Geographics Locaiton</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -1200,9 +1217,9 @@ T_{slot, v_i} = p_{ideal, v_i^\sigma} + p_{t_x, v_i}T_z^P{t_x} + p_{coll, v_i} T
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/knowledge-base/academic/paper-reading/fakhar2018hybrid.html";
-    this.page.identifier = "knowledge-base/academic/paper-reading/fakhar2018hybrid.html";
-    this.page.title = '混合协议 C-V2X & IEE802.11p';
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/paper-reading/ahlem2019survey.html";
+    this.page.identifier = "knowledge-base/academic/paper-reading/ahlem2019survey.html";
+    this.page.title = 'Survey: V2X通信的资源调度问题';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');

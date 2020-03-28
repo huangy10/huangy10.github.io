@@ -32,7 +32,7 @@
   <!--  -->
   
   
-  <link rel="stylesheet" href="https://ethantw.github.io/Han/latest/han.min.css">
+  <link rel="stylesheet" href="https://cdn.bootcss.com/Han/3.3.0/han.css">
 
 
 
@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="这篇论文全名是: PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems，是2020年发表在IEEE IoT上的文章。 这里将的多层级的计算卸载问题。在这篇文章中作者重点研究多层雾计算中流量预测的动态卸载和资源分配问题。通过将问题表述为随机网络优化问题，我们旨在通过为系统中的所有队列提">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-06T07:17:52.547Z">
+<meta property="og:updated_time" content="2020-03-22T17:25:00.500Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-计算卸载、资源分配与雾计算">
 <meta name="twitter:description" content="这篇论文全名是: PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems，是2020年发表在IEEE IoT上的文章。 这里将的多层级的计算卸载问题。在这篇文章中作者重点研究多层雾计算中流量预测的动态卸载和资源分配问题。通过将问题表述为随机网络优化问题，我们旨在通过为系统中的所有队列提">
@@ -704,8 +704,6 @@
                     
                   
                     
-                    
-                      
                     
                       
                     
@@ -1517,7 +1515,12 @@
       },
       
     }
-    
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
   });
   MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
     MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
@@ -1538,7 +1541,7 @@
     }
   });
 </script>
-<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
     
   
@@ -1635,7 +1638,7 @@ if ($('body').find('div.pdf').length) {
   
 
 
-  <script src="https://ethantw.github.io/Han/latest/han.min.js"></script>
+  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
   
   <script>
     void function(){
