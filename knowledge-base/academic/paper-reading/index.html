@@ -130,7 +130,7 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF I">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-27T08:42:44.599Z">
+<meta property="og:updated_time" content="2020-03-29T11:20:52.703Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文">
 <meta name="twitter:description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF I">
@@ -1545,6 +1545,53 @@ span.add-date {
   
   
 
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      },
+      
+    }
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
   
 
 
