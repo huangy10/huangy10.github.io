@@ -132,7 +132,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
-<meta property="og:updated_time" content="2020-03-30T15:09:14.674Z">
+<meta property="og:updated_time" content="2020-03-30T15:29:50.117Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X">
 <meta name="twitter:description" content="span.questions {     background-color: yellow; }  本章节内容  3GPP标准相关 V2X异构网络  关于C-V2X标准的一些关键内容 物理层信息 频谱与调制 C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018年工信部印发了《车联网（智能">
@@ -552,7 +552,7 @@ span.questions {
 <h2 id="关于c-v2x标准的一些关键内容">关于C-V2X标准的一些关键内容</h2>
 <h3 id="物理层信息">物理层信息</h3>
 <h4 id="频谱与调制">频谱与调制</h4>
-<p>C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018年工信部印发了《车联网（智能网联汽车）直连通信使用5905-5925MHz频段管理规定（暂行）》的<a href="http://www.gov.cn/xinwen/2018-11/13/content_5339936.htm" target="_blank" rel="noopener">通知</a>。这个通知除了规定使用的频段以外，还规定了发射功率等其他参数，具体如下：</p>
+<p>C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018年工信部印发了《车联网（智能网联汽车）直连通信使用<strong>5905-5925MHz</strong>频段管理规定（暂行）》的<a href="http://www.gov.cn/xinwen/2018-11/13/content_5339936.htm" target="_blank" rel="noopener">通知</a>。这个通知除了规定使用的频段以外，还规定了发射功率等其他参数，具体如下：</p>
 <ul>
 <li>发射功率限值(EIRP)
 <ul>
@@ -569,7 +569,7 @@ span.questions {
 </ul></li>
 </ul>
 <blockquote>
-<p>注意到工信部这里给出的频率范围和<a href="../wave">WAVE</a>使用的频率范围是重叠的。</p>
+<p>注意到工信部这里给出的频率范围和<a href="../wave">WAVE</a>使用的频率范围是重叠的。<span class="questions">另外这里只给出工信部的规定，尚不确定世界上其他国家和地区，尤其是美国和欧洲的标准部门是如何规定的，这里还需要补充</span></p>
 </blockquote>
 <p>以上是工信部的标准。在研究论文中也提到了更广为接受的标准。基于<a href="/knowledge-base/academic/paper-reading/rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a>中的内容，C-V2X的一般特点如下：</p>
 <ul>
@@ -583,6 +583,21 @@ span.questions {
 <img src="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png" alt="图中包含了IEEE802.11p的信息以进行二者的对比。图片来自A Comparison of the V2X Communication System: ITS-G5 and C-V2X"><figcaption>图中包含了IEEE802.11p的信息以进行二者的对比。图片来自<a href="./valerian2019comparison.html">A Comparison of the V2X Communication System: ITS-G5 and C-V2X</a></figcaption>
 </figure>
 <h4 id="lte-uu与pc5接口">LTE-Uu与PC5接口</h4>
+<h4 id="一些关键问题faq">一些关键问题(FAQ)</h4>
+<div class="questions-div">
+<ol type="1">
+<li><p><strong>C-V2X的频段具体是多少，每个信道带宽是多少，有多少个信道</strong>；<br>
+目前可以确定的是信道带宽是10MHz或者20MHz，尚未看到文献提到C-V2X有多个信道。具体的频段目前看到的文献大部分没有提到。只查到工信部的要求是<strong>5905-5925MHz</strong>。</p></li>
+<li><p><strong>C-V2X的有效传输距离一般是多少</strong>；<br>
+有文献提到C-V2X的有效传输距离一般高于WAVE。</p></li>
+<li><p><strong>C-V2X传输的数据率一般是多少</strong>；<br>
+尚不清楚。</p></li>
+<li><p><strong>抗干扰能力：SINR门限一般会是什么水平</strong>；<br>
+尚不清楚</p></li>
+<li><p><strong>是否支持双工</strong>。（WAVE支持一辆车带两套天线，一套收一套发，但是需要在不通的信道。WAVE总共提供了7个信道）<br>
+尚不清楚。</p></li>
+</ol>
+</div>
 <h3 id="mac层帧结构">MAC层帧结构</h3>
 <h4 id="pssch与pscch">PSSCH与PSCCH</h4>
 <p>PSSCH的全称是Physical Sidelink Shared Channel, PSCCH</p>
@@ -603,6 +618,13 @@ span.questions {
 </ol>
 车辆在这两个条件需要同时满足时<span class="math inline">\(V\)</span>才会将对应CSR排除在<span class="math inline">\(L_1\)</span>之外。这个步骤需要确保<span class="math inline">\(L_1\)</span>中至少包含了20%的资源总量，否则这一步会一直循环知道20%的目标达到。而在每轮循环中，RSRP阈值会升高3dB。</li>
 <li><span class="math inline">\(V\)</span>创建第二个CSR的列表<span class="math inline">\(L_2\)</span>。<span class="math inline">\(L_2\)</span>中的CSR总数必须占CSR总数的20%。<span class="math inline">\(L_2\)</span>来自<span class="math inline">\(L_1\)</span>中最优最低的平均RSSI的CSR。当所有车辆的传输频率是10Hz时，这里的平均RSSI的计算范围是过去的第<span class="math inline">\(T_{CSR} - 100 \times j, j \in N, 1 \leq j \leq 10\)</span> 子帧，参考上图。车辆<span class="math inline">\(V\)</span>随机从<span class="math inline">\(L_2\)</span>中选择一个CSR使用，并在接下来的<i>Reselection Counter</i>次传输中保持使用这一资源。</li>
+</ol>
+<h4 id="问题faq">问题(FAQ)</h4>
+<ol type="1">
+<li><p><strong>SP-SPS是否存在冲突问题</strong>。<br>
+我还没有看到有文献讨论SPS机制中是否存在冲突问题，甚至有文章将SPS称为无冲突协议。但是可以说任何分布式的资源调度方式不出现冲突是不可能的。一方面信息无法保证一致，因此可能两个临近车辆会选择同一个资源块。另一方面，由于车辆的运动原本无冲突的两个节点会彼此靠近而导致冲突。</p></li>
+<li><p><strong>SCI中的具体信息内容</strong>。<br>
+提这一点是想关注SCI中是否会包含本节点周围节点的资源分配信息，这涉及到是否会有隐藏终端问题。</p></li>
 </ol>
 
         
@@ -998,7 +1020,7 @@ span.questions {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本章节内容"><span class="nav-number">1.</span> <span class="nav-text">本章节内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于c-v2x标准的一些关键内容"><span class="nav-number">2.</span> <span class="nav-text">关于C-V2X标准的一些关键内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层信息"><span class="nav-number">2.1.</span> <span class="nav-text">物理层信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#频谱与调制"><span class="nav-number">2.1.1.</span> <span class="nav-text">频谱与调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lte-uu与pc5接口"><span class="nav-number">2.1.2.</span> <span class="nav-text">LTE-Uu与PC5接口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac层帧结构"><span class="nav-number">2.2.</span> <span class="nav-text">MAC层帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pssch与pscch"><span class="nav-number">2.2.1.</span> <span class="nav-text">PSSCH与PSCCH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transport-block-and-sci"><span class="nav-number">2.2.2.</span> <span class="nav-text">Transport Block and SCI</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac层sb-sps"><span class="nav-number">2.3.</span> <span class="nav-text">MAC层SB-SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#半持久与重选计数"><span class="nav-number">2.3.1.</span> <span class="nav-text">半持久与重选计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于感知"><span class="nav-number">2.3.2.</span> <span class="nav-text">基于感知</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#本章节内容"><span class="nav-number">1.</span> <span class="nav-text">本章节内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于c-v2x标准的一些关键内容"><span class="nav-number">2.</span> <span class="nav-text">关于C-V2X标准的一些关键内容</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层信息"><span class="nav-number">2.1.</span> <span class="nav-text">物理层信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#频谱与调制"><span class="nav-number">2.1.1.</span> <span class="nav-text">频谱与调制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lte-uu与pc5接口"><span class="nav-number">2.1.2.</span> <span class="nav-text">LTE-Uu与PC5接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一些关键问题faq"><span class="nav-number">2.1.3.</span> <span class="nav-text">一些关键问题(FAQ)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac层帧结构"><span class="nav-number">2.2.</span> <span class="nav-text">MAC层帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pssch与pscch"><span class="nav-number">2.2.1.</span> <span class="nav-text">PSSCH与PSCCH</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#transport-block-and-sci"><span class="nav-number">2.2.2.</span> <span class="nav-text">Transport Block and SCI</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mac层sb-sps"><span class="nav-number">2.3.</span> <span class="nav-text">MAC层SB-SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#半持久与重选计数"><span class="nav-number">2.3.1.</span> <span class="nav-text">半持久与重选计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基于感知"><span class="nav-number">2.3.2.</span> <span class="nav-text">基于感知</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题faq"><span class="nav-number">2.3.3.</span> <span class="nav-text">问题(FAQ)</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
