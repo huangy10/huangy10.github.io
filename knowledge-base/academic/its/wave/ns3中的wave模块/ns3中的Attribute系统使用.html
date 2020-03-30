@@ -565,7 +565,7 @@
           <p>ns3中的Attribute及相关系统的设计非常有意思，其意义在于为仿真中的极其复杂的模块架构中，提供了一种非常方便的<strong>解耦</strong>的属性访问（读写）方法。例如，在一个复杂的设计WAVE的性能仿真中，若要修改某个节点的CSMA竞争窗口大小。没有Attriubute系统的情况下，想要通过层层指针获取底层对象再进行修改，会对代码的模块化设计和代码的复杂度带来灾难性的硬性。相反，在Attribute系统下，我们只需要提供CSMA竞争窗口的<strong>路径</strong>(path)就可以直接修改对应的属性。</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Config::Set (<span class="string">"/NodeList/0/$ns3::Node/DeviceList/0/$ns3::WaveNetDevice/MacEntities/172/$ns3::OcbWifiMac/BE_Txop/$ns3::QosTxop/MinCw"</span>, UintegerValue (<span class="number">15</span>));</span><br></pre></td></tr></table></figure>
 <p>下面我们来梳理一下Attribute使用中的一些要点。</p>
-<h2 id="attribute的创建">Attribute的创建</h2>
+<h1 data-number="1" id="attribute的创建"><span class="header-section-number">1</span> Attribute的创建</h1>
 <p>Attribute的创建是在TypeId中进行的。Attribute系统的实现有赖于Object系统，这意味着你如果要在你的类中自定义Attribute，需要让你的类继承自Object基类。我们通过<code>TypeId::AddAttribte</code>这个函数来定义属性。例如上面提到的<code>MinCW</code>，其创建过程如下：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> TypeId tid = TypeId (<span class="string">"ns3::Txop"</span>)</span><br><span class="line">    .SetParent&lt;ns3::Object&gt; ()</span><br><span class="line">    .SetGroupName (<span class="string">"Wifi"</span>)</span><br><span class="line">    .AddConstructor&lt;Txop&gt; ()</span><br><span class="line">    .AddAttribute (<span class="string">"MinCw"</span>, <span class="string">"The minimum value of the contention window."</span>,</span><br><span class="line">                   UintegerValue (<span class="number">15</span>),</span><br><span class="line">                   MakeUintegerAccessor (&amp;Txop::SetMinCw,</span><br><span class="line">                                         &amp;Txop::GetMinCw),</span><br><span class="line">                   MakeUintegerChecker&lt;<span class="keyword">uint32_t</span>&gt; ())</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    ;</span><br></pre></td></tr></table></figure>
 <p>这个函数有五个参数，分别是：</p>
@@ -576,7 +576,7 @@
 <li>属性的访问器，这里决定了的具体的属性值如何存储和访问。可以使用Getter，Setter函数范式，也可以直接使用类的成员变量。</li>
 <li>属性的格式检查器，我们可以通过这个类来规定属性的格式</li>
 </ol>
-<h2 id="attribute的结构路径组成">Attribute的结构（路径组成）</h2>
+<h1 data-number="2" id="attribute的结构路径组成"><span class="header-section-number">2</span> Attribute的结构（路径组成）</h1>
 <p>Attribte使用中最大的一个困难在于，我们如何确定Attribute的路径呢？</p>
 <p>Attribute的路径，是各个模块内部的层级关系（hierarchy）的反映。我们以开头的例子中使用的路径为例：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/NodeList/0/$ns3::Node/DeviceList/0/$ns3::WaveNetDevice/MacEntities/172/$ns3::OcbWifiMac/BE_Txop/$ns3::QosTxop/MinCw</span><br></pre></td></tr></table></figure>
@@ -587,11 +587,11 @@
 <li>索引(indexing/mapping)</li>
 <li>类型转换(casting)</li>
 </ol>
-<h3 id="indexingmapping">indexing/mapping</h3>
+<h2 data-number="2.1" id="indexingmapping"><span class="header-section-number">2.1</span> indexing/mapping</h2>
 <p>在定义Attribute时，可以将Attribute定义为Vector或者Map类型。例如Node的DeviceList这个Attribute就是一个Vector。在构建Attribute Path时，紧跟在Node后面我们需要添加一个索引项来表明我们要访问的具体是哪个成员。利用通配符<code>*</code>指定选中所有的成员。这里的例子包括上面路径的<code>/NodeList/0</code>还有<code>DeviceList/0</code>等等部分。</p>
-<h3 id="casting">casting</h3>
+<h2 data-number="2.2" id="casting"><span class="header-section-number">2.2</span> casting</h2>
 <p>一般来说，定义Attribute时，我们指定的类型可能是特定的基类，例如上面Node的Attribute定义中，其<code>DeviceList</code>中的成员就是<code>NetDevice</code>这个基类。再具体的子类中，其Attribute定义可能各不相通。为了访问特定的子类的Attribute，我们要将其转化成对应的子类。以开头的例子为例，casting操作的标识是<code>$</code>。<code>DeviceList/0/$ns3::WaveNetDevice/MacEntities</code>中，我们取出每个Node的第0个Device，并将其转化成<code>ns3::WaveNetDevice</code>类型，然后访问<code>MacEntities</code>这个Attribute。</p>
-<h3 id="查询方法">查询方法</h3>
+<h2 data-number="2.3" id="查询方法"><span class="header-section-number">2.3</span> 查询方法</h2>
 <p>尽管知道了Attribute Path的构建方法，但是实际书写起来还是非常复杂，我们可以用一个简单的工具<code>ConfigStore</code>来查询仿真中具体有哪些<code>Attribute</code>。</p>
 <p>参考下面的样例修改你的代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(...)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  CommandLine cmd;</span><br><span class="line">  cmd.Parse (...);</span><br><span class="line"></span><br><span class="line">  ConfigStore config;</span><br><span class="line">  config.ConfigureDefaults ();</span><br><span class="line"></span><br><span class="line">  ... topology creation</span><br><span class="line"></span><br><span class="line">  config.ConfigureAttributes ();</span><br><span class="line"></span><br><span class="line">  Simulator::Run ();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -601,7 +601,7 @@
 <blockquote>
 <p>注意只有在程序中使用过（读/写）才会在此处输出。</p>
 </blockquote>
-<h2 id="further-reading">Further Reading</h2>
+<h1 data-number="3" id="further-reading"><span class="header-section-number">3</span> Further Reading</h1>
 <ul>
 <li><a href="https://www.nsnam.org/wiki/HOWTO_determine_the_path_of_an_attribute_or_trace_source" target="_blank" rel="noopener">HOWTO determine the path of an attribute or trace source</a></li>
 <li><a href="https://www.nsnam.org/wiki/HOWTO_use_the_ConfigStore" target="_blank" rel="noopener">HOWTO use the ConfigStore</a></li>
@@ -1027,7 +1027,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#attribute的创建"><span class="nav-number">1.</span> <span class="nav-text">Attribute的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attribute的结构路径组成"><span class="nav-number">2.</span> <span class="nav-text">Attribute的结构（路径组成）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#indexingmapping"><span class="nav-number">2.1.</span> <span class="nav-text">indexing/mapping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#casting"><span class="nav-number">2.2.</span> <span class="nav-text">casting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询方法"><span class="nav-number">2.3.</span> <span class="nav-text">查询方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#further-reading"><span class="nav-number">3.</span> <span class="nav-text">Further Reading</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#attribute的创建"><span class="nav-text">1 Attribute的创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#attribute的结构路径组成"><span class="nav-text">2 Attribute的结构（路径组成）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#indexingmapping"><span class="nav-text">2.1 indexing/mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#casting"><span class="nav-text">2.2 casting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询方法"><span class="nav-text">2.3 查询方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#further-reading"><span class="nav-text">3 Further Reading</span></a></li></ol></div>
             
 
           </div>

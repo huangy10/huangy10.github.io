@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="Flags -fPIC 参考 PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存，它们在每个">
+  <meta name="description" content="1 Flags 1.1 -fPIC 参考 PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存">
 <meta property="og:type" content="website">
 <meta property="og:title" content="编译问题">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/compile/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="Flags -fPIC 参考 PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存，它们在每个">
+<meta property="og:description" content="1 Flags 1.1 -fPIC 参考 PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-09-18T09:38:59.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编译问题">
-<meta name="twitter:description" content="Flags -fPIC 参考 PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存，它们在每个">
+<meta name="twitter:description" content="1 Flags 1.1 -fPIC 参考 PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存">
 
 
 
@@ -524,26 +524,26 @@
       <div class="post-body han-init-context">
         
         
-          <h2 id="flags">Flags</h2>
-<h3 id="fpic"><code>-fPIC</code></h3>
+          <h1 data-number="1" id="flags"><span class="header-section-number">1</span> Flags</h1>
+<h2 data-number="1.1" id="fpic"><span class="header-section-number">1.1</span> <code>-fPIC</code></h2>
 <p><a href="https://www.cnblogs.com/cswuyg/p/3830703.html" target="_blank" rel="noopener">参考</a></p>
 <p>PIC的含义是Position Independent Code。这个选项的设置与「共享对象」有关。共享对象可能会被不同的进程加载到不同的位置上，如果共享对象中的指令使用了绝对地址、外部模块地址，那么在共享对象被加载时就必须根据相关模块的加载位置对这个地址做调整，也就是修改这些地址，让它在对应进程中能正确访问，而被修改到的段就不能实现多进程共享一份物理内存，它们在每个进程中都必须有一份物理内存的拷贝。fPIC指令就是为了让使用到同一个共享对象的多个进程能尽可能多的共享物理内存，它背后把那些涉及到绝对地址、外部模块地址访问的地方都抽离出来，保证代码段的内容可以多进程相同，实现共享。</p>
 <p>这里的「共享对象」，常见就是一些动态库文件。</p>
-<h3 id="pipe"><code>-pipe</code></h3>
+<h2 data-number="1.2" id="pipe"><span class="header-section-number">1.2</span> <code>-pipe</code></h2>
 <p><a href="https://stackoverflow.com/questions/1512933/when-should-i-use-gccs-pipe-option" target="_blank" rel="noopener">参考</a></p>
 <p>作用在编译过程中使用pipe管道，而非临时文件。</p>
 <blockquote>
 <p>Use pipes rather than temporary files for communication between the various stages of compilation. This fails to work on some systems where the assembler is unable to read from a pipe; but the GNU assembler has no trouble.</p>
 </blockquote>
-<h3 id="wall"><code>-Wall</code></h3>
+<h2 data-number="1.3" id="wall"><span class="header-section-number">1.3</span> <code>-Wall</code></h2>
 <p><a href="https://stackoverflow.com/questions/2408038/what-does-wall-in-g-wall-test-cpp-o-test-do" target="_blank" rel="noopener">参考</a></p>
-<p>意思是&quot;warn all&quot;。让编译器抛出所有的警告</p>
-<h3 id="w"><code>-W</code></h3>
+<p>意思是"warn all"。让编译器抛出所有的警告</p>
+<h2 data-number="1.4" id="w"><span class="header-section-number">1.4</span> <code>-W</code></h2>
 <p><a href="https://stackoverflow.com/questions/29254877/meaning-of-g-flags-wall-w-werror" target="_blank" rel="noopener">参考</a></p>
 <p>启用额外的警告信息。一般更加推荐用<code>-Wextra</code></p>
-<h3 id="werror"><code>-Werror</code></h3>
+<h2 data-number="1.5" id="werror"><span class="header-section-number">1.5</span> <code>-Werror</code></h2>
 <p>将warning处理视为错误。</p>
-<h3 id="wl"><code>-Wl</code></h3>
+<h2 data-number="1.6" id="wl"><span class="header-section-number">1.6</span> <code>-Wl</code></h2>
 <p><a href="https://blog.csdn.net/gohome520/article/details/7259450" target="_blank" rel="noopener">参考</a></p>
 <p>这个Flag是一个前缀，表示后面的Flag传递给链接器。</p>
 
@@ -928,7 +928,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#flags"><span class="nav-number">1.</span> <span class="nav-text">Flags</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fpic"><span class="nav-number">1.1.</span> <span class="nav-text">-fPIC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pipe"><span class="nav-number">1.2.</span> <span class="nav-text">-pipe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wall"><span class="nav-number">1.3.</span> <span class="nav-text">-Wall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#w"><span class="nav-number">1.4.</span> <span class="nav-text">-W</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#werror"><span class="nav-number">1.5.</span> <span class="nav-text">-Werror</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wl"><span class="nav-number">1.6.</span> <span class="nav-text">-Wl</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#flags"><span class="nav-text">1 Flags</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fpic"><span class="nav-text">1.1 -fPIC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pipe"><span class="nav-text">1.2 -pipe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wall"><span class="nav-text">1.3 -Wall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#w"><span class="nav-text">1.4 -W</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#werror"><span class="nav-text">1.5 -Werror</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wl"><span class="nav-text">1.6 -Wl</span></a></li></ol></li></ol></div>
             
 
           </div>

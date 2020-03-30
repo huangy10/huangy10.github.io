@@ -558,10 +558,10 @@
 
       
         <p><img src="https://imgs.codewoody.com/uploads/big/cb54becbed976afbcd2d21733fcf85c6.png" alt="OpenVPN"> <a id="more"></a></p>
-<h2 id="环境配置">环境配置</h2>
+<h1 data-number="1" id="环境配置"><span class="header-section-number">1</span> 环境配置</h1>
 <p>安装OpenVPN的方法很简单：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install openvpn</span><br></pre></td></tr></table></figure>
-<h2 id="使用方法">使用方法</h2>
+<h1 data-number="2" id="使用方法"><span class="header-section-number">2</span> 使用方法</h1>
 <p>首先你需要从OpenVPN服务提供商那里得到<code>*.ovpn</code>配置文件，然后在服务器上运行</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo openvpn --config your.ovpn</span><br></pre></td></tr></table></figure>
 <p>不过这个命令会在前台运行，当我们退出SSH之后就会终止。为了让OpenVPN能够在后台运行，且能够自动开机启动，我们需要借助于Systemctl的帮助。首先我们将ovpn文件复制到<code>/etc/openvpn/client/</code>下，<strong>将后缀直接修改为<code>.conf</code></strong>。如果配置文件需要我们手动输入密码，我们需要将密码以配置文件的形式固定下来，不然自动启动会失败。在<code>/etc/openvpn/client/</code>新建一个<code>account.txt</code>文件，在其中输入：</p>
@@ -971,7 +971,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法"><span class="nav-number">2.</span> <span class="nav-text">使用方法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境配置"><span class="nav-text">1 环境配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用方法"><span class="nav-text">2 使用方法</span></a></li></ol></div>
             
 
           </div>

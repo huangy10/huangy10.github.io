@@ -562,12 +562,12 @@
 <p>在使用make过程中的第一个核心问题是处理文件依赖的问题。例如：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foo.o : foo.c defs.h       # foo模块</span><br><span class="line">	cc -c -g foo.c</span><br></pre></td></tr></table></figure>
 <p>这里<code>foo.o</code>依赖于<code>foo.c</code>和<code>defs.h</code>。当后面两个文件发生变化时，make会自动运行<code>cc -c -g foo.c</code>命令更新<code>foo.o</code>文件。但是，随着项目扩大。这种文件之间的依赖关系会变得非常复杂，一个小的改动可能会涉及到众多依赖关系的修改。因此有必要在项目的开始就引入自动构建依赖关系的工具链。<a id="more"></a></p>
-<p>在<a href="http://wiki.ubuntu.org.cn/跟我一起写Makefile:书写规则" target="_blank" rel="noopener">跟我一起写Makefile:书写规则</a>这篇教程中，提到了编译器的一个特性：大多数的C/C++编译器都支持一个&quot;-M&quot;的选项，即自动寻找源文件中包含的头文件，并生成一个依赖关系。例如如果我们执行</p>
+<p>在<a href="http://wiki.ubuntu.org.cn/跟我一起写Makefile:书写规则" target="_blank" rel="noopener">跟我一起写Makefile:书写规则</a>这篇教程中，提到了编译器的一个特性：大多数的C/C++编译器都支持一个"-M"的选项，即自动寻找源文件中包含的头文件，并生成一个依赖关系。例如如果我们执行</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cc -M main.c</span><br></pre></td></tr></table></figure>
 <p>其输出是：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">main.o: main.c defs.h</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>注意如果你用的是GNU的C/C++编译器，你得用&quot;-MM&quot;参数，不然，&quot;-M&quot;参数会把一些标准库头文件也引入进来。</p>
+<p>注意如果你用的是GNU的C/C++编译器，你得用"-MM"参数，不然，"-M"参数会把一些标准库头文件也引入进来。</p>
 </blockquote>
 <p>这篇教程里面详细阐述了如果在Makefile中使用这一特性的方法，综合而来就是：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 对于每个.c源文件，建立一个描述其依赖关系的.d依赖文件</span><br><span class="line">%.d: %.c</span><br><span class="line">	@set -e; rm -f $@; \</span><br><span class="line">         $(CC) -M $(CPPFLAGS) $&lt; &gt; $@.$$$$; \</span><br><span class="line">         sed &apos;s,\($*\)\.o[ :]*,\1.o $@ : ,g&apos; &lt; $@.$$$$ &gt; $@; \</span><br><span class="line">         rm -f $@.$$$$</span><br></pre></td></tr></table></figure>

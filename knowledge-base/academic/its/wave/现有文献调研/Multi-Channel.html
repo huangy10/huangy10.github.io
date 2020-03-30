@@ -123,12 +123,12 @@
 
 
 
-  <meta name="description" content="Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商机制来保证访">
+  <meta name="description" content="1 Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 1.1 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商">
 <meta property="og:type" content="website">
 <meta property="og:title" content="多信道机制调研">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/现有文献调研/Multi-Channel.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商机制来保证访">
+<meta property="og:description" content="1 Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 1.1 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e0fcd3ee03f35fe7190aaaaba8fadf93.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/247ab9750c35026fd72bd9ae93763f1f.png">
@@ -138,7 +138,7 @@
 <meta property="og:updated_time" content="2019-09-26T06:34:23.449Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多信道机制调研">
-<meta name="twitter:description" content="Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商机制来保证访">
+<meta name="twitter:description" content="1 Lin-2019-Distributed Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme IEEE Access, 2019 1.1 System Model 这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/e0fcd3ee03f35fe7190aaaaba8fadf93.png">
 
 
@@ -568,26 +568,26 @@
       <div class="post-body han-init-context">
         
         
-          <h2 id="lin-2019-distributed">Lin-2019-Distributed</h2>
+          <h1 data-number="1" id="lin-2019-distributed"><span class="header-section-number">1</span> Lin-2019-Distributed</h1>
 <p><a href="https://ieeexplore.ieee.org/abstract/document/8611438" target="_blank" rel="noopener">Distributed Multi-Channel MAC Protocol for VANET: An Adaptive Frame Structure Scheme</a></p>
 <p>IEEE Access, 2019</p>
-<h3 id="system-model">System Model</h3>
+<h2 data-number="1.1" id="system-model"><span class="header-section-number">1.1</span> System Model</h2>
 <p>这篇文章采用了基于TDMA的接入机制来确保信息传输的可靠性(Reliability)。 同时还是用了基于竞争的协商机制来保证访问服务信道资源的公平性。文章做如下假设：</p>
 <ol type="1">
 <li>每辆车装备有半双工设备，只能同时工作在一个信道上；</li>
 <li>GPS提供了同步时钟源。</li>
 </ol>
-<h4 id="信道帧结构">信道帧结构</h4>
+<h3 data-number="1.1.1" id="信道帧结构"><span class="header-section-number">1.1.1</span> 信道帧结构</h3>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/e0fcd3ee03f35fe7190aaaaba8fadf93.png" alt="Frame structure of MAC layer."><figcaption>Frame structure of MAC layer.</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/e0fcd3ee03f35fe7190aaaaba8fadf93.png" alt=""><figcaption>Frame structure of MAC layer.</figcaption>
 </figure>
 <p>上图展示了在一个同步间隔内的信道帧结构。CCH frame被划分成广播段(broadcasting period)和协商段(negoriation period)。广播段由长度相等的时隙组成（TDMA），时隙的数量可以根据车流密度动态地调整。协商段则采用基于退避(backoff)机制的竞争方式来进行通信。</p>
 <p>文章提出了一种「三次握手」机制用于协商段的通信。每次当一轮协商完成后，协商发起者即可以获得一个服务信道。因此，SCH的长度就会根据协商的结果动态地变化。由于协商完成后可以立刻切换到对应的SCH信道，因此可以提高信道的使用效率。</p>
-<h4 id="cch-访问过程-cch资源分配问题">CCH 访问过程 (CCH资源分配问题)</h4>
+<h3 data-number="1.1.2" id="cch-访问过程-cch资源分配问题"><span class="header-section-number">1.1.2</span> CCH 访问过程 (CCH资源分配问题)</h3>
 <p>如前面所述，CCH 的访问过程被划分为广播段和协商段。我们首先讨论广播段。</p>
 <p>我们首先来介绍一下广播段期间车辆发送的消息的结构。如下图所示：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/247ab9750c35026fd72bd9ae93763f1f.png" alt="CCH 广播段发送的消息的格式"><figcaption>CCH 广播段发送的消息的格式</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/247ab9750c35026fd72bd9ae93763f1f.png" alt=""><figcaption>CCH 广播段发送的消息的格式</figcaption>
 </figure>
 <p>消息由三部分组成。首先是Header部分，Header部分包含了发送者的基础信息，包括车辆的ID，车辆占据的基础时隙<span class="math inline">\(N_{basic}\)</span>。<span class="math inline">\(N_{ts}\)</span>表示时隙的总数以及可用时隙的数量。Header中<span class="math inline">\(\text{ID} + N_{rcmd}\)</span>的作用是，当<span class="math inline">\(N_{ava}\)</span>相对来说很大的时候，车辆会尝试减少时隙总数来提高信道的利用效率。这里的<span class="math inline">\(\text{ID} + N_{rcmd}\)</span>表示建议目标节点调换到<span class="math inline">\(N_{rcmd}\)</span>这个时隙，进而方便时隙调整。第二部分是邻接表信息(Neighbor information)，记录了两跳范围内的时隙占用情况。其中<span class="math inline">\(S_{slot}\)</span>为0表示时隙被一跳邻居节点占用，1表示被两跳邻居节点占用。最后一个部分是安全消息的内容。</p>
 <p>由于相距两跳以上的节点之间可以复用时隙。所以这里只考虑两跳以内的时隙分配问题。当一个没有被分配时隙的新节点进入网络时，该节点首先要监听信道一个同步间隔(Synchronization Interval)的时间。通过从邻居节点中解析相关信息，该车辆可以获知两跳内的时隙占用情况。然后此新节点随机选择一个空闲时隙作为basic time slot - 基础时隙。然后到下一个同步间隔时，该节点广播自己的状态消息。</p>
@@ -599,7 +599,7 @@
 </p>
 <p>伪代码第9行中，如果只有两个节点，且两个节点采用了同一个时隙时，这两个节点都无法收到对面的包。那么按照现有的伪代码的逻辑， 这两个节点会持续占用这两个节点进行通信，二者互相无法感知对方的存在。</p>
 </blockquote>
-<h4 id="sch-接入过程">SCH 接入过程</h4>
+<h3 data-number="1.1.3" id="sch-接入过程"><span class="header-section-number">1.1.3</span> SCH 接入过程</h3>
 <p>SCH的资源分配于CCH的协商段完成。由于SCH的通常是点对点通信，故完成协商的节点可以不等CCHI结束，立即切换到SCH进行通信。</p>
 <p>协商段的协商过程示意图如下：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/aee16e55815aa0fa73ddcdffb2029e7e.png" style="width: 70%"></p>
@@ -608,8 +608,8 @@
 <p>SCHI 也被分割成多个时隙。一对车辆之间的传输可能无法使用整个SCHI，因此这部分资源可以复用。复用通过RES消息来调度</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/832b58b9739355368e8dcebdefa291c4.png" style="width:50%"></p>
 <p>如上图的，RES中包含了的源节点车辆ID <span class="math inline">\(\text{ID}_{sour\_veh}\)</span>，为需要服务的车辆；目标节点车辆ID <span class="math inline">\(\text{ID}_{dest\_veh}\)</span>，为提供服务的车辆；SCH信道编号<span class="math inline">\(N_{sch}\)</span>，以及SCH的长度<span class="math inline">\(T_{sch}\)</span>；以及需要使用的时隙集合<span class="math inline">\(O_{set_ts}\)</span>。网络中其他车辆在收到RES消息时，会相应地更新SCH占用信息。</p>
-<p>在选择SCH信道时，优先选择已经被占用的信道。如果SCH中剩余的时隙资源无法满足需要，那么采用&quot;try the best to transmit&quot;的策略，选择最长的时隙分配。</p>
-<h2 id="reference">Reference</h2>
+<p>在选择SCH信道时，优先选择已经被占用的信道。如果SCH中剩余的时隙资源无法满足需要，那么采用"try the best to transmit"的策略，选择最长的时隙分配。</p>
+<h1 data-number="2" id="reference"><span class="header-section-number">2</span> Reference</h1>
 
         
       </div>
@@ -1030,7 +1030,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lin-2019-distributed"><span class="nav-number">1.</span> <span class="nav-text">Lin-2019-Distributed</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system-model"><span class="nav-number">1.1.</span> <span class="nav-text">System Model</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#信道帧结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">信道帧结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cch-访问过程-cch资源分配问题"><span class="nav-number">1.1.2.</span> <span class="nav-text">CCH 访问过程 (CCH资源分配问题)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sch-接入过程"><span class="nav-number">1.1.3.</span> <span class="nav-text">SCH 接入过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lin-2019-distributed"><span class="nav-text">1 Lin-2019-Distributed</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#system-model"><span class="nav-text">1.1 System Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信道帧结构"><span class="nav-text">1.1.1 信道帧结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cch-访问过程-cch资源分配问题"><span class="nav-text">1.1.2 CCH 访问过程 (CCH资源分配问题)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sch-接入过程"><span class="nav-text">1.1.3 SCH 接入过程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">2 Reference</span></a></li></ol></div>
             
 
           </div>

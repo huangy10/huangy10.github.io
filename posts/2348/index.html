@@ -136,7 +136,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png">
-<meta property="og:updated_time" content="2019-01-22T08:59:24.910Z">
+<meta property="og:updated_time" content="2020-03-30T17:12:48.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netlink:用户空间与内核空间交互">
 <meta name="twitter:description" content="Reference 1 什么是Netlink Netlink is a socket family that supplies a messaging facility based on the ++BSD socket interface++ to send and retrieve kernel-space information from user-space.  Netlink is po">
@@ -487,12 +487,24 @@
                 
               
 
-              <time title="Created: 2019-01-22 16:29:18 / Modified: 16:59:24" itemprop="dateCreated datePublished" datetime="2019-01-22T16:29:18+08:00">2019-01-22</time>
+              <time title="Created: 2019-01-22 16:29:18" itemprop="dateCreated datePublished" datetime="2019-01-22T16:29:18+08:00">2019-01-22</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-31 01:12:48" itemprop="dateModified" datetime="2020-03-31T01:12:48+08:00">2020-03-31</time>
               
             
           </span>
@@ -594,7 +606,7 @@
 <li><code>rtnetlink</code>：网络设备管理，路由和队列管理</li>
 </ol>
 <blockquote>
-<p>关于Netlink总线，我发现了一个内核的<a href="https://lwn.net/Articles/746776/" target="_blank" rel="noopener">patch</a>，其中提到，&quot;This patchset aims to improve this situation by add ing a new NETLINK_DESC bus with two commands...&quot;</p>
+<p>关于Netlink总线，我发现了一个内核的<a href="https://lwn.net/Articles/746776/" target="_blank" rel="noopener">patch</a>，其中提到，"This patchset aims to improve this situation by add ing a new NETLINK_DESC bus with two commands..."</p>
 </blockquote>
 <h1 id="netlink通信类型">4 Netlink通信类型</h1>
 <p>Netlink支持两种通信类型：</p>
@@ -607,13 +619,13 @@
 个组。</li>
 </ol>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/fd04efbb980d5c7939ee72218283967a.png" alt="Example scenario of unicast and multicast Netlink sockets"><figcaption>Example scenario of unicast and multicast Netlink sockets</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/fd04efbb980d5c7939ee72218283967a.png" alt=""><figcaption>Example scenario of unicast and multicast Netlink sockets</figcaption>
 </figure>
 <p>上图给出了Unicast和Multicast的图示。注意这里unicast是同步的，multicast是异步的。</p>
 <h1 id="netlink消息格式">5 Netlink消息格式</h1>
 <p>一般来说，Netlink消息对齐到32bit，其内部数据是<a href="https://www.quora.com/What-are-network-byte-order-and-host-byte-order-in-computer-networking" target="_blank" rel="noopener">host-byte order</a>. 一个Netlink消息总由一段16bytes的header组成，header的格式为<code>struct nlmsghdr</code>（定义在<code>&lt;include/linux/netlink.h&gt;</code>中）</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt="Layout of a Netlink message header"><figcaption>Layout of a Netlink message header</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt=""><figcaption>Layout of a Netlink message header</figcaption>
 </figure>
 <p>header包含如下字段：</p>
 <ul>
@@ -653,7 +665,7 @@
 <h1 id="netlink负载">6 Netlink负载</h1>
 <h2 id="type-length-valuetlv格式">6.1 Type-Length-Value(TLV)格式</h2>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt="An example of a hypothetical Netlink payload in TLV format"><figcaption>An example of a hypothetical Netlink payload in TLV format</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt=""><figcaption>An example of a hypothetical Netlink payload in TLV format</figcaption>
 </figure>
 <p>Netlink的消息格式由TLV格式的属性组成。TLV属性分为Length,  Type和Payload三部分。这种格式具有很强的可扩展性。在内核中，TLV属性的header定义如下:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> *  &lt;------- NLA_HDRLEN ------&gt; &lt;-- NLA_ALIGN(payload)--&gt;</span></span><br><span class="line"><span class="comment"> * +---------------------+- - -+- - - - - - - - - -+- - -+</span></span><br><span class="line"><span class="comment"> * |        Header       | Pad |     Payload       | Pad |</span></span><br><span class="line"><span class="comment"> * |   (struct nlattr)   | ing |                   | ing |</span></span><br><span class="line"><span class="comment"> * +---------------------+- - -+- - - - - - - - - -+- - -+</span></span><br><span class="line"><span class="comment"> *  &lt;-------------- nlattr-&gt;nla_len --------------&gt;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlattr</span> &#123;</span></span><br><span class="line">    __u16           nla_len;</span><br><span class="line">    __u16           nla_type;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -667,7 +679,7 @@
 </ul>
 <h1 id="netlink错误消息">7 Netlink错误消息</h1>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt="Layout of a Netlink error message"><figcaption>Layout of a Netlink error message</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/a852f3eedef7daa85d67253ce736fc4d.png" alt=""><figcaption>Layout of a Netlink error message</figcaption>
 </figure>
 <p>Netlink提供了一种包含了Netlink error header的消息类型，其格式如上图所示。这个header定义为<code>struct nlmsgerr</code> (<code>&lt;include/linux/netlink.h&gt;</code>)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">nlmsgerr</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span>		error;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">nlmsghdr</span> <span class="title">msg</span>;</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * followed by the message contents unless NETLINK_CAP_ACK was set</span></span><br><span class="line"><span class="comment">	 * or the ACK indicates success (error == 0)</span></span><br><span class="line"><span class="comment">	 * message length is aligned with NLMSG_ALIGN()</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	 * followed by TLVs defined in enum nlmsgerr_attrs</span></span><br><span class="line"><span class="comment">	 * if NETLINK_EXT_ACK was set</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -1165,7 +1177,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是netlink"><span class="nav-number">1.</span> <span class="nav-text">1 什么是Netlink</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink的典型应用场景"><span class="nav-number">2.</span> <span class="nav-text">2 Netlink的典型应用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink总线"><span class="nav-number">3.</span> <span class="nav-text">3 Netlink总线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink通信类型"><span class="nav-number">4.</span> <span class="nav-text">4 Netlink通信类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink消息格式"><span class="nav-number">5.</span> <span class="nav-text">5 Netlink消息格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink负载"><span class="nav-number">6.</span> <span class="nav-text">6 Netlink负载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#type-length-valuetlv格式"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 Type-Length-Value(TLV)格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink错误消息"><span class="nav-number">7.</span> <span class="nav-text">7 Netlink错误消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#genetlink"><span class="nav-number">8.</span> <span class="nav-text">8 GeNetlink</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink开发"><span class="nav-number">9.</span> <span class="nav-text">9 Netlink开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户空间开发"><span class="nav-number">9.1.</span> <span class="nav-text">9.1 用户空间开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开socket"><span class="nav-number">9.1.1.</span> <span class="nav-text">9.1.1 打开socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定socket地址"><span class="nav-number">9.1.2.</span> <span class="nav-text">9.1.2 绑定socket地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送netlink消息"><span class="nav-number">9.1.3.</span> <span class="nav-text">9.1.3 发送Netlink消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收netlink消息"><span class="nav-number">9.1.4.</span> <span class="nav-text">9.1.3 接收Netlink消息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核空间开发"><span class="nav-number">9.2.</span> <span class="nav-text">9.2 内核空间开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新的netlink协议类型"><span class="nav-number">9.2.1.</span> <span class="nav-text">9.2.1 创建新的Netlink协议类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建socket"><span class="nav-number">9.2.2.</span> <span class="nav-text">9.2.2 创建socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从内核向用户态程序发送消息"><span class="nav-number">9.2.3.</span> <span class="nav-text">9.2.3 从内核向用户态程序发送消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#further-reading"><span class="nav-number">10.</span> <span class="nav-text">10 Further Reading</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是netlink"><span class="nav-text">1 什么是Netlink</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink的典型应用场景"><span class="nav-text">2 Netlink的典型应用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink总线"><span class="nav-text">3 Netlink总线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink通信类型"><span class="nav-text">4 Netlink通信类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink消息格式"><span class="nav-text">5 Netlink消息格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink负载"><span class="nav-text">6 Netlink负载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#type-length-valuetlv格式"><span class="nav-text">6.1 Type-Length-Value(TLV)格式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink错误消息"><span class="nav-text">7 Netlink错误消息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#genetlink"><span class="nav-text">8 GeNetlink</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#netlink开发"><span class="nav-text">9 Netlink开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户空间开发"><span class="nav-text">9.1 用户空间开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开socket"><span class="nav-text">9.1.1 打开socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绑定socket地址"><span class="nav-text">9.1.2 绑定socket地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送netlink消息"><span class="nav-text">9.1.3 发送Netlink消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接收netlink消息"><span class="nav-text">9.1.3 接收Netlink消息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内核空间开发"><span class="nav-text">9.2 内核空间开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建新的netlink协议类型"><span class="nav-text">9.2.1 创建新的Netlink协议类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建socket"><span class="nav-text">9.2.2 创建socket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从内核向用户态程序发送消息"><span class="nav-text">9.2.3 从内核向用户态程序发送消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#further-reading"><span class="nav-text">10 Further Reading</span></a></li></ol></div>
             
 
           </div>

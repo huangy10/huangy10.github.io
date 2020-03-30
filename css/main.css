@@ -1841,7 +1841,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #3899d5;
+  background: #94ffcf;
 }
 .feed-link,
 .chat {
@@ -2907,12 +2907,6 @@ figcaption {
 body {
   line-height: 1.7;
 }
-h2::before {
-  content: "❖ ";
-}
-h3::before {
-  content: "◇ ";
-}
 h2.post-title::before {
   content: "📚";
 }
@@ -2966,10 +2960,6 @@ pre {
 }
 .post-body {
   color: #000;
-}
-h2 {
-  text-align: center;
-  margin-bottom: 30px;
 }
 h2.post-title {
   margin-bottom: 15px;

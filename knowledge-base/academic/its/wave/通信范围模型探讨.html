@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所有参考文">
+  <meta name="description" content="1 前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 2 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所">
 <meta property="og:type" content="website">
 <meta property="og:title" content="通信范围模型探讨">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/通信范围模型探讨.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所有参考文">
+<meta property="og:description" content="1 前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 2 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png">
-<meta property="og:updated_time" content="2019-05-09T13:39:17.091Z">
+<meta property="og:updated_time" content="2020-03-30T16:55:16.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通信范围模型探讨">
-<meta name="twitter:description" content="前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所有参考文">
+<meta name="twitter:description" content="1 前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 2 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png">
 
 
@@ -552,10 +552,10 @@
       <div class="post-body han-init-context">
         
         
-          <h1 id="前言">前言</h1>
+          <h1 data-number="1" id="前言"><span class="header-section-number">1</span> 前言</h1>
 <p>我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%.</p>
 <p>这里我们更加细致地讨论一下更为符合实际条件的通信范围模型<span class="citation" data-cites="hafeez2013performance">[1]</span>。</p>
-<h1 id="system-model">System Model</h1>
+<h1 data-number="2" id="system-model"><span class="header-section-number">2</span> System Model</h1>
 <p>在进行理论分析前有必要给出我们使用的System Model。这里的System Model与<span class="citation" data-cites="hafeez2013performance">[1]</span>中的系统模型是一致的。</p>
 <blockquote>
 <p>注意，在这里我们整理了所有参考文章中提出的系统模型假设，不过并不是所有的假设都会用于本文的分析内容。</p>
@@ -569,10 +569,10 @@
 <p>在我们的模型中，假设状态消息产生的速度是<span class="math inline">\(\lambda_s\)</span>，那么同步间隔SI长度为<span class="math inline">\(1/\lambda_s\)</span>(每个同步周期产生一个状态包). 假设所有包的大小都是一致的，为<span class="math inline">\(L\)</span>比特。为了简化分析假设整个SI都用于传输安全信息，即CCHI=SI。每辆车会随机选择SI中的一个时隙发送状态包，warning message则随着事件的发生随机产生。</p>
 <p>假设所有的车辆发射功率都是<span class="math inline">\(P_t\)</span>，对于接收方来说，若接收功率达到了门限<span class="math inline">\(P_{th}\)</span>就认为能够成功地收到数据包。<strong>由于信道衰减的随机性，接收功率也会是随机的，这意味着通信范围也是一个随机变量</strong>。通信范围的累积概率函数(CDF)<span class="math inline">\(F_R(r)\)</span>及其期望<span class="math inline">\(E[R]\)</span>会在后续进行推导。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png" alt="变量以及缩略语表"><figcaption>变量以及缩略语表</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png" alt=""><figcaption>变量以及缩略语表</figcaption>
 </figure>
-<h1 id="通信范围">通信范围</h1>
-<h2 id="传输模型">传输模型</h2>
+<h1 data-number="3" id="通信范围"><span class="header-section-number">3</span> 通信范围</h1>
+<h2 data-number="3.1" id="传输模型"><span class="header-section-number">3.1</span> 传输模型</h2>
 <p>VANET的信道衰减在近距离上服从Rician分布，在长距离上趋近于Rayleigh分布。通过使用Nakagami分布可以综合这两种情况。Nakagami模型的概率密度函数（PDF）如下：</p>
 <p><span class="math display">\[\begin{equation}
 
@@ -622,8 +622,8 @@ E[R]=\frac{1}{\alpha \Gamma(m)} \sum_{i=0}^{m-1} &amp; \frac{(m-1) !}{(m-1-i) !}
 E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
 
 \end{equation}\]</span></p>
-<h1 id="reference" class="unnumbered">Reference</h1>
-<div id="refs" class="references">
+<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
+<div id="refs" class="references" role="doc-bibliography">
 <div id="ref-hafeez2013performance">
 <p>[1] K. A. Hafeez, L. Zhao, B. Ma, and J. W. Mark, “Performance analysis and enhancement of the dsrc for vanet’s safety applications,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 62, no. 7, pp. 3069–3083, 2013.</p>
 </div>
@@ -1036,7 +1036,7 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#system-model"><span class="nav-number">2.</span> <span class="nav-text">System Model</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信范围"><span class="nav-number">3.</span> <span class="nav-text">通信范围</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传输模型"><span class="nav-number">3.1.</span> <span class="nav-text">传输模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#system-model"><span class="nav-text">2 System Model</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信范围"><span class="nav-text">3 通信范围</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传输模型"><span class="nav-text">3.1 传输模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

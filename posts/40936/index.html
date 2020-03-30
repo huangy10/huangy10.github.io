@@ -570,23 +570,23 @@
       
 
       
-        <h2 id="段落">段落</h2>
+        <h1 data-number="1" id="段落"><span class="header-section-number">1</span> 段落</h1>
 <p>在markdown中一个分行符不会将文字拆分成两段，为了段落的拆分，你需要在段落之间插入一个空行，也即两个换行符。pandoc提供了两种额外的分行方法，分别是：</p>
 <ol type="1">
 <li>在行尾添加两个空格或者更多的空格</li>
 <li>在后一段的段首加一个反斜杠</li>
 </ol>
 <p>不过注意上面两种手段的分段方式不是创建两个<code>p</code>标签，而是插入一个<code>&lt;br /&gt;</code>。</p>
-<h2 id="heading">Heading</h2>
-<h3 id="setext风格的heading">Setext风格的Heading</h3>
+<h1 data-number="2" id="heading"><span class="header-section-number">2</span> Heading</h1>
+<h2 data-number="2.1" id="setext风格的heading"><span class="header-section-number">2.1</span> Setext风格的Heading</h2>
 <p>在一行文字的下一行添加一行<code>=</code>（代表一级标题，即<code>&lt;h1&gt;</code>）或者<code>-</code>（代表二级标题，即<code>&lt;h2&gt;</code>）</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A level-one heading</span><br><span class="line">===================</span><br><span class="line"></span><br><span class="line">A level-two heading</span><br><span class="line">-------------------</span><br></pre></td></tr></table></figure>
-<h3 id="atx风格的heading">ATX风格的Heading</h3>
+<h2 data-number="2.2" id="atx风格的heading"><span class="header-section-number">2.2</span> ATX风格的Heading</h2>
 <p>这就是常见的Heading方式，使用<code>#</code>符号。</p>
 <blockquote>
 <p>pandoc要求以<code>#</code>开头的heading前方必须有一个空行。</p>
 </blockquote>
-<h3 id="heading的id">Heading的ID</h3>
+<h2 data-number="2.3" id="heading的id"><span class="header-section-number">2.3</span> Heading的ID</h2>
 <p>Heading可以使用如下的格式指定属性(html)，在尾部添加</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;#identifier .class .class key=value key=value&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -594,29 +594,29 @@
 </blockquote>
 <p>例如下面的写法可以为Heading指定id为<code>foo</code>:</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># My heading &#123;#foo&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="section">## My heading ## &#123;#foo&#125;</span></span><br><span class="line"></span><br><span class="line">My other header &#123;#foo&#125;</span><br><span class="line">---------------</span><br></pre></td></tr></table></figure>
-<h3 id="heading的编号">Heading的编号</h3>
+<h2 data-number="2.4" id="heading的编号"><span class="header-section-number">2.4</span> Heading的编号</h2>
 <blockquote>
 <p>注意在hexo-render-pandoc中默认是没有打开Heading编号的功能的，使用这一功能需要在博客的<code>_config.yml</code>（注意不是主题的）加入 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pandoc:</span></span><br><span class="line"><span class="attr">    extra:</span></span><br><span class="line"><span class="attr">        number-sections:</span> <span class="literal">null</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <p>在Heading后面添加<code>.unnumbered</code>可以阻止对给定的Heading进行编号</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># My heading &#123;.unnumbered&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="comment">&lt;!--可以简写为--&gt;</span></span></span><br><span class="line"><span class="section"># My header &#123;-&#125;</span></span><br></pre></td></tr></table></figure>
-<h2 id="代码块">代码块</h2>
+<h1 data-number="3" id="代码块"><span class="header-section-number">3</span> 代码块</h1>
 <p>额外的代码块形式</p>
 <figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~~~</span><br><span class="line">code</span><br><span class="line">~~~</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>这样写有一个好处，那就是中文输入法时<code>`</code> 符号常常无法输入，而<code>~</code>则没有问题。</p>
 </blockquote>
-<h2 id="行块">行块</h2>
+<h1 data-number="4" id="行块"><span class="header-section-number">4</span> 行块</h1>
 <p>这是解决多行输入的问题，在行块中，换行行为会原样输出。否则会以Markdown的规则进行格式化。行块的写法为</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">| The limerick packs laughs anatomical</span><br><span class="line">| In space that is quite economical.</span><br><span class="line">|    But the good ones I&apos;ve seen</span><br><span class="line">|    So seldom are clean</span><br><span class="line">| And the clean ones so seldom are comical</span><br><span class="line"></span><br><span class="line">| 200 Main St.</span><br><span class="line">| Berkeley, CA 94718</span><br></pre></td></tr></table></figure>
 <p>下面的写法也是可以的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| The Right Honorable Most Venerable and Righteous Samuel L.</span><br><span class="line">  Constable, Jr.</span><br><span class="line">| 200 Main St.</span><br><span class="line">| Berkeley, CA 94718</span><br></pre></td></tr></table></figure>
-<h2 id="编号的例子列表">编号的例子列表</h2>
+<h1 data-number="5" id="编号的例子列表"><span class="header-section-number">5</span> 编号的例子列表</h1>
 <p><code>@</code>这个特殊的列表符号用来做全局编号。例如</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(@)  My first example will be numbered (1).</span><br><span class="line">(@)  My second example will be numbered (2).</span><br><span class="line"></span><br><span class="line">Explanation of examples.</span><br><span class="line"></span><br><span class="line">(@)  My third example will be numbered (3).</span><br></pre></td></tr></table></figure>
 <p>这些列表可以打上标签(label)以供后续引用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(@good)  This is a good example.</span><br><span class="line"></span><br><span class="line">As (@good) illustrates, ...</span><br></pre></td></tr></table></figure>
-<h2 id="上标和下标">上标和下标</h2>
+<h1 data-number="6" id="上标和下标"><span class="header-section-number">6</span> 上标和下标</h1>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H~2~O is a liquid.  2^10^ is 1024.</span><br></pre></td></tr></table></figure>
 <p>渲染出来是：</p>
 <p>H<sub>2</sub>O is a liquid. 2<sup>10</sup> is 1024.</p>
@@ -625,18 +625,18 @@
 <p>我一直蠢蠢地用html标签在做这个事情</p>
 </blockquote>
 <p>What is the difference between <code>&gt;&gt;=</code> and &gt;&gt;?</p>
-<h2 id="小段的span">小段的span</h2>
+<h1 data-number="7" id="小段的span"><span class="header-section-number">7</span> 小段的span</h1>
 <blockquote>
 <p>这个比较重要，方便内联的样式控制</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Small caps]&#123;.smallcaps&#125;</span><br></pre></td></tr></table></figure>
 <p>等价于</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"smallcaps"</span>&gt;</span>Small caps<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="链接">链接</h2>
-<h3 id="简单链接">简单链接</h3>
+<h1 data-number="8" id="链接"><span class="header-section-number">8</span> 链接</h1>
+<h2 data-number="8.1" id="简单链接"><span class="header-section-number">8.1</span> 简单链接</h2>
 <p>使用尖括号可以直接把一个URL设定成链接:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;https://google.com&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="reference-link">Reference Link</h3>
+<h2 data-number="8.2" id="reference-link"><span class="header-section-number">8.2</span> Reference Link</h2>
 <p>可以集中将URL定义在一起然后在正文中引用。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[my label 1]: /foo/bar.html  &quot;My title, optional&quot;</span><br><span class="line">[my label 2]: /foo</span><br><span class="line">[my label 3]: https://fsf.org (The free software foundation)</span><br><span class="line">[my label 4]: /bar#special  &apos;A title in single quotes&apos;</span><br></pre></td></tr></table></figure>
 <p>URL也可以用尖括号包裹：</p>
@@ -646,7 +646,7 @@
 <p>注意链接的label不区分大小写。</p>
 <p>这样写也可以：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">See [my website][]. or see [my website]</span><br><span class="line"></span><br><span class="line">[my website]: http://foo.bar.baz</span><br></pre></td></tr></table></figure>
-<h2 id="div">Div</h2>
+<h1 data-number="9" id="div"><span class="header-section-number">9</span> Div</h1>
 <p>pandoc提供了便捷地创建<code>&lt;div&gt;</code>的方法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">::::: &#123;#special .sidebar&#125;</span><br><span class="line">Here is a paragraph.</span><br><span class="line"></span><br><span class="line">And another.</span><br><span class="line">:::::</span><br></pre></td></tr></table></figure>
 <p>冒号的数量至少是3个。也可以缩写成</p>
@@ -654,7 +654,7 @@
 <p>这个结构可以嵌套，但是要求开头的冒号一定要对应有属性设置（不然无法判断是div的开始还是结束)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">::: Warning ::::::</span><br><span class="line">This is a warning.</span><br><span class="line"></span><br><span class="line">::: Danger</span><br><span class="line">This is a warning within a warning.</span><br><span class="line">:::</span><br><span class="line">::::::::::::::::::</span><br></pre></td></tr></table></figure>
 <p>一个<code>div</code>的开头和结尾的冒号数量不要求保持一致，不过为了可读性，这个需要合适的设计。</p>
-<h2 id="脚注">脚注</h2>
+<h1 data-number="10" id="脚注"><span class="header-section-number">10</span> 脚注</h1>
 <p>示例如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Here is a footnote reference,[^1] and another.[^longnote]</span><br><span class="line"></span><br><span class="line">[^1]: Here is the footnote.</span><br><span class="line"></span><br><span class="line">[^longnote]: Here&apos;s one with multiple blocks.</span><br><span class="line"></span><br><span class="line">    Subsequent paragraphs are indented to show that they</span><br><span class="line">belong to the previous footnote.</span><br><span class="line"></span><br><span class="line">        &#123; some.code &#125;</span><br><span class="line"></span><br><span class="line">    The whole paragraph can be indented, or just the first</span><br><span class="line">    line.  In this way, multi-paragraph footnotes work like</span><br><span class="line">    multi-paragraph list items.</span><br><span class="line"></span><br><span class="line">This paragraph won&apos;t be part of the note, because it</span><br><span class="line">isn&apos;t indented.</span><br></pre></td></tr></table></figure>
 <p>也可以写内联脚注：</p>
@@ -1048,7 +1048,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#段落"><span class="nav-number">1.</span> <span class="nav-text">段落</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heading"><span class="nav-number">2.</span> <span class="nav-text">Heading</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setext风格的heading"><span class="nav-number">2.1.</span> <span class="nav-text">Setext风格的Heading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#atx风格的heading"><span class="nav-number">2.2.</span> <span class="nav-text">ATX风格的Heading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heading的id"><span class="nav-number">2.3.</span> <span class="nav-text">Heading的ID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#heading的编号"><span class="nav-number">2.4.</span> <span class="nav-text">Heading的编号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码块"><span class="nav-number">3.</span> <span class="nav-text">代码块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#行块"><span class="nav-number">4.</span> <span class="nav-text">行块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编号的例子列表"><span class="nav-number">5.</span> <span class="nav-text">编号的例子列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上标和下标"><span class="nav-number">6.</span> <span class="nav-text">上标和下标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小段的span"><span class="nav-number">7.</span> <span class="nav-text">小段的span</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">8.</span> <span class="nav-text">链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简单链接"><span class="nav-number">8.1.</span> <span class="nav-text">简单链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference-link"><span class="nav-number">8.2.</span> <span class="nav-text">Reference Link</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#div"><span class="nav-number">9.</span> <span class="nav-text">Div</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#脚注"><span class="nav-number">10.</span> <span class="nav-text">脚注</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#段落"><span class="nav-text">1 段落</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#heading"><span class="nav-text">2 Heading</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#setext风格的heading"><span class="nav-text">2.1 Setext风格的Heading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#atx风格的heading"><span class="nav-text">2.2 ATX风格的Heading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heading的id"><span class="nav-text">2.3 Heading的ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heading的编号"><span class="nav-text">2.4 Heading的编号</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码块"><span class="nav-text">3 代码块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#行块"><span class="nav-text">4 行块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编号的例子列表"><span class="nav-text">5 编号的例子列表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上标和下标"><span class="nav-text">6 上标和下标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小段的span"><span class="nav-text">7 小段的span</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链接"><span class="nav-text">8 链接</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单链接"><span class="nav-text">8.1 简单链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference-link"><span class="nav-text">8.2 Reference Link</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#div"><span class="nav-text">9 Div</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#脚注"><span class="nav-text">10 脚注</span></a></li></ol></div>
             
 
           </div>

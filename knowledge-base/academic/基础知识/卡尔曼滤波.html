@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="简介 卡尔曼滤波(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】。卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。  卡尔曼滤波得名自主要贡">
+  <meta name="description" content="1 简介 卡尔曼滤波(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】。卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。  卡尔曼滤波得名自主">
 <meta property="og:type" content="website">
 <meta property="og:title" content="卡尔曼滤波">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/基础知识/卡尔曼滤波.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="简介 卡尔曼滤波(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】。卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。  卡尔曼滤波得名自主要贡">
+<meta property="og:description" content="1 简介 卡尔曼滤波(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】。卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。  卡尔曼滤波得名自主">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/4bb2a426a9adddfe62206fa9a8910728.jpg">
 <meta property="og:updated_time" content="2019-09-08T17:04:18.079Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="卡尔曼滤波">
-<meta name="twitter:description" content="简介 卡尔曼滤波(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】。卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。  卡尔曼滤波得名自主要贡">
+<meta name="twitter:description" content="1 简介 卡尔曼滤波(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】。卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。  卡尔曼滤波得名自主">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/4bb2a426a9adddfe62206fa9a8910728.jpg">
 
 
@@ -540,15 +540,15 @@
       <div class="post-body han-init-context">
         
         
-          <h2 id="简介">简介</h2>
+          <h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
 <p><strong>卡尔曼滤波</strong>(Kalman Filter)是一种高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全以及包含噪声的测量中，估计动态系统的状态<span class="foot-note-span">【这里的估计，可以是对将来的估计（预测），对现在的估计（滤波）以及对过去的估计（插值）】</span>。<em>卡尔曼滤波会根据各测量在不同时间下的值，考虑各时间下的联合分布</em>，再产生对此未知变量的估计，因此会比只以单一测量为基础的估计方式要准确。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/4bb2a426a9adddfe62206fa9a8910728.jpg" alt="卡尔曼滤波得名自主要贡献者之一的鲁道夫·卡尔曼"><figcaption>卡尔曼滤波得名自主要贡献者之一的鲁道夫·卡尔曼</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/4bb2a426a9adddfe62206fa9a8910728.jpg" alt=""><figcaption>卡尔曼滤波得名自主要贡献者之一的鲁道夫·卡尔曼</figcaption>
 </figure>
 <p>卡尔曼滤波的算法是二步骤的程序。在估计步骤中，卡尔曼滤波会产生有关目前状态的估计，其中也包括不确定性。只要观察到下一个量测（其中一定含有某种程度的误差，包括随机噪声）。会透过<strong>加权平均</strong>来更新估计值，而确定性越高的量测加权比重也越高。算法是迭代的，可以在实时控制系统中执行，只需要目前的输入量测、以往的计算值以及其不确定性矩阵，不需要其他以往的资讯。</p>
 <p><em>使用卡尔曼滤波不用假设误差是正态分布</em>，不过若所有的误差都是正态分布，卡尔曼滤波可以得到正确的条件几率估计。</p>
 <p>卡尔曼滤波的一个典型实例是从一组有限的，包含噪声的，通过对物体位置的观察序列（可能有偏差）预测出物体的位置的坐标及速度<span class="foot-note-span">【雷达就是这种应用场景】</span>。在很多工程应用（如雷达、电脑视觉）中都可以找到它的身影。同时，卡尔曼滤波也是控制理论以及控制系统工程中的一个重要课题。</p>
-<h2 id="基本动态系统模型">基本动态系统模型</h2>
+<h1 data-number="2" id="基本动态系统模型"><span class="header-section-number">2</span> 基本动态系统模型</h1>
 <p>卡尔曼滤波建立在<strong>线性代数</strong>和<strong>隐马尔科夫模型</strong>上。其基本动态系统可以用一个马尔科夫链表示，该马尔科夫链建立在一个被高斯噪声干扰的<strong>线性算子</strong><span class="foot-note-span">【可以理解为一个矩阵】</span>上。系统的一个状态可以通过一个向量表示，随着离散时间的递增，这个线性算子就会作用在当前状态上，产生一个新的状态，并且也会代入一些噪声。同时，系统的一些已知控制器的控制信息也会被加入。。同时，另一个受噪声干扰的线性算子产生出这些隐含状态的可见输出。</p>
 <p>根据上面的描述，我们要在卡尔曼滤波的框架下建立模型，对于每一步<span class="math inline">\(k\)</span><span class="foot-note-span">【离散时间】</span>，我们需要定义矩阵<span class="math inline">\(\textbf{F}_k, \textbf{H}_k, \textbf{Q}_k, \textbf{R}_k\)</span>，有时也需要多定义一个矩阵<span class="math inline">\(\textbf{B}_k\)</span>，如下：</p>
 <p>卡尔曼滤波模型假设<span class="math inline">\(k\)</span>时刻的真实状态是从<span class="math inline">\((k-1)\)</span>时刻的状态演化过来，符合下式：</p>
@@ -957,7 +957,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本动态系统模型"><span class="nav-number">2.</span> <span class="nav-text">基本动态系统模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本动态系统模型"><span class="nav-text">2 基本动态系统模型</span></a></li></ol></div>
             
 
           </div>

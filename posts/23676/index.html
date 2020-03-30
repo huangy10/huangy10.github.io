@@ -560,32 +560,32 @@
 
       
         <p></p>
-<h2 id="why-vpn">Why VPN</h2>
+<h1 data-number="1" id="why-vpn"><span class="header-section-number">1</span> Why VPN</h1>
 <p>为什么要使用VPN？尤其是，为什么个人用户需要使用VPN呢？其实如果你只有一台电脑，其实一般用不上VPN（当然，用VPN来翻墙另说），如果你有多个电脑，甚至是服务器，这些服务器的网络情况还比较复杂，而你希望随时随地方便地访问这些机器，那么建立VPN虚拟网络将这些机器连接起来就能极大的方便访问过程。例如，如果一台服务器是在路由器后面，没有公网IP，与其在路由器上配置复杂的端口映射表，不如通过VPN网络自由地访问各个端口。又例如在一些特定的场景下，一些服务器的低位（1024以下）端口的访问会收到限制，这个也可以同VPN来解决。</p>
 <p>当然，还有可能，你处于校园网中，而你通过种种途径有了一个无限流量服务器，通过VPN，可以让你在校园网场景下能够随时通过这台服务器上网，从而免去流量费用。另外，将这一宝贵资源分享给同学使用，用VPN也非常方便。</p>
-<h2 id="why-pritunl">Why Pritunl</h2>
+<h1 data-number="2" id="why-pritunl"><span class="header-section-number">2</span> Why Pritunl</h1>
 <p>我试过很多VPN方案，例如PPTP，OpenVPN，IPSec等等。其实使用VPN过程中的一个痛点在于用户管理要尽可能方便，虽然我也比较多的在用命令行工具，但是使用命令行工具去管理用户体验还是非常差。Pritunl提供了OpenVPN的网页GUI管理界面。这也是我为什么推荐使用Priunl的原因。而且，Pritunl中免费用户就可以使用无数量限制的账户和设备，这对于个人用户来说足够了。</p>
 <p>另一方面，Pritunl的客户端支持也非常全面</p>
-<h2 id="how-to-deploy">How to deploy</h2>
-<h3 id="installation">Installation</h3>
+<h1 data-number="3" id="how-to-deploy"><span class="header-section-number">3</span> How to deploy</h1>
+<h2 data-number="3.1" id="installation"><span class="header-section-number">3.1</span> Installation</h2>
 <p>官方文档在这里: <a href="https://docs.pritunl.com/docs/installation" target="_blank" rel="noopener">Installation</a>。事实上按照官方文档的推荐，Pritunl最好部署在企业级的Linux OS上，如Red Hat, Oracle Linux, CentOS等。不过对于个人用户，对于性能，稳定性和安全性要求没有那么严格的情况下，用Debian系的系统也未尝不可。我的Pritunl服务器就是部署在Ubuntu上的，几个月使用下来，性能和稳定性都非常好。</p>
 <p>对于不同版本的系统，安装脚本不同。例如，Ubuntu 16.04，安装脚本如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list &lt;&lt; EOF</span><br><span class="line">deb https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/4.0 multiverse</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo tee /etc/apt/sources.list.d/pritunl.list &lt;&lt; EOF</span><br><span class="line">deb http://repo.pritunl.com/stable/apt xenial main</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 9DA31620334BD75D9DCB49F368818C72E52529D4</span><br><span class="line">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com --recv 7568D9BB55FF9E5287D586017AE645C0CF8E292A</span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get --assume-yes install pritunl mongodb-org</span><br><span class="line">sudo systemctl start pritunl mongod</span><br><span class="line">sudo systemctl enable pritunl mongod</span><br></pre></td></tr></table></figure>
-<h3 id="configuration">Configuration</h3>
+<h2 data-number="3.2" id="configuration"><span class="header-section-number">3.2</span> Configuration</h2>
 <p>在安装完Pritunl之后，访问服务器的443端口，即可以看到配置引导界面。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/04288b446ec0e7ad27b790dd4890d71b.png" alt="配置界面"><figcaption>配置界面</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/04288b446ec0e7ad27b790dd4890d71b.png" alt=""><figcaption>配置界面</figcaption>
 </figure>
 <p>其中需要输入的主要是第一项Setup Key。数据库部分，如果你是使用上面的脚本安装的话，那么Pritunl服务本机上就已经安装运行了MongoDB，这里第二个配置MongoDB URI就不需要变动。要获取Setup Key，ssh进入部署服务器，运行<code>pritunl setup-key</code>即可.</p>
 <p>完成这一步设置以后就来到管理员登录界面：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/5310344dc5cd485d83835f900fdf38df.png" alt="管理员登录界面"><figcaption>管理员登录界面</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/5310344dc5cd485d83835f900fdf38df.png" alt=""><figcaption>管理员登录界面</figcaption>
 </figure>
 <p>初始时用户名和密码都是<code>pritunl</code>，在完成第一次登录之后会被要求修改管理员的用户名和密码：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/88164d6b435cfb64cc84a35bd6188235.png" alt="修改密码"><figcaption>修改密码</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/88164d6b435cfb64cc84a35bd6188235.png" alt=""><figcaption>修改密码</figcaption>
 </figure>
-<h2 id="further-reading">Further Reading</h2>
+<h1 data-number="4" id="further-reading"><span class="header-section-number">4</span> Further Reading</h1>
 <p>Pritunl的使用方法非常直观，文档可以参见<a href="https://docs.pritunl.com/docs/connecting" target="_blank" rel="noopener">Connecting</a>.</p>
       
     </div>
@@ -980,7 +980,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#why-vpn"><span class="nav-number">1.</span> <span class="nav-text">Why VPN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#why-pritunl"><span class="nav-number">2.</span> <span class="nav-text">Why Pritunl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to-deploy"><span class="nav-number">3.</span> <span class="nav-text">How to deploy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#installation"><span class="nav-number">3.1.</span> <span class="nav-text">Installation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#configuration"><span class="nav-number">3.2.</span> <span class="nav-text">Configuration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#further-reading"><span class="nav-number">4.</span> <span class="nav-text">Further Reading</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#why-vpn"><span class="nav-text">1 Why VPN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#why-pritunl"><span class="nav-text">2 Why Pritunl</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#how-to-deploy"><span class="nav-text">3 How to deploy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#installation"><span class="nav-text">3.1 Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#configuration"><span class="nav-text">3.2 Configuration</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#further-reading"><span class="nav-text">4 Further Reading</span></a></li></ol></div>
             
 
           </div>

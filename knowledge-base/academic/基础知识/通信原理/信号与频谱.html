@@ -123,12 +123,12 @@
 
 
 
-  <meta name="description" content="这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。 基本信号 正弦信号 正弦信号表示为 \(s(t) = A \sin (2 \pi f t + \phi)\)。其中 \(A\) 是振幅，\(f\)">
+  <meta name="description" content="这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。 1 基本信号 1.1 正弦信号 正弦信号表示为 \(s(t) = A \sin (2 \pi f t + \phi)\)。其中 \(A\) 是振幅，">
 <meta property="og:type" content="website">
 <meta property="og:title" content="信号与频谱">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/基础知识/通信原理/信号与频谱.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。 基本信号 正弦信号 正弦信号表示为 \(s(t) = A \sin (2 \pi f t + \phi)\)。其中 \(A\) 是振幅，\(f\)">
+<meta property="og:description" content="这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。 1 基本信号 1.1 正弦信号 正弦信号表示为 \(s(t) = A \sin (2 \pi f t + \phi)\)。其中 \(A\) 是振幅，">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7fd6d73dc8bac3e48bcc6b46aa1ed236.jpg">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/01130f92b53f85f44e402975e240a97a.jpeg">
@@ -137,7 +137,7 @@
 <meta property="og:updated_time" content="2020-01-13T05:03:25.886Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="信号与频谱">
-<meta name="twitter:description" content="这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。 基本信号 正弦信号 正弦信号表示为 \(s(t) = A \sin (2 \pi f t + \phi)\)。其中 \(A\) 是振幅，\(f\)">
+<meta name="twitter:description" content="这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。 1 基本信号 1.1 正弦信号 正弦信号表示为 \(s(t) = A \sin (2 \pi f t + \phi)\)。其中 \(A\) 是振幅，">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/7fd6d73dc8bac3e48bcc6b46aa1ed236.jpg">
 
 
@@ -556,16 +556,16 @@
         
         
           <p>这是《深入浅出通信原理》一书第二章对应的内容。在这个章节我们主要引入「信号」和「频谱」的概念，重点是要从数学模型的角度去理解信号。其中，傅里叶变换构建了我们整个信号模型的根基，将是这一章节的重中之重。傅里叶变换本质是用简单的基本信号来表示复杂的信号。</p>
-<h2 id="基本信号">基本信号</h2>
-<h3 id="正弦信号">正弦信号</h3>
+<h1 data-number="1" id="基本信号"><span class="header-section-number">1</span> 基本信号</h1>
+<h2 data-number="1.1" id="正弦信号"><span class="header-section-number">1.1</span> 正弦信号</h2>
 <p>正弦信号表示为 <span class="math inline">\(s(t) = A \sin (2 \pi f t + \phi)\)</span>。其中 <span class="math inline">\(A\)</span> 是<strong>振幅</strong>，<span class="math inline">\(f\)</span> 为频率，<span class="math inline">\(\phi\)</span> 为<strong>初相</strong>。余弦信号可以通过相位移动从正弦变化得到，没有本质区别。</p>
 <p>作为基础信号，正弦信号有一些非常重要的性质:</p>
-<h4 id="积分特性">积分特性</h4>
+<h3 data-number="1.1.1" id="积分特性"><span class="header-section-number">1.1.1</span> 积分特性</h3>
 <p>对一个正弦信号做积分，积分区间是信号周期的整数倍时，积分结果为 0.</p>
 <p><span class="math display">\[
 \int_{n T_0}s(t) dt = A \int_{n T_0}\sin (2 \pi f_0 t + \phi) dt = 0
 \]</span></p>
-<h4 id="正交特性">正交特性</h4>
+<h3 data-number="1.1.2" id="正交特性"><span class="header-section-number">1.1.2</span> 正交特性</h3>
 <p>这是作为基础信号的一个非常重要的特性。在正弦信号集合 <span class="math inline">\(\{\sin 2\pi f_0 t, \cos 2\pi f_0 t, \sin 4\pi f_0 t, \cos 4\pi f_0 t, \cdots\}\)</span> 中，其中频率最低信号 <span class="math inline">\(\{\sin 2\pi f_0 t, \cos 2\pi f_0 t\}\)</span> 称为<strong>基波</strong>。集合中任意两个不同信号在基波周期内积分为 0 。</p>
 <p><span class="math display">\[
 \begin{array}{l}
@@ -582,7 +582,7 @@
 \end{array}
 \]</span></p>
 <p>正弦信号的正交特性是我们能够使用正弦信号集合作为基础信号进行信号分解的基础。</p>
-<h3 id="复指数信号">复指数信号</h3>
+<h2 data-number="1.2" id="复指数信号"><span class="header-section-number">1.2</span> 复指数信号</h2>
 <p>复指数信号可以认为是正弦信号的一种简洁表达。复指数信号的定义建立在<a href="https://zh.wikipedia.org/zh-hans/%E6%AC%A7%E6%8B%89%E5%85%AC%E5%BC%8F" target="_blank" rel="noopener"><strong>欧拉公式</strong></a>的基础上。欧拉公式的形式如下：</p>
 <p><span class="math display">\[
 e^{j\theta} = \cos \theta + j \sin \theta.
@@ -630,13 +630,13 @@ s(t) = A e^{j(\omega_0 t + \varphi)}
 <p><img src="https://imgs.codewoody.com/uploads/big/01130f92b53f85f44e402975e240a97a.jpeg">。</p>
 <p>将复信号的实部和虚部分来来看，可以认为是<strong>两路并行传输的信号</strong>。需要注意的是，复信号是一个理论性的模型，在实际传输中，虚数<span class="math inline">\(j\)</span>无法被传递，要传递「复信号」，实际系统必须并行传输其实部和虚部。</p>
 <p>复信号的数学特点和正弦信号类似，都表现出周期内积分为0和正交特性。</p>
-<h2 id="相与相位">相与相位</h2>
+<h1 data-number="2" id="相与相位"><span class="header-section-number">2</span> 相与相位</h1>
 <blockquote>
 <p>在《深入浅出通信系统》中，作者对这一部分的概念做了非常深入的阐述。我个人认为这个部分的概念其实比较简单，实在不需要啰嗦太多。这里我们非常简要地带过。</p>
 </blockquote>
 <p>相与相位之间有着非常微妙的概念差别。「相」比较宽泛地指信号的状态，而「相位」则是从数学角度进行抽象之后对周期信号的相对状态的描述。这里之所以要强调「相对」状态是因为相位的定义独立于信号的幅度。即相位值的是正弦信号中三角函数的因变量部分，这个部分物理上表示一个角度，故相位也称为相位角。</p>
-<h2 id="信号的分解与合成">信号的分解与合成</h2>
-<h3 id="傅里叶级数">傅里叶级数</h3>
+<h1 data-number="3" id="信号的分解与合成"><span class="header-section-number">3</span> 信号的分解与合成</h1>
+<h2 data-number="3.1" id="傅里叶级数"><span class="header-section-number">3.1</span> 傅里叶级数</h2>
 <p>将信号表示为一个直流分量和一系列复指数信号之和的过程被称为<strong>傅里叶技术</strong>展开。周期信号 <span class="math inline">\(f(t)\)</span> 的傅里叶技术展开形式为:</p>
 <p><span class="math display">\[
 f(t) = \sum_{k = -\infty}^{\infty}c_k ^{j k \omega_0 t}
@@ -651,7 +651,7 @@ c_k = \frac{1}{T} \int_{-T/2}^{T/2}f(t) e^{-j k \omega_0 t} dt, \quad
 <p>由于复指数信号的正交性，频率不是 <span class="math inline">\(k \omega_0\)</span> 的信号的积分都会变成 0。同频率的积分为 <span class="math inline">\(T\)</span>。故上述积分最后能够得到 <span class="math inline">\(c_k\)</span>。</p>
 <p>下面我们以方波信号<span class="math inline">\(x(t)\)</span> 为例计算其傅里叶技术。方波信号的周期为 <span class="math inline">\(T\)</span>，幅度为 1，脉宽为 <span class="math inline">\(\tau\)</span>。对于方波来讲，占空比为 <span class="math inline">\(1 / 2\)</span>，因此 <span class="math inline">\(T = 2 \tau\)</span>。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/49e4ba4e5ff8640fab3c65ccd03c466d.jpeg" alt="方波信号"><figcaption>方波信号</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/49e4ba4e5ff8640fab3c65ccd03c466d.jpeg" alt=""><figcaption>方波信号</figcaption>
 </figure>
 <p>先来计算 <span class="math inline">\(c_0\)</span>:</p>
 <p><span class="math display">\[
@@ -681,10 +681,10 @@ sinc(x) = \frac{\sin(\pi x)} {\pi x}
 <p><span class="math display">\[
 c_k = \frac{1}{n} sinc \left(\frac{k}{n}\right)
 \]</span></p>
-<h3 id="周期信号的离散谱">周期信号的离散谱</h3>
+<h2 data-number="3.2" id="周期信号的离散谱"><span class="header-section-number">3.2</span> 周期信号的离散谱</h2>
 <p>将傅里叶技术画到复平面上沿系数 <span class="math inline">\(k\)</span> 排列就能得到<strong>周期信号的离散谱</strong>。这样直接画出来的谱是三维的，为了更加直观，一般拆分成<strong>幅度</strong>谱和<strong>相位谱</strong>。</p>
-<h3 id="傅里叶变换">傅里叶变换</h3>
-<h4 id="变换公式">变换公式</h4>
+<h2 data-number="3.3" id="傅里叶变换"><span class="header-section-number">3.3</span> 傅里叶变换</h2>
+<h3 data-number="3.3.1" id="变换公式"><span class="header-section-number">3.3.1</span> 变换公式</h3>
 <blockquote>
 <p>原书中以<strong>矩形脉冲信号</strong>为例讲述了如何求非周期信号的连续谱。这个过程其实就是<strong>级数</strong>到<strong>积分</strong>的朴素思想的反映。因此我们这里跳过这些引导部分直接将傅里叶变换。</p>
 </blockquote>
@@ -719,10 +719,10 @@ x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(\omega) e^{j \omega t} d\omega
 <blockquote>
 <p>注意我们在得到傅里叶正变换的公式时，使用了傅里叶级数。<span class="math inline">\(X(f)\)</span> 从 <span class="math inline">\(c_k / f_0\)</span> 转化而来。所以 <span class="math inline">\(X(f)\)</span> 也会被成为频谱<strong>密度</strong>。</p>
 </blockquote>
-<h4 id="非周期信号的傅里叶变换">非周期信号的傅里叶变换</h4>
+<h3 data-number="3.3.2" id="非周期信号的傅里叶变换"><span class="header-section-number">3.3.2</span> 非周期信号的傅里叶变换</h3>
 <p>矩形脉冲信号的傅里叶变换是 <span class="math inline">\(sinc\)</span> 函数。反过来，<span class="math inline">\(sinc\)</span> 信号的傅里叶变换是矩形函数。</p>
 <p>且注意到矩形脉冲越窄，则 <span class="math inline">\(sinc\)</span> 函数的主峰越宽。当矩形脉冲无限窄时（冲激函数），其傅里叶变换成为一个常数，即频谱上的一条无穷长的水平线。</p>
-<h4 id="傅里叶变换的对称性w">傅里叶变换的对称性w</h4>
+<h3 data-number="3.3.3" id="傅里叶变换的对称性w"><span class="header-section-number">3.3.3</span> 傅里叶变换的对称性w</h3>
 
         
       </div>
@@ -1131,7 +1131,7 @@ x(t) = \frac{1}{2\pi} \int_{-\infty}^{\infty} X(\omega) e^{j \omega t} d\omega
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本信号"><span class="nav-number">1.</span> <span class="nav-text">基本信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正弦信号"><span class="nav-number">1.1.</span> <span class="nav-text">正弦信号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#积分特性"><span class="nav-number">1.1.1.</span> <span class="nav-text">积分特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正交特性"><span class="nav-number">1.1.2.</span> <span class="nav-text">正交特性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复指数信号"><span class="nav-number">1.2.</span> <span class="nav-text">复指数信号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相与相位"><span class="nav-number">2.</span> <span class="nav-text">相与相位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信号的分解与合成"><span class="nav-number">3.</span> <span class="nav-text">信号的分解与合成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#傅里叶级数"><span class="nav-number">3.1.</span> <span class="nav-text">傅里叶级数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#周期信号的离散谱"><span class="nav-number">3.2.</span> <span class="nav-text">周期信号的离散谱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#傅里叶变换"><span class="nav-number">3.3.</span> <span class="nav-text">傅里叶变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#变换公式"><span class="nav-number">3.3.1.</span> <span class="nav-text">变换公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非周期信号的傅里叶变换"><span class="nav-number">3.3.2.</span> <span class="nav-text">非周期信号的傅里叶变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#傅里叶变换的对称性w"><span class="nav-number">3.3.3.</span> <span class="nav-text">傅里叶变换的对称性w</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#基本信号"><span class="nav-text">1 基本信号</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#正弦信号"><span class="nav-text">1.1 正弦信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#积分特性"><span class="nav-text">1.1.1 积分特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正交特性"><span class="nav-text">1.1.2 正交特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复指数信号"><span class="nav-text">1.2 复指数信号</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相与相位"><span class="nav-text">2 相与相位</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#信号的分解与合成"><span class="nav-text">3 信号的分解与合成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#傅里叶级数"><span class="nav-text">3.1 傅里叶级数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#周期信号的离散谱"><span class="nav-text">3.2 周期信号的离散谱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#傅里叶变换"><span class="nav-text">3.3 傅里叶变换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变换公式"><span class="nav-text">3.3.1 变换公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非周期信号的傅里叶变换"><span class="nav-text">3.3.2 非周期信号的傅里叶变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#傅里叶变换的对称性w"><span class="nav-text">3.3.3 傅里叶变换的对称性w</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

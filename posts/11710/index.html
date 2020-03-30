@@ -576,7 +576,7 @@
       
         <p>现在GFW不断加高，翻墙的服务搞不好什么时候就挂了，之前我在文章里介绍过比较稳定的方法是使用一台能够从ipv4到ipv6的跳板机。但跳板机挂了就糟糕了。这篇文章就是我昨天遇到这个问题时弄的一个临时性办法，可以在Shadowsocks流量被拦截，跳板机挂掉的情况下，使用SSH隧道连接翻墙服务器以使用Shadowsocks的服务。</p>
 <p>最近因为新冠肺炎疫情的关系，GFW对于翻墙流量的审查更加严格了，基于Ipv4的直连方式访问Shadowsocks基本不可能了。但是GFW的拦截基本针对流量特征的，有些服务器的IP实际上并未处于黑名单中。因此我们使用别的方式还是能够连接到翻墙服务器的。例如SSH访问服务器就能成功。这时我们可以使用SSH开通一个从我们本地电脑的localhost到翻墙服务器的localhost的隧道，将我们本地的地址的端口映射到翻墙服务器的本地地址端口。这样我们通过本地地址端口访问远端的Shadowsocks的服务时，我们的客户端和服务器的通信流量就不再是Shadowsocks流量，而是SSH特征的流量，这样通信就可以绕过GFW的检查了。</p>
-<h2 id="ssh隧道">ssh隧道</h2>
+<h1 data-number="1" id="ssh隧道"><span class="header-section-number">1</span> ssh隧道</h1>
 <p>完整的SSH隧道的教程网络上能搜到很多，比如<a href="https://www.ssh.com/ssh/tunneling/example" target="_blank" rel="noopener">这篇</a>。我们只需要使用Local Forwarding模式。这个模式下，客户端的本地端口被映射到服务端的端口。命令的基本形式如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -L local_addr:local_port:remote_addr:remote_port username@jump-server-addr</span><br></pre></td></tr></table></figure>
 <p>如果我们的翻墙服务器的地址是<code>jump.server.com</code>，用户名是<code>ss</code>，Shadowsocks服务的端口是<code>11111</code>则使用下面的命令：</p>
@@ -585,7 +585,7 @@
 <p>不过上面的命令会打开一个SSH会话，如果我们退出这个会话，会导致隧道中断。因此我们改进命令为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
 <p>这个命令会在打开SSH隧道，将ssh进程转到后台运行。</p>
-<h2 id="autossh">autossh</h2>
+<h1 data-number="2" id="autossh"><span class="header-section-number">2</span> autossh</h1>
 <p>不过ssh命令本身可能不太稳定，连接中断后ssh会退出。为了提升稳定性，我们需要能够监管ssh进程并在断线时自动重启ssh服务。<code>autossh</code>就是这样一款工具。目前<code>autossh</code>可以在Linux和macOS上运行，适用于Windows的工具我还没来得及找到。以macOS为例，可以使用Homebrew安装:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew instal autossh</span><br></pre></td></tr></table></figure>
 <p>其使用方式非常简单，命令形式是</p>
@@ -595,11 +595,11 @@
 <p>这个命令用<code>autossh</code>改写为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh -M 20000 -f -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
 <p>即可。</p>
-<h2 id="windows的支持">Windows的支持</h2>
+<h1 data-number="3" id="windows的支持"><span class="header-section-number">3</span> Windows的支持</h1>
 <p>Windows上用的比较多的SSH客户端是PuTTY，不过PuTTY不能很好地满足ssh隧道的需求。这里我推荐的是<a href="https://www.bitvise.com/ssh-client-download" target="_blank" rel="noopener">Bitvise</a>这个软件（点击链接可以前往下载页面）。这里给出Bitvise的配置方法。</p>
 <p>首先下载Bitvise软件并完成安装。安装完成后打开，在Login界面，输入服务器的信息，包括Host，Port，以及用户名。这里Initial Method指的是认证手段，图中选择的是密码，通过下拉框也可以选择公钥验证或其他验证方法。</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/9481da177c540367f38733d6c371d2a6.PNG"></p>
-<p>接下来前往Options页面，确保&quot;Automatically reconnect if successful connection breaks&quot;。这个功能比较关键，可以确保ssh连接中断时程序能够自动重新建立连接。另外要注意右侧的选项。由于我们只希望建立操作，而不需要登录到服务器进行其他操作，所以我们可以去掉Open Terminal和Open SFTP的选项。</p>
+<p>接下来前往Options页面，确保"Automatically reconnect if successful connection breaks"。这个功能比较关键，可以确保ssh连接中断时程序能够自动重新建立连接。另外要注意右侧的选项。由于我们只希望建立操作，而不需要登录到服务器进行其他操作，所以我们可以去掉Open Terminal和Open SFTP的选项。</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/a67c5007eed2f8229369e8450ab3b148.PNG"></p>
 <p>最后前往C2S界面配置端口映射以建立SSH隧道：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/cb3448748978270c4dcc48ca48694f68.PNG"></p>
@@ -610,9 +610,9 @@
 <li>Destination Host 这个概念要非常注意。很多新手可能会填写服务器的地址，如其公网IP。其实这是对SSH隧道缺乏了解导致的。这里的目的地址，是从服务器的视角来看的，我们要连接的是服务器本地的端口，所以这里填写localhost。</li>
 <li>Dest. Port 为服务器端shadowsocks服务的端口</li>
 </ul>
-<p>上面的配置完成以后点击Log in即可建立连接。注意右上角有一个&quot;Closing and minimization&quot;的按钮，点开这个按钮可以选择点击右上角关闭按钮之后的程序行为，我们可以选择的&quot;Hide to notification area if connected, exit otherwise&quot;，这样可以关闭窗口同时保证程序继续在后台运行。</p>
-<h2 id="稳定性讨论">稳定性讨论</h2>
-<p>用SSH隧道来实现翻墙，连接本身就是不太稳定的，在<a href="https://unix.stackexchange.com/questions/275681/ssh-connection-through-ssh-tunnel-keeps-closing" target="_blank" rel="noopener">这个链接</a>，答主提到使用<code>-M</code>选项来让autossh负责检查连接的可用性会比较不可靠，推荐使用ssh自己来负责监控连接。具体方式是设置<code>-M 0</code>，同时为ssh传递<code>-o &quot;ServerAliveInterval 30&quot; -o &quot;TCPKeepAlive yes&quot;</code>参数。完整的命令为</p>
+<p>上面的配置完成以后点击Log in即可建立连接。注意右上角有一个"Closing and minimization"的按钮，点开这个按钮可以选择点击右上角关闭按钮之后的程序行为，我们可以选择的"Hide to notification area if connected, exit otherwise"，这样可以关闭窗口同时保证程序继续在后台运行。</p>
+<h1 data-number="4" id="稳定性讨论"><span class="header-section-number">4</span> 稳定性讨论</h1>
+<p>用SSH隧道来实现翻墙，连接本身就是不太稳定的，在<a href="https://unix.stackexchange.com/questions/275681/ssh-connection-through-ssh-tunnel-keeps-closing" target="_blank" rel="noopener">这个链接</a>，答主提到使用<code>-M</code>选项来让autossh负责检查连接的可用性会比较不可靠，推荐使用ssh自己来负责监控连接。具体方式是设置<code>-M 0</code>，同时为ssh传递<code>-o "ServerAliveInterval 30" -o "TCPKeepAlive yes"</code>参数。完整的命令为</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh -M 0 -f -N -f -L 8000:localhost:111111 ss@jump.server.com -o "ServerAliveInterval 30" -o "TCPKeepAlive yes"</span><br></pre></td></tr></table></figure>
 <p>当<code>-M 0</code>时，autossh只会在ssh进程退出时重启进程，而不会检测联机本身的是否可用。关于<code>ServerAliveInterval</code>作用的细节，参见<a href="http://einverne.github.io/post/2017/05/ssh-keep-alive.html" target="_blank" rel="noopener">这篇文章</a>。</p>
 
@@ -1011,7 +1011,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh隧道"><span class="nav-number">1.</span> <span class="nav-text">ssh隧道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#autossh"><span class="nav-number">2.</span> <span class="nav-text">autossh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#windows的支持"><span class="nav-number">3.</span> <span class="nav-text">Windows的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#稳定性讨论"><span class="nav-number">4.</span> <span class="nav-text">稳定性讨论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ssh隧道"><span class="nav-text">1 ssh隧道</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#autossh"><span class="nav-text">2 autossh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#windows的支持"><span class="nav-text">3 Windows的支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#稳定性讨论"><span class="nav-text">4 稳定性讨论</span></a></li></ol></div>
             
 
           </div>

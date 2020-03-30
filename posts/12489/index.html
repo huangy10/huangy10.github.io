@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了，很">
+  <meta name="description" content="1 Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了">
 <meta name="keywords" content="教程,Shadowsocks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Haproxy支持Ipv6">
 <meta property="og:url" content="http://www.codewoody.com/posts/12489/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了，很">
+<meta property="og:description" content="1 Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-05-10T03:06:06.896Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Haproxy支持Ipv6">
-<meta name="twitter:description" content="Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了，很">
+<meta name="twitter:description" content="1 Haproxy Haproxy is a reliable, high performance TCP/HTTP Load Balancer 这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。 前一段时间，GFW的墙好像又加高了">
 
 
 
@@ -571,12 +571,12 @@
 
       
         <a id="more"></a>
-<h2 id="haproxy">Haproxy</h2>
+<h1 data-number="1" id="haproxy"><span class="header-section-number">1</span> Haproxy</h1>
 <p><a href="http://www.haproxy.org/" target="_blank" rel="noopener">Haproxy is a reliable, high performance TCP/HTTP Load Balancer</a></p>
 <p>这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。</p>
 <p>前一段时间，GFW的墙好像又加高了，很多时候在教育网外连接服务器不是很可靠。所以我考虑干脆在教育网环境下做一个跳板服务器，这样在外面可以先跳到教育网，然后再从教育网过墙。</p>
 <p>教育网的另一个好处是有IPv6。貌似IPv6上面的拦截比较弱，而且，绝大多数的高校对于IPv6都是免流量费的。因此，我们可以从IPv4公口进，然后走IPv6出。</p>
-<h2 id="how-to">How to</h2>
+<h1 data-number="2" id="how-to"><span class="header-section-number">2</span> How to</h1>
 <p>不过，问题是通过apt安装的haproxy是<a href="https://github.com/Entware/Entware-ng/issues/426" target="_blank" rel="noopener">不支持IPv6的</a>！</p>
 <p>我们只能自己动手从源码编译了：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.haproxy.org/download/1.7/src/haproxy-1.7.2.tar.gz</span><br><span class="line">tar -xzf haproxy-1.7.2.tar.gz</span><br><span class="line">cd haproxy-1.7.2</span><br><span class="line">make TARGET=linux2626 USE_GETADDRINFO=1</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
@@ -977,7 +977,7 @@ x = \sum_{i=1}^{N}x^2
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#haproxy"><span class="nav-number">1.</span> <span class="nav-text">Haproxy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#how-to"><span class="nav-number">2.</span> <span class="nav-text">How to</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#haproxy"><span class="nav-text">1 Haproxy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#how-to"><span class="nav-text">2 How to</span></a></li></ol></div>
             
 
           </div>

@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
+  <meta name="description" content="1 前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="一维马尔科夫过程的使用">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/1D-markov.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
+<meta property="og:description" content="1 前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
 <meta property="og:updated_time" content="2019-06-20T05:45:04.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一维马尔科夫过程的使用">
-<meta name="twitter:description" content="前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。 一维">
+<meta name="twitter:description" content="1 前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
 
 
@@ -564,13 +564,13 @@
       <div class="post-body han-init-context">
         
         
-          <h2 id="前言">前言</h2>
+          <h1 data-number="1" id="前言"><span class="header-section-number">1</span> 前言</h1>
 <p>一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的<a href="../wave.html">二维马尔科夫链</a>中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。</p>
 <p>这里整理的一维马尔科夫过程的研究主要来自于<span class="citation" data-cites="wang2009characterising">[1]</span>，同时包含饱和以及不饱和场景的性能分析。</p>
-<h2 id="一维马尔科夫链">一维马尔科夫链</h2>
+<h1 data-number="2" id="一维马尔科夫链"><span class="header-section-number">2</span> 一维马尔科夫链</h1>
 <p>网络结构为的单跳Adhoc网络，节点总数为<span class="math inline">\(n\)</span>。传输环境为：a two-ray propagation model with no hidden terminal or capture effects，即所有的包丢失都是由于碰撞(Collision)导致的。假设每个节点每次只能缓存一个数据包，且包的到达过程为到达率为<span class="math inline">\(\lambda\)</span>的Poisson过程，</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png" alt="非饱和状态下的一维马尔科夫链状态转移图"><figcaption>非饱和状态下的一维马尔科夫链状态转移图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png" alt=""><figcaption>非饱和状态下的一维马尔科夫链状态转移图</figcaption>
 </figure>
 <p>如上图所示，退避窗口为<span class="math inline">\(W\)</span>，意味着退避状态一共有<span class="math inline">\(W\)</span>个，以及一个额外的Idle状态（记为<span class="math inline">\(I\)</span>）。同时记包的到达概率为<span class="math inline">\(q\)</span>，信道繁忙的概率为<span class="math inline">\(q_b\)</span>，则有下面的概率转移矩阵：</p>
 <p><span class="math display">\[\begin{equation}
@@ -617,8 +617,8 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
 <blockquote>
 <p>上面描述的是非饱和状态下的性能计算过程，但是当<span class="math inline">\(\lambda\)</span>趋近于无穷大，即<span class="math inline">\(q\)</span>趋向于1时，即可以得到饱和场景下的通信性能。</p>
 </blockquote>
-<h2 id="reference" class="unnumbered">Reference</h2>
-<div id="refs" class="references">
+<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
+<div id="refs" class="references" role="doc-bibliography">
 <div id="ref-wang2009characterising">
 <p>[1] J.-P. Wang, M. Abolhasan, D. R. Franklin, and F. Safaei, “Characterising the behaviour of ieee 802.11 broadcast transmissions in ad hoc wireless lans,” in <em>2009 ieee international conference on communications</em>, 2009, pp. 1–5.</p>
 </div>
@@ -1046,7 +1046,7 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一维马尔科夫链"><span class="nav-number">2.</span> <span class="nav-text">一维马尔科夫链</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一维马尔科夫链"><span class="nav-text">2 一维马尔科夫链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

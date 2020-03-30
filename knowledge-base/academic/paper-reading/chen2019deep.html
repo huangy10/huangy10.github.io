@@ -549,7 +549,7 @@ p {
 <p>这篇文章的标题是<span style="font-style:italic"><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8886105" target="_blank" rel="noopener">A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems</a></span>。2019年ICNC的会议文章。</p>
 <p>之前我看过一篇关于深度增强学习+C-V2X的文章：<a href="/posts/34309/">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>。本文章没有提增强学习的模型。我们来看脱离了增强学习的框架如何来解决C-V2X的资源分配问题。</p>
 <p>在车联网通信中，小区内干扰(intracell interference)<span class="foot-note-span">【有小区内干扰的要求，说明是Mode 3的，而非Mode 4的】</span>和严格的延时要求是车联网的主要挑战。本文开率了V2V和V2I混合通信中的频谱复用和功率分配的联合问题。优化的目标是最大化加权后的通信能力和延时要求的总和。通过将原问题分解为分类子问题和回归子问题，本文提出了基于卷积神经网络(CNN)的达到频谱复用和功率分配的实时决策方法。且本方法需要的计算量比较小。</p>
-<h2 id="简介">简介</h2>
+<h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
 <p>延时敏感的通信发生在邻居节点之间，故不需要考虑多跳的问题。<br>
 为了改善频谱效率，V2V通信和V2I通信需要采用<a href="/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">Underlay模式</a>共享信道。此时小区内干扰管理是一个非常重要的问题。<br>
 延时是非常重要的指标。有些文章只考虑了V2V的优化，没有考虑V2I的性能。这篇文章考虑的是两种通信模式并存的情形。</p>
@@ -560,7 +560,7 @@ p {
 <li>将原始问题分解为分类子问题和回归子问题。<span class="eng-origin">decomposes the original problem of vehicular communications into a classification subproblem and a regression subproblem</span></li>
 <li>仿真结果限制本文的方案在取得和<a href="#exhaustive-method">Exhaustive方法</a>同等的性能的同时减少了计算量。</li>
 </ul>
-<h2 id="系统模型">系统模型</h2>
+<h1 data-number="2" id="系统模型"><span class="header-section-number">2</span> 系统模型</h1>
 <p>系统模型如 <a href="#fig:sys-model">图 1</a> 所示。图中的车辆都在<strong>同一个基站</strong>的覆盖范围之内。<span class="math inline">\(M\)</span>辆车与基站(BS)进行V2I通信，这些车辆被称为C-UEs，同时有<span class="math inline">\(N\)</span>对车辆进行V2V通信，这些车辆被称为V-UEs。数学上的标记分别为</p>
 <ul>
 <li><span class="math inline">\(\mathcal{M} := \{1, 2, \dots, M\}\)</span></li>
@@ -575,7 +575,7 @@ p {
 <li>空闲</li>
 </ul>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/ea17a495831fc208cd98ad2b31dce918.png" alt="图 1: 系统模型图" id="fig:sys-model"><figcaption>图 1: 系统模型图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/ea17a495831fc208cd98ad2b31dce918.png" id="fig:sys-model" alt=""><figcaption>图 1: 系统模型图</figcaption>
 </figure>
 <p>为了提升频谱利用效率，假设被正交地分配给C-UE的上行链路可以被V-UE复用。为了减少干扰水平，这里假设一个C-UE的频谱资源只能被一个V-UE复用。且V-UE只能访问一个C-UE的资源。</p>
 <blockquote>
@@ -624,8 +624,8 @@ C_{s}=\mathbb{E}\left[\log _{2}\left(1+\gamma_{d}^{v}\right) | g_{s, d}, s \in \
 \label{eq:optimization-problem}
 \end{equation}\]</span></p>
 <p>其中<span class="math inline">\(\omega_1\)</span>和<span class="math inline">\(\omega_2\)</span>为权重系数, <span class="math inline">\(r_0^c\)</span>为每条V2I链路要求的最小信道容量。<span class="math inline">\(P_{max}^c\)</span>和<span class="math inline">\(P_{max}^v\)</span>分别为V2I和V2V链路的最大功率。上面的约束条件中倒数第三、第二个是限制RB的共享行为<span class="foot-note-span">【即前面提到的“为了减少干扰水平，这里假设一个C-UE的频谱资源只能被一个V-UE复用。且V-UE只能访问一个C-UE的资源。”】</span>。</p>
-<h2 id="深度学习应用">深度学习应用</h2>
-<h3 id="data-generation">Data Generation</h3>
+<h1 data-number="3" id="深度学习应用"><span class="header-section-number">3</span> 深度学习应用</h1>
+<h2 data-number="3.1" id="data-generation"><span class="header-section-number">3.1</span> Data Generation</h2>
 <p>给定预先生成的信道增益<span class="math inline">\(\mathbf{h} := \{h_{m, B}, h_{m, d}, h_{s, d}, h_{s, B}, \forall m, d, s\}\)</span>，以及预先确定的参数<span class="math inline">\(P_{max}^c\)</span>, <span class="math inline">\(P_{max}^v\)</span>和<span class="math inline">\(r_{0}^c\)</span>，我们可以使用Exhausive方法生成对应的频谱复用状态<span class="math inline">\(\{\rho_{m, s}, \forall m, s\}\)</span>和功率分配<span class="math inline">\(\{ P_m^c, P_s^v, \forall m, s \}\)</span>。所谓Exhaustive方法即为暴力解法。<span id="exhaustive-method" class="eng-origin">The Exhaustive method iteratively calculates and compares the objective in (7a) for all possible schemes and chooses one of the scheme that maximizes the objective as the optimal solution.</span> Exhaustive方法为性能对比设定了一个对比的锚点。重复上述过程我们就可以生成训练数据集<span class="math inline">\(\{\mathbf{h}, \rho_{m, s}, P_{m}^c, P_s^v, \forall m, d, s\}\)</span>。</p>
 <blockquote>
 <p>从这里的描述来看，作者使用暴力穷举的方法生成数据集，然后用CNN模型去拟合暴力穷举的结果。从而在达到暴力穷举的结果的同时大幅度减少计算量。</p>
@@ -642,9 +642,9 @@ C_{s}=\mathbb{E}\left[\log _{2}\left(1+\gamma_{d}^{v}\right) | g_{s, d}, s \in \
 </blockquote>
 <p>所以这里涉及一个编码机制，而这个编码机制没有得到明确的说明。</p>
 </blockquote>
-<h3 id="模型网络架构">模型网络架构</h3>
+<h2 data-number="3.2" id="模型网络架构"><span class="header-section-number">3.2</span> 模型网络架构</h2>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/0c76e5bd28e3556756e8645853eaf485.png" alt="图 2: 模型架构" id="fig:模型架构"><figcaption>图 2: 模型架构</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/0c76e5bd28e3556756e8645853eaf485.png" id="fig:模型架构" alt=""><figcaption>图 2: 模型架构</figcaption>
 </figure>
 <p>模型如 <a href="#fig:模型架构">图 2</a> 所示，包含一个输入层，多个隐藏层和一个输出层。</p>
 <ul>
@@ -652,7 +652,7 @@ C_{s}=\mathbb{E}\left[\log _{2}\left(1+\gamma_{d}^{v}\right) | g_{s, d}, s \in \
 <li><strong>隐藏层</strong>: 隐藏高层由三个卷积层和是哪个全连接层组成，激励函数为ReLU。使用卷积层可以发现信道增益的空间关联信息，并且相比于全连接层，卷积层可以减少参数数量。</li>
 <li><strong>输出层</strong>: 输出层需要输出三个量。第一个是信道复用，我们选择softmax函数作为输出的激励函数；剩下两个分别是V2I和V2V的功率分配。</li>
 </ul>
-<h3 id="损失函数">损失函数</h3>
+<h2 data-number="3.3" id="损失函数"><span class="header-section-number">3.3</span> 损失函数</h2>
 <p>这里提出的CNN网络需要解决不同的子问题（分类问题和回归问题），不同的子问题需要不同的损失函数定义。</p>
 <ul>
 <li><p>MSE: <span class="math display">\[
@@ -1059,7 +1059,7 @@ L_{cls} = \sum_{j} \rho_j \log (\tilde{\rho}_j)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型"><span class="nav-number">2.</span> <span class="nav-text">系统模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#深度学习应用"><span class="nav-number">3.</span> <span class="nav-text">深度学习应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-generation"><span class="nav-number">3.1.</span> <span class="nav-text">Data Generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型网络架构"><span class="nav-number">3.2.</span> <span class="nav-text">模型网络架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#损失函数"><span class="nav-number">3.3.</span> <span class="nav-text">损失函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">2 系统模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习应用"><span class="nav-text">3 深度学习应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#data-generation"><span class="nav-text">3.1 Data Generation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型网络架构"><span class="nav-text">3.2 模型网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-text">3.3 损失函数</span></a></li></ol></li></ol></div>
             
 
           </div>

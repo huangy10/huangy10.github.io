@@ -554,12 +554,12 @@
         
           <p><del>在很多使用WAVE作为车联网通信标准的文献研究中<span class="citation" data-cites="zhang2014scalable">[1]</span> <span class="citation" data-cites="hafeez2013performance">[2]</span>，在遇到Beacon时通常会简化其退避过程。由于Beacon的生命周期有限，无法接受无止限的退避</del>。在IEEE802.11 DCF中，在一轮退避完成后节点会尝试发包，如果发包失败，则会将其竞争窗口加倍。由于发送失败需要经过ACK来确认.因此广播包只能进行一轮退避。此时Beacon的发送过程可以简化为一维马尔科夫过程。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/a4e7b85649818f46469ffdf0fccd0b47.png" alt="广播包的一维马尔科夫链 [3]"><figcaption>广播包的一维马尔科夫链 <span class="citation" data-cites="nguyen2018survey">[3]</span></figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/a4e7b85649818f46469ffdf0fccd0b47.png" alt=""><figcaption>广播包的一维马尔科夫链 <span class="citation" data-cites="nguyen2018survey">[3]</span></figcaption>
 </figure>
-<h2 id="非马尔科夫链方法">非马尔科夫链方法</h2>
+<h1 data-number="1" id="非马尔科夫链方法"><span class="header-section-number">1</span> 非马尔科夫链方法</h1>
 <p>不使用马尔科夫链的方式整理自<span class="citation" data-cites="zhang2014scalable">[1]</span>. 这篇文章主要的贡献是设计了长度可变的CCHI。</p>
-<h3 id="system-model">System Model</h3>
-<p>在节点访问信道前，需要侦听信道处于空闲的时间超过DIFS。如果DIFS之后信道仍然空闲，那么节点可以立即开始发送。否则，节点需要进行一段退避(_Backoff Counter_)，Backoff Counter从<span class="math inline">\([0, W-1]\)</span>中随机取出。<span class="math inline">\(W\)</span>被称为退避窗口(_CW_)。Backoff Counter在每一段空闲的时隙结束后减一。当Backoff Counter递减至0时，节点开始访问信道。</p>
+<h2 data-number="1.1" id="system-model"><span class="header-section-number">1.1</span> System Model</h2>
+<p>在节点访问信道前，需要侦听信道处于空闲的时间超过DIFS。如果DIFS之后信道仍然空闲，那么节点可以立即开始发送。否则，节点需要进行一段退避(<em>Backoff Counter</em>)，Backoff Counter从<span class="math inline">\([0, W-1]\)</span>中随机取出。<span class="math inline">\(W\)</span>被称为退避窗口(<em>CW</em>)。Backoff Counter在每一段空闲的时隙结束后减一。当Backoff Counter递减至0时，节点开始访问信道。</p>
 <p>考虑到：</p>
 <ol type="1">
 <li>Backoff Counter的初始值不会为0；</li>
@@ -573,7 +573,7 @@
 <li>每个车辆的通信范围固定且相通</li>
 <li>载波侦听范围和通信范围一致</li>
 </ol>
-<h3 id="cch完全传输时间">CCH完全传输时间</h3>
+<h2 data-number="1.2" id="cch完全传输时间"><span class="header-section-number">1.2</span> CCH完全传输时间</h2>
 <p>假设各车退避过程独立，网络内任意节点之间的的距离不超过两跳<sup title="Assume there are N vehicles within the two-hop transmission range of each other so that messages are irretrievably corrupted if their transmissions overlap in time">?</sup>。 考虑概率<span class="math inline">\(P(l, n, w, k)\)</span>表示<span class="math inline">\(n\)</span>个车辆在CCHI开头产生了Beacon包，竞争窗口大小为<span class="math inline">\(w\)</span>，第一次发送尝试为<span class="math inline">\(l-1\)</span>，<span class="math inline">\(k\)</span>辆车在第<span class="math inline">\(l\)</span>个时隙尝试传输（<span class="math inline">\(k\leq n\)</span>），此概率值为：</p>
 <p><span class="math display">\[\begin{equation}
 \begin{aligned}
@@ -597,7 +597,7 @@ T(w, n)=\sum_{l=1}^{w} \left\{\begin{array}{l}{P(l, n, w, 1)\left[T_{s}+T(w-l, n
 <div class="note danger">
             <p>当<span class="math inline">\(W\)</span>和<span class="math inline">\(N\)</span>比较小时，<span class="math inline">\(T(W,N)\)</span>会小于50ms，那么多余的CCHI被浪费了。反之，当<span class="math inline">\(W\)</span>和<span class="math inline">\(N\)</span>比较大时，<span class="math inline">\(T(W,N)\)</span>会大于50ms，那么会有包无法发送而丢失掉。</p>
           </div>
-<h3 id="cch丢包率">CCH丢包率</h3>
+<h2 data-number="1.3" id="cch丢包率"><span class="header-section-number">1.3</span> CCH丢包率</h2>
 <p>我们定义<span class="math inline">\(L(W,N)\)</span>为在一个CCHI内发生碰撞的包的数量。则</p>
 <p><span class="math display">\[\begin{equation}
 \label{L}
@@ -609,10 +609,10 @@ L(w, n)=\sum_{l=1}^{w} \left\{\begin{array}{l}{P(l, n, w, 1) \cdot L(w-l, n-1)} 
 P(W, N)=\frac{L(W, N)}{N}
 \end{equation}\]</span></p>
 <p>数值计算<span class="math inline">\(P(W, N)\)</span>的值发现，丢包率即便在通常的的<span class="math inline">\(W\)</span>和<span class="math inline">\(N\)</span>取值内也非常高。通过提升竞争窗口可以改善这个丢包率，但是考虑到事实上CCHI的长度是有限的，而提高竞争窗口会推高<span class="math inline">\(\eqref{T}\)</span>的值。如果将总传输时间<span class="math inline">\(T(W,N)\)</span>值推高到50ms以上，那么50ms后续的包都会丢掉。综上可见，丢包率的改善是有上限的，且这个上限可能并不会达到100%.</p>
-<h2 id="马尔科夫链方法">马尔科夫链方法</h2>
+<h1 data-number="2" id="马尔科夫链方法"><span class="header-section-number">2</span> 马尔科夫链方法</h1>
 <p>马尔科夫链主要参考是的是<span class="citation" data-cites="hafeez2013performance">[2]</span>.</p>
-<h2 id="reference" class="unnumbered">Reference</h2>
-<div id="refs" class="references">
+<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
+<div id="refs" class="references" role="doc-bibliography">
 <div id="ref-zhang2014scalable">
 <p>[1] L. Zhang, Z. Liu, R. Zou, J. Guo, and Y. Liu, “A scalable csma and self-organizing tdma mac for ieee 802.11 p/1609. X in vanets,” <em>Wireless Personal Communications</em>, vol. 74, no. 4, pp. 1197–1212, 2014.</p>
 </div>
@@ -1031,7 +1031,7 @@ P(W, N)=\frac{L(W, N)}{N}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#非马尔科夫链方法"><span class="nav-number">1.</span> <span class="nav-text">非马尔科夫链方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#system-model"><span class="nav-number">1.1.</span> <span class="nav-text">System Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cch完全传输时间"><span class="nav-number">1.2.</span> <span class="nav-text">CCH完全传输时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cch丢包率"><span class="nav-number">1.3.</span> <span class="nav-text">CCH丢包率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#马尔科夫链方法"><span class="nav-number">2.</span> <span class="nav-text">马尔科夫链方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#非马尔科夫链方法"><span class="nav-text">1 非马尔科夫链方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#system-model"><span class="nav-text">1.1 System Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cch完全传输时间"><span class="nav-text">1.2 CCH完全传输时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cch丢包率"><span class="nav-text">1.3 CCH丢包率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#马尔科夫链方法"><span class="nav-text">2 马尔科夫链方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

@@ -581,7 +581,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">backend: TkAgg</span><br></pre></td></tr></table></figure>
 <p>不过我在使用过程中发现使用<code>TkAgg</code>时会出现系统级的错误，抛出了<code>Terminating app due to uncaught exception</code>的错误。因此我尝试替换成其他后端。我主要选择包括：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/bdd0f72aede5a20bf5378bc373287e55.png" alt="Matplotlib可用后端类型"><figcaption>Matplotlib可用后端类型</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/bdd0f72aede5a20bf5378bc373287e55.png" alt=""><figcaption>Matplotlib可用后端类型</figcaption>
 </figure>
 <p>而又因为<code>PySide</code>只支持比较早的python版本，因此我选择了Qt5作为后端。在这之前，我们需要安装下面的依赖</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install qt</span><br><span class="line">pip install PySide2</span><br></pre></td></tr></table></figure>

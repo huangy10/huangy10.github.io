@@ -561,24 +561,24 @@
 
       
         <p>如何在Ubuntu上搭建一个简洁的Time Machine服务器呢？网上找到的教程说的都比较杂，这里整理一个刚刚经过实践检验的方法来供大家参考。目标系统是<code>Ubuntu 16.04 LTS</code>。 <a id="more"></a></p>
-<h3 id="安装需要的工具">1. 安装需要的工具</h3>
+<h2 data-number="0.1" id="安装需要的工具"><span class="header-section-number">0.1</span> 1. 安装需要的工具</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install netatalk avahi-daemon</span><br></pre></td></tr></table></figure>
-<h3 id="创建一个用于专门用来运行time-machine进程的用户">2. 创建一个用于专门用来运行Time Machine进程的用户</h3>
+<h2 data-number="0.2" id="创建一个用于专门用来运行time-machine进程的用户"><span class="header-section-number">0.2</span> 2. 创建一个用于专门用来运行Time Machine进程的用户</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd -c "Time machine" -m -s /bin/bash tm</span><br></pre></td></tr></table></figure>
 <p>我这里命名为<code>tm</code>，你可以替换为任何你定的名字，但是最好不要使用<code>root</code>用户。 接下来给新用户设定密码 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd tm</span><br></pre></td></tr></table></figure></p>
-<h3 id="准备文件夹">3. 准备文件夹</h3>
+<h2 data-number="0.3" id="准备文件夹"><span class="header-section-number">0.3</span> 3. 准备文件夹</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -R /home/tm/TimeMachineFolder</span><br><span class="line">sudo chown -R tm /home/tm/TimeMachineFolder</span><br></pre></td></tr></table></figure>
-<h3 id="设置netatalk">4. 设置<code>netatalk</code></h3>
+<h2 data-number="0.4" id="设置netatalk"><span class="header-section-number">0.4</span> 4. 设置<code>netatalk</code></h2>
 <p>首先我们将原有的配置文件备份 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.old</span><br></pre></td></tr></table></figure></p>
 <p>然后创建一个新的配置文件 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/netatalk/AppleVolumes.default</span><br></pre></td></tr></table></figure></p>
 <p>使用你偏好的编辑器（vim，nano之类）向这个配置文件中加入如下内容 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">:DEFAULT: options:upriv,usedots</span><br><span class="line">/home/tm/TimeMachineFolder "My Time Machine" options:tm volsizelimit:500000 allow:tm</span><br></pre></td></tr></table></figure></p>
 <p>注意将第二行的文件夹路径设定为你再第三步中创建的文件夹的路径。另外，第二行中的<code>volsizelimit</code>设定了Time Machine将会使用的最大硬盘空间，单位是MB。</p>
-<h3 id="重启netatalk服务来应用更改">5. 重启<code>netatalk</code>服务来应用更改</h3>
+<h2 data-number="0.5" id="重启netatalk服务来应用更改"><span class="header-section-number">0.5</span> 5. 重启<code>netatalk</code>服务来应用更改</h2>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service netatalk restart</span><br></pre></td></tr></table></figure>
-<h3 id="在mac上连接到time-machine">6. 在Mac上连接到Time Machine</h3>
+<h2 data-number="0.6" id="在mac上连接到time-machine"><span class="header-section-number">0.6</span> 6. 在Mac上连接到Time Machine</h2>
 <p>首先直接尝试在Time Machine中选择这个服务器（会显示在可用磁盘下面，名字显示为第四步中你<code>netatalk</code>设置文件中指定的名字）。 如果你无法找到，那么打开Finder并按下⌘+K，在弹出来的窗口中，于服务器地址一栏输入<code>afp://IP.of.your.server/</code>，然后点连接。如果提示需要输入用户名和密码来登录，那就输入第二步中你设定的用户名密码即可。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/408d6956cd13b4c671b4519c1115d97c.png" alt="示意图"><figcaption>示意图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/408d6956cd13b4c671b4519c1115d97c.png" alt=""><figcaption>示意图</figcaption>
 </figure>
 <p>ref：<a href="http://dae.me/blog/1660/concisest-guide-to-setting-up-time-machine-server-on-ubuntu-server-12-04/" target="_blank" rel="noopener">Concisest guide to setting up Time Machine server on Ubuntu Server 12.04, 14.04 &amp; Debian | Dae’s blog</a></p>
 
@@ -977,7 +977,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装需要的工具"><span class="nav-number">1.</span> <span class="nav-text">1. 安装需要的工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个用于专门用来运行time-machine进程的用户"><span class="nav-number">2.</span> <span class="nav-text">2. 创建一个用于专门用来运行Time Machine进程的用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备文件夹"><span class="nav-number">3.</span> <span class="nav-text">3. 准备文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置netatalk"><span class="nav-number">4.</span> <span class="nav-text">4. 设置netatalk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启netatalk服务来应用更改"><span class="nav-number">5.</span> <span class="nav-text">5. 重启netatalk服务来应用更改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在mac上连接到time-machine"><span class="nav-number">6.</span> <span class="nav-text">6. 在Mac上连接到Time Machine</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装需要的工具"><span class="nav-text">0.1 1. 安装需要的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个用于专门用来运行time-machine进程的用户"><span class="nav-text">0.2 2. 创建一个用于专门用来运行Time Machine进程的用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备文件夹"><span class="nav-text">0.3 3. 准备文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置netatalk"><span class="nav-text">0.4 4. 设置netatalk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重启netatalk服务来应用更改"><span class="nav-text">0.5 5. 重启netatalk服务来应用更改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在mac上连接到time-machine"><span class="nav-text">0.6 6. 在Mac上连接到Time Machine</span></a></li></ol></div>
             
 
           </div>

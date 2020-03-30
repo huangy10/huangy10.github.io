@@ -132,7 +132,7 @@
 <meta property="og:description" content="网络资源的分享是非常重要的，而建立起一个网关来进行网络分享是一个比较好的解决方案。在Linux系统中创建和设置网关非常简单，成本低廉，而且性能可靠。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6f341c57eb221eab557015034a7c4c0e.png">
-<meta property="og:updated_time" content="2019-01-22T08:06:21.104Z">
+<meta property="og:updated_time" content="2020-03-30T17:08:18.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用iptables和route来建立起Linux的网关设置">
 <meta name="twitter:description" content="网络资源的分享是非常重要的，而建立起一个网关来进行网络分享是一个比较好的解决方案。在Linux系统中创建和设置网关非常简单，成本低廉，而且性能可靠。">
@@ -483,12 +483,24 @@
                 
               
 
-              <time title="Created: 2019-01-22 16:00:49 / Modified: 16:06:21" itemprop="dateCreated datePublished" datetime="2019-01-22T16:00:49+08:00">2019-01-22</time>
+              <time title="Created: 2019-01-22 16:00:49" itemprop="dateCreated datePublished" datetime="2019-01-22T16:00:49+08:00">2019-01-22</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2020-03-31 01:08:18" itemprop="dateModified" datetime="2020-03-31T01:08:18+08:00">2020-03-31</time>
               
             
           </span>
@@ -561,25 +573,25 @@
 
       
         本文翻译自：<a href="https://www.systutorials.com/1372/setting-up-gateway-using-iptables-and-route-on-linux/" target="_blank" rel="noopener">Setting Up Gateway Using iptables and route on Linux</a>。 网络资源的分享是非常重要的，而建立起一个网关来进行网络分享是一个比较好的解决方案。在Linux系统中创建和设置网关非常简单，成本低廉，而且性能可靠。<p></p>
-<h1 id="linux网络设置">1 Linux网络设置</h1>
+<h1 data-number="1" id="linux网络设置"><span class="header-section-number">1</span> 1 Linux网络设置</h1>
 <p>假定我们要处理的Linux有如下的配置：</p>
 <ul>
 <li>NIC1: eth0, ip: 192.168.0.1，连接到局域网(LAN)</li>
 <li>NIC2: eth1, ip: 1.2.3.4, 连接到公网</li>
 </ul>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/6f341c57eb221eab557015034a7c4c0e.png" alt="网络拓扑图"><figcaption>网络拓扑图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/6f341c57eb221eab557015034a7c4c0e.png" alt=""><figcaption>网络拓扑图</figcaption>
 </figure>
 <p>现在我们希望将分享这台机器的网络连接给LAN网络上的其他电脑(ip: 192.168.0.0/16)</p>
-<h1 id="设置网关">2 设置网关</h1>
+<h1 data-number="2" id="设置网关"><span class="header-section-number">2</span> 2 设置网关</h1>
 <p>下面提到的所有操作都需要root权限来执行。</p>
-<h2 id="操作ip路由表">2.1 操作IP路由表</h2>
+<h1 data-number="3" id="操作ip路由表"><span class="header-section-number">3</span> 2.1 操作IP路由表</h1>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route add 192.168.0.0/16 dev eth0</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="comment"># route add -net 192.168.0.0/16 dev eth0</span></span><br></pre></td></tr></table></figure>
-<h2 id="启用linux-ip-转发ip-forwarding">2.2 启用Linux IP 转发(IP Forwarding)</h2>
+<h1 data-number="4" id="启用linux-ip-转发ip-forwarding"><span class="header-section-number">4</span> 2.2 启用Linux IP 转发(IP Forwarding)</h1>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sysctl -w net.ipv4.ip.forward=1</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="comment"># echo 1 &gt; /proc/sys/net/ipv4/ip_forward</span></span><br></pre></td></tr></table></figure>
 <p>你也可以直接编辑<code>/etc/sysctl.conf</code>来持久化这一设置：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.ipv4.ip_forward = 1</span><br></pre></td></tr></table></figure>
-<h2 id="通过iptables设置源地址映射snat">2.3 通过iptables设置源地址映射(SNAT)</h2>
+<h2 data-number="4.1" id="通过iptables设置源地址映射snat"><span class="header-section-number">4.1</span> 2.3 通过iptables设置源地址映射(SNAT)</h2>
 <p>将（其他电脑发送的）包的源地址修改为网关的源地址。iptables会自动将响应包的目的地址替换成正确的IP地址。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth1 -j SNAT --to-source 1.2.3.4</span><br></pre></td></tr></table></figure>
 <p>除了使用SNAT，也可以使用MASQUERADE:</p>
@@ -591,7 +603,7 @@
 <p>你还需要确保其他iptables不会阻拦对应的连接。如果你有这方面的问题，可以尝试：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iptables -F</span><br><span class="line">iptables -t nat -F</span><br><span class="line">iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth1 -j SNAT --to-source 1.2.3.4</span><br></pre></td></tr></table></figure>
 <p>上面的代码可以允许所有的接入连接。不过这会存在一些安全性问题。</p>
-<h1 id="客户端配置">3 客户端配置</h1>
+<h1 data-number="5" id="客户端配置"><span class="header-section-number">5</span> 3 客户端配置</h1>
 <p>客户端配置主要是把网关设置成192.168.0.1。例如如下命令</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip route add default via 192.168.0.1 dev eth0</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="comment"># route add default gw 192.168.0.1 eth0</span></span><br></pre></td></tr></table></figure>
       
@@ -989,7 +1001,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux网络设置"><span class="nav-number">1.</span> <span class="nav-text">1 Linux网络设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置网关"><span class="nav-number">2.</span> <span class="nav-text">2 设置网关</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作ip路由表"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 操作IP路由表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用linux-ip-转发ip-forwarding"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 启用Linux IP 转发(IP Forwarding)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过iptables设置源地址映射snat"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 通过iptables设置源地址映射(SNAT)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端配置"><span class="nav-number">3.</span> <span class="nav-text">3 客户端配置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux网络设置"><span class="nav-text">1 1 Linux网络设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置网关"><span class="nav-text">2 2 设置网关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#操作ip路由表"><span class="nav-text">3 2.1 操作IP路由表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启用linux-ip-转发ip-forwarding"><span class="nav-text">4 2.2 启用Linux IP 转发(IP Forwarding)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过iptables设置源地址映射snat"><span class="nav-text">4.1 2.3 通过iptables设置源地址映射(SNAT)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端配置"><span class="nav-text">5 3 客户端配置</span></a></li></ol></div>
             
 
           </div>

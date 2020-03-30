@@ -123,12 +123,12 @@
 
 
 
-  <meta name="description" content="性能差异分析 在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对于B">
+  <meta name="description" content="1 性能差异分析 在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对">
 <meta property="og:type" content="website">
 <meta property="og:title" content="IEEE802.11 DCF中Basic Access和RTS&#x2F;CTS机制的理论饱和吞吐率性能差异分析">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/performance-of-bas-and-rts.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="性能差异分析 在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对于B">
+<meta property="og:description" content="1 性能差异分析 在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/48c01d167935b42f5daa3cbb1d0b6145.png">
@@ -136,7 +136,7 @@
 <meta property="og:updated_time" content="2019-05-16T03:24:44.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IEEE802.11 DCF中Basic Access和RTS&#x2F;CTS机制的理论饱和吞吐率性能差异分析">
-<meta name="twitter:description" content="性能差异分析 在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对于B">
+<meta name="twitter:description" content="1 性能差异分析 在Wireless Access in Vehicular Environments (WAVE)文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：  饱和吞吐率与节点数量的关系  注意到在3.4.4中给出的一般形式的饱和吞吐率对">
 <meta name="twitter:image" content="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png">
 
 
@@ -554,14 +554,14 @@
       <div class="post-body han-init-context">
         
         
-          <h2 id="性能差异分析">性能差异分析</h2>
+          <h1 data-number="1" id="性能差异分析"><span class="header-section-number">1</span> 性能差异分析</h1>
 <p>在<a href="./">Wireless Access in Vehicular Environments (WAVE)</a>文章的3.4章节我们梳理了对IEEE802.11 DCF机制的性能推导。通过推导的结论我们发现使用了RTS/CTS机制之后，相比于Basic Access手段，饱和吞吐率的性能有了大幅度的改进，如下图：</p>
 <figure>
-<img src="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png" alt="饱和吞吐率与节点数量的关系"><figcaption>饱和吞吐率与节点数量的关系</figcaption>
+<img src="https://gitlab.vlionthu.com/mixed-autonomy/advanced-tdma-ns3-simulation/uploads/419e1e0df6b65ff0cebbc7b3f7f1b9a1/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7_2019-04-30_22.59.10.png" alt=""><figcaption>饱和吞吐率与节点数量的关系</figcaption>
 </figure>
 <p>注意到在<a href="/knowledge-base/academic/its/wave/#%E5%90%9E%E5%90%90%E7%8E%87%E8%AE%A1%E7%AE%97">3.4.4</a>中给出的一般形式的饱和吞吐率对于Basic Access以及RTS/CTS机制是一样。两种机制的主要区别在于<span class="math inline">\(T_c\)</span>和<span class="math inline">\(T_s\)</span>的区别，如下图所示：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/48c01d167935b42f5daa3cbb1d0b6145.png" alt="T_c和T_s"><figcaption><span class="math inline">\(T_c\)</span>和<span class="math inline">\(T_s\)</span></figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/48c01d167935b42f5daa3cbb1d0b6145.png" alt=""><figcaption><span class="math inline">\(T_c\)</span>和<span class="math inline">\(T_s\)</span></figcaption>
 </figure>
 <p>考虑到ACK, RTS, CTS这些包的体积非常小，因此Basic Access和RTS/CTS机制的区别在于<span class="math inline">\(T_s\)</span>和<span class="math inline">\(T_c\)</span>的相对大小不同。在Basic Access中两个值非常接近，而在RTS/CTS中两个值的差别非常大。</p>
 <p><span class="math display">\[\begin{equation}
@@ -574,7 +574,7 @@ S=\frac{P_sP_{tr}E[P]}{(1-P_{tr})\sigma+P_{tr}P_sT_s+P_{tr}(1-P_s)T_c}
 <div class="note info">
             <p>上图其实是bezier曲线的原理示意图，出处是<a href="https://www.cnblogs.com/hnfxs/p/3148483.html" target="_blank" rel="noopener">贝塞尔曲线原理（简单阐述）</a></p>
           </div>
-<h2 id="混合性能">混合性能</h2>
+<h1 data-number="2" id="混合性能"><span class="header-section-number">2</span> 混合性能</h1>
 <p>这里说的混合性能是指同时存在Basic Access和RTS/CTS的情况。具体的，如果包的大小超过了阈值<span class="math inline">\(\overline{P}\)</span>，那么采用RTS/CTS发送，否则应用Basic Access规则。</p>
 <p>记<span class="math inline">\(F(\cdot)\)</span>为包大小的累积概率分布，那么<span class="math inline">\(F(\overline{P})\)</span>就为Basic Access发送的概率，<span class="math inline">\(1-F(\overline{P})\)</span>为使用RTS/CTS发送的概率。记:</p>
 <p><span class="math display">\[\begin{equation}
@@ -1018,7 +1018,7 @@ T_{c}^{\mathrm{bas} / \mathrm{bas}}=\alpha+\int_{0}^{\overline{P}}\left(1-\frac{
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#性能差异分析"><span class="nav-number">1.</span> <span class="nav-text">性能差异分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#混合性能"><span class="nav-number">2.</span> <span class="nav-text">混合性能</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#性能差异分析"><span class="nav-text">1 性能差异分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#混合性能"><span class="nav-text">2 混合性能</span></a></li></ol></div>
             
 
           </div>

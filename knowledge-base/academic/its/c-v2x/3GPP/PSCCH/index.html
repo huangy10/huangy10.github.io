@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="span.eng-origin {   color: #D3D3D3;   font-size: 12px;   font-style: italic; }   标准文档Release 16的下载链接： 36213-g00.zip   下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文  PSCCH in Mode 4 PSCCH以及PSSCH相关的内容在3GPP标准文档的第14个部">
+  <meta name="description" content="span.eng-origin {   color: #D3D3D3;   font-size: 12px;   font-style: italic; }   标准文档Release 16的下载链接： 36213-g00.zip   下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文  1 PSCCH in Mode 4 PSCCH以及PSSCH相关的内容在3GPP标准文档的第14">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Physical Sidelink Shared Channel (PSCCH)">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/c-v2x/3GPP/PSCCH/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="span.eng-origin {   color: #D3D3D3;   font-size: 12px;   font-style: italic; }   标准文档Release 16的下载链接： 36213-g00.zip   下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文  PSCCH in Mode 4 PSCCH以及PSSCH相关的内容在3GPP标准文档的第14个部">
+<meta property="og:description" content="span.eng-origin {   color: #D3D3D3;   font-size: 12px;   font-style: italic; }   标准文档Release 16的下载链接： 36213-g00.zip   下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文  1 PSCCH in Mode 4 PSCCH以及PSSCH相关的内容在3GPP标准文档的第14">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:41:14.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Physical Sidelink Shared Channel (PSCCH)">
-<meta name="twitter:description" content="span.eng-origin {   color: #D3D3D3;   font-size: 12px;   font-style: italic; }   标准文档Release 16的下载链接： 36213-g00.zip   下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文  PSCCH in Mode 4 PSCCH以及PSSCH相关的内容在3GPP标准文档的第14个部">
+<meta name="twitter:description" content="span.eng-origin {   color: #D3D3D3;   font-size: 12px;   font-style: italic; }   标准文档Release 16的下载链接： 36213-g00.zip   下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文  1 PSCCH in Mode 4 PSCCH以及PSSCH相关的内容在3GPP标准文档的第14">
 
 
 
@@ -573,7 +573,7 @@ span.eng-origin {
 <blockquote>
 <p>下面的文档中📒表示这段的中文不太准确，需要参考后续的英文原文</p>
 </blockquote>
-<h2 id="pscch-in-mode-4">PSCCH in Mode 4</h2>
+<h1 data-number="1" id="pscch-in-mode-4"><span class="header-section-number">1</span> PSCCH in Mode 4</h1>
 <p>PSCCH以及PSSCH相关的内容在3GPP标准文档的第14个部分。其中关键内容<span class="foot-note-span">【我尤其关注Mode 4】</span>摘录如下：</p>
 <p>A UE can be configured by higher layers with one or more PSCCH resource configuration(s). A PSCCH resource configuration can be for reception of PSCCH, or for transmission of PSCCH and the PSCCH resource configuration is associated with either sidelink transmission mode 1,2,3 or sidelink transmission mode 4. The physical sidelink control channel related procedures are described in Subclause 14.2.<span class="foot-note-span">【这是很格式化的文档】</span></p>
 <blockquote>
@@ -598,7 +598,7 @@ span.eng-origin {
 <li>SCI格式1 需要使用同一个子帧中的两个RB进行传输，且这个子帧要和对应的PSSCH的子帧相同。<span class="eng-origin">SCI format 1 is transmitted in two phyiscal resource blocks per slot in each subframe where the corresponding PSSCH is transmitted.</span></li>
 <li>如果上层配置的侧链表示PSCCH使用<span class="math inline">\(t_{n}^{SL}\)</span>时刻的资源，那么PSCCH传输将使用对应时刻的资源<span class="math inline">\(m\)</span><sup>📒</sup>。<span class="eng-origin">If the configured sidelink grant from higher layer indicates the PSCCH resource in subframe <span class="math inline">\(t_n^{SL}\)</span>, one transmission of PSCCH is in the indicated PSCCH resource <span class="math inline">\(m\)</span> in subframe <span class="math inline">\(t_n^{SL}\)</span></span>
 <ul>
-<li>如果初始传输和重传的间隔在侧链配置中不为0，那么另一个PSCCH的传输会在子帧<span class="math inline">\(L_{n+SF_{gap}}^{SL}\)</span>上的PSCCH资源<span class="math inline">\(L_{ReTX}\)</span>中进行，其中<span class="math inline">\(S_{gap}\)</span>为初始传输和重传的间隔，而<span class="math inline">\(L_{ReTX}\)</span>则指由14.1.4C部分的流程确定的<span class="math inline">\(n_{subCH}^{start}\)</span>。<span class="eng-origin">If &quot;Time gap between initial transmission and retransmission&quot; in the configured sidelink grant (described in [8]) is not equal to zero, another transmission of PSCCH is in the PSCCH resource <span class="math inline">\(L_{ReTX}\)</span> in subframe <span class="math inline">\(L_{n+SF_{gap}}^{SL}\)</span> where <span class="math inline">\(S_{gap}\)</span> is the value indicated by &quot;Time gap between initial transmission and retransmission&quot; field in the configured sidelink grant, <span class="math inline">\(L_{ReTX}\)</span> orresponds to the value <span class="math inline">\(n_{subCH}^{start}\)</span> determined by the procedure in Subclause 14.1.1.4C with the RIV set to the value indicated by &quot;Frequency resource location of the initial transmission and retransmission&quot; field in the configured sidelink grant.</span></li>
+<li>如果初始传输和重传的间隔在侧链配置中不为0，那么另一个PSCCH的传输会在子帧<span class="math inline">\(L_{n+SF_{gap}}^{SL}\)</span>上的PSCCH资源<span class="math inline">\(L_{ReTX}\)</span>中进行，其中<span class="math inline">\(S_{gap}\)</span>为初始传输和重传的间隔，而<span class="math inline">\(L_{ReTX}\)</span>则指由14.1.4C部分的流程确定的<span class="math inline">\(n_{subCH}^{start}\)</span>。<span class="eng-origin">If "Time gap between initial transmission and retransmission" in the configured sidelink grant (described in [8]) is not equal to zero, another transmission of PSCCH is in the PSCCH resource <span class="math inline">\(L_{ReTX}\)</span> in subframe <span class="math inline">\(L_{n+SF_{gap}}^{SL}\)</span> where <span class="math inline">\(S_{gap}\)</span> is the value indicated by "Time gap between initial transmission and retransmission" field in the configured sidelink grant, <span class="math inline">\(L_{ReTX}\)</span> orresponds to the value <span class="math inline">\(n_{subCH}^{start}\)</span> determined by the procedure in Subclause 14.1.1.4C with the RIV set to the value indicated by "Frequency resource location of the initial transmission and retransmission" field in the configured sidelink grant.</span></li>
 </ul></li>
 </ul></li>
 <li>UE按照如下的规范确定SCI格式1的内容：
@@ -611,8 +611,8 @@ span.eng-origin {
 <li>每次PSSCCH传输中需要随机选择循环位移<span class="math inline">\(n_{cs, \lambda} \in \{0, 3, 6, 9\}\)</span>。</li>
 </ul></li>
 </ul>
-<h2 id="其他问题">其他问题</h2>
-<h3 id="pscch-in-mode-4-1">PSCCH in Mode 4</h3>
+<h1 data-number="2" id="其他问题"><span class="header-section-number">2</span> 其他问题</h1>
+<h2 data-number="2.1" id="pscch-in-mode-4-1"><span class="header-section-number">2.1</span> PSCCH in Mode 4</h2>
 <p>For sidelink transmission mode 2,</p>
 <ul>
 <li>SCI format 0 is transmitted in two subframes in the subframe pool and one physical resource block per slot in each of the two subframes, wherein the physical resource blocks belongs to the resource block pool, where the subframe pool and the resource block pool are indicated by the PSCCH resource configuration (as defined in Subclause 14.2.3)</li>
@@ -1038,7 +1038,7 @@ span.eng-origin {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pscch-in-mode-4"><span class="nav-number">1.</span> <span class="nav-text">PSCCH in Mode 4</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他问题"><span class="nav-number">2.</span> <span class="nav-text">其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pscch-in-mode-4-1"><span class="nav-number">2.1.</span> <span class="nav-text">PSCCH in Mode 4</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pscch-in-mode-4"><span class="nav-text">1 PSCCH in Mode 4</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他问题"><span class="nav-text">2 其他问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pscch-in-mode-4-1"><span class="nav-text">2.1 PSCCH in Mode 4</span></a></li></ol></li></ol></div>
             
 
           </div>

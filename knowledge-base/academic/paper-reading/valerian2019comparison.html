@@ -547,13 +547,13 @@
 <p>ITS-G5 这个词之前我看到的比较少，作者这里提到ITS-G5是欧洲方面(ETSI)的标准，对应美国版本的标注是DSRC。二者都是基于IEEE802.11p的，使用5.9GHz的频段。</p>
 <p>3GPP LTE Release 14中加入了ProSe(Proximity Service)功能，允许蜂窝网设备之间进行基于PC5接口的D2D通信。这里D2D通信可以在没有基站参与的情况下进行。PC5接口被设计用力啊满足有界的低延时需求，并在结合高速支持的情况下适应给定的交通密度环境。Release 14包含了模式3和模式4两种工作模式，其中前者需要使用基站，后者不需要。本文这里只关注模式4.</p>
 <p>IEEE802.11p协议是非常成熟的技术，测试数据也非常多，不过C-V2X方面的测试比较少（最早的测试在2017年末）。</p>
-<h2 id="通信标准简介">通信标准简介</h2>
-<h3 id="ieee802.11p">IEEE802.11p</h3>
+<h1 data-number="1" id="通信标准简介"><span class="header-section-number">1</span> 通信标准简介</h1>
+<h2 data-number="1.1" id="ieee802.11p"><span class="header-section-number">1.1</span> IEEE802.11p</h2>
 <p>IEEE802.11a的演进版本。使用OFDM，集合使用了卷积码。为了保证在多变的信道环境下的性能，时域上的参数被加倍，频域上的参数则减半。典型的参数如下图：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png"></p>
 <p>IEEE802.11p的MAC层使用OCB(Outside the Context of a Basic Service Set)工作模式，其中认证、关联与数据加密服务没有使用。</p>
 <p>IEEE802.11p使用EDCA进行QoS管理，使用DCF解决接入问题。关于这些还是去看我的网站里关于<a href="/knowledge-base/academic/its/wave/">WAVE的文档</a>。</p>
-<h3 id="c-v2x">C-V2X</h3>
+<h2 data-number="1.2" id="c-v2x"><span class="header-section-number">1.2</span> C-V2X</h2>
 <p>C-V2X物理层基于SC-FDMA技术，支持10MHz或者20MHz的信道。每个信道被划分成子帧(sub-frame)，Resource Block(RB)和子信道(Sub-channel)：</p>
 <ul>
 <li>sub-frame: 时间尺度的概念，1ms长度的时间片段称为一个子帧</li>
@@ -572,7 +572,7 @@
 <p>从MAC的角度来看，根据模式4，C-V2X采用了基于感知的半持久调度(Sensing-Based Semi-Persistent Scheduling, SB-SPS机制。这个机制通过对通信媒介的估计，来预测可用资源。当车辆占用子信道时，对子信道占据会持续Reselection Counter(RC)次传输<span class="foot-note-span">【即在接下来的这么多次传输都是使用同样的资源，这里资源的占用是按照次数来进行，而非时间】</span>。RC的值从<span class="math inline">\([5, 15]\)</span>之间随机选出。每次传输之后RC减一。当RC为零时，以概率<span class="math inline">\(P\)</span>继续使用当前的资源，即以概率<span class="math inline">\(1 - P\)</span>重新选择资源。<span class="math inline">\(P \in [0, 0.8]\)</span>。</p>
 <p>RC的值包含在SCI信息中，因此别的节点可以预测未来某个资源是否可用，从而避免碰撞。</p>
 <p>传输的可靠性通过HARQ重传来保证。</p>
-<h2 id="对比结论">对比结论</h2>
+<h1 data-number="2" id="对比结论"><span class="header-section-number">2</span> 对比结论</h1>
 <ol type="1">
 <li>在相同的数据率的前提下，C-V2X的性能（通信距离）要更好，因为C-V2X提供了更多的参数配置灵活性。不过这里的性能改善是以资源(时间/频率)消耗为代价的。</li>
 <li>C-V2X在低密度（密度小于<span class="math inline">\(150 user/km^2\)</span>）的情况下性能比ITS-G5好，之后就急剧恶化。</li>
@@ -974,7 +974,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通信标准简介"><span class="nav-number">1.</span> <span class="nav-text">通信标准简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ieee802.11p"><span class="nav-number">1.1.</span> <span class="nav-text">IEEE802.11p</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c-v2x"><span class="nav-number">1.2.</span> <span class="nav-text">C-V2X</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对比结论"><span class="nav-number">2.</span> <span class="nav-text">对比结论</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通信标准简介"><span class="nav-text">1 通信标准简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ieee802.11p"><span class="nav-text">1.1 IEEE802.11p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-v2x"><span class="nav-text">1.2 C-V2X</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对比结论"><span class="nav-text">2 对比结论</span></a></li></ol></div>
             
 
           </div>

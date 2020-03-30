@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。这对">
+  <meta name="description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 1 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="WAVE中的SCH调度机制研究状况">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/sch.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。这对">
+<meta property="og:description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 1 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-09-05T07:57:48.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WAVE中的SCH调度机制研究状况">
-<meta name="twitter:description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。这对">
+<meta name="twitter:description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 1 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。">
 
 
 
@@ -551,7 +551,7 @@
         
         
           <p><a href="./">WAVE协议</a>中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。</p>
-<h2 id="在sch上进行调度w-hdf">在SCH上进行调度（W-HDF）</h2>
+<h1 data-number="1" id="在sch上进行调度w-hdf"><span class="header-section-number">1</span> 在SCH上进行调度（W-HDF）</h1>
 <p>以下部分整理自<span class="citation" data-cites="marica2012enhancing">[1]</span>，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。</p>
 <p><a href="./wave.html">WAVE DCF</a>机制的主要问题在于无法保证带宽和延时性能。这对于特定的应用是难以忍受的（如多媒体串流）。W-HCF机制的核心在于针对非安全类应用，区分QoS敏感和QoS不敏感的业务类型，并且针对这两种业务采取不同的SCH访问控制策略。</p>
 <p>对于QoS不敏感的业务，W-HCF保留了WAVE标准中的特点：</p>
@@ -576,14 +576,14 @@
 <li><em>基于位置的Polling</em>：这里的Polling指由Q-pr主动，向多个用户拉取数据的过程。Q-pr会根据车辆的位置和速度来决定是否进行Polling，从而避免资源浪费（例如不要从已经不在Q-pr覆盖范围内的用户上拉取数据）</li>
 </ol>
 <p>上面步骤中的缩写含义为：Q-pr: QoS Provider，Q-user: QoS User。</p>
-<h3 id="q-wbss初始化">Q-WBSS初始化</h3>
+<h2 data-number="1.1" id="q-wbss初始化"><span class="header-section-number">1.1</span> Q-WBSS初始化</h2>
 <p>Q-WBSS是围绕着Q-pr建立的，因此Q-WBSS的初始化实质就是Q-pr初始化的过程。Q-pr在CCH上通过EDCA的规则来尝试通过广播Q-WSA信息来占用信道。Q-WSA在原始WSA包的基础上新增了两个字段：CAP频段和4个字节的<code>Own_SCH_Allocation</code>字段。这一四字节字段包含两个两字节的子字段：<code>CAP_start</code>, <code>CAP_duration</code>。前者是预留的Contention-Free的CAP阶段的开始时间，后者是为了满足用户通信需求的CAP持续时间。在初始化阶段，Q-pr并不知道潜在的用户数量，因此最初的广播只包含了Q-pr自身的通信需求（主要是Beacon）。</p>
 <blockquote>
 <p>作为广播，Q-pr在广播后不会收到任何反馈，作者在这里说可以通过多次广播来提高可靠性</p>
 </blockquote>
-<h3 id="gossip-based-distributed-cap-reservation">Gossip-based distributed CAP reservation</h3>
-<h2 id="reference" class="unnumbered">Reference</h2>
-<div id="refs" class="references">
+<h2 data-number="1.2" id="gossip-based-distributed-cap-reservation"><span class="header-section-number">1.2</span> Gossip-based distributed CAP reservation</h2>
+<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
+<div id="refs" class="references" role="doc-bibliography">
 <div id="ref-marica2012enhancing">
 <p>[1] M. Amadeo, C. Campolo, and A. Molinaro, “Enhancing ieee 802.11p/wave to provide infotainment applications in vanets,” <em>Ad Hoc Networks</em>, vol. 10, no. 2, pp. 253–269, 2012.</p>
 </div>
@@ -996,7 +996,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#在sch上进行调度w-hdf"><span class="nav-number">1.</span> <span class="nav-text">在SCH上进行调度（W-HDF）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#q-wbss初始化"><span class="nav-number">1.1.</span> <span class="nav-text">Q-WBSS初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gossip-based-distributed-cap-reservation"><span class="nav-number">1.2.</span> <span class="nav-text">Gossip-based distributed CAP reservation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在sch上进行调度w-hdf"><span class="nav-text">1 在SCH上进行调度（W-HDF）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#q-wbss初始化"><span class="nav-text">1.1 Q-WBSS初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gossip-based-distributed-cap-reservation"><span class="nav-text">1.2 Gossip-based distributed CAP reservation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>

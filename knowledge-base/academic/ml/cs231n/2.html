@@ -123,12 +123,12 @@
 
 
 
-  <meta name="description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意思的">
+  <meta name="description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 1 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意">
 <meta property="og:type" content="website">
 <meta property="og:title" content="CS231n笔记 - 2">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/ml/cs231n/2.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意思的">
+<meta property="og:description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 1 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/46c240bcbe5734e0c5417737361e92c1.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/f8b4f21722d3491fa881b57f3693c9ab.png">
@@ -136,7 +136,7 @@
 <meta property="og:updated_time" content="2020-03-22T17:25:00.493Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CS231n笔记 - 2">
-<meta name="twitter:description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意思的">
+<meta name="twitter:description" content="这是CS231n随笔笔记的第二部分，第一部分在这里 1 Recurrent Neural Networks 之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/46c240bcbe5734e0c5417737361e92c1.png">
 
 
@@ -555,9 +555,9 @@
         
         
           <p>这是CS231n随笔笔记的第二部分，第一部分在<a href="./">这里</a></p>
-<h2 id="recurrent-neural-networks">Recurrent Neural Networks</h2>
+<h1 data-number="1" id="recurrent-neural-networks"><span class="header-section-number">1</span> Recurrent Neural Networks</h1>
 <p>之前我们提到简单神经网络或者卷积神经网络都是针对一个输入，得到一个输出。这种网络无法处理序列类型的输入输出。这里的序列类型的输入输出的长度是可变的。这种序列类型的输入一般是文本或者视频。对于固定的输入输出也可以认为的序列化交给RNN网络处理（可以理解为引入时间的变量），这样可以得到一些很有意思的结果。</p>
-<h3 id="rnn的结构">RNN的结构</h3>
+<h2 data-number="1.1" id="rnn的结构"><span class="header-section-number">1.1</span> RNN的结构</h2>
 <p>RNN的最重要的变化是引入了内部状态的概念。用数学符号表示RNN的过程：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/46c240bcbe5734e0c5417737361e92c1.png" alt="" style="width: 50%"></p>
 <p>每次迭代时，模型中的参数都是相同的。</p>
@@ -570,11 +570,11 @@ y_{t}=W_{h y} h_{t}
 \]</span></p>
 <p>其中<span class="math inline">\(h_t\)</span>为内部的隐藏状态。用Computation Graph表示这个计算过程如下：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/f8b4f21722d3491fa881b57f3693c9ab.png" alt="图中表现了迭代的过程，注意图中每次计算式，模型的参数都是相同的。图中展示的是多对多的RNN模型，该模型可以很方便的修改为一对多和多对一模型。这个过程和递归调用的过程非常类似。"><figcaption>图中表现了迭代的过程，注意图中每次计算式，模型的参数都是相同的。图中展示的是多对多的RNN模型，该模型可以很方便的修改为一对多和多对一模型。这个过程和递归调用的过程非常类似。</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/f8b4f21722d3491fa881b57f3693c9ab.png" alt=""><figcaption>图中表现了迭代的过程，注意图中每次计算式，模型的参数都是相同的。图中展示的是多对多的RNN模型，该模型可以很方便的修改为一对多和多对一模型。这个过程和递归调用的过程非常类似。</figcaption>
 </figure>
 <p>注意上面的损失函数的计算是基于整个迭代序列的，反过来我们计算梯度时，这个反向计算过程也会被称为 Backpropagtaion through time。但是当序列很长时，这个计算过程可能会非常耗时，因为输入/输出序列可能会非常长。因此实际中使用的是 Truncated Backpropagation through time。即每组Forward和Backward操作真针对序列的一段(Batch)进行，如下图：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/3920cc12844d03b77233a62836776871.png"></p>
-<h2 id="detection-and-segmentation">Detection and Segmentation</h2>
+<h1 data-number="2" id="detection-and-segmentation"><span class="header-section-number">2</span> Detection and Segmentation</h1>
 
         
       </div>
@@ -983,7 +983,7 @@ y_{t}=W_{h y} h_{t}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#recurrent-neural-networks"><span class="nav-number">1.</span> <span class="nav-text">Recurrent Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rnn的结构"><span class="nav-number">1.1.</span> <span class="nav-text">RNN的结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#detection-and-segmentation"><span class="nav-number">2.</span> <span class="nav-text">Detection and Segmentation</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#recurrent-neural-networks"><span class="nav-text">1 Recurrent Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rnn的结构"><span class="nav-text">1.1 RNN的结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#detection-and-segmentation"><span class="nav-text">2 Detection and Segmentation</span></a></li></ol></div>
             
 
           </div>

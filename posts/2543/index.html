@@ -563,7 +563,7 @@
 
       
         <figure>
-<img src="https://imgs.codewoody.com/uploads/big/8cd3e0e5fe6f9051e2c67646cc1e7dbc.jpg" alt="Cover"><figcaption>Cover</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/8cd3e0e5fe6f9051e2c67646cc1e7dbc.jpg" alt=""><figcaption>Cover</figcaption>
 </figure>
 <p>这里我们讨论的图像截取部分是指从一个完整的大图中截取一小部分出来。当然，使用js实现。 <a id="more"></a></p>
 <blockquote>
@@ -571,22 +571,22 @@
 </blockquote>
 <p>例如，我们要从这样的大图中：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/f6551d523ea8c642cd663a1b9b3e024d.jpeg" alt="大图"><figcaption>大图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/f6551d523ea8c642cd663a1b9b3e024d.jpeg" alt=""><figcaption>大图</figcaption>
 </figure>
 <p>截取出</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/2208ad7dfbd59e73fa2ba244fcb41487.jpeg" alt="小图"><figcaption>小图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/2208ad7dfbd59e73fa2ba244fcb41487.jpeg" alt=""><figcaption>小图</figcaption>
 </figure>
 <p>使用H5中的canvas可以简单地解决这个问题。</p>
-<h2 id="载入原图像">1. 载入原图像</h2>
+<h1 data-number="1" id="载入原图像"><span class="header-section-number">1</span> 1. 载入原图像</h1>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> loadTimer;</span><br><span class="line"><span class="keyword">var</span> imgObject = <span class="keyword">new</span> Image();</span><br><span class="line">imgObject.src = <span class="string">'images/fozzie.jpg'</span>;</span><br><span class="line">imgObject.onLoad = onImgLoaded();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onImgLoaded</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (loadTimer != <span class="literal">null</span>) clearTimeout(loadTimer);</span><br><span class="line">  <span class="keyword">if</span> (!imgObject.complete) &#123;</span><br><span class="line">    loadTimer = setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      onImgLoaded();</span><br><span class="line">    &#125;, <span class="number">3</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    onPreloadComplete();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>注意这里我们为了演示是读取的图片文件内容，实际上除了图像文件，这里的“图像”还可以是其他形式，例如video元素，别的canvas等。</p>
 </blockquote>
-<h2 id="当图片完成载入以后重新绘制你要截取的那一部分">2. 当图片完成载入以后，重新绘制你要截取的那一部分</h2>
+<h1 data-number="2" id="当图片完成载入以后重新绘制你要截取的那一部分"><span class="header-section-number">2</span> 2. 当图片完成载入以后，重新绘制你要截取的那一部分</h1>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">onPreloadComplete</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//call the methods that will create a 64-bit version of thumbnail here.</span></span><br><span class="line">  <span class="keyword">var</span> newImg = getImagePortion(imgObject, <span class="number">120</span>, <span class="number">150</span>, <span class="number">150</span>, <span class="number">80</span>, <span class="number">2</span>);</span><br><span class="line">  <span class="comment">//place image in appropriate div</span></span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">"images"</span>).innerHTML = <span class="string">"&lt;img alt="</span><span class="string">" src="</span><span class="string">"+newImg+"</span><span class="string">" /&gt;"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个<code>onPreloadComplete</code>函数会在图像载入完成以后调用。在这个函数中我们会调用实际完成图片截取的函数<code>getImagePortion</code></p>
-<h2 id="图像截取">3. 图像截取</h2>
+<h1 data-number="3" id="图像截取"><span class="header-section-number">3</span> 3. 图像截取</h1>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">getImagePortion(imgObj, newWidth, newHeight, startX, startY, ratio)&#123;</span><br><span class="line"> <span class="comment">/* the parameters: - the image element - the new width - the new height - the x point we start taking pixels - the y point we start taking pixels - the ratio */</span></span><br><span class="line"> <span class="comment">//set up canvas for thumbnail</span></span><br><span class="line"> <span class="keyword">var</span> tnCanvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"> <span class="keyword">var</span> tnCanvasContext = canvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"> tnCanvas.width = newWidth; tnCanvas.height = newHeight;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">/* use the sourceCanvas to duplicate the entire image. This step was crucial for iOS4 and under devices. Follow the link at the end of this post to see what happens when you don’t do this */</span></span><br><span class="line"> <span class="keyword">var</span> bufferCanvas = <span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line"> <span class="keyword">var</span> bufferContext = bufferCanvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line"> bufferCanvas.width = imgObj.width;</span><br><span class="line"> bufferCanvas.height = imgObj.height;</span><br><span class="line"> bufferContext.drawImage(imgObj, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"> </span><br><span class="line"> <span class="comment">/* now we use the drawImage method to take the pixels from our bufferCanvas and draw them into our thumbnail canvas */</span></span><br><span class="line"> tnCanvasContext.drawImage(bufferCanvas, startX,startY,newWidth * ratio, newHeight * ratio,<span class="number">0</span>,<span class="number">0</span>,newWidth,newHeight);</span><br><span class="line"> <span class="keyword">return</span> tnCanvas.toDataURL();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>上面的函数时原作者给出的方法，他先将图像完整地画到一个canvas(<code>bufferCanvas</code>)上，再将这个canvas对应的目标区域画到<code>tnCanvas</code>上，根据注释来看，似乎是出于性能或者适配方面的考虑。不过就我在开发桌面端网页时，可以直接将<code>imgObj</code>画到<code>tnCanvas</code>上。</p>
@@ -985,7 +985,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#载入原图像"><span class="nav-number">1.</span> <span class="nav-text">1. 载入原图像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当图片完成载入以后重新绘制你要截取的那一部分"><span class="nav-number">2.</span> <span class="nav-text">2. 当图片完成载入以后，重新绘制你要截取的那一部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像截取"><span class="nav-number">3.</span> <span class="nav-text">3. 图像截取</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#载入原图像"><span class="nav-text">1 1. 载入原图像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#当图片完成载入以后重新绘制你要截取的那一部分"><span class="nav-text">2 2. 当图片完成载入以后，重新绘制你要截取的那一部分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像截取"><span class="nav-text">3 3. 图像截取</span></a></li></ol></div>
             
 
           </div>

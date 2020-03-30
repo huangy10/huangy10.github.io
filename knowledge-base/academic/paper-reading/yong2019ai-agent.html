@@ -123,12 +123,12 @@
 
 
 
-  <meta name="description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服务预">
+  <meta name="description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 1 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服">
 <meta property="og:type" content="website">
 <meta property="og:title" content="读论文-AI Agent in SDN">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/yong2019ai-agent.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服务预">
+<meta property="og:description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 1 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/847267a8beaa2dedab4afc279c5f7b78.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9f108ea26c896883eac891c303783cee.png">
@@ -136,7 +136,7 @@
 <meta property="og:updated_time" content="2020-03-22T17:25:00.508Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-AI Agent in SDN">
-<meta name="twitter:description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服务预">
+<meta name="twitter:description" content="文章的标题是 AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization。作者是华中科技大学的，文章发表在IoT上。 1 概述 主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/847267a8beaa2dedab4afc279c5f7b78.png">
 
 
@@ -543,7 +543,7 @@
         
         
           <p>文章的标题是 <a href="https://ieeexplore.ieee.org/document/8888257" target="_blank" rel="noopener">AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization</a>。作者是华中科技大学的，文章发表在IoT上。</p>
-<h2 id="概述">概述</h2>
+<h1 data-number="1" id="概述"><span class="header-section-number">1</span> 概述</h1>
 <p>主要思路是现有的SDN算法无法解决大规模网络的调度需要，作者转而使用AI技术来讲进行服务预测(service prediction)和资源分配(resource scheduling)。使用该方法可以增加SDN的效率，提升资源的命中概率(Hit ratio)。</p>
 <p>这里要解释一下文章中提到的Agent的概念：</p>
 <blockquote>
@@ -560,23 +560,23 @@
 </blockquote>
 <p>这篇文章提出了一种基于AI Agent的系统。这样的AI Agents被部署于SDN的不同层级，以实现网络服务预测，资源分配以及其他功能。不同层面的AI Agent的作用不同。在用户设备层面的AI Agent负责集成用户的历史网络数据，进而分析用户的数据使用行为模式可以被分析和预测<span class="foot-note-span">【 <del>尽管叫用户层面，但是这个Agent实际应该部署在边缘服务器，由边缘服务器来分析用户行为</del>】</span>。在基站层面的AI Agent用来汇总流量和服务类型(Traffic and service Type)，进而实现以最大化QoE (Quality of experience) 为目的的优化目标。位于SDN控制器层面的AI Agent用来收集和分析服务请求数据，进而将被高频请求的包部署到基站服务器上<span class="foot-note-span">【这里有点缓存系统的意思了】</span></p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/847267a8beaa2dedab4afc279c5f7b78.png" alt="不同层面的AI Agent的交互方式示意图"><figcaption>不同层面的AI Agent的交互方式示意图</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/847267a8beaa2dedab4afc279c5f7b78.png" alt=""><figcaption>不同层面的AI Agent的交互方式示意图</figcaption>
 </figure>
-<h2 id="网络架构">网络架构</h2>
+<h1 data-number="2" id="网络架构"><span class="header-section-number">2</span> 网络架构</h1>
 <p>传统的SDN服务基于用户请求来调度。即当用户请求一个服务时，远端的服务提供者将服务发送给边缘服务器，最终为用户提供服务。在这种架构下，端到端的延时会显著增长，服务质量QoE也会降低。另一方面，当用户请求率很低时，边缘服务器处于空闲的状态，没有得到有效利用，也降低了用户体验。基于以上的考虑，作者提出了一种基于Agent的模型。为了执行网络管理，负责资源请求、调度和部署的Agent被部署到用户智能终端，基站以及边缘服务器。如下图所示：</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/9f108ea26c896883eac891c303783cee.png" alt="Agent系统架构"><figcaption>Agent系统架构</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/9f108ea26c896883eac891c303783cee.png" alt=""><figcaption>Agent系统架构</figcaption>
 </figure>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/684f6b7556d7876bbd810dd6d5b2dbec.png" alt="Agent交互逻辑"><figcaption>Agent交互逻辑</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/684f6b7556d7876bbd810dd6d5b2dbec.png" alt=""><figcaption>Agent交互逻辑</figcaption>
 </figure>
-<h3 id="用户层资源请求">用户层：资源请求</h3>
+<h2 data-number="2.1" id="用户层资源请求"><span class="header-section-number">2.1</span> 用户层：资源请求</h2>
 <p>为了减少服务请求延时并改善QoE，部署在边缘的Agent需要预测对应用和计算资源的请求。在移动网络中，用户的资源请求是出发整个框架的关键因素，同时这些请求信息也是在三个层面实现资源调度和部署的重要指导。</p>
 <p>这里作者使用一些机器学习算法来处理请求特征的预测，这些算法包括LSTM，SVM还有KNN。另外作者还提到历史数据不会影响到当前的资源请求。但是历史数据能够更一般性地反映用户的请求特征。因此在Agent使用了Knowledge-based模块，环境数据的变化以及agent做出的行为决策都会更新到知识库。</p>
 <blockquote>
 <p>原文如下：It should be noted that the historical data would be abandoned and they would not influence the current resource request. However, the historical data often contains the characteristics of user personalization full of great value. Therefore, a knowledge base module is placed in the agent, and the environmental state data and action decisions performed by the agetn under the corresponding timestamp are updated in the knowledge base.</p>
 </blockquote>
-<h3 id="基站层资源调度">基站层：资源调度</h3>
+<h2 data-number="2.2" id="基站层资源调度"><span class="header-section-number">2.2</span> 基站层：资源调度</h2>
 <p>基站层是在用户层和边缘服务器层之间的中间层，其主要作用是提供无线网络覆盖。在这里，基站层负责接收用户的资源下载请求，并将的边缘层分配的应用和计算资源传送给终端用户。</p>
 <p>这一层的Agent感知的Middle Environment包括</p>
 <ol type="1">
@@ -589,14 +589,14 @@
 <li>远端服务器上的服务提供者向边缘部署资源时需要使用的通信资源。</li>
 </ol>
 <p>Agent需要同时考虑用户端和远程服务提供者双方的需求，在保证用户QoE的同时，也要保证远程服务提供商的利益。这部分决策需要经过多轮的trial-and-error的学习流程，以获得最优的决策。</p>
-<h3 id="sdn控制器层资源部署">SDN控制器层：资源部署</h3>
+<h2 data-number="2.3" id="sdn控制器层资源部署"><span class="header-section-number">2.3</span> SDN控制器层：资源部署</h2>
 <p>SDN控制器能够获取众多向上层开发的无线网络信息，例如用户的实时位置，基站的负载，来自每个用户的资源请求等。这些信息一半来自附近的，具有低延时，高带宽，及位置感知的特点<span class="foot-note-span">【which are mainly reflected in the proximity, low delay, high bandwidth, and location cognition】</span>。对于SDN控制器来说，对于上下文信息的实时感知可以使得控制器可以使其根据网络的实时变化提供对应的关联服务，改善用户体验并提升网络资源利用效率。</p>
 <p>这里考虑的是基于Agent的service caching, offloading and transfer。</p>
 <p>控制器端的Agent感知的环境参数主要是服务的数量和使用情况、不同的资源提供者的计算资源、用户的实时位置、用户的资源请求等。</p>
 <p>这里的Agent的主要任务是向边缘服务器部署资源，包括网络移动服务的caching, offloading and transfer。</p>
-<h2 id="系统模型">系统模型</h2>
+<h1 data-number="3" id="系统模型"><span class="header-section-number">3</span> 系统模型</h1>
 <p>这里考虑的系统模型是如上文所说的三层结构，包含<span class="math inline">\(N\)</span>个用户设备，<span class="math inline">\(1\)</span>个基站服务器和<span class="math inline">\(1\)</span>个SDN控制器。用户设备记为<span class="math inline">\(U=\left\{u_{1}, u_{2}, \cdots, u_{n}\right\}\)</span>，SDN控制器可以提供<span class="math inline">\(m\)</span>种不同的服务。用户设备可以向基站请求任意一种服务。当基站服务请收到一个请求，如果资源存储在本地，那么服务请直接响应并返回该资源。反之如果资源没有存储在本地，那么服务器向SDN控制器请求此资源。最终SDN控制器将资源发给基站服务器基站服务器再响应给用户。在<span class="math inline">\(m\)</span>种服务中<span class="foot-note-span">【这里作者服务和资源不分啊】</span>，每种服务的数据大小记为<span class="math inline">\(S=\left\{s_{1}, s_{2}, \cdots, s_{m}\right\}\)</span>。同时，基站服务器上的存储和带宽资源是受限的。其中最大存储容量记为<span class="math inline">\(W\)</span>，最大带宽资源记为<span class="math inline">\(B\)</span>。另外，本文忽略了用户向基站服务器发送任务请求和基站服务器向SDN控制器发送任务请求所需的时间。如果假设系统的运行时间是离散的，且临近时间戳的差值是均匀的，那么时间序列可以表达为={t_{1}, t_{2}, }</p>
-<h3 id="用户请求延时模型">用户请求延时模型</h3>
+<h2 data-number="3.1" id="用户请求延时模型"><span class="header-section-number">3.1</span> 用户请求延时模型</h2>
 <p>在时间<span class="math inline">\(t_i(t_i \in T)\)</span>用户向基站发出请求之后，基站分配带宽用于传输后续的数据包。基站服务器会根据不同设备的请求调度和分配网络资源。这一过程中的延时包括调度算法计算过程的延时，以及用户需要在队列里面等待的时间。注意到用户的请求可能没法在发起请求的时间片段上得到响应，基站服务器只会在离散的时间片上进行调度和分配。因此，用户可能在计算过程中经历多轮周期的延时。因此，用户请求的延时被定义为三部分：数据包的传输延时、计算过程的延时、以及传输等待的延时。用户<span class="math inline">\(u_j\)</span>在<span class="math inline">\(t_i\)</span>时刻发起一个请求<span class="math inline">\(\omega_{u_{j}}^{t_{i}}=\left\{\omega_{1}, \omega_{2}, \cdots, \omega_{m}\right\}\)</span>，其中<span class="math inline">\(\omega\)</span>代表用户请求数据包的大小。当其取值为0时代表对应的服务类型没有被请求，服务类型的总数是<span class="math inline">\(Z\)</span>。在经历<span class="math inline">\(\alpha_j\)</span>的时间粒度之后，基站根据用户<span class="math inline">\(u_j\)</span>在<span class="math inline">\(t_i\)</span>时刻发出的请求分配给该用户的带宽资源为<span class="math inline">\(q_{u_j}^{t_i}(0 \leq q_{u_{j}}^{t_i}) \leq B\)</span>。因此每个设备的传输速率为:</p>
 <p><span class="math display">\[
 r_{u_{j}}^{t_{i}}=q_{u_{j}}^{t_{i}} \log _{2}\left(1+\frac{p_{u_{j}}^{t_{i}}\left|h_{u_{j}}^{t_{i}}\right|^{2}}{q_{u_{j}}^{t_{i}} n_{0}+I_{1}+I_{2}+I_{3}}\right)
@@ -624,7 +624,7 @@ r_{u_{j}}^{t_{i}}=q_{u_{j}}^{t_{i}} \log _{2}\left(1+\frac{p_{u_{j}}^{t_{i}}\lef
 d_{u_{j}}^{t_{i}}=\sum_{k=1}^{m} \lambda_{k} \log _{2}\left(1+\omega_{k}^{t_{i}}\right)
 \]</span></p>
 <p>其中<span class="math inline">\(\lambda_k\)</span>代表耐心和服务<span class="math inline">\(s_k\)</span>的相关性。此值决定于具体的服务类型。例如用户对视频资源的耐心系数较高，而对于一般网页而言则较低。</p>
-<h3 id="资源管理模型">资源管理模型</h3>
+<h2 data-number="3.2" id="资源管理模型"><span class="header-section-number">3.2</span> 资源管理模型</h2>
 <p>位于访问层的AI代理统一进行资源管理和调度。 一方面，资源包括网络资源，在这里将其视为带宽资源。 另一方面，资源包括服务资源。 带宽资源主要分配给用户设备以响应其服务请求并用于服务数据的传输。 当用户请求的服务资源未存储在基站服务器上时，AI代理需要分配必要的带宽资源，以便从SDN控制器向基站服务器传输服务数据。 在本节中，将描述AI代理在访问层中维护的资源。</p>
 <p>首先，为了保证资源的调度和分配，AI代理需要维护一个请求队列，并记录的各个用户在当前时刻<span class="math inline">\(t_i\)</span>时的等待时间。服务请求队列记为<span class="math inline">\(A_{t_{i}}=\left\{a_{1}, a_{2}, \cdots, a_{\iota}\right\}\)</span>，其中一共有 <span class="math inline">\(\iota\)</span>个用户设备在等待。然后在<span class="math inline">\(t_i\)</span>AI代理为带宽资源计算调度方案，这一方案记为<span class="math inline">\(Q^{t_{i}}=\left\{q_{u_{1}}^{t_{i}}, q_{u_{2}}^{t_{i}}, \cdots, q_{u_{\iota}}^{t_{i}}\right\}\)</span>。因此在这一时刻剩余的贷款资源为</p>
 <p><span class="math display">\[
@@ -635,7 +635,7 @@ d_{u_{j}}^{t_{i}}=\sum_{k=1}^{m} \lambda_{k} \log _{2}\left(1+\omega_{k}^{t_{i}}
 \delta_{s}^{t_{i}}=W-\sum_{k=1}^{m} s_{k}^{b} \cdot s_{k}
 \]</span></p>
 <p>其中<span class="math inline">\(W\)</span>代表存储空间的总量，<span class="math inline">\(s_{k}^{b}\)</span>表示资源<span class="math inline">\(k\)</span>是否位于基站服务器上，<span class="math inline">\(s_{k}\)</span>代表了资源的大小。由于存储空间有限，当<span class="math inline">\(\delta^{t_i}_s\)</span>低于一定的阈值时，服务器会执行服务资源的卸载，以腾出空间缓存其他的服务资源。这一阈值有卸载机制指定。</p>
-<h3 id="用户体验模型">用户体验模型</h3>
+<h2 data-number="3.3" id="用户体验模型"><span class="header-section-number">3.3</span> 用户体验模型</h2>
 <p>在本文的网络系统中，用户服务体验意味着在他/她发起请求后等待服务响应时会有时间延迟。 时间延迟越小，意味着服务满意度越高，反之，如果时间延迟越大，则服务满意度就越低。基于上面的讨论的，用户<span class="math inline">\(u_j\)</span>是否满意于在<span class="math inline">\(t_i\)</span>时刻发出的请求要经理<span class="math inline">\(\alpha\)</span>个周期之后才收到响应</p>
 <p><span class="math display">\[
 p_{u_{j}}^{t_{i}}=\left\{\begin{array}{ll}
@@ -648,7 +648,7 @@ p_{u_{j}}^{t_{i}}=\left\{\begin{array}{ll}
 V_{u_{j}}^{t_{i}}=(1-p) \cdot\left(\mathcal{C}_{u_{j}}^{t_{i}+\alpha_{j}} \cdot \lambda_{u_{j}}^{t_{i}}+\epsilon_{E}\right)+p \cdot\left(\mathcal{C}_{u_{j}}^{t_{i}+\alpha_{j}} \cdot \lambda_{u_{j}}^{t_{i}}+\epsilon_{F}\right)
 \]</span></p>
 <p>其中<span class="math inline">\(\boldsymbol{C}_{\boldsymbol{u}_{j}}^{t_{i}+\alpha_{j}}\)</span>表示用户<span class="math inline">\(u_j\)</span>的实际等待时间（尚未包含传输延时）。<span class="math inline">\(\lambda_{u_{j}}^{t_{i}}\)</span>表示耐心系数（与用户和服务类型相关）。<span class="math inline">\(\epsilon_E\)</span>表示请求被满足后的体验数值，<span class="math inline">\(\epsilon_F\)</span>表示请求被满足前的体验数值。</p>
-<h3 id="问题表述">问题表述</h3>
+<h2 data-number="3.4" id="问题表述"><span class="header-section-number">3.4</span> 问题表述</h2>
 <p>基于以上分析，目标是提高用户的服务体验质量。 即，AI代理根据用户请求和现有资源执行资源调度和分配，以最小化用户的后悔程度。 用户最终获得的体验意味着他/她所请求的服务是否得到满足，这取决于资源调度和AI代理的分配。 因此，在当前时间片下队列在当前的队列中发送的请求是否被满足，可以被建模为</p>
 <p><span class="math display">\[
 R_{t_{i}}\left(Q_{d}^{t_{i}}, Q_{c}^{t_{i}}\right)=\frac{\sum_{k=1}^{\iota} V_{u_{k}}^{t_{i}}}{\iota}
@@ -1057,7 +1057,7 @@ L_{2}: 0 \leq \delta_{s}^{t_{i}} \leq W
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络架构"><span class="nav-number">2.</span> <span class="nav-text">网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户层资源请求"><span class="nav-number">2.1.</span> <span class="nav-text">用户层：资源请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基站层资源调度"><span class="nav-number">2.2.</span> <span class="nav-text">基站层：资源调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sdn控制器层资源部署"><span class="nav-number">2.3.</span> <span class="nav-text">SDN控制器层：资源部署</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型"><span class="nav-number">3.</span> <span class="nav-text">系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用户请求延时模型"><span class="nav-number">3.1.</span> <span class="nav-text">用户请求延时模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源管理模型"><span class="nav-number">3.2.</span> <span class="nav-text">资源管理模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户体验模型"><span class="nav-number">3.3.</span> <span class="nav-text">用户体验模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题表述"><span class="nav-number">3.4.</span> <span class="nav-text">问题表述</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网络架构"><span class="nav-text">2 网络架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户层资源请求"><span class="nav-text">2.1 用户层：资源请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基站层资源调度"><span class="nav-text">2.2 基站层：资源调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sdn控制器层资源部署"><span class="nav-text">2.3 SDN控制器层：资源部署</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">3 系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户请求延时模型"><span class="nav-text">3.1 用户请求延时模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源管理模型"><span class="nav-text">3.2 资源管理模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用户体验模型"><span class="nav-text">3.3 用户体验模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题表述"><span class="nav-text">3.4 问题表述</span></a></li></ol></li></ol></div>
             
 
           </div>

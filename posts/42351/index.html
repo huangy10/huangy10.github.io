@@ -123,19 +123,19 @@
 
 
 
-  <meta name="description" content="什么是经验分布EDF 经验分布函数（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有\(n\)个数据点上都跳跃\(1/n\)的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。 经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-Can">
+  <meta name="description" content="1 什么是经验分布EDF 经验分布函数（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有\(n\)个数据点上都跳跃\(1/n\)的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。 经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-C">
 <meta name="keywords" content="教程,数学,python,科研">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python: 获取经验分布(EDF)的方法">
 <meta property="og:url" content="http://www.codewoody.com/posts/42351/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="什么是经验分布EDF 经验分布函数（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有\(n\)个数据点上都跳跃\(1/n\)的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。 经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-Can">
+<meta property="og:description" content="1 什么是经验分布EDF 经验分布函数（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有\(n\)个数据点上都跳跃\(1/n\)的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。 经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-C">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9bb7d75a59e3cc5467cd6461b3732198.png">
 <meta property="og:updated_time" content="2019-07-26T06:00:29.981Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python: 获取经验分布(EDF)的方法">
-<meta name="twitter:description" content="什么是经验分布EDF 经验分布函数（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有\(n\)个数据点上都跳跃\(1/n\)的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。 经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-Can">
+<meta name="twitter:description" content="1 什么是经验分布EDF 经验分布函数（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有\(n\)个数据点上都跳跃\(1/n\)的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。 经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-C">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/9bb7d75a59e3cc5467cd6461b3732198.png">
 
 
@@ -560,7 +560,7 @@
       
 
       
-        <h2 id="什么是经验分布edf">什么是经验分布EDF</h2>
+        <h1 data-number="1" id="什么是经验分布edf"><span class="header-section-number">1</span> 什么是经验分布EDF</h1>
 <p><a href="https://zh.wikipedia.org/wiki/%E7%BB%8F%E9%AA%8C%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0" target="_blank" rel="noopener">经验分布函数</a>（Empirical Distribution Function）是统计学中一个与样本的经验测度有关的分布函数。该累积分布函数是在所有<span class="math inline">\(n\)</span>个数据点上都跳跃<span class="math inline">\(1/n\)</span>的阶跃函数。对于被测随机变量的某个可能取值而言，EDF在这个取值处的值为所有观测样本中小于或者等于该取值的比例。</p>
 <p>经验分布函数是对用于生成样本的累积分布函数的估计。根据Glivenko-Cantelli定理可以证明，经验分布函数以概率1收敛至这一累积分布函数。</p>
 <p>令<span class="math inline">\((x_1, \dots, x_n)\)</span>为独立同分布的的实随机变量，它们共同的累积分布函数为<span class="math inline">\(F(t)\)</span>。于是，经验分布函数可以定义为</p>
@@ -569,9 +569,9 @@
 \end{equation}\]</span></p>
 <p>其中<span class="math inline">\(\mathbf{1}_{A}\)</span> 为事件 <span class="math inline">\(A\)</span> 的指示函数。 <span class="math inline">\(\mathbf{1}_{x_i \leq t}\)</span>为<span class="math inline">\(p=F(t)\)</span>是伯努利随机变量。因而<span class="math inline">\(n \hat{F}_n(t)\)</span>则是期望为<span class="math inline">\(nF(t)\)</span>，方差为<span class="math inline">\(nF(t)(1 - F(t))\)</span>的二项随机变量。这意味着<span class="math inline">\(\hat{F}_n(t)\)</span>是<span class="math inline">\(F_(t)\)</span>的无偏估计。</p>
 <figure>
-<img src="https://imgs.codewoody.com/uploads/big/9bb7d75a59e3cc5467cd6461b3732198.png" alt="蓝线为经验分布函数，黑色长条表示相应的样本，灰线则是用于生成样本的累积分布函数。"><figcaption>蓝线为经验分布函数，黑色长条表示相应的样本，灰线则是用于生成样本的累积分布函数。</figcaption>
+<img src="https://imgs.codewoody.com/uploads/big/9bb7d75a59e3cc5467cd6461b3732198.png" alt=""><figcaption>蓝线为经验分布函数，黑色长条表示相应的样本，灰线则是用于生成样本的累积分布函数。</figcaption>
 </figure>
-<h2 id="python实现">Python实现</h2>
+<h1 data-number="2" id="python实现"><span class="header-section-number">2</span> Python实现</h1>
 <p>从上面的定义来看，其实自己实现一个EDF函数也并不困难。这里有一个例子：<a href="https://www.codementor.io/kripanshubharga/calculate-ecdf-in-python-gycltzxi3" target="_blank" rel="noopener">Calculate ECDF in Python</a>。<code>statsmodels</code>这个库里面提供了现成的<a href="https://www.statsmodels.org/devel/generated/statsmodels.distributions.empirical_distribution.ECDF.html" target="_blank" rel="noopener"><code>ECDF</code>函数</a>。</p>
 <blockquote>
 <p>这里函数名字是ECDF，其中C表示累积分布。</p>
@@ -975,7 +975,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是经验分布edf"><span class="nav-number">1.</span> <span class="nav-text">什么是经验分布EDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python实现"><span class="nav-number">2.</span> <span class="nav-text">Python实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是经验分布edf"><span class="nav-text">1 什么是经验分布EDF</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#python实现"><span class="nav-text">2 Python实现</span></a></li></ol></div>
             
 
           </div>

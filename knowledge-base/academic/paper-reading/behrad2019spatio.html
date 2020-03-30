@@ -545,15 +545,15 @@
 <p>现存的研究主要是从网络的层面讨论C-V2X的问题，这篇文章的重点放在高低密场景下C-V2X的时空动态特征。文章从建立时间、稳定性、可靠性等方面，研究了在高密度的VANET网络中，拥塞控制算法的有效性。这一算法主要面向于安全相关的车联网应用，其中延时要求非常重要。</p>
 <p>这里也提到了3GPP Release 14的模式3和模式4。这部分已经在<a href="./rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a>中介绍过了，这里就跳过省略。</p>
 <p>这篇文章研究了启用与不启用分布式拥塞控制(Distributed congestion)算法的情况下，C-V2X的时空特点。这个研究可以帮助我们更好的认识C-V2X在车联网安全应用中的有效性。</p>
-<h2 id="启用dcc">启用DCC</h2>
-<h3 id="c-v2x的一些基本信息">C-V2X的一些基本信息</h3>
+<h1 data-number="1" id="启用dcc"><span class="header-section-number">1</span> 启用DCC</h1>
+<h2 data-number="1.1" id="c-v2x的一些基本信息"><span class="header-section-number">1.1</span> C-V2X的一些基本信息</h2>
 <p>这里不重复了，参考<a href="./rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a>。</p>
-<h3 id="dcc">DCC</h3>
+<h2 data-number="1.2" id="dcc"><span class="header-section-number">1.2</span> DCC</h2>
 <p>拥塞控制算法旨在避免高密度网络环境导致网络性能下降。DCC可以通过将你的消息广播频率或者限制通信距离的方式来实现。</p>
 <p>前者需要实现速率控制算法，速率控制算法根据车辆周围的汽车密度来决定广播频率。直接控制id是Inter-transmission time (ITT)。同时车辆还需要评估Position Tracking Error (PTE)。PTE衡量的是车辆对于周围车辆位置追踪的精度。当精度比较差时，如<span class="math inline">\(PTE &gt; 50cm\)</span>，则车辆会无视计算出来的ITT，直接以基线频率（如10Hz）进行广播。</p>
 <p>后者基于channel busy percentage(CBP)来控制通信距离。</p>
-<h2 id="仿真与结论">仿真与结论</h2>
-<h3 id="仿真场景">仿真场景</h3>
+<h1 data-number="2" id="仿真与结论"><span class="header-section-number">2</span> 仿真与结论</h1>
+<h2 data-number="2.1" id="仿真场景"><span class="header-section-number">2.1</span> 仿真场景</h2>
 <p>高速公路场景，双向12车道。仿真参数如下：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/82b198f5d36a8c859b70f7bc5f022715.png"></p>
 <p>这里仿了不同密度下的情况。仿真关注的参数包括：</p>
@@ -568,7 +568,7 @@
 <li>节点适应动态环境的速度，这会影响延时</li>
 <li>临近通信的可靠性。</li>
 </ul>
-<h3 id="结论">结论</h3>
+<h2 data-number="2.2" id="结论"><span class="header-section-number">2.2</span> 结论</h2>
 <p>SB-SPS机制需要依靠感知信道状态来避免资源选择过程中的碰撞（两个节点选择了同一个资源）。具体而言，节点在选择子信道时会排除子信道上的信号强度超过一定阈值的子信道。而信道传输模型存在一定的随机性，SB-SPS能够多有效地减轻碰撞的影响呢？另一方面，DCC中应用通信距离需要建立起信道功率和传输距离的模型，这一模型的准确性也有待考证。</p>
 <p>作者测量了发生碰撞，即选择了两个相同的子信道的节点的实际距离。</p>
 
@@ -967,7 +967,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#启用dcc"><span class="nav-number">1.</span> <span class="nav-text">启用DCC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c-v2x的一些基本信息"><span class="nav-number">1.1.</span> <span class="nav-text">C-V2X的一些基本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dcc"><span class="nav-number">1.2.</span> <span class="nav-text">DCC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真与结论"><span class="nav-number">2.</span> <span class="nav-text">仿真与结论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#仿真场景"><span class="nav-number">2.1.</span> <span class="nav-text">仿真场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">2.2.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#启用dcc"><span class="nav-text">1 启用DCC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-v2x的一些基本信息"><span class="nav-text">1.1 C-V2X的一些基本信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dcc"><span class="nav-text">1.2 DCC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仿真与结论"><span class="nav-text">2 仿真与结论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真场景"><span class="nav-text">2.1 仿真场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-text">2.2 结论</span></a></li></ol></li></ol></div>
             
 
           </div>

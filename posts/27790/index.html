@@ -560,7 +560,7 @@
 <p>上面的目录的前几个部分其实讲的就是图像压缩的问题，不过这里他将的特别的入门级，显得比较啰嗦，我会进行一定的简化。</p>
 </blockquote>
 <p>图像性能常常是网页性能糟糕的一个重要因素，尤其是在初始载入的时候。根据的分辨率和图像质量不同，图像的大小可能占据网站总体积的70%以上。不注重图像性能优化很容易让网站的体验变得非常糟糕。没有经验的开发者则常常忽视这个问题。他们也未能及时接触到相关的优化工具。这篇文章的主旨就在于为Web开发者提供网页中图像性能优化的指南。</p>
-<h2 id="图像压缩">图像压缩</h2>
+<h1 data-number="1" id="图像压缩"><span class="header-section-number">1</span> 图像压缩</h1>
 <p>未被压缩的图像大小和很容易通过像素数量乘以通道数确定：长 * 宽 * 24bits（RGB颜色系统）。原始图像的大小是非常大的，因此图像压缩就非常重要。</p>
 <p>有一些在线的网站能够提供图像压缩的功能，如：</p>
 <ul>
@@ -579,9 +579,9 @@
 <li><a href="https://github.com/itgalaxy/imagemin-webpack" target="_blank" rel="noopener">imagemin - Webpack</a></li>
 <li><a href="https://github.com/DeMoorJasper/parcel-plugin-imagemin" target="_blank" rel="noopener">imagemin - Parcel</a></li>
 </ul>
-<h2 id="图像载入优化">图像载入优化</h2>
+<h1 data-number="2" id="图像载入优化"><span class="header-section-number">2</span> 图像载入优化</h1>
 <p>上面已经介绍了通过压缩图像而不减低分辨率以减少前端需要下载文件体积的方法。不过如果一次性载入的图像数量比较多，网页的性能还是会很糟糕。</p>
-<h3 id="lazy-loading">Lazy Loading</h3>
+<h2 data-number="2.1" id="lazy-loading"><span class="header-section-number">2.1</span> Lazy Loading</h2>
 <p>Lazy Loading 是指在需要的时候才载入素材的理念。在我们的场景中，只有位于当前用户可视区域内的图像才需要进行载入。</p>
 <p>最简单的 Lazy Loading 方法是：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.jpg"</span> <span class="attr">loading</span>=<span class="string">"lazy"</span> <span class="attr">alt</span>=<span class="string">"sample image"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
@@ -591,25 +591,25 @@
 <li><a href="https://github.com/malchata/yall.js/" target="_blank" rel="noopener">yall.js</a></li>
 <li><a href="https://github.com/dinbror/blazy" target="_blank" rel="noopener">Blazy (not actively maintained)</a></li>
 </ul>
-<h3 id="progressive-images">Progressive images</h3>
+<h2 data-number="2.2" id="progressive-images"><span class="header-section-number">2.2</span> Progressive images</h2>
 <p>Lazy Loading 的问题在于，从 UX 设计角度来看，用户在等待图像载入的时候，面对的是一个空的画面，这个设计不是特别的友好。Progressive images 的概念就是，我们可以先载入一个低质量的图像放在那里，然后载入高质量的图像。低质量的图像体积要小很多，可以很快的完成。这个图像质量逐渐改善的过程也可以分成多步，如下图：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/aa65cd49aef46db5741f02d249826ba5.jpeg"></p>
 <p>这种设计给予用户一种速度的错觉。用户可以看着图片变得越来越清晰，而非只是盯着一个空白区域。这里是一个 JavaScript 实现的 Progressive images: <a href="https://www.npmjs.com/package/progressive-image" target="_blank" rel="noopener">progressive-image</a>。</p>
-<h3 id="responsive-images">Responsive images</h3>
+<h2 data-number="2.3" id="responsive-images"><span class="header-section-number">2.3</span> Responsive images</h2>
 <p>使用正确尺寸的图像也是一个需要注意的点。</p>
 <p>例如，我们有一个图像，在桌面端的最大宽度为<code>1920px</code>，在平板端的最大宽度为<code>1024px</code>，移动端的最大宽度为<code>568px</code>。简单的方法是使用一个<code>1920px</code>的图像用于所有的情况。但是这样就意味着平板用户和移动用户需要载入其实完全不必要的数据。</p>
 <p>我么可以使用 <code>picture</code> 元素来告诉浏览器根据设备类型去下载哪个图片。这个元素大约被93%的用户的浏览器支持，不过我们可以内嵌使用 <code>img</code> 元素来实现 fallback。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 1025px)"</span> <span class="attr">srcset</span>=<span class="string">"image_desktop.jpg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 769px)"</span> <span class="attr">srcset</span>=<span class="string">"image_tablet.jpg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image_mobile.jpg"</span> <span class="attr">alt</span>=<span class="string">"Sample image"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用-cdn">使用 CDN</h2>
+<h1 data-number="3" id="使用-cdn"><span class="header-section-number">3</span> 使用 CDN</h1>
 <p>一些 CDN，例如 Cloudinary 还有 Cloudflare 可以在服务器上进行图像优化。如果你使用了 CDN 服务，注意留意一下 CDN 服务提供商是否提供了图像优化的服务。这就可以让我们省下很多功夫了。</p>
-<h2 id="webp-图像格式">WebP 图像格式</h2>
+<h1 data-number="4" id="webp-图像格式"><span class="header-section-number">4</span> WebP 图像格式</h1>
 <blockquote>
 <p>最近看到了好多 WebP 格式的图像啊，尤其是微信公众号的文章里都是这种格式。别的优点还不清楚，不过给图像直接下载设置了一点障碍。</p>
 </blockquote>
 <p>WebP 图像格式由 Google 开发，是一种特别针对 Web 场景优化的格式。根据 canIUse 的数据，WebP 格式的图像在大约 80% 的场景下使用。为了保险设计 Fallback机制，例如：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">srcset</span>=<span class="string">"image.webp"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"image.jpg"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.jpg"</span> <span class="attr">alt</span>=<span class="string">"Sample image"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>有很多在线转化工具可以将图像转化成 WebP 格式。如果 CDN 能够提供这种支持就是最为省心了。</p>
-<h2 id="为高像素密度的屏幕的优化">为高像素密度的屏幕的优化</h2>
+<h1 data-number="5" id="为高像素密度的屏幕的优化"><span class="header-section-number">5</span> 为高像素密度的屏幕的优化</h1>
 <p>这更多的是 UX 方面的改善，而非性能方面的改善。例如在我们子啊一个 <code>768px</code> 宽度的屏幕中展示 <code>768px x 320px</code> 的图像，而这个设备的像素密度是2x，则设备屏幕实际的像素宽度是 <code>2 x 768 = 1536px</code>。那么实际上我们是将一个 <code>768px</code> 的图像拉伸了两倍。为了最优化图像在高分辨率设备上的显示，我们需要额外指定一个两倍甚至三倍分辨率的图像。这一图像通过<code>srcset</code>属性来设置：</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image-1x.jpg"</span> <span class="attr">srcset</span>=<span class="string">"image-2x.jpg 2x"</span> <span class="attr">alt</span>=<span class="string">"Sample image"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>一个完整的响应式的，支持 WebP/PNG 格式以及高分辨率屏幕的例子：</p>
@@ -1008,7 +1008,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#图像压缩"><span class="nav-number">1.</span> <span class="nav-text">图像压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图像载入优化"><span class="nav-number">2.</span> <span class="nav-text">图像载入优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lazy-loading"><span class="nav-number">2.1.</span> <span class="nav-text">Lazy Loading</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#progressive-images"><span class="nav-number">2.2.</span> <span class="nav-text">Progressive images</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#responsive-images"><span class="nav-number">2.3.</span> <span class="nav-text">Responsive images</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-cdn"><span class="nav-number">3.</span> <span class="nav-text">使用 CDN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webp-图像格式"><span class="nav-number">4.</span> <span class="nav-text">WebP 图像格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为高像素密度的屏幕的优化"><span class="nav-number">5.</span> <span class="nav-text">为高像素密度的屏幕的优化</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像压缩"><span class="nav-text">1 图像压缩</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像载入优化"><span class="nav-text">2 图像载入优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lazy-loading"><span class="nav-text">2.1 Lazy Loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#progressive-images"><span class="nav-text">2.2 Progressive images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#responsive-images"><span class="nav-text">2.3 Responsive images</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-cdn"><span class="nav-text">3 使用 CDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webp-图像格式"><span class="nav-text">4 WebP 图像格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为高像素密度的屏幕的优化"><span class="nav-text">5 为高像素密度的屏幕的优化</span></a></li></ol></div>
             
 
           </div>

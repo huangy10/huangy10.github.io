@@ -546,12 +546,12 @@
 <p>Mode 2，以及Mode 1是3GPP Release 12提出的ProSe，即临近服务(Proximity Service)的一部分。这个标准是通用的D2D通信，并非专门针对C-V2X提出。不过Release 12和后面为C-V2X提出的Release 14有继承关系。</p>
 </blockquote>
 <p>如果读者对这篇文章里的概念缺乏了解，需要先阅读<a href="/knowledge-base/academic/its/c-v2x/">C-V2X</a>中的相关内容。</p>
-<h2 id="概述">概述</h2>
+<h1 data-number="1" id="概述"><span class="header-section-number">1</span> 概述</h1>
 <p>发送数据的用户设备(User Devices, UEs)在传输前必须要通过PSCCH上广播这一通知。因此网络需要定义好PSCCH的资源池，从而尽可能使得所有的车辆都能够正确地解码控制信息。对于工作在模式2（没有基站服务）下的节点来说这一操作尤为困难。</p>
 <p>由于UE是半双工设备，如果控制信道资源池谁家的不好可能会导致控制信息没法被所有的节点收到。这篇文章分析了能够正确收到控制信息的车辆的数量的分布，从而知道PSCCH设计。</p>
 <p>在Mode 2下，UE需要在所有的sidelink（区分于uplink和downlink，使用不同的频段）下竞争通信资源。这个竞争过程通过PSCCH来进行。</p>
-<h2 id="d2d通信">D2D通信</h2>
-<h3 id="overview">Overview</h3>
+<h1 data-number="2" id="d2d通信"><span class="header-section-number">2</span> D2D通信</h1>
+<h2 data-number="2.1" id="overview"><span class="header-section-number">2.1</span> Overview</h2>
 <p>sidelink上的通信上的通信在时域上具有周期性。每个sidelink周期包含有若干个PSCCH和Physical Sidelink Shared Channel (PSSCH)，PSSCH负责传输数据。3GPP的标准定义了PSCCH和PSSCH的发送和接受流程。</p>
 <p>UE上的sidelink的运行周期需要提前配置好。在基站服务可用时可以由基站分配PSCCH，而基站不可用时，UE需要从PSCCH池中随机选择资源使用，并选择使用选中的PSCCH告知潜在的消息接受者。所有的UE则在监听PSCCH，从而使得潜在的消息接受者知道真正的数据包会在什么时候以何种方式发送。</p>
 <p>当潜在的接受者收到PSCCH上的消息时，就可以将自己切换到对应的PSSCH的物理资源块(Physical Resource Blocks, PRBs)上准备接受真正的数据信息。反之，如果潜在接受者没有收到PSCCH上的控制消息，那么这些UE将无法正确地接受PSSCH上的数据。</p>
@@ -564,14 +564,14 @@
 <blockquote>
 <p><span style="background-color: yellow;">👆这个问题在<a href="/knowledge-base/academic/its/c-v2x/3GPP/PSCCH/">这个地方</a>中做了进一步讨论。</span>。</p>
 </blockquote>
-<h3 id="pscch">PSCCH</h3>
+<h2 data-number="2.2" id="pscch"><span class="header-section-number">2.2</span> PSCCH</h2>
 <p>在给定的周期内，所有的控制信息需要传输两次：前一次传输完成后立刻跟上一个重复的传输。不过两次传输使用的是不通的PRB。UE需要从PSCCH池中随机选择一对PRB。PSCCH池有下面两个特征参数：</p>
 <ol type="1">
 <li><span class="math inline">\(L_{PSCCH}\)</span>: 时间尺度上PSCCH占据的子帧数量，<span class="math inline">\(2 &lt; L_{PSCCH} &lt; 40\)</span></li>
 <li><span class="math inline">\(M^{PSCCH\_RP}_{RB}\)</span>：频率尺度上PSCCH占据的PRBs的数量</li>
 </ol>
 <p>由于每次消息传输需要使用两个PRBs，则PSCCH中实际可用的资源数量是<span class="math inline">\(N_{PSCCH} = L_{PSCCH} x \lfloor M_{RB}^{PSCCH\_RP} / 2 \rfloor\)</span></p>
-<h2 id="分析模型">分析模型</h2>
+<h1 data-number="3" id="分析模型"><span class="header-section-number">3</span> 分析模型</h1>
 <blockquote>
 <p>阅读这篇文章的目的在于了解PSCCH的基本特点，所以后文的数学模型没有看。</p>
 </blockquote>
@@ -971,7 +971,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#d2d通信"><span class="nav-number">2.</span> <span class="nav-text">D2D通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#overview"><span class="nav-number">2.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pscch"><span class="nav-number">2.2.</span> <span class="nav-text">PSCCH</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析模型"><span class="nav-number">3.</span> <span class="nav-text">分析模型</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#d2d通信"><span class="nav-text">2 D2D通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-text">2.1 Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pscch"><span class="nav-text">2.2 PSCCH</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析模型"><span class="nav-text">3 分析模型</span></a></li></ol></div>
             
 
           </div>
