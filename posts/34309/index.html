@@ -136,7 +136,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9fe6971082bdeb85a3859cc580a2c68d.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/54bc27c9a000ea8c25fe505f15401975.png">
-<meta property="og:updated_time" content="2020-03-22T17:25:00.486Z">
+<meta property="og:updated_time" content="2020-03-30T18:14:19.426Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-增强学习与车联网通信资源分配">
 <meta name="twitter:description" content="1 概述 本次要读的论文是Deep Reinforcement Learning Based Resource Allocation for V2V Communications，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做分布式的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不">
@@ -504,7 +504,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2020-03-23 01:25:00" itemprop="dateModified" datetime="2020-03-23T01:25:00+08:00">2020-03-23</time>
+                <time title="Modified: 2020-03-31 02:14:19" itemprop="dateModified" datetime="2020-03-31T02:14:19+08:00">2020-03-31</time>
               
             
           </span>
@@ -676,7 +676,7 @@ Loss(\mathbf{\theta}) = \sum_{(\mathbf{s}_t, a_t) \in D} (y - Q(\mathbf{s}_t, a_
 y = r_t + \max_{a \in \mathcal{A}} Q_{old} (\mathbf{s}_t, a, \mathbf{\theta})
 \]</span></p>
 <h2 data-number="4.3" id="模型训练与测试"><span class="header-section-number">4.3</span> 模型训练与测试</h2>
-<p>如同众多的机器学习算法，这里的方法的也分为训练和测试两个阶段。训练数据和测试数据都是通过环境（仿真系统模拟出来的）和代理的交互过程中产生的。每个训练样本包括<span class="math inline">\(\mathbf{s}_t, \mathbf{s}_{t+1}, a_t, r_t\)</span>。环境模拟器包括VUE，CUE及信道，车联的位置随机生成。V2V以及V2I的链路的CSI信息根据车辆的位置生成。在给定V2V的频谱和功率选择之后，环境模拟器负责给出<span class="math inline">\(\mathbf{s}_{t+1}\)</span>和<span class="math inline">\(r_t\)</span>。在训练阶段，深度Q学习使用了经验回放(Experience replay)功能，其中训练数据被生成并存储到内存中。如下面的算法所示：</p>
+<p>如同众多的机器学习算法，这里的方法的也分为训练和测试两个阶段。训练数据和测试数据都是通过环境（仿真系统模拟出来的）和代理的交互过程中产生的。每个训练样本包括<span class="math inline">\(\mathbf{s}_t, \mathbf{s}_{t+1}, a_t, r_t\)</span>。环境模拟器包括VUE，CUE及信道，车联的位置随机生成。V2V以及V2I的链路的CSI信息根据车辆的位置生成。在给定V2V的频谱和功率选择之后，环境模拟器负责给出<span class="math inline">\(\mathbf{s}_{t+1}\)</span>和<span class="math inline">\(r_t\)</span>。在训练阶段，深度Q学习使用了经验回放(Experience replay)功能，其中训练数据被生成并存储到内存中。如下面的算法所示：</p>
 <p><img src="https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png"></p>
 <p>在每轮迭代中，从内存中提取一个mini-batch用于更新Q网络。这种方法可以消除生成训练数据的时间相关性。</p>
 <blockquote>
