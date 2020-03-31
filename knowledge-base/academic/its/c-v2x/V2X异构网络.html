@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a302ef9d78222499ac3ed8b5d3ee75f9.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/3d3c5c3f145c5178817cbe2051a7c6ab.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/14ec39a1df82a5fa8635d8c083f75edb.png">
-<meta property="og:updated_time" content="2020-03-22T17:25:00.492Z">
+<meta property="og:updated_time" content="2020-03-30T18:54:54.336Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自动驾车车辆的异构V2X网络">
 <meta name="twitter:description" content=".pdfobject-container {   height: 700px;   padding: 10px;   border: 1px solid black;   margin-bottom: 15px; }  下面给出的这个pdf文件的原始下载地址是这里，从URL来看，这个pdf是IEEE 5G峰会2019年南非场的一部分。 下面的pdf展示如果出现了502 Bad Gateway的错">
@@ -563,7 +563,7 @@
 }
 </style>
 <p>下面给出的这个pdf文件的原始下载地址是<a href="http://www.5gsummit.org/pretoria/img/Javier%20Gozalvez%205G%20Summit.pdf" target="_blank" rel="noopener">这里</a>，从URL来看，这个pdf是IEEE 5G峰会2019年南非场的一部分。</p>
-<p>下面的pdf展示如果出现了502 Bad Gateway的错误可以刷新页面重试一下。</p>
+<p>下面的pdf展示如果出现了502 Bad Gateway的错误可以右键点击选择重新加载。</p>
 <p>在后面我会列一下部分有意思的点。</p>
 <div class="pdf" target="https://static.codewoody.com/blogfiles/Javier%20Gozalvez%205G%20Summit.pdf" height="690px"></div>
 <blockquote>
@@ -1601,6 +1601,7 @@ if ($('body').find('div.pdf').length) {
   const reqFile = function (onFail) {
     if (retry === 0) return
     retry --
+    console.log("retry: " + retry)
     $.ajax({
       type: 'GET',
       url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',

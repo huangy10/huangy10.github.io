@@ -126,7 +126,7 @@
   <meta name="description" content="晚来天雨雪，能饮一杯无？">
 <meta property="og:type" content="website">
 <meta property="og:title" content="治部少辅">
-<meta property="og:url" content="http://www.codewoody.com/tags/Hexo/index.html">
+<meta property="og:url" content="http://www.codewoody.com/tags/hexo/index.html">
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="晚来天雨雪，能饮一杯无？">
 <meta property="og:locale" content="zh-Hans">
@@ -142,7 +142,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/tags/Hexo/">
+  <link rel="canonical" href="http://www.codewoody.com/tags/hexo/">
 
 
 
@@ -152,7 +152,7 @@
   };
 </script>
 
-  <title>Tag: Hexo | 治部少辅</title>
+  <title>Tag: hexo | 治部少辅</title>
   
 
 
@@ -452,7 +452,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h2>Hexo<small>Tag</small>
+        <h2>hexo<small>Tag</small>
         </h2>
       </div>
 
@@ -464,17 +464,17 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/posts/40936/" itemprop="url">
+          <a class="post-title-link" href="/posts/36496/" itemprop="url">
             
-              <span itemprop="name">pandoc中提供的markdown特殊扩展功能</span>
+              <span itemprop="name">Hexo启用Han支持过程中发现的问题</span>
             
           </a>
         
       </h3>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2020-03-24T14:42:14+08:00" content="2020-03-24">
-          03-24
+        <time class="post-time" itemprop="dateCreated" datetime="2019-06-29T15:04:54+08:00" content="2019-06-29">
+          06-29
         </time>
       </div>
 
@@ -490,17 +490,17 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/posts/5440/" itemprop="url">
+          <a class="post-title-link" href="/posts/42846/" itemprop="url">
             
-              <span itemprop="name">开源对象存储服务(OSS) Minio 及其在Hexo中的使用</span>
+              <span itemprop="name">Hexo文章置顶/置底方法研究</span>
             
           </a>
         
       </h3>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-16T17:33:40+08:00" content="2018-11-16">
-          11-16
+        <time class="post-time" itemprop="dateCreated" datetime="2019-06-26T22:51:15+08:00" content="2019-06-26">
+          06-26
         </time>
       </div>
 
@@ -516,17 +516,43 @@
 
       <h3 class="post-title">
         
-          <a class="post-title-link" href="/posts/53793/" itemprop="url">
+          <a class="post-title-link" href="/posts/62502/" itemprop="url">
             
-              <span itemprop="name">这个博客是如何建立起来的</span>
+              <span itemprop="name">Pandoc渲染引擎导致Hexo Tag渲染失败的临时解决办法</span>
             
           </a>
         
       </h3>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-05T16:16:48+08:00" content="2018-11-05">
-          11-05
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-25T14:06:21+08:00" content="2019-04-25">
+          04-25
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h3 class="post-title">
+        
+          <a class="post-title-link" href="/posts/20215/" itemprop="url">
+            
+              <span itemprop="name">Hexo+Next: 使用Latex公式</span>
+            
+          </a>
+        
+      </h3>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-04-24T12:55:54+08:00" content="2019-04-24">
+          04-24
         </time>
       </div>
 
@@ -1365,6 +1391,7 @@ if ($('body').find('div.pdf').length) {
   const reqFile = function (onFail) {
     if (retry === 0) return
     retry --
+    console.log("retry: " + retry)
     $.ajax({
       type: 'GET',
       url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',
@@ -1441,36 +1468,6 @@ if ($('body').find('div.pdf').length) {
     }).append(e);
   })
 </script>
-
-
-  
-
-  
-
-
-  <script src="https://cdn.bootcss.com/Han/3.3.0/han.js"></script>
-  
-  <script>
-    void function(){
-      // window.hinst = Han(document.querySelector('.post-body')).setRoutine([
-      //   'initCond',
-      //   'renderElem',
-      //   'renderJiya',
-      //   'renderHanging',
-      //   'renderHWS',
-      //   'correctBasicBD',
-      //   'substCombLigaWithPUA'
-      // ]).render()
-      const ele = document.getElementById("refs")
-      if (ele) {
-        ele.setAttribute("lang", "en_US");
-      }
-    }()
-
-    </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</body>
-</html>
-ipt>
 
 
   

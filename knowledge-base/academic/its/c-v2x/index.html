@@ -132,7 +132,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
-<meta property="og:updated_time" content="2020-03-30T15:42:16.994Z">
+<meta property="og:updated_time" content="2020-03-31T11:23:02.864Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X">
 <meta name="twitter:description" content="span.questions {     background-color: yellow; }  1 本章节内容  3GPP标准相关 V2X异构网络  2 关于C-V2X标准的一些关键内容 2.1 物理层信息 2.1.1 频谱与调制 C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018">
@@ -589,13 +589,14 @@ span.questions {
 <li><p><strong>C-V2X的频段具体是多少，每个信道带宽是多少，有多少个信道</strong>；<br>
 目前可以确定的是信道带宽是10MHz或者20MHz，尚未看到文献提到C-V2X有多个信道。具体的频段目前看到的文献大部分没有提到。只查到工信部的要求是<strong>5905-5925MHz</strong>。</p></li>
 <li><p><strong>C-V2X的有效传输距离一般是多少</strong>；<br>
-有文献提到C-V2X的有效传输距离一般高于WAVE。</p></li>
+有文献提到C-V2X的有效传输距离一般高于WAVE<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>。</p></li>
 <li><p><strong>C-V2X传输的数据率一般是多少</strong>；<br>
-尚不清楚。</p></li>
+<del>尚不清楚。</del> 在<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#RB符号数与传输速率">这篇Survey里面</a>提到了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p></li>
 <li><p><strong>抗干扰能力：SINR门限一般会是什么水平</strong>；<br>
 尚不清楚</p></li>
 <li><p><strong>是否支持双工</strong>。（WAVE支持一辆车带两套天线，一套收一套发，但是需要在不通的信道。WAVE总共提供了7个信道）<br>
 尚不清楚。</p></li>
+<li><p><strong>仿真工具</strong></p></li>
 </ol>
 </div>
 <h2 data-number="2.2" id="mac层帧结构"><span class="header-section-number">2.2</span> MAC层帧结构</h2>
@@ -626,6 +627,12 @@ span.questions {
 <li><p><strong>SCI中的具体信息内容</strong>。<br>
 提这一点是想关注SCI中是否会包含本节点周围节点的资源分配信息，这涉及到是否会有隐藏终端问题。</p></li>
 </ol>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#通信距离更远">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a>: 一个共识是，在给定一个目标性能时，LTE-V2X可以达到更远的通信距离<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
         
       </div>
@@ -1623,6 +1630,7 @@ if ($('body').find('div.pdf').length) {
   const reqFile = function (onFail) {
     if (retry === 0) return
     retry --
+    console.log("retry: " + retry)
     $.ajax({
       type: 'GET',
       url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',

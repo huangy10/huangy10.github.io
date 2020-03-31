@@ -1337,6 +1337,7 @@ if ($('body').find('div.pdf').length) {
   const reqFile = function (onFail) {
     if (retry === 0) return
     retry --
+    console.log("retry: " + retry)
     $.ajax({
       type: 'GET',
       url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',

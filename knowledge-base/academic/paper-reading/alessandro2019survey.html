@@ -123,17 +123,22 @@
 
 
 
-  <meta name="description" content="文章的标题是Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era，是意大利人的文章。 这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。">
+  <meta name="description" content="文章的标题是Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era，是意大利人的文章。 这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。IE">
 <meta property="og:type" content="website">
 <meta property="og:title" content="5G Sidelink C-V2X 和 基于Wifi的车联网协议的对比调研">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/alessandro2019survey.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章的标题是Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era，是意大利人的文章。 这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。">
+<meta property="og:description" content="文章的标题是Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era，是意大利人的文章。 这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。IE">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-30T17:26:13.594Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bdb15273b52f390c8affced77f5581ec.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e9a7a177f724b721e789bd1930b4f675.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/079657cf47c91dbbb113437f2bd826e1.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/b3b7f447d276949351fdcfc13d045084.png">
+<meta property="og:updated_time" content="2020-03-31T11:58:36.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="5G Sidelink C-V2X 和 基于Wifi的车联网协议的对比调研">
-<meta name="twitter:description" content="文章的标题是Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era，是意大利人的文章。 这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。">
+<meta name="twitter:description" content="文章的标题是Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era，是意大利人的文章。 这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。IE">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/bdb15273b52f390c8affced77f5581ec.png">
 
 
 
@@ -539,7 +544,97 @@
         
         
           <p>文章的标题是<a href="https://www.mdpi.com/1999-5903/11/6/122/htm" target="_blank" rel="noopener">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a>，是意大利人的文章。</p>
-<p>这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。</p>
+<p>这篇文章是对比IEEE801.1p和C-V2X的，正好符合我的需要。文章说到，IEEE802.11p是去中心化的，基于发送前感知的策略（指CSMA/CA）；C-V2X则是基于正交资源(RB)。IEEE802.11p的历史相对比较长，测试与应用也比较多。LTE-V2X则要年轻的多。因此LTE-V2X上有一些比较新的物理层设计，不过其可靠性和可扩展性（规模）还有待考量。</p>
+<p><span id="通信距离更远">一个共识是，在给定一个目标性能时，LTE-V2X可以达到更远的通信距离</span>。不过在一些场景下IEEE802.11p可以取得同LTE-V2X相当，甚至更好的结果。另一个需要注意的问题是，大多数进行二者对比的文章都会就调制编码方式(MCS)做出一定的假设，而MCS在IEEE802.11p中是没有经过优化的。目前针对MAC的比较还基本没有。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/bdb15273b52f390c8affced77f5581ec.png" id="fig:大事记" alt=""><figcaption>图 1: 大事记</figcaption>
+</figure>
+<h1 data-number="1" id="协议基本信息"><span class="header-section-number">1</span> 协议基本信息</h1>
+<h2 data-number="1.1" id="ieee802.11p"><span class="header-section-number">1.1</span> IEEE802.11p</h2>
+<p>这个部分在<a href="/knowledge-base/academic/its/wave">WAVE</a>里面我做了比较多的梳理，故这里我不再啰嗦太多了。</p>
+<h3 data-number="1.1.1" id="下一代ieee-802.11bd"><span class="header-section-number">1.1.1</span> 下一代：IEEE 802.11bd</h3>
+<p>2018年五月 IEEE标准协会开始关注802.11的下一代V2X通信技术，称为IEEE 802.11 Next Generation V2X (NGV)，CAR2CAR Communication Consortium也在进行ITS-G5 Release 2的研究。新一代的标准的想法是适应搞移动性和OCB模式，同时确保对历史协议的向下兼容。研究的重点技术包括MIMO，改善信道编码，以及better pilot placing (这个是什么含义还不清楚)。LDPC (Low density parity check, 一种信道编码方式)可以带来大约 6dB 的增益，STBC(Space time block codes)则可以带来2-3dB的增益。</p>
+<p>IEEE相关研究组的主要目标是提升吞吐率，扩展通信范围。目前的候选技术包括:</p>
+<ul>
+<li><strong>OFDM</strong> numerology re-design: definition of new optimized tone spacing and guard interval duration to better cope with 5.9 GHz frequencies and high-speed mobility;</li>
+<li><strong>LDPC</strong> codes to improve coding effectiveness;</li>
+<li><strong>MIMO</strong> diversity through STBC codes or cyclic shift diversity (CSD);</li>
+<li>Addition of midambles (control sequences in the middle of the packet) to improve Doppler recovery;</li>
+<li><strong>Dual carrier modulation (DCM)</strong> and 20 MHz channels</li>
+</ul>
+<p>上述所有的修改都是在物理层的。</p>
+<h2 data-number="1.2" id="sidelink-lte-v2x"><span class="header-section-number">1.2</span> Sidelink LTE-V2X</h2>
+<p>这个部分在别的论文里提到的也比较多，这里这里说一些新的内容。</p>
+<p>在频域上，子载波的间隔固定为15kHz，子载波则以12个为一组使用(180kHz) <span class="eng-orign">in the frequency domain, the subcarrier spacing is fixed to 15 kHz and subcarriers are used in groups of 12 (i.e., 180 kHz)</span>。在时域上，14个符号(Symbol)构成1ms长度的子帧，这1ms的长度也被称为Transmission Time Interval (TTI)，包含9个数据符号，4个解调参考的信号符号(Demodulation reference signal (DMRS) symbols)，和一个用Tx-RX切和时间校准的空符号。LTE-V2X相比IEEE802.11p提供了更多的调制编码方式，包括4-QAM, 16-QAM等调制，以及几乎连续的编码速率。MCS的更多信息参见 <a href="#fig:LTE-V2X-MCS">图 2</a> 。</p>
+<blockquote>
+<p>这里似乎没有采取将180kHz的频谱资源归为一个RB的说法，一直在说12 subcarrier groups.</p>
+</blockquote>
+<div id="RB符号数与传输速率">
+<blockquote>
+<p>这里给出了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p>
+</blockquote>
+</div>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/e9a7a177f724b721e789bd1930b4f675.png" id="fig:LTE-V2X-MCS" alt=""><figcaption>图 2: LTE-V2X MCS，及相关参数（根据包大小为300字节给出）</figcaption>
+</figure>
+<p>LTE-V2X调度的最小单元是12个子载波组 <span class="math inline">\(\times\)</span> 1 TTI。一个包的传输通常需要在一个TTI上占用多个RB。原则上，LTE-V2X的字资源块是正交的，即彼此之间不会有干扰。</p>
+<h3 data-number="1.2.1" id="下一代5g-new-radio"><span class="header-section-number">1.2.1</span> 下一代：5G &amp; New Radio</h3>
+<p>New Radio最早包含在2019年三月发布的Release 15里面。这里有一个很重要的结论：<br>
+5G NR可以为未来发布的协议标准提供更高级的服务，但是Release 14中提出的C-V2X标准的会是基础安全通信的核心基础。</p>
+<p>5G NR不会照顾向前兼容的问题，更像是添加一个额外的通信接口和信道。</p>
+<ul>
+<li>Carrier aggregation with support of up to eight bands;</li>
+<li>Use of frequencies above 6 GHz;</li>
+<li>Flexible numerology, with the possibility of subcarrier spacing of 30 kHz and 60 kHz at 5.9 GHz;</li>
+<li>Higher order of MCSs, also including 64-QAM;</li>
+<li>Possibility to transmit over single slots and even portions of slots;</li>
+<li>Addition of a sidelink feedback channel to allow higher reliability and lower latency;</li>
+<li>LDPC and polar codes designed to offer higher robustness without increasing encoding and decoding complexity;</li>
+<li>Use of MIMO receiving antennas to enable spatial diversity especially useful to mitigate multipath in urban scenarios;</li>
+<li>A modification of the scheduling Modes in order to enhance the sensing-based procedures and to deal with aperiodic traffic, also including the possibility of group reservations.</li>
+</ul>
+<h1 data-number="2" id="related-works"><span class="header-section-number">2</span> Related works</h1>
+<p>这里给出一些非常重要的结论</p>
+<ul>
+<li>现有的比较中，基本都能得出在同样的性能水平下，C-V2X能够取得更大的通信范围。不过这种对比中IEEE 802.11p 的设置并非是最优的情况。并且这些对比并不能很好的区分C-V2X的性能优势是来自于物理层还是MAC层。如果IEEE802.11p的物理层重新设计的话，性能是否会反超？</li>
+</ul>
+<h1 data-number="3" id="仿真工具与设置"><span class="header-section-number">3</span> 仿真工具与设置</h1>
+<p>仿真场景包括三个：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/079657cf47c91dbbb113437f2bd826e1.png"></p>
+<h2 data-number="3.1" id="ltev2vsim"><span class="header-section-number">3.1</span> LTEV2Vsim</h2>
+<p>LTEV2Vsim 是一个离散事件模拟工具，用MATLAB开发。车辆移动方面支持用跟随模型模拟车辆运动，也支持外部输入的车辆轨迹数据。这个仿真框架同时支持LTE-V2V和IEEE802.11p的模拟。</p>
+<blockquote>
+<p>仿真的细节问题这里先不谈</p>
+</blockquote>
+<h2 data-number="3.2" id="仿真结论"><span class="header-section-number">3.2</span> 仿真结论</h2>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/b3b7f447d276949351fdcfc13d045084.png" id="fig:sim-result" alt=""><figcaption>图 3: 仿真结果：PTR和更新延时(Update delay，指对于给定的通信对，相邻两次成功的接受的间隔)，更多的图看原文，还挺多的，这里不全贴了</figcaption>
+</figure>
+<ul>
+<li><strong>MCS in IEEE802.11p</strong></li>
+</ul>
+<p>研究MCS对于PRR(Packet Reception Ratio)的影响。注意最优的MCS选择肯定是要依赖于具体的场景的。MCS的选择有这样的tradeoff: 更高的MCS可以缩短传输时间，从而降低信道的拥堵；但是同时会减少通信的可靠性（误码率会上升）。</p>
+<ul>
+<li><strong>MCS in LTE-V2X</strong></li>
+</ul>
+<p>在LTE-V2X中，可靠性和传输效率的矛盾同时受到包在频域分配的情况的影响。（见原文）</p>
+<ul>
+<li><strong>标准IEEE802.11p vs LTE-V2X Mode 3</strong></li>
+</ul>
+<p>两者的差别比较大。在最好的情况下，LTE-V2X的通信范围是IEEE802.11p的1.4到2.9倍左右（同性能情况下）。</p>
+<ul>
+<li><strong>标准IEEE802.11p vs LTE-V2X Mode 4</strong></li>
+</ul>
+<p>在使用Mode 4时，二者的性能差别就没有那么明显了。而且结论会与<span class="math inline">\(p_k\)</span>(SPS的资源保留概率)有关。如果<span class="math inline">\(p_k\)</span>为0，那么IEEE 802.11p 的PRR会在Bologna场景下性能更优，在Highway场景下二者相当，而在Cologne上C-V2X的性能更好。当<span class="math inline">\(p_k\)</span>为0.8时（按照标准0.8是最大值），LTE-V2X的PRR性能更好，但是Update Delay会增加。</p>
+<ul>
+<li><strong>IEEE802.11p with LTE-V2X PHY vs LTE-V2X</strong></li>
+</ul>
+<p>在模式4下，PRR的心性能在<span class="math inline">\(p_k=0\)</span>时，IEEE802.11p的性能和LTE-V2X的性能基本相当，但是UD则始终要更低一些。在模式3下， LTE-V2X的PRR性能要好一些，UD则在Highway和Cologne场景下与IEEE802.11p相当，而在Bologna场景下更高一些。</p>
+<h1 data-number="4" id="讨论内容"><span class="header-section-number">4</span> 讨论内容</h1>
+<ul>
+<li>共识：LTE-V2X在同等性能水平下距离更远。这个结论在Mode3下比较坚实，但是在Mode4下疑问较多。如果MCS选择得当，那么IEEE802.11p的PRR性能会与LTE相当，UD性能则更优。</li>
+<li>IEEE802.11p在处理大小不同的包上更加灵活，LTE-V2X则比较困难。</li>
+</ul>
 
         
       </div>
@@ -643,8 +738,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -916,6 +1020,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#协议基本信息"><span class="nav-text">1 协议基本信息</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ieee802.11p"><span class="nav-text">1.1 IEEE802.11p</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下一代ieee-802.11bd"><span class="nav-text">1.1.1 下一代：IEEE 802.11bd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sidelink-lte-v2x"><span class="nav-text">1.2 Sidelink LTE-V2X</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#下一代5g-new-radio"><span class="nav-text">1.2.1 下一代：5G &amp; New Radio</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#related-works"><span class="nav-text">2 Related works</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仿真工具与设置"><span class="nav-text">3 仿真工具与设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ltev2vsim"><span class="nav-text">3.1 LTEV2Vsim</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真结论"><span class="nav-text">3.2 仿真结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#讨论内容"><span class="nav-text">4 讨论内容</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -1454,6 +1575,53 @@
   
 
   
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      },
+      
+    }
+    ,
+    "HTML-CSS": {
+      
+      preferredFont: "STIX", 
+      availableFonts: ["STIX","TeX"], 
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.bootcss.com/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
 
 
   
@@ -1464,6 +1632,7 @@ if ($('body').find('div.pdf').length) {
   const reqFile = function (onFail) {
     if (retry === 0) return
     retry --
+    console.log("retry: " + retry)
     $.ajax({
       type: 'GET',
       url: '//cdn.jsdelivr.net/npm/pdfobject@2/pdfobject.min.js',

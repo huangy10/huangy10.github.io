@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
+    
+    <lastmod>2020-03-31T11:58:57.217Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/alessandro2019survey.html</loc>
+    
+    <lastmod>2020-03-31T11:58:36.278Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/its/c-v2x/index.html</loc>
+    
+    <lastmod>2020-03-31T11:23:02.864Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/knowledge-base/academic/its/c-v2x/V2X%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C.html</loc>
+    
+    <lastmod>2020-03-30T18:54:54.336Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.codewoody.com/update/index.html</loc>
+    
+    <lastmod>2020-03-30T18:23:59.002Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.codewoody.com/knowledge-base/programming/linux-shell/socat.html</loc>
     
     <lastmod>2020-03-30T18:14:19.440Z</lastmod>
@@ -19,20 +54,6 @@
     <loc>http://www.codewoody.com/posts/34309/</loc>
     
     <lastmod>2020-03-30T18:14:19.426Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html</loc>
-    
-    <lastmod>2020-03-30T17:34:11.978Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/paper-reading/alessandro2019survey.html</loc>
-    
-    <lastmod>2020-03-30T17:26:13.594Z</lastmod>
     
   </url>
   
@@ -117,20 +138,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/its/wave/%E9%80%9A%E4%BF%A1%E8%8C%83%E5%9B%B4%E6%A8%A1%E5%9E%8B%E6%8E%A2%E8%AE%A8.html</loc>
     
     <lastmod>2020-03-30T16:55:16.393Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/update/index.html</loc>
-    
-    <lastmod>2020-03-30T16:43:19.633Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/its/c-v2x/index.html</loc>
-    
-    <lastmod>2020-03-30T15:42:16.994Z</lastmod>
     
   </url>
   
@@ -425,13 +432,6 @@
     <loc>http://www.codewoody.com/knowledge-base/academic/ml/cs231n/2.html</loc>
     
     <lastmod>2020-03-22T17:25:00.493Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.codewoody.com/knowledge-base/academic/its/c-v2x/V2X%E5%BC%82%E6%9E%84%E7%BD%91%E7%BB%9C.html</loc>
-    
-    <lastmod>2020-03-22T17:25:00.492Z</lastmod>
     
   </url>
   
