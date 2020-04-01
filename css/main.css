@@ -1841,7 +1841,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #c2b3ff;
+  background: #ffff0b;
 }
 .feed-link,
 .chat {
@@ -2983,4 +2983,5 @@ div.poem-block .poem-author {
 }
 section.footnotes p {
   margin-bottom: 0;
+  font-size: 12px;
 }

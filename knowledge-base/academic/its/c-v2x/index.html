@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e9a7a177f724b721e789bd1930b4f675.png">
-<meta property="og:updated_time" content="2020-03-31T13:23:09.282Z">
+<meta property="og:updated_time" content="2020-04-01T12:47:50.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X">
 <meta name="twitter:description" content="span.questions {     background-color: yellow; }  1 本章节内容  3GPP标准相关 V2X异构网络  2 关于C-V2X标准的一些关键内容 2.1 物理层信息 2.1.1 频谱与调制 C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018">
@@ -577,7 +577,7 @@ span.questions {
 <li>支持10MHz或者20MHz的信道</li>
 <li>使用SF-FDMA (Single-Carrier Frequency-Division Multiple Access)<span class="foot-note-span">【这应该算MAC层了？】</span></li>
 </ul>
-<p>C-V2X最关键的特征是将20MHz的带宽，同时从时域和频域进行切割。将1ms长度 <span class="math inline">\(\times\)</span> 180kHz带宽的时、频屏幕上的方块称为一个资源块(Resource Block, RB)。其中，时间尺度上这样的1ms称为一个子帧(sub-frame)。同一个子帧上的一组RB（应该是连续的）称为子信道，子信道中包含的RB的数量一般取决于调制编码方式（MCS）和包的大小。如下图所示：</p>
+<p>C-V2X最关键的特征是将20MHz的带宽，同时从时域和频域进行切割。将1ms长度 <span class="math inline">\(\times\)</span> 180kHz带宽<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>的时、频屏幕上的方块称为一个资源块(Resource Block, RB)。其中，时间尺度上这样的1ms称为一个子帧(sub-frame，也被称为Transmission Time Interval (TTI))。同一个子帧上的一组RB（应该是连续的）称为子信道(subchannel)，子信道中包含的RB的数量一般取决于调制编码方式（MCS）和包的大小。如下图所示：</p>
 <figure>
 <img src="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png" id="fig:RB结构" alt=""><figcaption>图 1: RB结构</figcaption>
 </figure>
@@ -586,14 +586,15 @@ span.questions {
 <img src="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png" id="fig:物理层信息" alt=""><figcaption>图 2: 图中包含了IEEE802.11p的信息以进行二者的对比。图片来自<a href="./valerian2019comparison.html">A Comparison of the V2X Communication System: ITS-G5 and C-V2X</a></figcaption>
 </figure>
 <h3 data-number="2.1.2" id="lte-uu与pc5接口"><span class="header-section-number">2.1.2</span> LTE-Uu与PC5接口</h3>
-<h3 data-number="2.1.3" id="一些关键问题faq"><span class="header-section-number">2.1.3</span> 一些关键问题(FAQ)</h3>
+<p>LTE-Uu是蜂窝网的上下行链路使用的接口，PC5是Sidelink使用的接口。</p>
+<h3 data-number="2.1.3" id="FAQ1"><span class="header-section-number">2.1.3</span> 一些关键问题(FAQ)</h3>
 <div class="questions-div">
 <ol type="1">
 <li><p><strong>C-V2X的频段具体是多少，每个信道带宽是多少，有多少个信道</strong>；<br>
 目前可以确定的是信道带宽是10MHz或者20MHz，尚未看到文献提到C-V2X有多个信道。具体的频段目前看到的文献大部分没有提到。只查到工信部的要求是<strong>5905-5925MHz</strong>。</p>
-<p>5G NR (New Radio)中提出让V2X使用高于6GHz的频段<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>，5G NR可以为未来发布的协议标准提供更高级的服务，但是Release 14中提出的C-V2X标准的会是基础安全通信的核心基础。5G NR不会照顾向前兼容的问题，更像是添加一个额外的通信接口和信道。因此在研究中将C-V2X理解为使用5.9GHz ITS频段没有问题。</p></li>
+<p>5G NR (New Radio)中提出让V2X使用高于6GHz的频段<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，5G NR可以为未来发布的协议标准提供更高级的服务，但是Release 14中提出的C-V2X标准的会是基础安全通信的核心基础。5G NR不会照顾向前兼容的问题，更像是添加一个额外的通信接口和信道。因此在研究中将C-V2X理解为使用5.9GHz ITS频段没有问题。</p></li>
 <li><p><strong>C-V2X的有效传输距离一般是多少</strong>；<br>
-有文献提到C-V2X的有效传输距离一般高于WAVE<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>。另外，下面第四个问题中的 <a href="#fig:MinSNR">图 3</a> 也给出了大概的通信距离。</p></li>
+有文献提到C-V2X的有效传输距离一般高于WAVE<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。另外，下面第四个问题中的 <a href="#fig:MinSNR">图 3</a> 也给出了大概的通信距离。</p></li>
 <li><p><strong>C-V2X传输的数据率一般是多少</strong>；<br>
 <del>尚不清楚。</del> 在<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#RB符号数与传输速率">这篇Survey里面</a>提到了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p></li>
 <li><p><strong>抗干扰能力：SINR门限一般会是什么水平</strong>；<br>
@@ -603,7 +604,8 @@ span.questions {
 </figure></li>
 <li><p><strong>是否支持双工</strong>。（WAVE支持一辆车带两套天线，一套收一套发，但是需要在不通的信道。WAVE总共提供了7个信道）<br>
 <del>尚不清楚。</del> 应当不支持</p></li>
-<li><p><strong>仿真工具</strong> <a href="http://www.wcsg.ieiit.cnr.it/products/LTEV2Vsim.html" target="_blank" rel="noopener">LTEV2Vsim</a>: 基于MATLAB，也允许仿真IEEE802.11p。</p></li>
+<li><p><strong>仿真工具</strong><br>
+<a href="http://www.wcsg.ieiit.cnr.it/products/LTEV2Vsim.html" target="_blank" rel="noopener">LTEV2Vsim</a>: 基于MATLAB，也允许仿真IEEE802.11p。</p></li>
 </ol>
 </div>
 <h2 data-number="2.2" id="mac层帧结构"><span class="header-section-number">2.2</span> MAC层帧结构</h2>
@@ -637,8 +639,9 @@ span.questions {
 <section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#%E4%B8%8B%E4%B8%80%E4%BB%A35g-new-radio">5G Sidelink C-V2X 和 基于Wifi的车联网协议的对比调研</a>: Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#通信距离更远">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a>: 一个共识是，在给定一个目标性能时，LTE-V2X可以达到更远的通信距离<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>在频域上，子载波的间隔固定为15kHz，子载波则以12个为一组使用(180kHz) ，来自<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#180kHzRB构成">这里</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#%E4%B8%8B%E4%B8%80%E4%BB%A35g-new-radio">5G Sidelink C-V2X 和 基于Wifi的车联网协议的对比调研</a>: Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#通信距离更远">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a>: 一个共识是，在给定一个目标性能时，LTE-V2X可以达到更远的通信距离<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
@@ -1035,7 +1038,7 @@ span.questions {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#本章节内容"><span class="nav-text">1 本章节内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于c-v2x标准的一些关键内容"><span class="nav-text">2 关于C-V2X标准的一些关键内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理层信息"><span class="nav-text">2.1 物理层信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#频谱与调制"><span class="nav-text">2.1.1 频谱与调制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lte-uu与pc5接口"><span class="nav-text">2.1.2 LTE-Uu与PC5接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些关键问题faq"><span class="nav-text">2.1.3 一些关键问题(FAQ)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac层帧结构"><span class="nav-text">2.2 MAC层帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pssch与pscch"><span class="nav-text">2.2.1 PSSCH与PSCCH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transport-block-and-sci"><span class="nav-text">2.2.2 Transport Block and SCI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac层sb-sps"><span class="nav-text">2.3 MAC层SB-SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#半持久与重选计数"><span class="nav-text">2.3.1 半持久与重选计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于感知"><span class="nav-text">2.3.2 基于感知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题faq"><span class="nav-text">2.3.3 问题(FAQ)</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#本章节内容"><span class="nav-text">1 本章节内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#关于c-v2x标准的一些关键内容"><span class="nav-text">2 关于C-V2X标准的一些关键内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理层信息"><span class="nav-text">2.1 物理层信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#频谱与调制"><span class="nav-text">2.1.1 频谱与调制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lte-uu与pc5接口"><span class="nav-text">2.1.2 LTE-Uu与PC5接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FAQ1"><span class="nav-text">2.1.3 一些关键问题(FAQ)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac层帧结构"><span class="nav-text">2.2 MAC层帧结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pssch与pscch"><span class="nav-text">2.2.1 PSSCH与PSCCH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transport-block-and-sci"><span class="nav-text">2.2.2 Transport Block and SCI</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac层sb-sps"><span class="nav-text">2.3 MAC层SB-SPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#半持久与重选计数"><span class="nav-text">2.3.1 半持久与重选计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于感知"><span class="nav-text">2.3.2 基于感知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题faq"><span class="nav-text">2.3.3 问题(FAQ)</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
