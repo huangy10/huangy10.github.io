@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e9a7a177f724b721e789bd1930b4f675.png">
-<meta property="og:updated_time" content="2020-04-01T12:47:50.551Z">
+<meta property="og:updated_time" content="2020-04-01T13:36:31.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X">
 <meta name="twitter:description" content="span.questions {     background-color: yellow; }  1 本章节内容  3GPP标准相关 V2X异构网络  2 关于C-V2X标准的一些关键内容 2.1 物理层信息 2.1.1 频谱与调制 C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018">
@@ -594,9 +594,11 @@ span.questions {
 目前可以确定的是信道带宽是10MHz或者20MHz，尚未看到文献提到C-V2X有多个信道。具体的频段目前看到的文献大部分没有提到。只查到工信部的要求是<strong>5905-5925MHz</strong>。</p>
 <p>5G NR (New Radio)中提出让V2X使用高于6GHz的频段<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>，5G NR可以为未来发布的协议标准提供更高级的服务，但是Release 14中提出的C-V2X标准的会是基础安全通信的核心基础。5G NR不会照顾向前兼容的问题，更像是添加一个额外的通信接口和信道。因此在研究中将C-V2X理解为使用5.9GHz ITS频段没有问题。</p></li>
 <li><p><strong>C-V2X的有效传输距离一般是多少</strong>；<br>
-有文献提到C-V2X的有效传输距离一般高于WAVE<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。另外，下面第四个问题中的 <a href="#fig:MinSNR">图 3</a> 也给出了大概的通信距离。</p></li>
+有文献提到C-V2X的有效传输距离一般高于WAVE<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>。另外，下面第四个问题中的 <a href="#fig:MinSNR">图 3</a> 也给出了大概的通信距离。</p>
+<p>LTE-V2X的距离优势是C-V2X的物理层带来的，而非其MAC层设计的优势。有<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#IEEE802.11p-with-LTE-V2X-PHY-vs-LTE-V2X">文章研究</a>尝试了结合C-V2X的物理层和IEEE802.11p的MAC层，发现可以取得和C-V2X相当的PRR(Pacet Reception Ratio)性能，且在UD(Update Delay)指标上更好。<span class="foot-note-span">【由于PRR性能是以距离为横轴的曲线，因此这里称PRR性能相当，意味着通信距离相当】</span></p></li>
 <li><p><strong>C-V2X传输的数据率一般是多少</strong>；<br>
-<del>尚不清楚。</del> 在<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#RB符号数与传输速率">这篇Survey里面</a>提到了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p></li>
+<del>尚不清楚。</del> 在<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#RB符号数与传输速率">这篇Survey里面</a>提到了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p>
+<p><span style="background-color: yellow">注意</span>，目前我们还没有看到有文章称C-V2X的数据传输速率相比IEEE802.11p有显著的优势。反而有文章提到C-V2X对于大小不固定的包的处理不好。</p></li>
 <li><p><strong>抗干扰能力：SINR门限一般会是什么水平</strong>；<br>
 <del>尚不清楚</del></p>
 <figure>
