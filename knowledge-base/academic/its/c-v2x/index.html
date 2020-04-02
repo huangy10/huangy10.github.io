@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e9a7a177f724b721e789bd1930b4f675.png">
-<meta property="og:updated_time" content="2020-04-01T13:36:31.308Z">
+<meta property="og:updated_time" content="2020-04-02T13:16:38.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X">
 <meta name="twitter:description" content="span.questions {     background-color: yellow; }  1 本章节内容  3GPP标准相关 V2X异构网络  2 关于C-V2X标准的一些关键内容 2.1 物理层信息 2.1.1 频谱与调制 C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018">
@@ -599,6 +599,8 @@ span.questions {
 <li><p><strong>C-V2X传输的数据率一般是多少</strong>；<br>
 <del>尚不清楚。</del> 在<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#RB符号数与传输速率">这篇Survey里面</a>提到了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p>
 <p><span style="background-color: yellow">注意</span>，目前我们还没有看到有文章称C-V2X的数据传输速率相比IEEE802.11p有显著的优势。反而有文章提到C-V2X对于大小不固定的包的处理不好。</p></li>
+<li><p><strong>延时性能</strong><br>
+Mode 3 和 Mode 4 的延时限制一般是 20 到 100 毫秒之间<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。</p></li>
 <li><p><strong>抗干扰能力：SINR门限一般会是什么水平</strong>；<br>
 <del>尚不清楚</del></p>
 <figure>
@@ -607,7 +609,26 @@ span.questions {
 <li><p><strong>是否支持双工</strong>。（WAVE支持一辆车带两套天线，一套收一套发，但是需要在不通的信道。WAVE总共提供了7个信道）<br>
 <del>尚不清楚。</del> 应当不支持</p></li>
 <li><p><strong>仿真工具</strong><br>
-<a href="http://www.wcsg.ieiit.cnr.it/products/LTEV2Vsim.html" target="_blank" rel="noopener">LTEV2Vsim</a>: 基于MATLAB，也允许仿真IEEE802.11p。</p></li>
+</p>
+<ul>
+<li><a href="http://www.wcsg.ieiit.cnr.it/products/LTEV2Vsim.html" target="_blank" rel="noopener">LTEV2Vsim</a>: 基于MATLAB，也允许仿真IEEE802.11p。</li>
+<li><a href="/knowledge-base/academic/paper-reading/amr2018performance.html">Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks</a>: 这篇文章提了一个Mode 4的开源仿真器。</li>
+<li>👆上面的文章中提到 NIST 团队在 NS-3的基础上做了支持Mode 1和Mode 2的仿真器。上文作者的仿真器是基于 NIST 团队的工作而来。</li>
+</ul></li>
+<li><p><strong>RB的大小(时域)</strong><br>
+RB的大小不同的文章有不同的说法，频域上都是统一的，带宽为180kHz，时域上有0.5ms和1ms两种说法：</p>
+<ul>
+<li>0.5ms:
+<ol type="1">
+<li><a href="/academic/paper-reading/amr2018performance.html">Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks</a></li>
+<li><a href="/knowledge-base/academic/paper-reading/valerian2019comparison.html">A Comparison of the V2X Communication System: ITS-G5 and C-V2X</a></li>
+</ol></li>
+<li>1ms:
+<ol type="1">
+<li><a href="/posts/2019-12-11-读论文-自动驾驶编队与LTE-D2D通信/">Better Platooning Control Toward Autonomous Driving: An LTE Device-To-Device Communications Strategy That Meets Ultralow Latency Requirements</a></li>
+<li><a href="/knowledge-base/academic/paper-reading/rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a></li>
+</ol></li>
+</ul></li>
 </ol>
 </div>
 <h2 data-number="2.2" id="mac层帧结构"><span class="header-section-number">2.2</span> MAC层帧结构</h2>
@@ -615,7 +636,17 @@ span.questions {
 <p>PSSCH的全称是Physical Sidelink Shared Channel, PSCCH</p>
 <p>PSCCH部分参见<a href="./3GPP/PSCCH">PSCCH</a></p>
 <h3 data-number="2.2.2" id="transport-block-and-sci"><span class="header-section-number">2.2.2</span> Transport Block and SCI</h3>
+<p>SCI 指 Sidelink Control Information。在Release 14中引入了<strong>SCI格式1</strong>，SCI信息在PSCCH上传输，占用两个RB。在Mode 4中SCI信息需要和消息主体（即TB）同时传输。</p>
+<p>SCI格式1负责通知接收者一些关键信息，包括：</p>
+<ul>
+<li>RRI (Resource Reservation Interval)</li>
+<li>初始传输和重传的频谱位置<span class="eng-origin">frequency location of initial transmission and retransmission (up to one retransmission is supported in Mode 4)</span></li>
+<li>初始传输和重传之间的间隔<span class="math inline">\(SF_{gap}\)</span></li>
+<li>调制编码方式(MCS)</li>
+<li>其他信息</li>
+</ul>
 <h2 data-number="2.3" id="mac层sb-sps"><span class="header-section-number">2.3</span> MAC层SB-SPS</h2>
+<p>下面的两个章节如果看不太懂，<a href="/knowledge-base/academic/paper-reading/amr2018performance.html#spssemi-persistent-scheduling">这篇论文</a>里面的介绍会更加清晰一些。</p>
 <h3 data-number="2.3.1" id="半持久与重选计数"><span class="header-section-number">2.3.1</span> 半持久与重选计数</h3>
 <p>C-V2X在MAC使用的机制是基于感知的半持久调度(Sensing-Based Semi-Persistent Scheduling)。其中「半持久」的概念，体现在重选计数器(Reselection Counter, RC)这个设计上。每当资源（选定的资源的单位一般是子信道）选定（选定的方法我们后面会提到）时，在后面的若干次传输中会继续使用同一个资源。这个「若干次」即由重选计数表示。在资源选定时，同时设置RC的值，设置方法为从5到15内随机选出。之后每经过一次传输，RC减一。当RC为0时，则面临重选资源的问题。</p>
 <p>在需要面临资源重选时，节点可以选择不进行重选，继续使用现有的资源。这一决策一般是随机的，即节点以概率<span class="math inline">\(P\)</span>继续使用当前的资源，即以概率<span class="math inline">\(1 - P\)</span>选择新资源。 一般<span class="math inline">\(P \in [0, 0.8]\)</span>。有些文章（如<a href="./alejandro2019cv2x.html">C-V2X Assisted mmWave V2V Scheduling</a>）没有提到这个重选概率的问题，而是总是在RC为0时进行资源重选。这是可以认为<span class="math inline">\(P = 0\)</span>。</p>
@@ -633,7 +664,7 @@ span.questions {
 </ol>
 <h3 data-number="2.3.3" id="问题faq"><span class="header-section-number">2.3.3</span> 问题(FAQ)</h3>
 <ol type="1">
-<li><p><strong>SP-SPS是否存在冲突问题</strong>。<br>
+<li><p><strong>SB-SPS是否存在冲突问题</strong>。<br>
 我还没有看到有文献讨论SPS机制中是否存在冲突问题，甚至有文章将SPS称为无冲突协议。但是可以说任何分布式的资源调度方式不出现冲突是不可能的。一方面信息无法保证一致，因此可能两个临近车辆会选择同一个资源块。另一方面，由于车辆的运动原本无冲突的两个节点会彼此靠近而导致冲突。</p></li>
 <li><p><strong>SCI中的具体信息内容</strong>。<br>
 提这一点是想关注SCI中是否会包含本节点周围节点的资源分配信息，这涉及到是否会有隐藏终端问题。</p></li>
@@ -644,6 +675,7 @@ span.questions {
 <li id="fn1" role="doc-endnote"><p>在频域上，子载波的间隔固定为15kHz，子载波则以12个为一组使用(180kHz) ，来自<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#180kHzRB构成">这里</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#%E4%B8%8B%E4%B8%80%E4%BB%A35g-new-radio">5G Sidelink C-V2X 和 基于Wifi的车联网协议的对比调研</a>: Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#通信距离更远">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a>: 一个共识是，在给定一个目标性能时，LTE-V2X可以达到更远的通信距离<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/amr2018performance.html">来源</a>:进去之后点原文看Introduction部分第三段<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
