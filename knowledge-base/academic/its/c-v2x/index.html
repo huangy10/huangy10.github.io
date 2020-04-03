@@ -133,7 +133,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e9a7a177f724b721e789bd1930b4f675.png">
-<meta property="og:updated_time" content="2020-04-02T13:16:38.705Z">
+<meta property="og:updated_time" content="2020-04-03T10:19:39.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X">
 <meta name="twitter:description" content="span.questions {     background-color: yellow; }  1 本章节内容  3GPP标准相关 V2X异构网络  2 关于C-V2X标准的一些关键内容 2.1 物理层信息 2.1.1 频谱与调制 C-V2X由于是使用蜂窝网架构，所以很容易被误认为是和5G一样是使用的几十GHz的频段。实际情况并非如此。C-V2X通信仍然采用的是sub-6GHz频段。2018">
@@ -598,6 +598,7 @@ span.questions {
 <p>LTE-V2X的距离优势是C-V2X的物理层带来的，而非其MAC层设计的优势。有<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#IEEE802.11p-with-LTE-V2X-PHY-vs-LTE-V2X">文章研究</a>尝试了结合C-V2X的物理层和IEEE802.11p的MAC层，发现可以取得和C-V2X相当的PRR(Pacet Reception Ratio)性能，且在UD(Update Delay)指标上更好。<span class="foot-note-span">【由于PRR性能是以距离为横轴的曲线，因此这里称PRR性能相当，意味着通信距离相当】</span></p></li>
 <li><p><strong>C-V2X传输的数据率一般是多少</strong>；<br>
 <del>尚不清楚。</del> 在<a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#RB符号数与传输速率">这篇Survey里面</a>提到了每个RB上的符号数，那么在根据编码信息得到每个符号代表的比特数，就能够得到数据率。</p>
+<p>关于符号数: 一个RB上一共十四个符号，分别是4个解调参考符号(Demodulation Reference Symbols, DMRS)；9个数据符号；一个空符号，用来作为保护间隔。</p>
 <p><span style="background-color: yellow">注意</span>，目前我们还没有看到有文章称C-V2X的数据传输速率相比IEEE802.11p有显著的优势。反而有文章提到C-V2X对于大小不固定的包的处理不好。</p></li>
 <li><p><strong>延时性能</strong><br>
 Mode 3 和 Mode 4 的延时限制一般是 20 到 100 毫秒之间<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>。</p></li>
@@ -627,8 +628,12 @@ RB的大小不同的文章有不同的说法，频域上都是统一的，带宽
 <ol type="1">
 <li><a href="/posts/2019-12-11-读论文-自动驾驶编队与LTE-D2D通信/">Better Platooning Control Toward Autonomous Driving: An LTE Device-To-Device Communications Strategy That Meets Ultralow Latency Requirements</a></li>
 <li><a href="/knowledge-base/academic/paper-reading/rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a></li>
+<li><a href="./../../paper-reading/adel2019first.html">A First Investigation of Congestion Control for LTE-V2X Mode 4</a></li>
 </ol></li>
-</ul></li>
+</ul>
+<blockquote>
+<p>注意有些文章尽管说RB的长度是0.5ms，但是调度单位仍然是1ms</p>
+</blockquote></li>
 </ol>
 </div>
 <h2 data-number="2.2" id="mac层帧结构"><span class="header-section-number">2.2</span> MAC层帧结构</h2>
@@ -653,14 +658,17 @@ RB的大小不同的文章有不同的说法，频域上都是统一的，带宽
 <p>RC的值需要包含在SCI消息中。</p>
 <h3 data-number="2.3.2" id="基于感知"><span class="header-section-number">2.3.2</span> 基于感知</h3>
 <ol type="1">
-<li>当需要选择资源时，车辆<span class="math inline">\(V\)</span>可以在时间<span class="math inline">\(T\)</span>内做出决策，这个<span class="math inline">\(T\)</span>为最大的建立延时，一般是100ms或者更低。这个时间段被称为选择窗口(Selection Window)。在选择窗口内，<span class="math inline">\(V\)</span>需要确定候选的单子帧资源(Candidate Single-Subframe Resources, CSR)。具体而言，CSR是同一个子帧上的一组相邻的子信道。</li>
-<li>车辆<span class="math inline">\(V\)</span>在选择窗口<span class="math inline">\(T\)</span>之前监听1000个子帧内（称为感知窗口，Sensing Window）的所有包传输情况。车辆然后建立起一个包含了在感知窗口中所有的CSR的列表<span class="math inline">\(L_1\)</span>，除非<span class="foot-note-span">【这里的除非是指如果CSR满足了下面两个条件就不会加入<span class="math inline">\(L_i\)</span>列表】</span>：
+<li><p>当需要选择资源时，车辆<span class="math inline">\(V\)</span>可以在时间<span class="math inline">\(T\)</span>内做出决策，这个<span class="math inline">\(T\)</span>为最大的建立延时，一般是100ms或者更低。这个时间段被称为选择窗口(Selection Window)。在选择窗口内，<span class="math inline">\(V\)</span>需要确定候选的单子帧资源(Candidate Single-Subframe Resources, CSR)。具体而言，CSR是同一个子帧上的一组相邻的子信道。</p>
+<blockquote>
+<p>选择窗口的作用：选择窗口实际上规定资源块在时间上的周期划分方式。例如选择窗口100ms，频域上划分成3个子信道，那么可调度的资源块一共就是300个。<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+</blockquote></li>
+<li><p>车辆<span class="math inline">\(V\)</span>在选择窗口<span class="math inline">\(T\)</span>之前监听1000个子帧内（称为感知窗口，Sensing Window）的所有包传输情况。车辆然后建立起一个包含了在感知窗口中所有的CSR的列表<span class="math inline">\(L_1\)</span>，除非<span class="foot-note-span">【这里的除非是指如果CSR满足了下面两个条件就不会加入<span class="math inline">\(L_i\)</span>列表】</span>：</p>
 <ol type="1">
 <li><span class="math inline">\(V\)</span> 收到了来自其他车辆的SCI信息，且这一SCI信息表示该车辆将会使用<span class="math inline">\(V\)</span>在接下来要使用的网络资源；</li>
 <li><span class="math inline">\(V\)</span> 从比别的节点使用的RB上检测出来的平均Reference Signal Received Power (RSRP)高于阈值；这里的RSRP阈值是可配置的参数。</li>
 </ol>
-车辆在这两个条件需要同时满足时<span class="math inline">\(V\)</span>才会将对应CSR排除在<span class="math inline">\(L_1\)</span>之外。这个步骤需要确保<span class="math inline">\(L_1\)</span>中至少包含了20%的资源总量，否则这一步会一直循环知道20%的目标达到。而在每轮循环中，RSRP阈值会升高3dB。</li>
-<li><span class="math inline">\(V\)</span>创建第二个CSR的列表<span class="math inline">\(L_2\)</span>。<span class="math inline">\(L_2\)</span>中的CSR总数必须占CSR总数的20%。<span class="math inline">\(L_2\)</span>来自<span class="math inline">\(L_1\)</span>中最优最低的平均RSSI的CSR。当所有车辆的传输频率是10Hz时，这里的平均RSSI的计算范围是过去的第<span class="math inline">\(T_{CSR} - 100 \times j, j \in N, 1 \leq j \leq 10\)</span> 子帧，参考上图。车辆<span class="math inline">\(V\)</span>随机从<span class="math inline">\(L_2\)</span>中选择一个CSR使用，并在接下来的<i>Reselection Counter</i>次传输中保持使用这一资源。</li>
+<p>车辆在这两个条件需要同时满足时<span class="math inline">\(V\)</span>才会将对应CSR排除在<span class="math inline">\(L_1\)</span>之外。这个步骤需要确保<span class="math inline">\(L_1\)</span>中至少包含了20%的资源总量，否则这一步会一直循环知道20%的目标达到。而在每轮循环中，RSRP阈值会升高3dB。</p></li>
+<li><p><span class="math inline">\(V\)</span>创建第二个CSR的列表<span class="math inline">\(L_2\)</span>。<span class="math inline">\(L_2\)</span>中的CSR总数必须占CSR总数的20%。<span class="math inline">\(L_2\)</span>来自<span class="math inline">\(L_1\)</span>中最优最低的平均RSSI的CSR。当所有车辆的传输频率是10Hz时，这里的平均RSSI的计算范围是过去的第<span class="math inline">\(T_{CSR} - 100 \times j, j \in N, 1 \leq j \leq 10\)</span> 子帧，参考上图。车辆<span class="math inline">\(V\)</span>随机从<span class="math inline">\(L_2\)</span>中选择一个CSR使用，并在接下来的<i>Reselection Counter</i>次传输中保持使用这一资源。</p></li>
 </ol>
 <h3 data-number="2.3.3" id="问题faq"><span class="header-section-number">2.3.3</span> 问题(FAQ)</h3>
 <ol type="1">
@@ -676,6 +684,7 @@ RB的大小不同的文章有不同的说法，频域上都是统一的，带宽
 <li id="fn2" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#%E4%B8%8B%E4%B8%80%E4%BB%A35g-new-radio">5G Sidelink C-V2X 和 基于Wifi的车联网协议的对比调研</a>: Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/alessandro2019survey.html#通信距离更远">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a>: 一个共识是，在给定一个目标性能时，LTE-V2X可以达到更远的通信距离<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4" role="doc-endnote"><p><a href="/knowledge-base/academic/paper-reading/amr2018performance.html">来源</a>:进去之后点原文看Introduction部分第三段<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5" role="doc-endnote"><p>详细可以参考这篇文章：<a href="/knowledge-base/academic/paper-reading/adel2019first.html">A First Investigation of Congestion Control for LTE-V2X Mode 4</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
