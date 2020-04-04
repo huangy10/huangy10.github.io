@@ -132,7 +132,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2d71899cacf01a8d7d21f6d3bb8d73e4.png">
-<meta property="og:updated_time" content="2020-03-30T18:14:19.432Z">
+<meta property="og:updated_time" content="2020-04-03T14:35:36.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Survey: V2X通信的资源调度问题">
 <meta name="twitter:description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
@@ -551,7 +551,7 @@
 </ul>
 <hr>
 <p>文章提到了Release 16相关的信息。在Release 16中，3GPP关注的内容是New Radio V2X (NR)，。5G NR的内容在Release 15中被标准化。NR V2X能够为V2X通信提供更多的QoS保证。【~NR，从名字来看应该是采用了不同的射频模块】<br>
-NR V2X和C-V2X之间的通信需要要求车辆同时装备有两套射频系统才行。【~从这里的命名可以发现C-V2X专门指Release 14，而NR V2X指Release 16，Release 12则用ProSe来称呼】<br>
+NR V2X和C-V2X之间的通信需要要求车辆同时装备有两套射频系统<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 才行。【~从这里的命名可以发现C-V2X专门指Release 14，而NR V2X指Release 16，Release 12则用ProSe来称呼】<br>
 V2X的通信涉及资源分配的问题。<del>一般由基站分配的方式我们成为Overlay Mode，节点之间协商不需要基站参与的方式称为Underlay Mode</del>（Underlay和Overlay的区别在于蜂窝通信与D2D通信的频谱共享方式不同，参加<a href="#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">这里</a>）。资源分配问题英文一般称为RRM (Redio Resource Management)问题，这也是这篇Survey关注的重点。</p>
 <h1 data-number="1" id="v2x-requirements-and-services"><span class="header-section-number">1</span> V2X Requirements and Services</h1>
 <p>3GPP在Release 14中定义了27中V2X服务的应用场景，这些场景可以划分为安全相关和非安全相关。相应的，V2X消息类型也可以分为安全相关和非安全相关，前者要求可靠性和低延时，后者一般要求更高的数据率。</p>
@@ -635,6 +635,12 @@ p_u^{out} \triangleq Pr \{
 <p>一般的做法是在不同的簇之前分配非正交的资源，而在簇内分配正交的资源。</p>
 <h3 data-number="4.1.3" id="rbs-sharing-based-user-geographics-locaiton"><span class="header-section-number">4.1.3</span> RBs Sharing-Based User Geographics Locaiton</h3>
 <p>基于地理位置共享RB资源。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>在<a href="https://www.nxp.com/company/our-company/about-nxp:ABOUT-NXP" target="_blank" rel="noopener">NXP</a>(一家企业)的一份<a href="https://www.nxp.com/docs/en/white-paper/CITSCOMPWP.pdf" target="_blank" rel="noopener">文档</a>中提到Therefore, basic safety messages will either only be broadcasted via Rel-14, thus disabling the potential advantages of further technology development, or vehicles equipped with Rel-14 cellularbased V2X technology will not be able to talk to vehicles with Rel-15 or subsequent releases. <strong>Either way, Rel-14 will be obsolete before it is even deployed</strong>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
         
       </div>

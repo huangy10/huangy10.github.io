@@ -136,7 +136,7 @@
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6c4601e0c60258332211eaaeb904e344.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/57f0edba16fa11ad649602ee9ead85f5.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/dedfd50375e203e7e8b9ae2472b34eb4.png">
-<meta property="og:updated_time" content="2020-04-02T13:58:27.280Z">
+<meta property="og:updated_time" content="2020-04-03T14:32:37.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X MAC(SB-SPS) 性能分析">
 <meta name="twitter:description" content="文章的标题是Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks，为2018年的VTC文章。 这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-SPS的性能，尤其是在拥堵情况下的性能（Congested radio environments)。这篇文章做了一个开源">
@@ -569,7 +569,7 @@
 <ol type="1">
 <li>UE 持续监听各个子帧，记录下解码出来的SCI信息和侧链接受信号强度(Sidelink Received Singal Strength Indicator, S-RSSI)。这里会连续记录1000个子帧。</li>
 <li>UE 设置信号功率门限 <span class="math inline">\(Th\)</span>，以及两个初始集合 <span class="math inline">\(S_A\)</span> 和 <span class="math inline">\(S_B\)</span>，前者初始包含所有的资源块，后者为空。</li>
-<li>UE 检查所有的单子帧资源块，在 <span class="math inline">\(S_A\)</span> 中排除UE 在感知窗口中未曾检测过的部分。</li>
+<li>UE 检查所有的单子帧资源块，在 <span class="math inline">\(S_A\)</span> 中排除UE 在感知窗口中未曾检测过的部分。</li>
 <li>在剩下的单子帧资源中，已经被别的节点占用、或者检测到的PSCCH的接受信号强度超过阈值 <span class="math inline">\(Th\)</span> 的部分从 <span class="math inline">\(S_A\)</span> 排除。</li>
 <li>如果经过上述两步筛选剩下的资源户数量占据总资源数量的比例不超过20%，则将 <span class="math inline">\(Th\)</span> 升高 3dB，并回到第三步。</li>
 <li>否则，计算S-RSSI的平均数（应该是在每个子资源块上，计算时间尺度上的历史平均值），并根军平均S-RSSI，从 <span class="math inline">\(S_A\)</span> 中筛选出最小的占据总资源数 20% 的资源放入集合 <span class="math inline">\(S_B\)</span>。</li>
