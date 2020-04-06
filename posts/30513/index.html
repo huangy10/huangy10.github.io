@@ -123,20 +123,18 @@
 
 
 
-  <meta name="description" content="1 元字符和语法  Python支持正则表达式元字符和语法  2 模式研究 2.1 浮点数匹配 1r&apos;-?(\d+(?:\.\d+)?(?:e-?\d+)?)&apos; 这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下(?:)这个模式，代表这个括号标出的元组不参与编号，在输 输出的结果中也不会单列出来。 2.2 汉字 1r&apos;^[\u4e00-\u9fa5]&amp;#123;0,&amp;#125">
+  <meta name="description" content="## 元字符和语法  ![Python支持正则表达式元字符和语法](https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png)  ## 模式研究  ### 浮点数匹配    这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下`(?:)`这个模式，代表这个括号标出的元组不参与编号，在">
 <meta name="keywords" content="教程,折腾">
 <meta property="og:type" content="article">
 <meta property="og:title" content="正则匹配的一些研究">
 <meta property="og:url" content="http://www.codewoody.com/posts/30513/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="1 元字符和语法  Python支持正则表达式元字符和语法  2 模式研究 2.1 浮点数匹配 1r&apos;-?(\d+(?:\.\d+)?(?:e-?\d+)?)&apos; 这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下(?:)这个模式，代表这个括号标出的元组不参与编号，在输 输出的结果中也不会单列出来。 2.2 汉字 1r&apos;^[\u4e00-\u9fa5]&amp;#123;0,&amp;#125">
+<meta property="og:description" content="## 元字符和语法  ![Python支持正则表达式元字符和语法](https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png)  ## 模式研究  ### 浮点数匹配    这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下`(?:)`这个模式，代表这个括号标出的元组不参与编号，在">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png">
 <meta property="og:updated_time" content="2019-09-03T04:05:06.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则匹配的一些研究">
-<meta name="twitter:description" content="1 元字符和语法  Python支持正则表达式元字符和语法  2 模式研究 2.1 浮点数匹配 1r&apos;-?(\d+(?:\.\d+)?(?:e-?\d+)?)&apos; 这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下(?:)这个模式，代表这个括号标出的元组不参与编号，在输 输出的结果中也不会单列出来。 2.2 汉字 1r&apos;^[\u4e00-\u9fa5]&amp;#123;0,&amp;#125">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png">
+<meta name="twitter:description" content="## 元字符和语法  ![Python支持正则表达式元字符和语法](https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png)  ## 模式研究  ### 浮点数匹配    这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下`(?:)`这个模式，代表这个括号标出的元组不参与编号，在">
 
 
 
@@ -560,25 +558,36 @@
       
 
       
-        <h1 data-number="1" id="元字符和语法"><span class="header-section-number">1</span> 元字符和语法</h1>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png" alt=""><figcaption>Python支持正则表达式元字符和语法</figcaption>
-</figure>
-<h1 data-number="2" id="模式研究"><span class="header-section-number">2</span> 模式研究</h1>
-<h2 data-number="2.1" id="浮点数匹配"><span class="header-section-number">2.1</span> 浮点数匹配</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r'-?(\d+(?:\.\d+)?(?:e-?\d+)?)'</span></span><br></pre></td></tr></table></figure>
-<p>这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下<code>(?:)</code>这个模式，代表这个括号标出的元组不参与编号，在输 输出的结果中也不会单列出来。</p>
-<h2 data-number="2.2" id="汉字"><span class="header-section-number">2.2</span> 汉字</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r'^[\u4e00-\u9fa5]&#123;0,&#125;$ '</span></span><br></pre></td></tr></table></figure>
-<h2 data-number="2.3" id="邮箱"><span class="header-section-number">2.3</span> 邮箱</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r'^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$ '</span></span><br></pre></td></tr></table></figure>
-<h2 data-number="2.4" id="手机号码"><span class="header-section-number">2.4</span> 手机号码</h2>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">r'^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d&#123;8&#125;$'</span></span><br></pre></td></tr></table></figure>
-<h1 data-number="3" id="更多阅读"><span class="header-section-number">3</span> 更多阅读</h1>
-<ul>
-<li><a href="https://blog.csdn.net/dengjianqiang2011/article/details/78726570" target="_blank" rel="noopener">常用的正则表达式知识点与常见的正则匹配模式</a></li>
-<li><a href="https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html" target="_blank" rel="noopener">Python正则表达式指南</a></li>
-</ul>
+        
+## 元字符和语法
+
+![Python支持正则表达式元字符和语法](https://imgs.codewoody.com/uploads/big/dccd456ebd9bc0d9f05205583de18634.png)
+
+## 模式研究
+
+### 浮点数匹配
+
+<!--￼0-->
+
+这个模式能够匹配所有的数字模式，包括正负数，科学计数法模式。这里注意一下`(?:)`这个模式，代表这个括号标出的元组不参与编号，在输
+输出的结果中也不会单列出来。
+
+### 汉字
+
+<!--￼1-->
+
+### 邮箱
+
+<!--￼2-->
+
+### 手机号码
+
+<!--￼3-->
+
+## 更多阅读
+
+- [常用的正则表达式知识点与常见的正则匹配模式](https://blog.csdn.net/dengjianqiang2011/article/details/78726570)
+- [Python正则表达式指南](https://www.cnblogs.com/huxi/archive/2010/07/04/1771073.html)
 
       
     </div>
@@ -680,17 +689,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -962,23 +962,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#元字符和语法"><span class="nav-text">1 元字符和语法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模式研究"><span class="nav-text">2 模式研究</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点数匹配"><span class="nav-text">2.1 浮点数匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汉字"><span class="nav-text">2.2 汉字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮箱"><span class="nav-text">2.3 邮箱</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手机号码"><span class="nav-text">2.4 手机号码</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#更多阅读"><span class="nav-text">3 更多阅读</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

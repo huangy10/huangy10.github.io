@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="原贴地址">
+  <meta name="description" content="- [原贴地址](https://www.digitalocean.com/community/questions/no-password-is-asked-when-installing-mysql-server)">
 <meta name="keywords" content="翻译,linux,Debug">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql安装过程中没有提示设置密码的问题">
 <meta property="og:url" content="http://www.codewoody.com/posts/9986/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="原贴地址">
+<meta property="og:description" content="- [原贴地址](https://www.digitalocean.com/community/questions/no-password-is-asked-when-installing-mysql-server)">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-07-23T09:52:21.550Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql安装过程中没有提示设置密码的问题">
-<meta name="twitter:description" content="原贴地址">
+<meta name="twitter:description" content="- [原贴地址](https://www.digitalocean.com/community/questions/no-password-is-asked-when-installing-mysql-server)">
 
 
 
@@ -570,14 +570,18 @@
       
 
       
-        <ul>
-<li><a href="https://www.digitalocean.com/community/questions/no-password-is-asked-when-installing-mysql-server" target="_blank" rel="noopener">原贴地址</a></li>
-</ul>
+        
+- [原贴地址](https://www.digitalocean.com/community/questions/no-password-is-asked-when-installing-mysql-server)
+
 <a id="more"></a>
-<p>问题描述：在使用<code>sudo apt-get install -y mysql-server</code>的过程中没有提示设置<code>root</code>账户的密码，按照<a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04" target="_blank" rel="noopener">教程</a>执行<code>mysql_secure_installation</code>时，无法以<code>root</code>账户登录进入MySQL。</p>
-<p>解决方法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo mysqld_safe --skip-grant-tables&amp;</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo mysql --user=root mysql</span></span><br><span class="line"></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> update user <span class="built_in">set</span> authentication_string=PASSWORD(<span class="string">'new-password'</span>) <span class="built_in">where</span> user=<span class="string">'root'</span>;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> flush privileges;</span></span><br><span class="line"><span class="meta">mysql&gt;</span><span class="bash"> quit</span></span><br><span class="line">sudo service mysql restart</span><br></pre></td></tr></table></figure>
-<p>注意将<code>new-password</code>替换为你想要设置的密码。注意，我们仍然需要使用<code>sudo</code>才能运行<code>mysql_secure_installation</code>，否则会出现<code>Error: Access denied for user 'root'@'localhost'</code>的错误。</p>
+
+问题描述：在使用`sudo apt-get install -y mysql-server`的过程中没有提示设置`root`账户的密码，按照[教程](https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04)执行`mysql_secure_installation`时，无法以`root`账户登录进入MySQL。
+
+解决方法如下：
+
+<!--￼0-->
+
+注意将`new-password`替换为你想要设置的密码。注意，我们仍然需要使用`sudo`才能运行`mysql_secure_installation`，否则会出现`Error: Access denied for user 'root'@'localhost'`的错误。
 
       
     </div>

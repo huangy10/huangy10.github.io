@@ -131,13 +131,10 @@
 <meta property="og:site_name" content="治部少辅">
 <meta property="og:description" content="GitLab 由乌克兰程序员 Dmitriy Zaporozhets 和 Valery Sizov 开发，它由 Ruby 写成。后来，一些部分用 Go 语言重写。截止 2018 年 5 月，该公司约有 290 名团队成员，以及 2000 多名开源贡献者。 GitLab 被 IBM，Sony，Jülich Research Center，NASA，Alibaba，Invincea，O’Reilly">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/109e8d518cabd20d26bb2bdc01feaaa0.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fc818b279eb9b922aa4b4adbb8c8ff57.png">
 <meta property="og:updated_time" content="2020-03-30T17:03:19.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gitlab|安装-迁移-删除">
 <meta name="twitter:description" content="GitLab 由乌克兰程序员 Dmitriy Zaporozhets 和 Valery Sizov 开发，它由 Ruby 写成。后来，一些部分用 Go 语言重写。截止 2018 年 5 月，该公司约有 290 名团队成员，以及 2000 多名开源贡献者。 GitLab 被 IBM，Sony，Jülich Research Center，NASA，Alibaba，Invincea，O’Reilly">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/109e8d518cabd20d26bb2bdc01feaaa0.png">
 
 
 
@@ -573,92 +570,146 @@
       
 
       
-        <p></p>
-<h1 id="安装">1 安装</h1>
-<h2 id="omnibus-package-installation">1.1 Omnibus package installation</h2>
-<p>这是Gitlab官网推荐的安装方式。官网文档链接位于<a href="https://gitlab.com/gitlab-org/gitlab-recipes/blob/master/web-server/nginx/gitlab-omnibus-nginx.conf" target="_blank" rel="noopener">Gitlab Installation</a>。不过，现在直接去官网默认给出的是企业版，即gitlab-ee的安装方式（付费的），而个人版其实用gitlab-ce就够了。gitlab-ce安装方式如下</p>
-<h3 id="安装并配置依赖">1.1.1 安装并配置依赖</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y curl openssh-server ca-certificates</span><br></pre></td></tr></table></figure>
-<p>然后安装Postfix来启动邮件提醒功能。（如果你使用了第三方的邮件服务，可以跳过这一步并且参照<a href="https://docs.gitlab.com/omnibus/settings/smtp.html" target="_blank" rel="noopener">配置外部SMTP服务器</a>）。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y postfix</span><br></pre></td></tr></table></figure>
-<p>在接下来的配置过程中，选择'Internet Site'选项。使用你的服务器的域名来作为'mail name'。如果还有后续的选项，输入Enter直至安装完成。</p>
-<h3 id="安装gitlab-ee">1.1.2 安装Gitlab-EE</h3>
-<p>添加Gitlab Package仓库：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意这里安装的是CE版本，故是gitlab-ce，企业版对应的是gitlab-ee</p>
-</blockquote>
-<p>接下来安装Gitlab：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo EXTERNAL_URL=<span class="string">"http://gitlab.example.com"</span> apt-get install gitlab-ce</span><br></pre></td></tr></table></figure>
-<p>这里的EXTERNAL_URL是你的Gitlab服务要使用的域名。如果你只使用http，或者后续要使用已有的Nginx，可以在这里使用http。如果使用https，gitlab会调用<a href="https://letsencrypt.org" target="_blank" rel="noopener">Let's encrtpy</a>的服务为你的网站添加ssl证书。</p>
-<h3 id="登录gtilab">1.1.3 登录Gtilab</h3>
-<p>进入你在安装阶段的域名，你会被重定向到密码重置界面。在这个页面你要设置管理员账户的密码，然后回到登录界面。在这个登录界面，使用<code>root</code>用户名和上一步设置的密码登录。</p>
-<h2 id="使用已有的nginx">1.2 使用已有的Nginx</h2>
-<p>这个章节我们参考<a href="https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/nginx.md#using-a-non-bundled-web-server" target="_blank" rel="noopener">官方文档</a>给出使用已有的Nginx的方法。</p>
-<h3 id="禁用gitlab自带的nginx">1.2.1 禁用Gitlab自带的Nginx</h3>
-<p>编辑<code>/etc/gitlab/gitlab.rb</code>文件，设置</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx[<span class="string">'enable'</span>] = <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<h3 id="设置外部服务器的用户">1.2.2 设置外部服务器的用户</h3>
-<p>这一步是为了保证外部服务器用户能够访问gitlab。使用Nginx时，可以通过<code>/etc/nginx/nginx.conf</code>文件查看到nginx用户。一般情况下这个用户名是<code>www-data</code>。修改<code>/etc/gitlab/gitlab.rb</code>：</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">web_server[<span class="string">'external_users'</span>] = [<span class="string">'www-data'</span>]</span><br></pre></td></tr></table></figure>
-<p>然后使用<code>sudo gitlab-ctl reconfigure</code>来使得更改生效。</p>
-<h3 id="trusted-proxies">1.2.3 Trusted proxies</h3>
-<p>如果你的反向代理服务器和gitlab不是在同一台机器上，那么你还需要设置Trusted proxies。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab_rails[<span class="string">'trusted_proxies'</span>] = [<span class="string">'192.168.1.0/24'</span>, <span class="string">'192.168.2.1'</span>, <span class="string">'2001:0db8::/32'</span>]</span><br></pre></td></tr></table></figure>
-<h3 id="nginx示例配置文件">1.2.4 Nginx示例配置文件</h3>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># gitlab socket 文件地址</span></span><br><span class="line"><span class="attribute">upstream</span> gitlab &#123;</span><br><span class="line">  <span class="comment"># 7.x 版本在此位置</span></span><br><span class="line">  <span class="comment"># server unix:/var/opt/gitlab/gitlab-rails/tmp/sockets/gitlab.socket;</span></span><br><span class="line">  <span class="comment"># 8.0 位置</span></span><br><span class="line">  <span class="attribute">server</span> unix:/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> *:<span class="number">80</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">server_name</span> gitlab.example.com;   <span class="comment"># 请修改为你的域名</span></span><br><span class="line"></span><br><span class="line">  <span class="attribute">server_tokens</span> <span class="literal">off</span>;     <span class="comment"># don't show the version number, a security best practice</span></span><br><span class="line">  <span class="attribute">root</span> /opt/gitlab/embedded/service/gitlab-rails/public;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Increase this if you want to upload large attachments</span></span><br><span class="line">  <span class="comment"># Or if you want to accept large git objects over http</span></span><br><span class="line">  <span class="attribute">client_max_body_size</span> <span class="number">250m</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># individual nginx logs for this gitlab vhost</span></span><br><span class="line">  <span class="attribute">access_log</span>  /var/log/gitlab/nginx/gitlab_access.log;</span><br><span class="line">  <span class="attribute">error_log</span>   /var/log/gitlab/nginx/gitlab_error.log;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="comment"># serve static files from defined root folder;.</span></span><br><span class="line">    <span class="comment"># @gitlab is a named location for the upstream fallback, see below</span></span><br><span class="line">    <span class="attribute">try_files</span> <span class="variable">$uri</span> <span class="variable">$uri</span>/index.html <span class="variable">$uri</span>.html <span class="variable">@gitlab</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># if a file, which is not found in the root folder is requested,</span></span><br><span class="line">  <span class="comment"># then the proxy pass the request to the upsteam (gitlab unicorn)</span></span><br><span class="line">  <span class="attribute">location</span> <span class="variable">@gitlab</span> &#123;</span><br><span class="line">    <span class="comment"># If you use https make sure you disable gzip compression</span></span><br><span class="line">    <span class="comment"># to be safe against BREACH attack</span></span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_read_timeout</span> <span class="number">300</span>; <span class="comment"># Some requests take more than 30 seconds.</span></span><br><span class="line">    <span class="attribute">proxy_connect_timeout</span> <span class="number">300</span>; <span class="comment"># Some requests take more than 30 seconds.</span></span><br><span class="line">    <span class="attribute">proxy_redirect</span>     <span class="literal">off</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_set_header</span>   X-Forwarded-Proto https;</span><br><span class="line">    <span class="attribute">proxy_set_header</span>   Host              <span class="variable">$http_host</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span>   X-Real-IP         <span class="variable">$remote_addr</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span>   X-Forwarded-For   <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span>   X-Frame-Options   SAMEORIGIN;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://gitlab;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># Enable gzip compression as per rails guide: http://guides.rubyonrails.org/asset_pipeline.html#gzip-compression</span></span><br><span class="line">  <span class="comment"># WARNING: If you are using relative urls do remove the block below</span></span><br><span class="line">  <span class="comment"># See config/application.rb under "Relative url support" for the list of</span></span><br><span class="line">  <span class="comment"># other files that need to be changed for relative url support</span></span><br><span class="line">  <span class="attribute">location</span> <span class="regexp">~ ^/(assets)/</span>  &#123;</span><br><span class="line">    <span class="attribute">root</span> /opt/gitlab/embedded/service/gitlab-rails/public;</span><br><span class="line">    <span class="comment"># gzip_static on; # to serve pre-gzipped version</span></span><br><span class="line">    <span class="attribute">expires</span> max;</span><br><span class="line">    <span class="attribute">add_header</span> Cache-Control public;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment"># error_page 502 /502.html;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="迁移">2 迁移</h1>
-<h2 id="备份">2.1 备份</h2>
-<p>迁移首先要做的是备份。在<a href="https://blog.csdn.net/ouyang_peng/article/details/77070977" target="_blank" rel="noopener">git学习------&gt; Gitlab如何进行备份恢复与迁移？</a>这篇文章中详细讲述了备份的问题。我们这里介绍的是最为直接和简单的步骤。如果要更加详细的信息请阅读这篇参考。</p>
-<p>备份使用如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-rake gitlab:backup:create</span><br></pre></td></tr></table></figure>
-<p>备份会生成在<code>/var/opt/gitlab/backups</code>目录下。名称类似于<code>1502357536_2017_08_10_9.4.3_gitlab_backup.tar</code>。下面这些配置信息，没有包含在backup文件里面。需要手动迁移。</p>
-<ul>
-<li><code>/etc/gitlab/gitlab.rb</code> 配置文件须备份</li>
-<li><code>/var/opt/gitlab/nginx/conf</code> nginx配置文件</li>
-<li><code>/etc/postfix/main.cfpostfix</code> 邮件配置备份</li>
-</ul>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/109e8d518cabd20d26bb2bdc01feaaa0.png" alt=""><figcaption>备份命令的执行</figcaption>
-</figure>
-<h2 id="在目标机器上安装gitlab">2.2 在目标机器上安装gitlab</h2>
-<p>迁移过程中要求源机器和目标机器上安装的gitlab版本是相同的。如果不同，其实最好的做法是先将源机器上的gitlab升级到最新的版本。然后再生成备份。</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/fc818b279eb9b922aa4b4adbb8c8ff57.png" alt=""><figcaption>如何查看Gitlab版本</figcaption>
-</figure>
-<h2 id="上传备份">2.3 上传备份</h2>
-<p>使用<code>scp</code>命令将备份文件上传到目标机器的<code>/var/opt/gitlab/backups</code>。</p>
-<blockquote>
-<p>如果scp上传目标文件文件夹的权限不够，可以先上传到自己的home目录下，然后ssh登录到服务器使用sudo进行移动。</p>
-</blockquote>
-<h2 id="应用备份文件">2.4 应用备份文件</h2>
-<p>首先为了避免潜在的权限问题，将备份文件的权限设置为777</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 1502357536_2017_08_10_9.4.3_gitlab_backup.tar</span><br></pre></td></tr></table></figure>
-<p>然后停止gitlab的相关数据连接服务</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gitlab-ctl stop unicorn</span><br><span class="line">gitlab-ctl stop sidekiq</span><br></pre></td></tr></table></figure>
-<p>然后用下面的命令读取备份：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gitlab-rake gitlab:backup:restore BACKUP=1502357536_2017_08_10_9.4.3</span><br></pre></td></tr></table></figure>
-<p>在后续出现的所有询问中输入yes，等待执行完毕，即完成了迁移过程，接下来再次启动gitlab</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-ctl start</span><br></pre></td></tr></table></figure>
-<h1 id="删除">3 删除</h1>
-<p>下面的删除过程在Ubuntu 16上得到验证：</p>
-<h2 id="移除gitlab服务">3.1 移除gitlab服务</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-ctl uninstall</span><br></pre></td></tr></table></figure>
-<h2 id="清楚gitlab产生的数据">3.2 清楚Gitlab产生的数据</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-ctl cleanse</span><br></pre></td></tr></table></figure>
-<h2 id="删除gitlab生成的系统账户">3.3 删除Gitlab生成的系统账户</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gitlab-ctl remove-accounts</span><br></pre></td></tr></table></figure>
-<h2 id="删除gitlab">3.4 删除gitlab</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -P gitlab-ce</span><br></pre></td></tr></table></figure>
-<h2 id="其他文件的删除">3.5 其他文件的删除</h2>
-<p>除了上述操作，Gitlab使用的其他文件夹还需要手动删除，包括：</p>
-<ul>
-<li><code>/opt/gitlab</code>: 包含了Gitlab的应用代码和依赖</li>
-<li><code>/var/opt/gitlab</code>: 包含了应用的数据和配置信息(gitlab-ctl reconfigure的写入内容)</li>
-<li><code>/etc/gitlab</code>: omnibus gitlab的配置信息。这里的文件是唯一允许你手动编辑的部分</li>
-<li><code>/var/log/gitlab</code>: 日志文件</li>
-</ul>
-<p>在你完成了开始的四个步骤后，这里的四个文件夹可以安全地手动删除。</p>
+        ## 1 安装
+
+### 1.1 Omnibus package installation
+
+这是Gitlab官网推荐的安装方式。官网文档链接位于[Gitlab Installation](https://gitlab.com/gitlab-org/gitlab-recipes/blob/master/web-server/nginx/gitlab-omnibus-nginx.conf)。不过，现在直接去官网默认给出的是企业版，即gitlab-ee的安装方式（付费的），而个人版其实用gitlab-ce就够了。gitlab-ce安装方式如下
+
+#### 1.1.1 安装并配置依赖
+
+<!--￼0-->
+
+然后安装Postfix来启动邮件提醒功能。（如果你使用了第三方的邮件服务，可以跳过这一步并且参照[配置外部SMTP服务器](https://docs.gitlab.com/omnibus/settings/smtp.html)）。
+
+<!--￼1-->
+
+在接下来的配置过程中，选择'Internet Site'选项。使用你的服务器的域名来作为'mail name'。如果还有后续的选项，输入Enter直至安装完成。
+
+#### 1.1.2 安装Gitlab-EE
+
+添加Gitlab Package仓库：
+
+<!--￼2-->
+
+> 注意这里安装的是CE版本，故是gitlab-ce，企业版对应的是gitlab-ee
+
+接下来安装Gitlab：
+
+<!--￼3-->
+
+这里的EXTERNAL_URL是你的Gitlab服务要使用的域名。如果你只使用http，或者后续要使用已有的Nginx，可以在这里使用http。如果使用https，gitlab会调用[Let's encrtpy](https://letsencrypt.org)的服务为你的网站添加ssl证书。
+
+#### 1.1.3 登录Gtilab
+
+进入你在安装阶段的域名，你会被重定向到密码重置界面。在这个页面你要设置管理员账户的密码，然后回到登录界面。在这个登录界面，使用`root`用户名和上一步设置的密码登录。
+
+### 1.2 使用已有的Nginx
+
+这个章节我们参考[官方文档](https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/nginx.md#using-a-non-bundled-web-server)给出使用已有的Nginx的方法。
+
+#### 1.2.1 禁用Gitlab自带的Nginx
+
+编辑`/etc/gitlab/gitlab.rb`文件，设置
+
+<!--￼4-->
+
+#### 1.2.2 设置外部服务器的用户
+
+这一步是为了保证外部服务器用户能够访问gitlab。使用Nginx时，可以通过`/etc/nginx/nginx.conf`文件查看到nginx用户。一般情况下这个用户名是`www-data`。修改`/etc/gitlab/gitlab.rb`：
+
+<!--￼5-->
+
+然后使用`sudo gitlab-ctl reconfigure`来使得更改生效。
+
+#### 1.2.3 Trusted proxies
+
+如果你的反向代理服务器和gitlab不是在同一台机器上，那么你还需要设置Trusted proxies。
+
+<!--￼6-->
+
+#### 1.2.4 Nginx示例配置文件
+
+<!--￼7-->
+
+## 2 迁移
+
+### 2.1 备份
+
+迁移首先要做的是备份。在[git学习------> Gitlab如何进行备份恢复与迁移？](https://blog.csdn.net/ouyang_peng/article/details/77070977)这篇文章中详细讲述了备份的问题。我们这里介绍的是最为直接和简单的步骤。如果要更加详细的信息请阅读这篇参考。
+
+备份使用如下命令：
+
+<!--￼8-->
+
+备份会生成在`/var/opt/gitlab/backups`目录下。名称类似于`1502357536_2017_08_10_9.4.3_gitlab_backup.tar`。下面这些配置信息，没有包含在backup文件里面。需要手动迁移。
+
+- `/etc/gitlab/gitlab.rb` 配置文件须备份
+- `/var/opt/gitlab/nginx/conf` nginx配置文件
+- `/etc/postfix/main.cfpostfix` 邮件配置备份
+
+![备份命令的执行](https://imgs.codewoody.com/uploads/big/109e8d518cabd20d26bb2bdc01feaaa0.png)
+
+### 2.2 在目标机器上安装gitlab
+
+迁移过程中要求源机器和目标机器上安装的gitlab版本是相同的。如果不同，其实最好的做法是先将源机器上的gitlab升级到最新的版本。然后再生成备份。
+
+![如何查看Gitlab版本](https://imgs.codewoody.com/uploads/big/fc818b279eb9b922aa4b4adbb8c8ff57.png)
+
+### 2.3 上传备份
+
+使用`scp`命令将备份文件上传到目标机器的`/var/opt/gitlab/backups`。
+
+> 如果scp上传目标文件文件夹的权限不够，可以先上传到自己的home目录下，然后ssh登录到服务器使用sudo进行移动。
+
+### 2.4 应用备份文件
+
+首先为了避免潜在的权限问题，将备份文件的权限设置为777
+
+<!--￼9-->
+
+然后停止gitlab的相关数据连接服务
+
+<!--￼10-->
+
+然后用下面的命令读取备份：
+
+<!--￼11-->
+
+在后续出现的所有询问中输入yes，等待执行完毕，即完成了迁移过程，接下来再次启动gitlab
+
+<!--￼12-->
+
+## 3 删除
+
+下面的删除过程在Ubuntu 16上得到验证：
+
+### 3.1 移除gitlab服务
+
+<!--￼13-->
+
+### 3.2 清楚Gitlab产生的数据
+
+<!--￼14-->
+
+### 3.3 删除Gitlab生成的系统账户
+
+<!--￼15-->
+
+### 3.4 删除gitlab
+
+<!--￼16-->
+
+### 3.5 其他文件的删除
+
+除了上述操作，Gitlab使用的其他文件夹还需要手动删除，包括：
+
+- `/opt/gitlab`: 包含了Gitlab的应用代码和依赖
+- `/var/opt/gitlab`: 包含了应用的数据和配置信息(gitlab-ctl reconfigure的写入内容)
+- `/etc/gitlab`: omnibus gitlab的配置信息。这里的文件是唯一允许你手动编辑的部分
+- `/var/log/gitlab`: 日志文件
+
+在你完成了开始的四个步骤后，这里的四个文件夹可以安全地手动删除。
       
     </div>
 
@@ -761,17 +812,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1043,23 +1085,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-text">1 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#omnibus-package-installation"><span class="nav-text">1.1 Omnibus package installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装并配置依赖"><span class="nav-text">1.1.1 安装并配置依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装gitlab-ee"><span class="nav-text">1.1.2 安装Gitlab-EE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#登录gtilab"><span class="nav-text">1.1.3 登录Gtilab</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用已有的nginx"><span class="nav-text">1.2 使用已有的Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#禁用gitlab自带的nginx"><span class="nav-text">1.2.1 禁用Gitlab自带的Nginx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置外部服务器的用户"><span class="nav-text">1.2.2 设置外部服务器的用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trusted-proxies"><span class="nav-text">1.2.3 Trusted proxies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx示例配置文件"><span class="nav-text">1.2.4 Nginx示例配置文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迁移"><span class="nav-text">2 迁移</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#备份"><span class="nav-text">2.1 备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在目标机器上安装gitlab"><span class="nav-text">2.2 在目标机器上安装gitlab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#上传备份"><span class="nav-text">2.3 上传备份</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用备份文件"><span class="nav-text">2.4 应用备份文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除"><span class="nav-text">3 删除</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#移除gitlab服务"><span class="nav-text">3.1 移除gitlab服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#清楚gitlab产生的数据"><span class="nav-text">3.2 清楚Gitlab产生的数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除gitlab生成的系统账户"><span class="nav-text">3.3 删除Gitlab生成的系统账户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除gitlab"><span class="nav-text">3.4 删除gitlab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他文件的删除"><span class="nav-text">3.5 其他文件的删除</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

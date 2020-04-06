@@ -123,19 +123,17 @@
 
 
 
-  <meta name="description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[1]这篇文章。该文章内的马尔科夫链中的变量定义和[2]中的有点不同。我们先梳理一下[1]中马尔科夫链。 1 二维马尔科夫过程 对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马尔科夫链表示：  二维马尔科夫链表示  其中状态变量定义为\(\{s(t), b(t)\}\)，\(">
+  <meta name="description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[@liu2017joint]这篇文章。该文章内的马尔科夫链中的变量定义和[@bianchi2000performance]中的有点不同。我们先梳理一下[@liu2017joint]中马尔科夫链。  ## 二维马尔科夫过程  对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马">
 <meta property="og:type" content="website">
 <meta property="og:title" content="延时分析">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/delay-analysis.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[1]这篇文章。该文章内的马尔科夫链中的变量定义和[2]中的有点不同。我们先梳理一下[1]中马尔科夫链。 1 二维马尔科夫过程 对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马尔科夫链表示：  二维马尔科夫链表示  其中状态变量定义为\(\{s(t), b(t)\}\)，\(">
+<meta property="og:description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[@liu2017joint]这篇文章。该文章内的马尔科夫链中的变量定义和[@bianchi2000performance]中的有点不同。我们先梳理一下[@liu2017joint]中马尔科夫链。  ## 二维马尔科夫过程  对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/84f08989447e4bc20711e7b76c0bb65a.png">
 <meta property="og:updated_time" content="2019-05-17T07:00:17.571Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="延时分析">
-<meta name="twitter:description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[1]这篇文章。该文章内的马尔科夫链中的变量定义和[2]中的有点不同。我们先梳理一下[1]中马尔科夫链。 1 二维马尔科夫过程 对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马尔科夫链表示：  二维马尔科夫链表示  其中状态变量定义为\(\{s(t), b(t)\}\)，\(">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/84f08989447e4bc20711e7b76c0bb65a.png">
+<meta name="twitter:description" content="在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[@liu2017joint]这篇文章。该文章内的马尔科夫链中的变量定义和[@bianchi2000performance]中的有点不同。我们先梳理一下[@liu2017joint]中马尔科夫链。  ## 二维马尔科夫过程  对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马">
 
 
 
@@ -552,61 +550,63 @@
       <div class="post-body han-init-context">
         
         
-          <p>在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了<span class="citation" data-cites="liu2017joint">[1]</span>这篇文章。该文章内的马尔科夫链中的变量定义和<span class="citation" data-cites="bianchi2000performance">[2]</span>中的有点不同。我们先梳理一下<span class="citation" data-cites="liu2017joint">[1]</span>中马尔科夫链。</p>
-<h1 data-number="1" id="二维马尔科夫过程"><span class="header-section-number">1</span> 二维马尔科夫过程</h1>
-<p>对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马尔科夫链表示：</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/84f08989447e4bc20711e7b76c0bb65a.png" alt=""><figcaption>二维马尔科夫链表示</figcaption>
-</figure>
-<p>其中状态变量定义为<span class="math inline">\(\{s(t), b(t)\}\)</span>，<span class="math inline">\(s(t)\in \{0, 1\}\)</span>代表车辆是否有包<strong>等待</strong>发送。<span class="math inline">\(b(t)\in \{0, 1,2, \dots, W_e-1\}\)</span>代表了退避计数器的值。进而马尔科夫链的转移概率为：</p>
-<p><span class="math display">\[\begin{equation}
-\left\{\begin{array}{l}{P\{0, k | 0, k+1\}=1-p, k \in\left[0, W_{s}-2\right]} \\ {P\{0, k | 0, k\}=p} \\ {P\{0, k | 0,0\}=p\left(1-G_{t}\right) / W_{s}} \\ {P\{1, k | 0,0\}=p G_{t} / W_{s}} \\ {P\{0, k | 1, k\}=G_{s}} \\ {P\{1, k | 1, k\}=1-G_{s}}\end{array}\right.
-\end{equation}\]</span></p>
-<p>上面的公式中除了第一行，其他情况下<span class="math inline">\(k\in \{0, 1, 2,\dots,W_s - 1\}\)</span>。<span class="math inline">\(G_t\)</span>和<span class="math inline">\(G_s\)</span>为恒定，且独立的值。 <strong><span class="math inline">\(p\)</span>为信道被感知为繁忙的概率</strong>（probability when a busy channel is sensed）。 <span class="math inline">\(G_t\)</span>为安全消息在非竞争段产生的概率（在此区间内改包没法马上发送），<span class="math inline">\(G_s\)</span>为安全消息可以进行发送的概率（即在竞争段产生的概率）。由于安全消息的生成速度是均匀的，则</p>
-<p><span class="math display">\[\begin{equation}
-G_{t}=\frac{T_{t}+T_{\mathrm{SCH}}}{T_{\mathrm{CCH}} + T_{\mathrm{SCH}}} \\
-\end{equation}\]</span></p>
-<p><span class="math display">\[\begin{equation}
-G_{s}=\frac{T_{c}}{T_{\mathrm{C} \mathrm{CH}}+T_{\mathrm{SCH}}}
-\end{equation}\]</span></p>
-<p>我们进一步解释一下转移概率的各行的含义：</p>
-<ol type="1">
-<li>退避计数器减一，对应感知到信道空闲</li>
-<li>退避计数器不变，对应感知到信道繁忙</li>
-<li>退避计数器从0到k，s(t)的值不变为0，从概率计算的形式来看，是感知到信道为繁忙，且包生成的时间在竞争段。</li>
-<li>退避计数器从0变成k，s(t)的值从0变成1， 从概率计算的形式来看，是感知到信道繁忙，且包生成在非竞争段（这时没法立刻发送），这个包进入等待队列。</li>
-<li>s(t)变成0，意味着原先缓存的包现在可以参与发送了。</li>
-<li>s(t)不变，对应当前时隙仍然不允许发送。</li>
-</ol>
-<p>记平稳分布为：<span class="math inline">\(b_{i, k}=\lim_{t \rightarrow \infty} P\{s(t)=i, b(t)=k\}\)</span>, <span class="math inline">\(T&#39;_{ss}\)</span> 为平均服务时间（排队论里的概念），那么任意车辆在任意时隙里面发送的概率是</p>
-<p><span class="math display">\[\begin{equation}
-P_{\mathrm{uns}}^{\prime}=b(0,0)\left(1-e^{-\lambda_{s} T_{\mathrm{ss}}^{\prime}}\right)
-\end{equation}\]</span></p>
-<h1 data-number="2" id="发送延时"><span class="header-section-number">2</span> 发送延时</h1>
-<p>发送延时 有如下几个部分构成：</p>
-<ol type="1">
-<li>退避延时：<span class="math inline">\(T_{\mathrm{sf}}\)</span></li>
-<li>传输延时(Transmission Delay)：<span class="math inline">\(T_{st}=L / R_{d}+T_{\mathrm{DIFS}}+\delta\)</span>，其中<span class="math inline">\(\delta\)</span>为信道传输延时(Propagation Delay)</li>
-<li>队列等待延时：<span class="math inline">\(T_{sq}\)</span></li>
-</ol>
-<p>总的延时为：<span class="math inline">\(T_{\mathrm{sd}}=T_{\mathrm{sq}}+T_{\mathrm{sf}}+T_{\mathrm{st}}\)</span>。根据上面的马尔科夫过程，我们可以得到退避延时为：</p>
-<p><span class="math display">\[\begin{equation}
-\begin{aligned} E\left[T_{\mathrm{sf}}\right] &amp;=\sum_{i=0}^{W_{s}} \frac{\left(1-G_{t}\right) p}{W_{s}} \sum_{i=0}^{W_{s}}\left(p T_{t}\right)+\sum_{i=0}^{W_{s}} \frac{G_{t} p}{W_{s}} \sum_{i=0}^{W_{s}}\left[\left(1-G_{s}\right) T_{t}\right] \\ &amp;=\frac{p T_{t}\left(1-G_{t}\right)\left(W_{s}-1\right)\left(G_{t}+p\right)}{2} \end{aligned}
-\end{equation}\]</span></p>
-<p>对于队列等待延时部分，为了保证系统的稳定性，需要有<span class="math inline">\(\lambda_{s} T_{\mathrm{serv}}&lt;1\)</span>，其中<span class="math inline">\(\lambda_s\)</span>为消息生成的速率，<span class="math inline">\(T_{\mathrm{serv}}=E\left[T_{\mathrm{sf}}\right]+T_{\mathrm{st}}\)</span>。根据Pollaczek-Khintchine定理：</p>
-<p><span class="math display">\[\begin{equation}
-T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-\lambda_{s} T_{\mathrm{serv}}\right)}
-\end{equation}\]</span></p>
-<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
-<div id="refs" class="references" role="doc-bibliography">
-<div id="ref-liu2017joint">
-<p>[1] B. Liu, D. Jia, K. Lu, D. Ngoduy, J. Wang, and L. Wu, “A joint control–communication design for reliable vehicle platooning in hybrid traffic,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 66, no. 10, pp. 9394–9409, 2017.</p>
-</div>
-<div id="ref-bianchi2000performance">
-<p>[2] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coordination function,” <em>IEEE Journal on Selected Areas in Communications</em>, vol. 18, no. 3, pp. 535–547, 2000.</p>
-</div>
-</div>
+          
+在这篇文章中，我们利用之前提到过的二维马尔可夫模型针对传输延时进行分析。这篇文章主要参考了[@liu2017joint]这篇文章。该文章内的马尔科夫链中的变量定义和[@bianchi2000performance]中的有点不同。我们先梳理一下[@liu2017joint]中马尔科夫链。
 
+## 二维马尔科夫过程
+
+对于使用IEEE802.11 DCF机制的节点的退避过程，可以用如下图所示的二维马尔科夫链表示：
+
+![二维马尔科夫链表示](https://imgs.codewoody.com/uploads/big/84f08989447e4bc20711e7b76c0bb65a.png)
+
+其中状态变量定义为$\{s(t), b(t)\}$，$s(t)\in \{0, 1\}$代表车辆是否有包**等待**发送。$b(t)\in \{0, 1,2, \dots, W_e-1\}$代表了退避计数器的值。进而马尔科夫链的转移概率为：
+
+\begin{equation}
+\left\{\begin{array}{l}{P\{0, k | 0, k+1\}=1-p, k \in\left[0, W_{s}-2\right]} \\ {P\{0, k | 0, k\}=p} \\ {P\{0, k | 0,0\}=p\left(1-G_{t}\right) / W_{s}} \\ {P\{1, k | 0,0\}=p G_{t} / W_{s}} \\ {P\{0, k | 1, k\}=G_{s}} \\ {P\{1, k | 1, k\}=1-G_{s}}\end{array}\right.
+\end{equation}
+
+上面的公式中除了第一行，其他情况下$k\in \{0, 1, 2,\dots,W_s - 1\}$。$G_t$和$G_s$为恒定，且独立的值。
+**$p$为信道被感知为繁忙的概率**（probability when a busy channel is sensed）。
+$G_t$为安全消息在非竞争段产生的概率（在此区间内改包没法马上发送），$G_s$为安全消息可以进行发送的概率（即在竞争段产生的概率）。由于安全消息的生成速度是均匀的，则
+
+\begin{equation}
+G_{t}=\frac{T_{t}+T_{\mathrm{SCH}}}{T_{\mathrm{CCH}} + T_{\mathrm{SCH}}} \\
+\end{equation}
+
+\begin{equation}
+G_{s}=\frac{T_{c}}{T_{\mathrm{C} \mathrm{CH}}+T_{\mathrm{SCH}}}
+\end{equation}
+
+我们进一步解释一下转移概率的各行的含义：
+
+1. 退避计数器减一，对应感知到信道空闲
+2. 退避计数器不变，对应感知到信道繁忙
+3. 退避计数器从0到k，s(t)的值不变为0，从概率计算的形式来看，是感知到信道为繁忙，且包生成的时间在竞争段。
+4. 退避计数器从0变成k，s(t)的值从0变成1， 从概率计算的形式来看，是感知到信道繁忙，且包生成在非竞争段（这时没法立刻发送），这个包进入等待队列。
+5. s(t)变成0，意味着原先缓存的包现在可以参与发送了。
+6. s(t)不变，对应当前时隙仍然不允许发送。
+
+记平稳分布为：$b_{i, k}=\lim_{t \rightarrow \infty} P\{s(t)=i, b(t)=k\}$, $T'_{ss}$ 为平均服务时间（排队论里的概念），那么任意车辆在任意时隙里面发送的概率是
+
+\begin{equation}
+P_{\mathrm{uns}}^{\prime}=b(0,0)\left(1-e^{-\lambda_{s} T_{\mathrm{ss}}^{\prime}}\right)
+\end{equation}
+
+## 发送延时
+
+发送延时 有如下几个部分构成：
+
+1. 退避延时：$T_{\mathrm{sf}}$
+2. 传输延时(Transmission Delay)：$T_{st}=L / R_{d}+T_{\mathrm{DIFS}}+\delta$，其中$\delta$为信道传输延时(Propagation Delay)
+3. 队列等待延时：$T_{sq}$
+
+总的延时为：$T_{\mathrm{sd}}=T_{\mathrm{sq}}+T_{\mathrm{sf}}+T_{\mathrm{st}}$。根据上面的马尔科夫过程，我们可以得到退避延时为：
+
+\begin{equation}
+\begin{aligned} E\left[T_{\mathrm{sf}}\right] &=\sum_{i=0}^{W_{s}} \frac{\left(1-G_{t}\right) p}{W_{s}} \sum_{i=0}^{W_{s}}\left(p T_{t}\right)+\sum_{i=0}^{W_{s}} \frac{G_{t} p}{W_{s}} \sum_{i=0}^{W_{s}}\left[\left(1-G_{s}\right) T_{t}\right] \\ &=\frac{p T_{t}\left(1-G_{t}\right)\left(W_{s}-1\right)\left(G_{t}+p\right)}{2} \end{aligned}
+\end{equation}
+
+对于队列等待延时部分，为了保证系统的稳定性，需要有$\lambda_{s} T_{\mathrm{serv}}
         
       </div>
       
@@ -721,17 +721,8 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1003,23 +994,6 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二维马尔科夫过程"><span class="nav-text">1 二维马尔科夫过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#发送延时"><span class="nav-text">2 发送延时</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
@@ -1571,7 +1545,7 @@ T_{\mathrm{sq}}=\frac{\lambda_{s} E\left[T_{\mathrm{serv}}^{2}\right]}{2\left(1-
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }

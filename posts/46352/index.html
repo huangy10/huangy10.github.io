@@ -123,20 +123,18 @@
 
 
 
-  <meta name="description" content="这篇文章翻译自Analysing nefarious ssh access attempts，非核心内容有删改。 维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经常发生的一些奇怪的事情。">
+  <meta name="description" content="这篇文章翻译自[Analysing nefarious ssh access attempts](https://bastian.rieck.me/blog/posts/2019/ssh_incidents/)，非核心内容有删改。  维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经">
 <meta name="keywords" content="翻译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【翻译】分析恶意SSH访问">
 <meta property="og:url" content="http://www.codewoody.com/posts/46352/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这篇文章翻译自Analysing nefarious ssh access attempts，非核心内容有删改。 维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经常发生的一些奇怪的事情。">
+<meta property="og:description" content="这篇文章翻译自[Analysing nefarious ssh access attempts](https://bastian.rieck.me/blog/posts/2019/ssh_incidents/)，非核心内容有删改。  维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/77056379db69bf5b325e301c611b2871.png">
 <meta property="og:updated_time" content="2019-11-29T11:16:59.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【翻译】分析恶意SSH访问">
-<meta name="twitter:description" content="这篇文章翻译自Analysing nefarious ssh access attempts，非核心内容有删改。 维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经常发生的一些奇怪的事情。">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/77056379db69bf5b325e301c611b2871.png">
+<meta name="twitter:description" content="这篇文章翻译自[Analysing nefarious ssh access attempts](https://bastian.rieck.me/blog/posts/2019/ssh_incidents/)，非核心内容有删改。  维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经">
 
 
 
@@ -542,50 +540,65 @@
       
 
       
-        <p>这篇文章翻译自<a href="https://bastian.rieck.me/blog/posts/2019/ssh_incidents/" target="_blank" rel="noopener">Analysing nefarious ssh access attempts</a>，非核心内容有删改。</p>
-<p>维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经常发生的一些奇怪的事情。</p>
+        
+这篇文章翻译自[Analysing nefarious ssh access attempts](https://bastian.rieck.me/blog/posts/2019/ssh_incidents/)，非核心内容有删改。
+
+维护我自己的服务器让我在过去的若干年里面学会了很多事情。也让我对那些勇敢的同时维护多个服务器的系统管理员抱有更高的敬意。这篇文章将会讲述我在维护自己的服务器的过程中经常发生的一些奇怪的事情。
+
 <a id="more"></a>
-<h1 data-number="1" id="analysing-ip-addresses"><span class="header-section-number">1</span> Analysing IP addresses</h1>
-<p>更准确地而言，我们在这里是要寻找对我们的服务器发出的恶意ssh访问请求。这里，恶意的访问请求是指使用无效的ssh密码来尝试访问服务器。由于我管理服务器上所有的用户都使用公钥来访问服务器，因此无效密码这个评价指标是非常站得住脚的。首先让我们收集一点证据。所有的认证请求都会被记录在<code>/var/log/auth.log</code>文件中（或者历史版本）。这个文件的结构非常简单：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Feb 25 00:07:21 myrddin sshd[22071]: Failed password for root from X.X.X.X port 493 ssh2</span><br><span class="line">Feb 25 00:07:28 myrddin sshd[22075]: Invalid user ftpadmin from X.X.X.X port 567</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这个文件中不只存储了sshd的认证请求，其他的，例如sudo的认证信息也在这个文件夹</p>
-</blockquote>
-<p>注意到日志条目对于访问者是使用已有用户名还是不存在的用户名上，采用了不同的记录方式。作者用一个python脚本过滤枚举了所有的连接请求，并按照IP排序。一共有983892条记录（大概在一个月的时间里），其中大约17%可能与恶意访问有关。事实上在统计这个数字的时候已经忽略了无效密码【~这里的无效密码应该指不符合格式要求的密码，而非指错误的密码】和无效用户名的情况，所以17%这个数字其实是偏低的。</p>
-<p>在进一步检查了IP来源之后我觉得更有意思了。大约3个独特的IP地址，占了所有无效密码请求的25%。为了隐私问题，这里不列举具体的IP了，不过可以说的是这三个IP地址的ISP都来自中国。其中两个是中国电信，另一个是中国联通，尽管这两个ISP都列出了投诉的邮件，不过作者怀疑举报了也不会有什么卵用。</p>
-<p>接下来我尝试用<code>nmap</code>搜集更多的消息：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap -O -Pn X.X.X.X</span><br></pre></td></tr></table></figure>
-<p>对于两个中国电信的IP地址，对方只开放了一个端口可以访问，为端口25。尽管这个端口我没法访问，不过<code>nmap</code>命令反映出对方可能是<code>FreeBSD 6.2-Release</code>系统【~这很可能指向的只是一个路由网关，而非实际的服务器】。不过对于第三个中国联通的IP地址，<code>nmap</code>挖掘出来的结果要更有意思一些。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report for X.X.X.X</span><br><span class="line">Host is up (0.18s latency).</span><br><span class="line">Not shown: 977 closed ports</span><br><span class="line">PORT     STATE    SERVICE</span><br><span class="line">22/tcp   open     ssh</span><br><span class="line">25/tcp   open     smtp</span><br><span class="line">80/tcp   filtered http</span><br><span class="line">111/tcp  filtered rpcbind</span><br><span class="line">135/tcp  filtered msrpc</span><br><span class="line">139/tcp  filtered netbios-ssn</span><br><span class="line">199/tcp  filtered smux</span><br><span class="line">445/tcp  filtered microsoft-ds</span><br><span class="line">593/tcp  filtered http-rpc-epmap</span><br><span class="line">901/tcp  filtered samba-swat</span><br><span class="line">1025/tcp filtered NFS-or-IIS</span><br><span class="line">1034/tcp filtered zincite-a</span><br><span class="line">1068/tcp filtered instl_bootc</span><br><span class="line">1434/tcp filtered ms-sql-m</span><br><span class="line">3128/tcp filtered squid-http</span><br><span class="line">4444/tcp filtered krb524</span><br><span class="line">5800/tcp filtered vnc-http</span><br><span class="line">5900/tcp filtered vnc</span><br><span class="line">6006/tcp open     X11:6</span><br><span class="line">6129/tcp filtered unknown</span><br><span class="line">6667/tcp filtered irc</span><br><span class="line">6669/tcp filtered irc</span><br><span class="line">8080/tcp filtered http-proxy</span><br><span class="line">Device type: general purpose|WAP|storage-misc|broadband router</span><br><span class="line">Running (JUST GUESSING): Linux 3.X|4.X|2.6.X|2.4.X (95%), Asus embedded (92%), HP embedded (91%)</span><br><span class="line">OS CPE: cpe:/o:linux:linux_kernel:3 cpe:/o:linux:linux_kernel:4 cpe:/o:linux:linux_kernel cpe:/h:asus:rt-ac66u cpe:/h:hp:p2000_g3 cpe:/o:linux:linux_kernel:3.4 cpe:/o:linux:linux_kernel:2.6.22 cpe:/o:linux:linux_kernel:2.4</span><br><span class="line">Aggressive OS guesses: Linux 3.10 - 4.11 (95%), Linux 3.13 (95%), Linux 3.13 or 4.2 (95%), Linux 4.2 (95%), Linux 4.4 (95%), Linux 3.16 (94%), Linux 3.16 - 4.6 (94%), Linux 3.12 (93%), Linux 3.2 - 4.9 (93%), Linux 3.8 - 3.11 (93%)</span><br><span class="line">No exact OS matches for host (test conditions non-ideal).</span><br><span class="line">Network Distance: 16 hops</span><br><span class="line"></span><br><span class="line">OS detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 58.88 seconds</span><br></pre></td></tr></table></figure>
-<p>这里显示服务器是使用的<code>OpenSSH_6.9p1 Ubuntu-2 pat</code>，可以使用密码或者秘钥登录。所以理论上我可以以其人之道还治其人之身。</p>
-<h1 data-number="2" id="analysing-user-names"><span class="header-section-number">2</span> Analysing User Names</h1>
-<p>让我们分析一下所有的恶意请求中使用的有效用户名的比例：</p>
-<ol type="1">
-<li>root (98.42%)</li>
-<li>backup (0.29%)</li>
-<li>www-data (0.14%)</li>
-<li>ghost (0.11%)</li>
-<li>nobody (0.08%)</li>
-</ol>
-<p>很明显绝大多数恶意请求的目标都是root。不过这些用户其实都不允许通过ssh登录的，攻击者不知道这点。对于使用无效用户名的登录请求，其分布就比较分散了。比例最高的10个我们列出如下：</p>
-<ol type="1">
-<li>admin (4.57%)</li>
-<li>test (3.81%)</li>
-<li>user (3.07%)</li>
-<li>ubuntu (2.64%)</li>
-<li>ftpuser (2.40%)</li>
-<li>postgres (1.19%)</li>
-<li>oracle (1.10%)</li>
-<li>nagios (1.08%)</li>
-<li>git (0.92%)</li>
-<li>teamspeak (0.89%)</li>
-</ol>
-<h1 data-number="3" id="analysis-countries"><span class="header-section-number">3</span> Analysis Countries</h1>
-<p>最后我想可视化地呈现以下恶意访问的来源情况。最后选定的可视化工具是<a href="https://plot.ly/" target="_blank" rel="noopener">plotly</a>。</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/77056379db69bf5b325e301c611b2871.png"></p>
-<blockquote>
-<p>这里我们可以看到最容易被攻击的还是root账户。禁止root账户使用ssh登录可以让你免疫绝大多数ssh攻击。禁止的方法参考：<a href="https://www.howtogeek.com/howto/linux/security-tip-disable-root-ssh-login-on-linux/" target="_blank" rel="noopener">Security Tip: Disable Root SSH Login on Linux</a></p>
-</blockquote>
+
+## Analysing IP addresses
+
+更准确地而言，我们在这里是要寻找对我们的服务器发出的恶意ssh访问请求。这里，恶意的访问请求是指使用无效的ssh密码来尝试访问服务器。由于我管理服务器上所有的用户都使用公钥来访问服务器，因此无效密码这个评价指标是非常站得住脚的。首先让我们收集一点证据。所有的认证请求都会被记录在`/var/log/auth.log`文件中（或者历史版本）。这个文件的结构非常简单：
+
+<!--￼0-->
+
+> 这个文件中不只存储了sshd的认证请求，其他的，例如sudo的认证信息也在这个文件夹
+
+注意到日志条目对于访问者是使用已有用户名还是不存在的用户名上，采用了不同的记录方式。作者用一个python脚本过滤枚举了所有的连接请求，并按照IP排序。一共有983892条记录（大概在一个月的时间里），其中大约17%可能与恶意访问有关。事实上在统计这个数字的时候已经忽略了无效密码【~这里的无效密码应该指不符合格式要求的密码，而非指错误的密码】和无效用户名的情况，所以17%这个数字其实是偏低的。
+
+在进一步检查了IP来源之后我觉得更有意思了。大约3个独特的IP地址，占了所有无效密码请求的25%。为了隐私问题，这里不列举具体的IP了，不过可以说的是这三个IP地址的ISP都来自中国。其中两个是中国电信，另一个是中国联通，尽管这两个ISP都列出了投诉的邮件，不过作者怀疑举报了也不会有什么卵用。
+
+接下来我尝试用`nmap`搜集更多的消息：
+
+<!--￼1-->
+
+对于两个中国电信的IP地址，对方只开放了一个端口可以访问，为端口25。尽管这个端口我没法访问，不过`nmap`命令反映出对方可能是`FreeBSD 6.2-Release`系统【~这很可能指向的只是一个路由网关，而非实际的服务器】。不过对于第三个中国联通的IP地址，`nmap`挖掘出来的结果要更有意思一些。
+
+<!--￼2-->
+
+这里显示服务器是使用的`OpenSSH_6.9p1 Ubuntu-2 pat`，可以使用密码或者秘钥登录。所以理论上我可以以其人之道还治其人之身。
+
+## Analysing User Names
+
+让我们分析一下所有的恶意请求中使用的有效用户名的比例：
+
+1. root (98.42%)
+2. backup (0.29%)
+3. www-data (0.14%)
+4. ghost (0.11%)
+5. nobody (0.08%)
+
+很明显绝大多数恶意请求的目标都是root。不过这些用户其实都不允许通过ssh登录的，攻击者不知道这点。对于使用无效用户名的登录请求，其分布就比较分散了。比例最高的10个我们列出如下：
+
+1. admin (4.57%)
+2. test (3.81%)
+3. user (3.07%)
+4. ubuntu (2.64%)
+5. ftpuser (2.40%)
+6. postgres (1.19%)
+7. oracle (1.10%)
+8. nagios (1.08%)
+9. git (0.92%)
+10. teamspeak (0.89%)
+
+## Analysis Countries
+
+最后我想可视化地呈现以下恶意访问的来源情况。最后选定的可视化工具是[plotly](https://plot.ly/)。
+
+![](https://imgs.codewoody.com/uploads/big/77056379db69bf5b325e301c611b2871.png)
+
+> 这里我们可以看到最容易被攻击的还是root账户。禁止root账户使用ssh登录可以让你免疫绝大多数ssh攻击。禁止的方法参考：[Security Tip: Disable Root SSH Login on Linux](https://www.howtogeek.com/howto/linux/security-tip-disable-root-ssh-login-on-linux/)
 
       
     </div>
@@ -685,17 +698,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -967,23 +971,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#analysing-ip-addresses"><span class="nav-text">1 Analysing IP addresses</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analysing-user-names"><span class="nav-text">2 Analysing User Names</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#analysis-countries"><span class="nav-text">3 Analysis Countries</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

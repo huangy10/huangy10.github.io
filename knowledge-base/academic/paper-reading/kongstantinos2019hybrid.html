@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇Flexible SDN control in tactical ad hoc network的作者。同样也是关于 SDN 的内容。在那">
+  <meta name="description" content="这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc  Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇[Flexible SDN control in tactical ad hoc network](./konstantinos20">
 <meta property="og:type" content="website">
 <meta property="og:title" content="读论文：Hybrid SDN Control in MANET">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/kongstantinos2019hybrid.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇Flexible SDN control in tactical ad hoc network的作者。同样也是关于 SDN 的内容。在那">
+<meta property="og:description" content="这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc  Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇[Flexible SDN control in tactical ad hoc network](./konstantinos20">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文：Hybrid SDN Control in MANET">
-<meta name="twitter:description" content="这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇Flexible SDN control in tactical ad hoc network的作者。同样也是关于 SDN 的内容。在那">
+<meta name="twitter:description" content="这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc  Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇[Flexible SDN control in tactical ad hoc network](./konstantinos20">
 
 
 
@@ -538,20 +538,21 @@
       <div class="post-body han-init-context">
         
         
-          <p>这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇<a href="./konstantinos2018flexible.html">Flexible SDN control in tactical ad hoc network</a>的作者。同样也是关于 SDN 的内容。在那篇 SDN 里面作者提出的机制其实比较简单，SDN 和 MANET结合的方式是独立地运行SDN 和 MANET协议，当SDN给出的链路不可用时切换到MANET提供的链路上。这次读的这篇会议是在上次的期刊之后的内容，有一定的更新。</p>
-<blockquote>
-<p>this paper complements the controller placement methods with a new architecture that has a hybrid structure splitting the routing decision logic between the controllers and the data plane nodes.</p>
-</blockquote>
-<p>这里说的controller placement方法指的是用多 SDN 控制器的方法来解决可靠性的问题。</p>
-<blockquote>
-<p>Specifically, the controllers can break the routing path into segments, similar to the segment routing technique, and broadcast the list of segment labels (endpoint nodes of the segments) to the data plane nodes. The latter are able to make the actual forwarding decisions for each segment in a distributed manner, e.g. by running an existing MANET protocol like OLSR.</p>
-</blockquote>
-<p>这里的SDN + MANET的结合就比之前的期刊文章的要更加「灵巧」一些了。这里SDN给出较为粗线条的路由方案，将网络划分成一个一个的区段(Segment)，SDN给出的是以区段为单位的路由方案。区段内部的路由则通过MANET协议完成。因此我们需要精确的定义SDN和分布式路由协议的互动规则，包括他们需要交换哪些信息，信息的形式以及何时交换这些信息。</p>
-<p>具体而言，作者提出将SDN给出的路由路径分段(segments)，并且周期性地广播这些分段的连接点信息，而不是广播整个路由表。每段内的路由由分布式路由协议来完成。这样的好处是：</p>
-<ol type="1">
-<li>可靠性得到了改善，data nodes有独立的路由能力。</li>
-<li>性能得到了改善，SDN控制器提供的路由指导可以提升性能。</li>
-</ol>
+          
+这是一篇会议，全名是 Hybrid SDN Control in Mobile Ad Hoc  Networks。会议是 2019 IEEE International Conference on Smart Computing。这个文章的作者同时也是之前读过的一篇[Flexible SDN control in tactical ad hoc network](./konstantinos2018flexible.html)的作者。同样也是关于 SDN 的内容。在那篇 SDN 里面作者提出的机制其实比较简单，SDN 和 MANET结合的方式是独立地运行SDN 和 MANET协议，当SDN给出的链路不可用时切换到MANET提供的链路上。这次读的这篇会议是在上次的期刊之后的内容，有一定的更新。
+
+> this paper complements the controller placement methods with a new architecture that has a hybrid structure splitting the routing decision logic between the controllers and the data plane nodes.
+
+这里说的controller placement方法指的是用多 SDN 控制器的方法来解决可靠性的问题。
+
+> Specifically, the controllers can break the routing path into segments, similar to the segment routing technique, and broadcast the list of segment labels (endpoint nodes of the segments) to the data plane nodes. The latter are able to make the actual forwarding decisions for each segment in a distributed manner, e.g. by running an existing MANET protocol like OLSR.
+
+这里的SDN + MANET的结合就比之前的期刊文章的要更加「灵巧」一些了。这里SDN给出较为粗线条的路由方案，将网络划分成一个一个的区段(Segment)，SDN给出的是以区段为单位的路由方案。区段内部的路由则通过MANET协议完成。因此我们需要精确的定义SDN和分布式路由协议的互动规则，包括他们需要交换哪些信息，信息的形式以及何时交换这些信息。
+
+具体而言，作者提出将SDN给出的路由路径分段(segments)，并且周期性地广播这些分段的连接点信息，而不是广播整个路由表。每段内的路由由分布式路由协议来完成。这样的好处是：
+
+1. 可靠性得到了改善，data nodes有独立的路由能力。
+2. 性能得到了改善，SDN控制器提供的路由指导可以提升性能。
 
         
       </div>

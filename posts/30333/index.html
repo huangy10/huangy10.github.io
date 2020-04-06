@@ -123,20 +123,18 @@
 
 
 
-  <meta name="description" content="在上一篇文章中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：Dependency Injection in Node.js - 2016 edition。原文包含三个部分，我在这里直接整理成为一篇完整的文章。">
+  <meta name="description" content="在[上一篇文章](/posts/61013/)中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：[Dependency Injection in Node.js - 2016 edition](https://medium.com/@Jeffijoe/dependency-injection-in-node">
 <meta name="keywords" content="翻译,nodejs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dependency Injection in Node.js | 2016">
 <meta property="og:url" content="http://www.codewoody.com/posts/30333/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="在上一篇文章中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：Dependency Injection in Node.js - 2016 edition。原文包含三个部分，我在这里直接整理成为一篇完整的文章。">
+<meta property="og:description" content="在[上一篇文章](/posts/61013/)中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：[Dependency Injection in Node.js - 2016 edition](https://medium.com/@Jeffijoe/dependency-injection-in-node">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a3409d0fa20c30e7116c01c4d7ac4f1e.jpeg">
 <meta property="og:updated_time" content="2020-03-30T17:16:12.243Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dependency Injection in Node.js | 2016">
-<meta name="twitter:description" content="在上一篇文章中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：Dependency Injection in Node.js - 2016 edition。原文包含三个部分，我在这里直接整理成为一篇完整的文章。">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/a3409d0fa20c30e7116c01c4d7ac4f1e.jpeg">
+<meta name="twitter:description" content="在[上一篇文章](/posts/61013/)中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：[Dependency Injection in Node.js - 2016 edition](https://medium.com/@Jeffijoe/dependency-injection-in-node">
 
 
 
@@ -572,81 +570,129 @@
       
 
       
-        <p>在<a href="/posts/61013/">上一篇文章</a>中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：<a href="https://medium.com/@Jeffijoe/dependency-injection-in-node-js-2016-edition-f2a88efdd427" target="_blank" rel="noopener">Dependency Injection in Node.js - 2016 edition</a>。原文包含三个部分，我在这里直接整理成为一篇完整的文章。</p>
+        在[上一篇文章](/posts/61013/)中我们初步讨论的Dependency Injection的一些理念。在这篇文章中，我翻译了awilix模块的作者Jeff Hansen的文章：[Dependency Injection in Node.js - 2016 edition](https://medium.com/@Jeffijoe/dependency-injection-in-node-js-2016-edition-f2a88efdd427)。原文包含三个部分，我在这里直接整理成为一篇完整的文章。
+
 <a id="more"></a>
-<blockquote>
-<p>在翻译中我以传到核心思想为主，故不会太拘泥于一些细节问题。对于一些插科打诨的话，如果不是特别有意思的话，也许不会翻译。</p>
-</blockquote>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/a3409d0fa20c30e7116c01c4d7ac4f1e.jpeg" alt=""><figcaption>作者Jeff Hansen</figcaption>
-</figure>
-<hr>
-<h1 data-number="1" id="part-i"><span class="header-section-number">1</span> Part I</h1>
-<p>在2015年，RisingStack写了<a href="https://blog.risingstack.com/dependency-injection-in-node-js/" target="_blank" rel="noopener">一篇关于Dependency Injection(缩写为DI)的文章</a>，解释了什么是DI，以及如何手动实现。如果你还没有阅读这篇文章，我强烈建议你先阅读以下那篇文章。这样你对于本文的一些概念会有更加清晰的理解。</p>
-<blockquote>
-<p>这里提到的RisingStack的文章的中文版可以在我的博客里找到: <a href="/posts/61013/">Node.js | Dependency Injection</a>。</p>
-</blockquote>
-<p>在这一系列文章中，我会扩展一下手动实现的DI，为什么这种做法是糟糕的，以及我们如何最终能够让DI的现实变得优雅 -- 甚至比require/imports方式要更好。我将要证明Node中使用DI可以不像之前的做法那样沉闷。这都要归功于在ES6中引入的新特性：Proxies（直译就是代理）。</p>
-<p>我100%肯定作为一个Node的开发者，你会见过某种形式的DI。借鉴一下RisingStack文章中的例子:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>)</span><br><span class="line"></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    store: <span class="built_in">require</span>(<span class="string">'connect-session-knex'</span>)</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
-<p>session needs a store! - 这种存储的具体实现方式是多样的 ：redis，MySQL。Express本身并不关心背后的实现。我们来看下面的这个例子 -- 非DI实现：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">'../mydatabase'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    getToDos: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> db.query(<span class="string">'select * from todos'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在这个例子中我们直接导入了db模块，因此这个文件就依赖于db模块在磁盘上的具体存储位置，以及依赖于特定的是方式。在大多数场景下这并不算一个大问题。不过这种方式让测试变得更加困难 -- 不至于无法进行测试，但是无论如何都变得更加地困难了。另外，这个模块还假定db模块已经准备好了（例如：数据库连接已经建立起来了）。</p>
-<p>如果我们进一步将上面的代码转化成为对于测试友好的DI实现方式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">makeTodosService</span> (<span class="params">&#123; db &#125;</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        getTodos: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> db.query(<span class="string">'select * from todos'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>那么上面两个例子有什么区别呢？在下面的DI实现的例子中我们不是export出一个对象，而是export出一个生成这种对象的函数。这个函数同时阐明了为了创建此种对象所需要的依赖。</p>
-<p>如果你熟悉在其他语言中的DI实现，如Java, C#，还有PHP。下面这个使用ES6的类实现的例子可能更受你喜欢一些：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">TodosService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(&#123; db &#125;) &#123;</span><br><span class="line">        <span class="keyword">this</span>.db = db</span><br><span class="line">    &#125;</span><br><span class="line">    getTodos() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.db.query(<span class="string">'select * from todos'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>不过从个人角度我还是更喜欢函数的方法：不用担心this的上下文的问题。</p>
-<p>测试上面这个基于DI的例子非常简单 -- 你不再需要担心对require进行修修补补来替代数据库模块从而连接到测试数据库。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'Todo Service'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    beforeEach(() &#123;</span><br><span class="line">        subject = makeTodosService(&#123;</span><br><span class="line">            db: testDatabaseSomehow</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    it(<span class="string">'work'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> todos = <span class="keyword">await</span> subject.getTodos(</span><br><span class="line">            expect(todos.length).to.equal(<span class="number">3</span>)</span><br><span class="line">        )</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h1 data-number="2" id="part-ii"><span class="header-section-number">2</span> Part II</h1>
-<p>在这个部分我们来构思一个Todo APP。</p>
-<p>在我们开始折腾API框架和其他乱七八糟的部分之前，我们来大致搭建一下项目的骨架 -- the service and data access。为了可读性的考虑我在这里使用了ES7的async-await机制。</p>
-<p>然我们来开始我们的Todos Service - 这个模块来负责处理所有的业务逻辑。</p>
-<p>我会在下面的代码片段那种使用不同的风格（函数式或者是面向对象的）来证明，这些具体的代码风格并不本质，你可以使用任何你喜欢的方式。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// todosService.js</span></span><br><span class="line"><span class="keyword">import</span> assert <span class="keyword">from</span> <span class="string">'assert'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Using object destructring to make it look good</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">makeTodosService</span> (<span class="params">&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="regexp">//</span> <span class="string">"repository"</span> is a fancy term to describe an object</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="regexp">//</span> that is used to retrieve data from a datasource - the actual</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="regexp">//</span> data source does not matter. Could be a database, a REST API,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="regexp">//</span> or some IoT things like sensors or what ever</span></span></span><br><span class="line"><span class="function"><span class="params">    todosRepository,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="regexp">//</span> We also want info about the user that is using the service,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="regexp">//</span> so we can restrict access to only their own todos.</span></span></span><br><span class="line"><span class="function"><span class="params">    currentUser</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;</span>) </span>&#123;</span><br><span class="line">    assert(todosRepositry, <span class="string">'opts.todosRepository is required.'</span>)</span><br><span class="line">    assert(currentUser, <span class="string">'opts.currentUser is required.'</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="comment">// Gets todos for the current user</span></span><br><span class="line">        getTodos: <span class="keyword">async</span>(query) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> todos = <span class="keyword">await</span> todosRepository.find(&#123;</span><br><span class="line">                <span class="comment">// can be ALL, INCOMPLETED, COMPLETED</span></span><br><span class="line">                filter: query.filter,</span><br><span class="line">                userId: currentUser.id</span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> todos</span><br><span class="line">        &#125;,</span><br><span class="line">        createTodo: <span class="keyword">async</span> (data) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> newTodo = <span class="keyword">await</span> todosRepository.create(&#123;</span><br><span class="line">                text: data.text,</span><br><span class="line">                userId: currentUser.id,</span><br><span class="line">                completed: <span class="literal">false</span></span><br><span class="line">            &#125;)</span><br><span class="line">            <span class="keyword">return</span> newTodo</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        updateTodo: <span class="keyword">async</span> (todoId, data) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> todo = <span class="keyword">await</span> todosRepository.get(todoId)</span><br><span class="line"></span><br><span class="line">            <span class="comment">// verify that we are allowed to modify this todo</span></span><br><span class="line">            <span class="keyword">if</span> (todo.userId !== currentUser.id) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Forbidden'</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">const</span> updatedTodo = <span class="keyword">await</span> todosRepository.update(todoId, &#123;</span><br><span class="line">                text: data.text,</span><br><span class="line">                completed: data.completed</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> updatedTodo</span><br><span class="line">        &#125;,</span><br><span class="line"></span><br><span class="line">        deleteTodo: <span class="keyword">async</span> (todoId) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> todo = <span class="keyword">await</span> (todoId)</span><br><span class="line">            <span class="keyword">const</span> todo = <span class="keyword">await</span> todosRepository.get(todoId);</span><br><span class="line">            <span class="keyword">if</span> (todo.userId !== currentUser.id) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Forbidden'</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">await</span> todoRepository.delete(todoId)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>代码有点长，但是并没有什么太fancy的东西。我们并没有依赖于外部库（除了自带的assert模块用于输入检验）。不过，我们导出的函数其实有两个依赖：</p>
-<ul>
-<li><code>todosRepository</code> -- 给予todos数据库访问的对象（我们并不关心具体的实现细节）。</li>
-<li><code>currentUser</code> -- 正在使用这个服务的用户。注意我们并不知道这个对象从何处生成，也不关心这些细节。</li>
-</ul>
-<p>我们继续往下走，给出todos repository的一个不错的实现方式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// todosRepository.js</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Let's do an in-memory implementation for now.</span></span><br><span class="line"><span class="keyword">const</span> _todos = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="class"><span class="keyword">class</span> <span class="title">TodosRepository</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Making all methods async makes them return promises!</span></span><br><span class="line">    <span class="keyword">async</span> find(query) &#123;</span><br><span class="line">        <span class="keyword">const</span> filtered = _todos.filter(<span class="function">(<span class="params">todo</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// Check the user id</span></span><br><span class="line">            <span class="keyword">if</span> (todo.userId !== query.userId) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// check the filter</span></span><br><span class="line">            <span class="keyword">if</span> (query.filter === <span class="string">"COMPLETED"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> todo.completed === <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (query.filter === <span class="string">"INCOMPLETED"</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> todo.completed === <span class="literal">false</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> filtered</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> get(id) &#123;</span><br><span class="line">        <span class="keyword">const</span> todo = _todos.find(<span class="function"><span class="params">x</span> =&gt;</span> x.id === id)</span><br><span class="line">        <span class="keyword">return</span> todo</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> create(data) &#123;</span><br><span class="line">        <span class="keyword">const</span> newTodo = &#123;</span><br><span class="line">            id: <span class="built_in">Date</span>.now(),</span><br><span class="line">            text: data.text,</span><br><span class="line">            userId: data.userId,</span><br><span class="line">            completed: data.completed</span><br><span class="line">        &#125;</span><br><span class="line">        _todos.push(newTodo)</span><br><span class="line">        <span class="keyword">return</span> newTodo</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> update(id, data) &#123;</span><br><span class="line">        <span class="keyword">const</span> todo = <span class="keyword">await</span> <span class="keyword">this</span>.get(id)</span><br><span class="line">        <span class="built_in">Object</span>.assign(todo, data)</span><br><span class="line">        <span class="keyword">return</span> todo</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">delete</span>(id) &#123;</span><br><span class="line">        <span class="keyword">const</span> todo = <span class="keyword">await</span> <span class="keyword">this</span>.get(id)</span><br><span class="line">        _todos.splice(todo, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上面的代码只是todos repository的一个in-memory实现。任何时候我们准备好的时候，可以替换成MySQL，Rethink，MongoDB等存储后端，只要具有同形式的API就可以了。Typescript和Flow在这里可以发挥很大的作用。</p>
-<h2 data-number="2.1" id="把系统粘合起来"><span class="header-section-number">2.1</span> 把系统粘合起来</h2>
-<p>在我们进入到RESTful API之前，让我们先把上门两个模块在测试中整合起来。下面的方法被称为“穷人式的DI”，不过别担心，在后面我们会展示更加fancy的做法。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> makeTodosService <span class="keyword">from</span> <span class="string">'./todosService'</span></span><br><span class="line"><span class="keyword">import</span> TodosRepository <span class="keyword">from</span> <span class="string">'./todosRepository'</span></span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Todos System'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'works'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// This is how DI is done manually</span></span><br><span class="line">        <span class="keyword">const</span> todosService = makeTodosService(&#123;</span><br><span class="line">            todosRepository: <span class="keyword">new</span> TodosRepository(),</span><br><span class="line">            <span class="comment">// Let's fake it til we make it!</span></span><br><span class="line">            currentUser: &#123;</span><br><span class="line">                id: <span class="number">123</span>,</span><br><span class="line">                name: <span class="string">'Jeff'</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Todos Service already knows who's creating it!</span></span><br><span class="line">        <span class="keyword">const</span> created = <span class="keyword">await</span> todosService.create(&#123;</span><br><span class="line">            text: <span class="string">'Write Medium article'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        expect(created.userId).to.equal(<span class="number">123</span>, <span class="string">'user id should match currentUser'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> todos = <span class="keyword">await</span> todosService.getTodos(&#123;</span><br><span class="line">            filter: <span class="string">'ALL'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        expect(todos.length).to.equal(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> todosService.update(todo.id, &#123;</span><br><span class="line">            completed: <span class="literal">true</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> incompleteTodos = <span class="keyword">await</span> todosService.getTodos(&#123;</span><br><span class="line">            filter: <span class="string">'INCOMPETED'</span></span><br><span class="line">        &#125;)</span><br><span class="line">        expect(incompleteTodos.length).to.equal(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> completedTodos = <span class="keyword">await</span> todosService.getTodos&#123;</span><br><span class="line">            filter: <span class="string">'COMPLETED'</span></span><br><span class="line">        &#125;</span><br><span class="line">        expect(completedTodos.length).to.equal(<span class="number">1</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>看到上面的代码你可能会想：“这里的代码不是已经知道了两个模块了么？”。没错，在一个真实的APP中（下文中我们会提及），还是需要有一个知道所有使用的模块的单一置信源（source of truth）。在我们倒腾DI黑科技的时候，我们把这个部分的代码称为：组合根（The Composition Root，译者按：这个名字放在中文下太绕口了）。这是在应用中将所有的模块胶合在一起的地方。Composition Root可能长这个样子：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cosnt currentUser = &#123;</span><br><span class="line">    id: <span class="number">123</span>,</span><br><span class="line">    name: <span class="string">'Jeff'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todoRepository = <span class="keyword">new</span> TodosRepository()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todosService = makeTodosService(&#123;</span><br><span class="line">    todosRepository,</span><br><span class="line">    currentUser</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    todosService,</span><br><span class="line">    todosRepository</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>看到这个代码，我知道你一定在想：“我现在还不知道这个currentUser具体是指哪个用户呢！我要构建的是一个Web应用，这种方法根本没用！”。你说的对。有两种方法来手动解决这个问题：</p>
-<ul>
-<li>为所有需要currentUser的方法手动传递这个参数 -- 这也太坑了。</li>
-<li>将实例化过程推迟到你拥有了所有的数据之后（译者按：即在已知了currentUser之后再调用工厂函数初始化todosService）-- 这种方法也不好，你需要在很多的地方重复地进行实例化。</li>
-</ul>
-<p>为了进一步解释以下第二点，下面给出一个例子。例子中使用到了Koa Router</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> KoaRouter()</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">"/todos"</span>, <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> todosService = makeTodosService(&#123;</span><br><span class="line">        todosRepository: <span class="keyword">new</span> TodosRepository(),</span><br><span class="line">        currentUser: ctx.state.user</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    ctx.body = <span class="keyword">await</span> todosService.getTodos(ctdx.request.query)</span><br><span class="line">    ctx.status = <span class="number">200</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">"/todos"</span>. async (ctx) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> todosService = makeTodosService(&#123;</span><br><span class="line">        todosRepository: <span class="keyword">new</span> TodosRepository(),</span><br><span class="line">        currentUser: ctx.state.user</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// and so on</span></span><br></pre></td></tr></table></figure>
-<p>这还只是涉及到两个模块。想象一下要是需要处理10个模块（这还只是对于小型的应用）。没错，第二种方法也是很糟糕的。</p>
-<h1 data-number="3" id="part-iii"><span class="header-section-number">3</span> Part III</h1>
-<p>Angular曾经是在JavaScript世界中第一个引入了DI的大型框架。他们的做法是使用函数的字符串表达来提取使用的模块名称。在当时这是唯一的做法。</p>
-<p>有一些人尝试将DI功能从Angular中独立出来做成一个独立模块。但是问题是，大多数DI模块要求你的所有代码都要围绕着特定的DI系统来开发，这位违背了DI设计理念的初衷。</p>
-<blockquote>
-<p>DI的作用是减少程序模块之间的耦合程度，提高代码的可维护性。在这种目标下，DI系统的设计应当尽可能减少对于其它业务代码的影响。如果为了使用DI要对业务代码结构进行大范围的改动的话就得不偿失了。</p>
-</blockquote>
-<p>我们希望能够在不改动我们的service和repository模块的情况下使用DI机制。</p>
-<h2 data-number="3.1" id="关于awilix---the-di-container-you-deservce"><span class="header-section-number">3.1</span> 关于Awilix - The DI container you deservce</h2>
-<p>如果你不知道DI容器是什么，下面是一个简短的解释。DI容器的功能是将系统中的模块整合起来，从而让开发者不再需要太关注这些DI的实现细节问题。在前面两个Part中我们给出的示例代码：实例化services和repositories，确保service获取repository对象。这些工作都将由DI容器来完成。</p>
-<p>Awilix就是这样的一个容器，其实现是基于ES6 Proxies，这一意味着不再需要对函数的参数进行字符串解析。</p>
-<p>现在让我们回到开头的todo应用。让我们使用Awilix来将各个模块整合起来。我们将会使用Koa 2来实现Web API。先让我们来安装这些依赖：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -S koa@next koa-router@next awilix awilix-koa</span><br></pre></td></tr></table></figure>
-<p>这里的awilix-koa模块让Awlix和Koa的搭配更加易用。现在让我们从composition root开始</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// configureContainer.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createContainer, asClass, asFunction &#125; <span class="keyword">from</span> <span class="string">'awilix'</span></span><br><span class="line"><span class="keyword">import</span> makeTodosService <span class="keyword">from</span> <span class="string">'./todosService'</span></span><br><span class="line"><span class="keyword">import</span> TodosRepository <span class="keyword">from</span> <span class="string">'./todosRepository'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">configureContainer</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> container = createContainer()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Ordering does not matter</span></span><br><span class="line">    container.register(&#123;</span><br><span class="line">        <span class="comment">// Notice the scoped() at the end - this signals</span></span><br><span class="line">        <span class="comment">// Awilix that we gonna want a new instance per "scope"</span></span><br><span class="line">        todosService: asFunction(makeTodosService).scoped(),</span><br><span class="line">        <span class="comment">// We only want a single instance of this for the apps</span></span><br><span class="line">        <span class="comment">// lifetime (it does not deal with user context)</span></span><br><span class="line">        <span class="comment">// so we can reuse it!</span></span><br><span class="line">        todosRepository: asClass(TodosRepository).singliton()</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> container</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这看起来已经非常不错了。不过如果你有超过100个服务需要注册，Awilix提供了<a href="https://github.com/jeffijoe/awilix#auto-loading-modules" target="_blank" rel="noopener">自动化的工具</a>。</p>
-<p>现在让我们来配置Koa应用</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// server.js</span></span><br><span class="line"><span class="keyword">import</span> Koa <span class="keyword">from</span> <span class="string">'koa'</span></span><br><span class="line"><span class="keyword">import</span> KoaRouter <span class="keyword">from</span> <span class="string">'koa-router'</span></span><br><span class="line"><span class="keyword">import</span> &#123; asValue &#125; <span class="keyword">from</span> <span class="string">'awilix'</span></span><br><span class="line"><span class="keyword">import</span> &#123; scopePerRequest, makeInvoker &#125; <span class="keyword">from</span> <span class="string">'awilix-koa'</span></span><br><span class="line"><span class="keyword">import</span> configureContainer <span class="keyword">from</span> <span class="string">'./configureContainer'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa()</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> KoaRouter()</span><br><span class="line"><span class="keyword">const</span> container = configureContainer()</span><br><span class="line"></span><br><span class="line"><span class="comment">// This installs a scoped container into our</span></span><br><span class="line"><span class="comment">// context - we will use this to register our current user</span></span><br><span class="line">app.use(scopePerRequest(container))</span><br><span class="line"><span class="comment">// Let's do that now!</span></span><br><span class="line">app.use(<span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">    ctx.state.container.register(Value)(&#123;</span><br><span class="line">        <span class="comment">// Imagine some auth middleware somewhere...</span></span><br><span class="line">        <span class="comment">// This makes currentUser available to all services</span></span><br><span class="line">        currentUser: ctx.state.user</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> next()</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Now our handlers will be able to resolve a todos service</span></span><br><span class="line"><span class="comment">// using DI!</span></span><br><span class="line"><span class="comment">// P.S: be a good dev and use multiple files. ;)</span></span><br><span class="line"><span class="keyword">const</span> todosAPI = (&#123; todosService &#125; =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        getTodos: <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> todos = <span class="keyword">await</span> todosService.getTodos(ctx.request.query)</span><br><span class="line">            ctx.body = todos</span><br><span class="line">            ctx.status = <span class="number">200</span></span><br><span class="line">        &#125;,</span><br><span class="line">        createTodos: <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> todo = <span class="keyword">await</span> todosService.createTodo(ctx.request.body)</span><br><span class="line">            ctx.body = todo</span><br><span class="line">            ctx.status = <span class="number">201</span></span><br><span class="line">        &#125;,</span><br><span class="line">        updateTodo: <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">            <span class="keyword">const</span> updated = <span class="keyword">await</span> todosService.updateTodo(</span><br><span class="line">                ctx.params.id,</span><br><span class="line">                ctx.request.body</span><br><span class="line">            )</span><br><span class="line">            ctx.body = updated,</span><br><span class="line">            ctx.status = <span class="number">200</span></span><br><span class="line">        &#125;,</span><br><span class="line">        deleteTodo: <span class="keyword">async</span> (ctx) =&gt; &#123;</span><br><span class="line">            <span class="keyword">await</span> todosService.deleteTodo(</span><br><span class="line">                ctx.params.id,</span><br><span class="line">                ctx.request.body</span><br><span class="line">            )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Awilix magic will run the above function</span></span><br><span class="line"><span class="comment">// every time a request comes in, so we have</span></span><br><span class="line"><span class="comment">// a set of scoped services per request</span></span><br><span class="line"><span class="keyword">const</span> api = makeInvoker(todosAPI)</span><br><span class="line">router.get(<span class="string">'/todos'</span>, api(<span class="string">'getTodos'</span>))</span><br><span class="line">router.post(<span class="string">'/todos'</span>, api(<span class="string">'createTodos'</span>))</span><br><span class="line">router.patch(<span class="string">'/todos/:id'</span>, api(<span class="string">'updateTodo'</span>))</span><br><span class="line">router.patch(<span class="string">'/todos/:id'</span>, api(<span class="string">'deleteTodo'</span>))</span><br><span class="line"></span><br><span class="line">app.use(router.routes())</span><br><span class="line">app.listen(<span class="number">1337</span>)</span><br></pre></td></tr></table></figure>
-<p>上面的代码还只是一个简单的雏形，不过你现在已经有了构建大规模项目的基础。</p>
-<h2 data-number="3.2" id="结论"><span class="header-section-number">3.2</span> 结论</h2>
-<p>DI是一个很有用的东西，不过手动去实现DI是一件糟心的事情。这也是Awilix这种DI容器扮演作用的地方。</p>
+
+> 在翻译中我以传到核心思想为主，故不会太拘泥于一些细节问题。对于一些插科打诨的话，如果不是特别有意思的话，也许不会翻译。
+
+![作者Jeff Hansen](https://imgs.codewoody.com/uploads/big/a3409d0fa20c30e7116c01c4d7ac4f1e.jpeg)
+
+---
+
+## Part I
+
+在2015年，RisingStack写了[一篇关于Dependency Injection(缩写为DI)的文章](https://blog.risingstack.com/dependency-injection-in-node-js/)，解释了什么是DI，以及如何手动实现。如果你还没有阅读这篇文章，我强烈建议你先阅读以下那篇文章。这样你对于本文的一些概念会有更加清晰的理解。
+
+> 这里提到的RisingStack的文章的中文版可以在我的博客里找到: [Node.js | Dependency Injection](/posts/61013/)。
+
+在这一系列文章中，我会扩展一下手动实现的DI，为什么这种做法是糟糕的，以及我们如何最终能够让DI的现实变得优雅 -- 甚至比require/imports方式要更好。我将要证明Node中使用DI可以不像之前的做法那样沉闷。这都要归功于在ES6中引入的新特性：Proxies（直译就是代理）。
+
+我100%肯定作为一个Node的开发者，你会见过某种形式的DI。借鉴一下RisingStack文章中的例子:
+
+<!--￼0-->
+
+session needs a store! - 这种存储的具体实现方式是多样的 ：redis，MySQL。Express本身并不关心背后的实现。我们来看下面的这个例子 -- 非DI实现：
+
+<!--￼1-->
+
+在这个例子中我们直接导入了db模块，因此这个文件就依赖于db模块在磁盘上的具体存储位置，以及依赖于特定的是方式。在大多数场景下这并不算一个大问题。不过这种方式让测试变得更加困难 -- 不至于无法进行测试，但是无论如何都变得更加地困难了。另外，这个模块还假定db模块已经准备好了（例如：数据库连接已经建立起来了）。
+
+如果我们进一步将上面的代码转化成为对于测试友好的DI实现方式：
+
+<!--￼2-->
+
+那么上面两个例子有什么区别呢？在下面的DI实现的例子中我们不是export出一个对象，而是export出一个生成这种对象的函数。这个函数同时阐明了为了创建此种对象所需要的依赖。
+
+如果你熟悉在其他语言中的DI实现，如Java, C#，还有PHP。下面这个使用ES6的类实现的例子可能更受你喜欢一些：
+
+<!--￼3-->
+
+不过从个人角度我还是更喜欢函数的方法：不用担心this的上下文的问题。
+
+测试上面这个基于DI的例子非常简单 -- 你不再需要担心对require进行修修补补来替代数据库模块从而连接到测试数据库。
+
+<!--￼4-->
+
+## Part II
+
+在这个部分我们来构思一个Todo APP。
+
+在我们开始折腾API框架和其他乱七八糟的部分之前，我们来大致搭建一下项目的骨架 -- the service and data access。为了可读性的考虑我在这里使用了ES7的async-await机制。
+
+然我们来开始我们的Todos Service - 这个模块来负责处理所有的业务逻辑。
+
+我会在下面的代码片段那种使用不同的风格（函数式或者是面向对象的）来证明，这些具体的代码风格并不本质，你可以使用任何你喜欢的方式。
+
+<!--￼5-->
+
+代码有点长，但是并没有什么太fancy的东西。我们并没有依赖于外部库（除了自带的assert模块用于输入检验）。不过，我们导出的函数其实有两个依赖：
+
+- `todosRepository` -- 给予todos数据库访问的对象（我们并不关心具体的实现细节）。
+- `currentUser` -- 正在使用这个服务的用户。注意我们并不知道这个对象从何处生成，也不关心这些细节。
+
+我们继续往下走，给出todos repository的一个不错的实现方式：
+
+<!--￼6-->
+
+上面的代码只是todos repository的一个in-memory实现。任何时候我们准备好的时候，可以替换成MySQL，Rethink，MongoDB等存储后端，只要具有同形式的API就可以了。Typescript和Flow在这里可以发挥很大的作用。
+
+### 把系统粘合起来
+
+在我们进入到RESTful API之前，让我们先把上门两个模块在测试中整合起来。下面的方法被称为“穷人式的DI”，不过别担心，在后面我们会展示更加fancy的做法。
+
+<!--￼7-->
+
+看到上面的代码你可能会想：“这里的代码不是已经知道了两个模块了么？”。没错，在一个真实的APP中（下文中我们会提及），还是需要有一个知道所有使用的模块的单一置信源（source of truth）。在我们倒腾DI黑科技的时候，我们把这个部分的代码称为：组合根（The Composition Root，译者按：这个名字放在中文下太绕口了）。这是在应用中将所有的模块胶合在一起的地方。Composition Root可能长这个样子：
+
+<!--￼8-->
+
+看到这个代码，我知道你一定在想：“我现在还不知道这个currentUser具体是指哪个用户呢！我要构建的是一个Web应用，这种方法根本没用！”。你说的对。有两种方法来手动解决这个问题：
+
+- 为所有需要currentUser的方法手动传递这个参数 -- 这也太坑了。
+- 将实例化过程推迟到你拥有了所有的数据之后（译者按：即在已知了currentUser之后再调用工厂函数初始化todosService）-- 这种方法也不好，你需要在很多的地方重复地进行实例化。
+
+为了进一步解释以下第二点，下面给出一个例子。例子中使用到了Koa Router
+
+<!--￼9-->
+
+这还只是涉及到两个模块。想象一下要是需要处理10个模块（这还只是对于小型的应用）。没错，第二种方法也是很糟糕的。
+
+## Part III
+
+Angular曾经是在JavaScript世界中第一个引入了DI的大型框架。他们的做法是使用函数的字符串表达来提取使用的模块名称。在当时这是唯一的做法。
+
+有一些人尝试将DI功能从Angular中独立出来做成一个独立模块。但是问题是，大多数DI模块要求你的所有代码都要围绕着特定的DI系统来开发，这位违背了DI设计理念的初衷。
+
+> DI的作用是减少程序模块之间的耦合程度，提高代码的可维护性。在这种目标下，DI系统的设计应当尽可能减少对于其它业务代码的影响。如果为了使用DI要对业务代码结构进行大范围的改动的话就得不偿失了。
+
+我们希望能够在不改动我们的service和repository模块的情况下使用DI机制。
+
+### 关于Awilix - The DI container you deservce
+
+如果你不知道DI容器是什么，下面是一个简短的解释。DI容器的功能是将系统中的模块整合起来，从而让开发者不再需要太关注这些DI的实现细节问题。在前面两个Part中我们给出的示例代码：实例化services和repositories，确保service获取repository对象。这些工作都将由DI容器来完成。
+
+Awilix就是这样的一个容器，其实现是基于ES6 Proxies，这一意味着不再需要对函数的参数进行字符串解析。
+
+现在让我们回到开头的todo应用。让我们使用Awilix来将各个模块整合起来。我们将会使用Koa 2来实现Web API。先让我们来安装这些依赖：
+
+<!--￼10-->
+
+这里的awilix-koa模块让Awlix和Koa的搭配更加易用。现在让我们从composition root开始
+
+<!--￼11-->
+
+这看起来已经非常不错了。不过如果你有超过100个服务需要注册，Awilix提供了[自动化的工具](https://github.com/jeffijoe/awilix#auto-loading-modules)。
+
+现在让我们来配置Koa应用
+
+<!--￼12-->
+
+上面的代码还只是一个简单的雏形，不过你现在已经有了构建大规模项目的基础。
+
+### 结论
+
+DI是一个很有用的东西，不过手动去实现DI是一件糟心的事情。这也是Awilix这种DI容器扮演作用的地方。
 
       
     </div>
@@ -748,17 +794,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1030,23 +1067,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#part-i"><span class="nav-text">1 Part I</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part-ii"><span class="nav-text">2 Part II</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#把系统粘合起来"><span class="nav-text">2.1 把系统粘合起来</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#part-iii"><span class="nav-text">3 Part III</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于awilix---the-di-container-you-deservce"><span class="nav-text">3.1 关于Awilix - The DI container you deservce</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-text">3.2 结论</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

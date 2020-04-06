@@ -553,7 +553,7 @@
 
       
         
-          <p>ns3使用了waf编译系统，因此在ns3中尝试引入第三方模块时，就没有make那么直接了。</p>
+          ns3使用了waf编译系统，因此在ns3中尝试引入第三方模块时，就没有make那么直接了。
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -746,14 +746,16 @@
       
         
           
-            <p>在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过<code>create-module.py</code>创建的module中的wscript为</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def options(opt):</span></span><br><span class="line"><span class="comment">#     pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def configure(conf):</span></span><br><span class="line"><span class="comment">#     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(bld)</span>:</span></span><br><span class="line">    module = bld.create_ns3_module(<span class="string">'example-module'</span>, [<span class="string">'core'</span>])</span><br><span class="line">    module.source = [</span><br><span class="line">        <span class="string">'model/example-module.cc'</span>,</span><br><span class="line">        <span class="string">'helper/example-module-helper.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    module_test = bld.create_ns3_module_test_library(<span class="string">'example-module'</span>)</span><br><span class="line">    module_test.source = [</span><br><span class="line">        <span class="string">'test/example-module-test-suite.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    headers = bld(features=<span class="string">'ns3header'</span>)</span><br><span class="line">    headers.module = <span class="string">'example-module'</span></span><br><span class="line">    headers.source = [</span><br><span class="line">        <span class="string">'model/example-module.h'</span>,</span><br><span class="line">        <span class="string">'helper/example-module-helper.h'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bld.env.ENABLE_EXAMPLES:</span><br><span class="line">        bld.recurse(<span class="string">'examples'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bld.ns3_python_bindings()</span></span><br></pre></td></tr></table></figure>
-<p>其中，<code>module.source</code>中包含需要编译的<code>.cc</code>源文件，而<code>headers.source</code>中包含对应的头文件。每次新建C++源代码文件时，都需要手动添加到这里的列表中。下面我给出一个自动从<code>module</code>的<code>model</code>, <code>helper</code>目录下搜索源文件的方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># def options(opt):</span></span><br><span class="line"><span class="comment">#     pass</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># def configure(conf):</span></span><br><span class="line"><span class="comment">#     conf.check_nonfatal(header_name='stdint.h', define_name='HAVE_STDINT_H')</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_list_sources</span><span class="params">(bld, suffix)</span>:</span></span><br><span class="line">    root_dir = bld.path.abspath()</span><br><span class="line">    res = [</span><br><span class="line">        x <span class="keyword">for</span> x <span class="keyword">in</span> </span><br><span class="line">            [os.path.join(<span class="string">"model"</span>, y) <span class="keyword">for</span> y <span class="keyword">in</span> os.listdir(os.path.join(root_dir, <span class="string">"model"</span>))]</span><br><span class="line">        <span class="keyword">if</span> x.endswith(suffix)</span><br><span class="line">    ]</span><br><span class="line">    res += [</span><br><span class="line">        x <span class="keyword">for</span> x <span class="keyword">in</span> </span><br><span class="line">            [os.path.join(<span class="string">"helper"</span>, y) <span class="keyword">for</span> y <span class="keyword">in</span> os.listdir(os.path.join(root_dir, <span class="string">"helper"</span>))]</span><br><span class="line">        <span class="keyword">if</span> x.endswith(suffix)</span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build</span><span class="params">(bld)</span>:</span></span><br><span class="line">    module = bld.create_ns3_module(<span class="string">'example-module'</span>, [<span class="string">"core"</span>])</span><br><span class="line">    module.source = _list_sources(bld, <span class="string">".cc"</span>)</span><br><span class="line"></span><br><span class="line">    module_test = bld.create_ns3_module_test_library(<span class="string">'example-module'</span>)</span><br><span class="line">    module_test.source = [</span><br><span class="line">        <span class="string">'test/mix-autonomy-test-suite.cc'</span>,</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    headers = bld(features=<span class="string">'ns3header'</span>)</span><br><span class="line">    headers.module = <span class="string">'example-module'</span></span><br><span class="line">    headers.source = _list_sources(bld, <span class="string">".h"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> bld.env.ENABLE_EXAMPLES:</span><br><span class="line">        bld.recurse(<span class="string">'examples'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># bld.ns3_python_bindings()</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意不要直接套用上面的范例文件，需要将"example-module"的名字改为你的module的名字</p>
-</blockquote>
+            
+在ns3的编译体系中，每个module会包含一个名为wscript的python脚本来提供编译信息。例如，一个通过`create-module.py`创建的module中的wscript为
 
+<!--￼0-->
+
+其中，`module.source`中包含需要编译的`.cc`源文件，而`headers.source`中包含对应的头文件。每次新建C++源代码文件时，都需要手动添加到这里的列表中。下面我给出一个自动从`module`的`model`, `helper`目录下搜索源文件的方法：
+
+<!--￼1-->
+
+> 注意不要直接套用上面的范例文件，需要将"example-module"的名字改为你的module的名字
           
         
       
@@ -925,7 +927,7 @@
 
       
         
-          <p><img src="https://imgs.codewoody.com/uploads/big/16bd24901ea98b88916dcbb0ead66cd7.gif" alt="五阶贝塞尔曲线">
+          ![五阶贝塞尔曲线](https://imgs.codewoody.com/uploads/big/16bd24901ea98b88916dcbb0ead66cd7.gif)
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -937,7 +939,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -1117,7 +1119,7 @@
 
       
         
-          <p>这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用<code>-v</code>将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。</p>
+          这里我们要解决的是使用Docker过程中常见的Volume权限问题。具体而言，当我们用`-v`将宿主机的路径绑定到Docker镜像的内部路径时，有时候会导致Docker镜像缺少对这个目录的访问权限，从而导致进程出错。
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1310,15 +1312,20 @@
       
         
           
-            <p>能够获得暴利的职业，都有一个共同特点：可扩展性（scaling），一次劳动可以服务成千上万的人。</p>
-<p>软件、电影、游戏行业都具有可扩展性，作品的生产成本是固定的，但可以被消费无数次，所以有巨大的获利空间，创造出许许多多的富豪。另一方面，理发师、厨师、出租车司机一次劳动，只能服务少数几个人，就不具有可扩展性，很难获得暴利，生存得很辛苦。</p>
-<p>最近，我读到美国一个风险投资家的<a href="https://andrewchen.co/professional-blogging/" target="_blank" rel="noopener">文章</a>。他说了一句发人深思的话：</p>
-<p>"写作是最具可扩展性的活动。你呆在家里，不去参加活动/会议，只是在网上写下自己的想法，然后你就具有了最好的可扩展性。"</p>
-<p>我想了一下，还真是这样。你写了一篇文章，想让其他人看到，只要到处张贴就行了。每次转贴，就是扩展了一次。这比其他产品的扩展容易多了。面包师傅想要更多的人尝到自己的面包，只能多开面包店；网站要扩展，只能购买更多的服务器。相比之下，文字的扩展简直是零成本。</p>
-<p>大公司每年花费数十亿美元用于广告，以求人们关注他们的产品。但是，一个好的作家可以免费获得这种扩展性。这就是为什么你应该把自己的想法写下来的原因，这么好的免费传播渠道，为什么不用呢？你以为，写下来不会有人看。错，其实是有人会看到的，如果他们觉得有价值，就会帮你传播出去。</p>
-<div class="note info">
-            <p>这篇文章转载自<a href="http://www.ruanyifeng.com/blog/2019/05/weekly-issue-54.html" target="_blank" rel="noopener">阮一峰的博客</a>。这篇文章其实说了一个非常简洁明了却价值巨大的道理，也给我们启示：我们应该如何规划自己的职业道路。只是靠出售自己的时间，即便是清北的同学，也只是能做到一个尚算富裕，但是辛苦中产阶级。要更上一层楼，还是需要手握资本。而怎么获得资本呢？其实就是靠文章里说的“可扩展性的工作”。</p>
-          </div>
+            
+能够获得暴利的职业，都有一个共同特点：可扩展性（scaling），一次劳动可以服务成千上万的人。
+
+软件、电影、游戏行业都具有可扩展性，作品的生产成本是固定的，但可以被消费无数次，所以有巨大的获利空间，创造出许许多多的富豪。另一方面，理发师、厨师、出租车司机一次劳动，只能服务少数几个人，就不具有可扩展性，很难获得暴利，生存得很辛苦。
+
+最近，我读到美国一个风险投资家的[文章](https://andrewchen.co/professional-blogging/)。他说了一句发人深思的话：
+
+"写作是最具可扩展性的活动。你呆在家里，不去参加活动/会议，只是在网上写下自己的想法，然后你就具有了最好的可扩展性。"
+
+我想了一下，还真是这样。你写了一篇文章，想让其他人看到，只要到处张贴就行了。每次转贴，就是扩展了一次。这比其他产品的扩展容易多了。面包师傅想要更多的人尝到自己的面包，只能多开面包店；网站要扩展，只能购买更多的服务器。相比之下，文字的扩展简直是零成本。
+
+大公司每年花费数十亿美元用于广告，以求人们关注他们的产品。但是，一个好的作家可以免费获得这种扩展性。这就是为什么你应该把自己的想法写下来的原因，这么好的免费传播渠道，为什么不用呢？你以为，写下来不会有人看。错，其实是有人会看到的，如果他们觉得有价值，就会帮你传播出去。
+
+<!--￼0-->
 
           
         
@@ -1503,7 +1510,7 @@
 
       
         
-          <p>在<a href="/posts/20215/">Hexo+Next: 使用Latex公式</a>这篇文章中我发现在使用<code>Pandoc</code>作为Hexo的渲染引擎时，Hexo的标签功能会有问题，具体表现为Hexo的标签内部的内容会输出markdown源码，而非渲染后的html。
+          在[Hexo+Next: 使用Latex公式](/posts/20215/)这篇文章中我发现在使用`Pandoc`作为Hexo的渲染引擎时，Hexo的标签功能会有问题，具体表现为Hexo的标签内部的内容会输出markdown源码，而非渲染后的html。
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1515,7 +1522,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -1695,7 +1702,7 @@
 
       
         
-          <p>这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了<code>_config.yml</code>文件的配置以及<code>pandoc</code>依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。
+          这次更换主题的很大一个动因就是因为在NexT这个主题上，开启Latex的支持很方便。网上关于这方面的文章其实不少，但是大部分都不全面，照本宣科下来，很可能不能用。这些教程一般就给了`_config.yml`文件的配置以及`pandoc`依赖安装，但是一些关键细节缺失了。这篇文章里我梳理了一下整个流程。
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1707,7 +1714,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -1887,7 +1894,7 @@
 
       
         
-          <p>大图预警
+          大图预警
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1899,7 +1906,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -2081,15 +2088,24 @@
         
           
             <a id="more"></a>
-<h1 data-number="1" id="haproxy"><span class="header-section-number">1</span> Haproxy</h1>
-<p><a href="http://www.haproxy.org/" target="_blank" rel="noopener">Haproxy is a reliable, high performance TCP/HTTP Load Balancer</a></p>
-<p>这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。</p>
-<p>前一段时间，GFW的墙好像又加高了，很多时候在教育网外连接服务器不是很可靠。所以我考虑干脆在教育网环境下做一个跳板服务器，这样在外面可以先跳到教育网，然后再从教育网过墙。</p>
-<p>教育网的另一个好处是有IPv6。貌似IPv6上面的拦截比较弱，而且，绝大多数的高校对于IPv6都是免流量费的。因此，我们可以从IPv4公口进，然后走IPv6出。</p>
-<h1 data-number="2" id="how-to"><span class="header-section-number">2</span> How to</h1>
-<p>不过，问题是通过apt安装的haproxy是<a href="https://github.com/Entware/Entware-ng/issues/426" target="_blank" rel="noopener">不支持IPv6的</a>！</p>
-<p>我们只能自己动手从源码编译了：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.haproxy.org/download/1.7/src/haproxy-1.7.2.tar.gz</span><br><span class="line">tar -xzf haproxy-1.7.2.tar.gz</span><br><span class="line">cd haproxy-1.7.2</span><br><span class="line">make TARGET=linux2626 USE_GETADDRINFO=1</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+## Haproxy
+
+[Haproxy is a reliable, high performance TCP/HTTP Load Balancer](http://www.haproxy.org/)
+
+这是官网对于Haproxy的介绍，其作用的类似于Nginx，是一个均衡负载的服务器。其相比于Nginx的好处是其代理TCP流量的功能配置起来非常的简单。我这里主要拿Haproxy来配置Shadowsocks的跳板机。
+
+前一段时间，GFW的墙好像又加高了，很多时候在教育网外连接服务器不是很可靠。所以我考虑干脆在教育网环境下做一个跳板服务器，这样在外面可以先跳到教育网，然后再从教育网过墙。
+
+教育网的另一个好处是有IPv6。貌似IPv6上面的拦截比较弱，而且，绝大多数的高校对于IPv6都是免流量费的。因此，我们可以从IPv4公口进，然后走IPv6出。
+
+## How to
+
+不过，问题是通过apt安装的haproxy是[不支持IPv6的](https://github.com/Entware/Entware-ng/issues/426)！
+
+我们只能自己动手从源码编译了：
+
+<!--￼0-->
+
 <!-- \begin{equation*}
 x = \sum_{i=1}^{N}x^2
 \end{equation*} -->
@@ -2277,11 +2293,10 @@ x = \sum_{i=1}^{N}x^2
 
       
         
-          <p>在知乎上看到的比较好的回答，作为备份放在这里：</p>
-<ol type="1">
-<li>原文链接：<a href="https://www.zhihu.com/question/306368870/answer/639051842" target="_blank" rel="noopener">https://www.zhihu.com/question/306368870/answer/639051842</a></li>
-<li>archive.is上的备份网页：<a href="http://archive.is/4dOL3" target="_blank" rel="noopener">http://archive.is/4dOL3</a></li>
-</ol>
+          在知乎上看到的比较好的回答，作为备份放在这里：
+
+1. 原文链接：[https://www.zhihu.com/question/306368870/answer/639051842](https://www.zhihu.com/question/306368870/answer/639051842)
+2. archive.is上的备份网页：[http://archive.is/4dOL3](http://archive.is/4dOL3)
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -3185,7 +3200,7 @@ x = \sum_{i=1}^{N}x^2
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }

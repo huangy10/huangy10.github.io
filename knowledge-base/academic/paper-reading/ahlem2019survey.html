@@ -123,20 +123,17 @@
 
 
 
-  <meta name="description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
+  <meta name="description" content="文章的标题是 [[A Survey on Radio Resource Allocation for V2X Communications]{style=&quot;font-style:italic&quot;} ](https://www.hindawi.com/journals/wcmc/2019/2430656/)。  文章的主要内容是：  - 描述V2X通信的要求和服务 - C-V2X的工作模式 - 现有">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Survey: V2X通信的资源调度问题">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/ahlem2019survey.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
+<meta property="og:description" content="文章的标题是 [[A Survey on Radio Resource Allocation for V2X Communications]{style=&quot;font-style:italic&quot;} ](https://www.hindawi.com/journals/wcmc/2019/2430656/)。  文章的主要内容是：  - 描述V2X通信的要求和服务 - C-V2X的工作模式 - 现有">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2d71899cacf01a8d7d21f6d3bb8d73e4.png">
 <meta property="og:updated_time" content="2020-04-03T14:35:36.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Survey: V2X通信的资源调度问题">
-<meta name="twitter:description" content="文章的标题是 A Survey on Radio Resource Allocation for V2X Communications。 文章的主要内容是：  描述V2X通信的要求和服务 C-V2X的工作模式 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类 文章是基于Mode 3的   文章提到了Release 16相关的信息。在Re">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png">
+<meta name="twitter:description" content="文章的标题是 [[A Survey on Radio Resource Allocation for V2X Communications]{style=&quot;font-style:italic&quot;} ](https://www.hindawi.com/journals/wcmc/2019/2430656/)。  文章的主要内容是：  - 描述V2X通信的要求和服务 - C-V2X的工作模式 - 现有">
 
 
 
@@ -541,106 +538,149 @@
       <div class="post-body han-init-context">
         
         
-          <p>文章的标题是 <a href="https://www.hindawi.com/journals/wcmc/2019/2430656/" target="_blank" rel="noopener"><span style="font-style:italic">A Survey on Radio Resource Allocation for V2X Communications</span></a>。</p>
-<p>文章的主要内容是：</p>
-<ul>
-<li>描述V2X通信的要求和服务</li>
-<li>C-V2X的工作模式</li>
-<li>现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类</li>
-<li>文章是基于Mode 3的</li>
-</ul>
-<hr>
-<p>文章提到了Release 16相关的信息。在Release 16中，3GPP关注的内容是New Radio V2X (NR)，。5G NR的内容在Release 15中被标准化。NR V2X能够为V2X通信提供更多的QoS保证。【~NR，从名字来看应该是采用了不同的射频模块】<br>
-NR V2X和C-V2X之间的通信需要要求车辆同时装备有两套射频系统<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> 才行。【~从这里的命名可以发现C-V2X专门指Release 14，而NR V2X指Release 16，Release 12则用ProSe来称呼】<br>
-V2X的通信涉及资源分配的问题。<del>一般由基站分配的方式我们成为Overlay Mode，节点之间协商不需要基站参与的方式称为Underlay Mode</del>（Underlay和Overlay的区别在于蜂窝通信与D2D通信的频谱共享方式不同，参加<a href="#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">这里</a>）。资源分配问题英文一般称为RRM (Redio Resource Management)问题，这也是这篇Survey关注的重点。</p>
-<h1 data-number="1" id="v2x-requirements-and-services"><span class="header-section-number">1</span> V2X Requirements and Services</h1>
-<p>3GPP在Release 14中定义了27中V2X服务的应用场景，这些场景可以划分为安全相关和非安全相关。相应的，V2X消息类型也可以分为安全相关和非安全相关，前者要求可靠性和低延时，后者一般要求更高的数据率。</p>
-<p>这些应用场景中服务需求可以划分为五个类别：<br>
-- 速度: 支持最大绝对速度为160km/h，最大相对速度为280km/h。无最大速度限制的场景中最大支持到500km/h的相对速度。 - 通信距离：有效通信距离需要为驾驶员留足反应时间，显然应该依赖于最大相对速度。 - 延时/可靠性：端到端最大延时为100ms。可靠性方面，应该不需要应用层进行重传，并满足延时和有效通信距离的要求。 - 消息大小：周期性消息的大小大约是50到300字节，事件触发的消息的大小最大是1200字节。 - 消息产生的周期：最小周期是100ms。</p>
-<h2 data-number="1.1" id="安全相关的v2x服务"><span class="header-section-number">1.1</span> 安全相关的V2X服务</h2>
-<p>目的是减少事故。消息需要在车辆，RSU，行人之间共享，通常是短小的广播消息。对于延时和可靠性有严格的要求。有两类的安全相关的消息被标准化，分别是周期性消息和时间触发的消息。周期性消息和事件触发消息都可以使用LTE-Uu和PC5接口。</p>
-<p>周期性消息的典型代表是CAM (Cooperative Awareness Messages)消息。事件触发消息的典型代表是DENMs (Decentralized Environmental Notification Messages)。</p>
-<h2 data-number="1.2" id="非安全相关的v2x服务"><span class="header-section-number">1.2</span> 非安全相关的V2X服务</h2>
-<p>这个类别很多，比如拥堵控制，娱乐等等。这类数据量很大，且对延时和可靠性的要求不高。</p>
-<h2 data-number="1.3" id="v2x通信要求"><span class="header-section-number">1.3</span> V2X通信要求</h2>
-<h3 data-number="1.3.1" id="可靠性要求"><span class="header-section-number">1.3.1</span> 可靠性要求</h3>
-<p>可靠性要求的定量表达一般是Outage probability (OP) 或者 Packet Reception Ratio (PRR)。PRR 的定义是成功接收到消息的车辆，占发送者通信范围内的车辆的数量的百分比：</p>
-<p><span><span class="math display">\[
+          
+文章的标题是 [[A Survey on Radio Resource Allocation for V2X Communications]{style="font-style:italic"} ](https://www.hindawi.com/journals/wcmc/2019/2430656/)。
+
+文章的主要内容是：
+
+- 描述V2X通信的要求和服务
+- C-V2X的工作模式
+- 现有的V2X资源分配机制(Resource Allocation Algorithms, RAA)，并进行分类
+- 文章是基于Mode 3的
+
+---
+
+文章提到了Release 16相关的信息。在Release 16中，3GPP关注的内容是New Radio V2X (NR)，。5G NR的内容在Release 15中被标准化。NR V2X能够为V2X通信提供更多的QoS保证。【~NR，从名字来看应该是采用了不同的射频模块】\
+NR V2X和C-V2X之间的通信需要要求车辆同时装备有两套射频系统
+^[在[NXP](https://www.nxp.com/company/our-company/about-nxp:ABOUT-NXP)(一家企业)的一份[文档](https://www.nxp.com/docs/en/white-paper/CITSCOMPWP.pdf)中提到Therefore, basic safety messages will either only be broadcasted via Rel-14, thus disabling the potential advantages of further technology development, or vehicles equipped with Rel-14 cellularbased V2X technology will not be able to talk to vehicles with Rel-15 or subsequent releases. **Either way, Rel-14 will be obsolete before it is even deployed**.]
+才行。【~从这里的命名可以发现C-V2X专门指Release 14，而NR V2X指Release 16，Release 12则用ProSe来称呼】\
+V2X的通信涉及资源分配的问题。~~一般由基站分配的方式我们成为Overlay Mode，节点之间协商不需要基站参与的方式称为Underlay Mode~~（Underlay和Overlay的区别在于蜂窝通信与D2D通信的频谱共享方式不同，参加[这里](#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F)）。资源分配问题英文一般称为RRM (Redio Resource Management)问题，这也是这篇Survey关注的重点。
+
+## V2X Requirements and Services
+
+3GPP在Release 14中定义了27中V2X服务的应用场景，这些场景可以划分为安全相关和非安全相关。相应的，V2X消息类型也可以分为安全相关和非安全相关，前者要求可靠性和低延时，后者一般要求更高的数据率。
+
+这些应用场景中服务需求可以划分为五个类别：\
+- 速度: 支持最大绝对速度为160km/h，最大相对速度为280km/h。无最大速度限制的场景中最大支持到500km/h的相对速度。
+- 通信距离：有效通信距离需要为驾驶员留足反应时间，显然应该依赖于最大相对速度。
+- 延时/可靠性：端到端最大延时为100ms。可靠性方面，应该不需要应用层进行重传，并满足延时和有效通信距离的要求。
+- 消息大小：周期性消息的大小大约是50到300字节，事件触发的消息的大小最大是1200字节。
+- 消息产生的周期：最小周期是100ms。
+
+### 安全相关的V2X服务
+
+目的是减少事故。消息需要在车辆，RSU，行人之间共享，通常是短小的广播消息。对于延时和可靠性有严格的要求。有两类的安全相关的消息被标准化，分别是周期性消息和时间触发的消息。周期性消息和事件触发消息都可以使用LTE-Uu和PC5接口。
+
+周期性消息的典型代表是CAM (Cooperative Awareness Messages)消息。事件触发消息的典型代表是DENMs (Decentralized Environmental Notification Messages)。
+
+### 非安全相关的V2X服务
+
+这个类别很多，比如拥堵控制，娱乐等等。这类数据量很大，且对延时和可靠性的要求不高。
+
+### V2X通信要求
+
+#### 可靠性要求
+
+可靠性要求的定量表达一般是Outage probability (OP) 或者 Packet Reception Ratio (PRR)。PRR 的定义是成功接收到消息的车辆，占发送者通信范围内的车辆的数量的百分比：
+
+$$
 \begin{aligned}
-\operatorname{PRR}_{u}(t) &amp;=\frac{1}{N_{u}(t)} \sum_{j=1}^{N_{u}(t)} 1\left\{\gamma_{j}^{(u)}(t) \geq \gamma_{\operatorname{th}}\right\} \\
-\gamma_{j}^{(u)}(t) &amp;=\sum_{k=1}^{N_{R B}} \frac{s_{k}^{u}(t) P_{u}(t)\left|H_{u j}^{k}(t)\right|^{2}}{\sigma^{2}+\sum_{m=1}^{N_{L}} s_{m}^{u}(t) P_{j}(t)\left|H_{m}^{k}(t)\right|^{2}}
+\operatorname{PRR}_{u}(t) &=\frac{1}{N_{u}(t)} \sum_{j=1}^{N_{u}(t)} 1\left\{\gamma_{j}^{(u)}(t) \geq \gamma_{\operatorname{th}}\right\} \\
+\gamma_{j}^{(u)}(t) &=\sum_{k=1}^{N_{R B}} \frac{s_{k}^{u}(t) P_{u}(t)\left|H_{u j}^{k}(t)\right|^{2}}{\sigma^{2}+\sum_{m=1}^{N_{L}} s_{m}^{u}(t) P_{j}(t)\left|H_{m}^{k}(t)\right|^{2}}
 \end{aligned}
-\qquad(1)\]</span></span></p>
-<p>其中：</p>
-<ul>
-<li><span class="math inline">\(N_u(t)\)</span> 为车辆<span class="math inline">\(u^{th}\)</span>，在时刻<span class="math inline">\(t\)</span>的邻居数量</li>
-<li><span class="math inline">\(\gamma^{(u)}_j (t)\)</span> 为接收车辆<span class="math inline">\(j\)</span>处的SINR，<span class="math inline">\(j \in N_{u}(t)\)</span></li>
-<li><span class="math inline">\(\gamma_{th}\)</span>为SINR阈值</li>
-<li><span class="math inline">\(P_{u}(t)\)</span>为车辆<span class="math inline">\(u^{th}\)</span>的阐述功率，<span class="math inline">\(\sigma^2\)</span>为加性白噪声的功率。</li>
-<li><span class="math inline">\(N_L\)</span>为干扰车辆的数量</li>
-<li><span class="math inline">\(s_k^u(t)\)</span>为在时间<span class="math inline">\(t\)</span>处的RB分配，为指示函数。当RB资源<span class="math inline">\(k^{th}\)</span>在时刻<span class="math inline">\(t\)</span>被分配给车辆<span class="math inline">\(u^{th}\)</span>时取1，否则为0</li>
-</ul>
-<p>OP是使用的最多的。OP定义为的无法以任何编码方式无误地传输<span class="math inline">\(N_u\)</span>个比特的概率：</p>
-<p><span><span class="math display">\[
+$$
+
+其中：
+
+- $N_u(t)$ 为车辆$u^{th}$，在时刻$t$的邻居数量
+- $\gamma^{(u)}_j (t)$ 为接收车辆$j$处的SINR，$j \in N_{u}(t)$
+- $\gamma_{th}$为SINR阈值
+- $P_{u}(t)$为车辆$u^{th}$的阐述功率，$\sigma^2$为加性白噪声的功率。
+- $N_L$为干扰车辆的数量
+- $s_k^u(t)$为在时间$t$处的RB分配，为指示函数。当RB资源$k^{th}$在时刻$t$被分配给车辆$u^{th}$时取1，否则为0
+
+OP是使用的最多的。OP定义为的无法以任何编码方式无误地传输$N_u$个比特的概率：
+
+$$
 p_u^{out} \triangleq Pr \{
-  \sum_{i = 1}^{E_{u}^{all}}\rho \log (1 + \gamma) &lt; N_u
+  \sum_{i = 1}^{E_{u}^{all}}\rho \log (1 + \gamma) < N_u
   \}
-\qquad(2)\]</span></span></p>
-<blockquote>
-<p>公式长的很像香农公式，可以视为是超过信道容量的概率</p>
-</blockquote>
-<p>其中</p>
-<ul>
-<li><span class="math inline">\(E_{u}^{all}\)</span> 为分配给车辆<span class="math inline">\(u^{th}\)</span>的RB的数量</li>
-<li><span class="math inline">\(\rho\)</span> 为RB中复杂符号的数量</li>
-<li><span class="math inline">\(\gamma\)</span>为第<span class="math inline">\(i\)</span>个RB上的SINR</li>
-</ul>
-<h3 data-number="1.3.2" id="延时要求"><span class="header-section-number">1.3.2</span> 延时要求</h3>
-<p>部分研究中将延时限制理解为调度时间单元的数量，大部分则认为延时限制是指端到端延时不应该超过100ms。<span class="eng-origin">The latency requirement in some studies is interpreted by the latency constraint that allows V-UEs to allocate their required RBs before the maximum tolerable latency according to scheduling time unit number. Most of the studies designate that C-V2X can support safety services reliably that required an end-to-end latency of nearby 100 milliseconds (msec)</span></p>
-<h1 data-number="2" id="v2x通信模式"><span class="header-section-number">2</span> V2X通信模式</h1>
-<p>在LTE-V中3GPP提供了两种射频接口：分别是支持V2I的Uu蜂窝网络接口(e.g. enhanced Multimedia Broadcast Multicast Service (eMBMS))和支持V2V通信的PC5接口(direct LTE Sidelink)</p>
-<h2 data-number="2.1" id="uu接口"><span class="header-section-number">2.1</span> Uu接口</h2>
-<p>一般说蜂窝网通信(Cellular）的时候是在指车辆节点V-UE与基站eNB的通信，适合于低延时容忍度的通信。eNB在接收到某个V-UE的单播消息时，再广播给范围内的所有V-UE。借助多小区协作，MBMS可以改善小区边缘处的性能。</p>
-<h2 data-number="2.2" id="pc5接口"><span class="header-section-number">2.2</span> PC5接口</h2>
-<p>LTE-D2D通信可以绕过基站。适合于低延时应用。</p>
-<p>这里提到Release 12中的D2D是以延时为代价来降低能耗的，因此Mode 1和Mode 2其实不适合V2X应用。<span class="eng-origin">These modes are designed in order to prolong the devices’ battery lifetime at the cost of increasing the latency</span></p>
-<p><strong>这篇文章研究的是Mode 3下的的V2X资源分配问题</strong>。</p>
-<h1 data-number="3" id="lte-v-d2d通信"><span class="header-section-number">3</span> LTE-V D2D通信</h1>
-<p>D2D通信中的蜂窝网络资源分配可以以正交(Orthogonal)或者非正交(Nonorthogonal)方式进行。</p>
-<h2 data-number="3.1" id="v2v-based-d2d-通信模式"><span class="header-section-number">3.1</span> V2V-Based D2D 通信模式</h2>
-<p>一共有两种V2V通信模式，分别是Overlay和Underlay模式。其中Overlay为资源正交分配，Underlay为资源非正交分配。如 <a href="#fig:underlay-overlay">图 1</a> 所示</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png" id="fig:underlay-overlay" alt=""><figcaption>图 1: Overlay and Underlay</figcaption>
-</figure>
-<p>在Overlay模式下，D2D通信部分使用一段独立的频谱资源。这会限制基站的性能。不过Overlay的优势在于消除了普通蜂窝设备和车联网设备之间的干扰。</p>
-<p>在Underlay模式下，普通蜂窝设备和车联网设备之间共享频谱。这意味着基站需要管理二者之间的干扰问题。</p>
-<p>Overlay和Underlay模式下都可以使用下行和上行链路子帧。车联网D2D使用的资源是从UL子帧中分配，原因为：</p>
-<ol type="1">
-<li>UL具有更低的峰值均值比<span class="eng-orign">peak-to-average power ratio</span>。</li>
-<li>UL的负载一般比较低。</li>
-</ol>
-<h2 data-number="3.2" id="v-ues间的非正交性"><span class="header-section-number">3.2</span> V-UEs间的非正交性</h2>
-<p>目前正交多址技术是现有的蜂窝网的主流技术。正交多址技术的例子包括OFDMA，TDMA等。5G中选用了非正交多址技术（NOMA)，NOMA允许多个用户共享一个资源块（RB），而在正交多址技术中RB只能被独占使用。因此NOMA技术可以达到恒高的吞吐率。NOMA技术还可以被用来改善延时、减少冲突。</p>
-<h1 data-number="4" id="rrm-over-lte"><span class="header-section-number">4</span> RRM over LTE</h1>
-<p>RRM in LTE包含了很多子问题，入射频资源分配，包调度等。其中资源分配问题是LTE-V中被讨论最多的问题。现有的大多数研究都采用了V-UE和C-UE共享蜂窝网频谱的做法，也即Overlay模式。</p>
-<p>RRM相关的算法分类方式如 <a href="#fig:RRM-classification">图 2</a>：</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/2d71899cacf01a8d7d21f6d3bb8d73e4.png" id="fig:RRM-classification" alt=""><figcaption>图 2: RRM分类</figcaption>
-</figure>
-<h2 data-number="4.1" id="underlaying-resource-allocation-in-v2x-services"><span class="header-section-number">4.1</span> Underlaying Resource Allocation in V2X Services</h2>
-<p>这部分将的是使用Underlaying模式，这是大部分现有研究使用的模式。Underlaying模式下的核心问题在于解决C-UE和V-UE之间的干扰问题。</p>
-<h3 data-number="4.1.1" id="rbs-sharing-based-user-pairing"><span class="header-section-number">4.1.1</span> RBs Sharing-Based User Pairing</h3>
-<p>大多数Underlaying资源分配算法都允许用户设备的基于用户配对来共享RB。这里的配对是指基站能够找到至少包含两个UE的共享RB的最佳组合。其主要目标是让一个V-UE设备和一个C-UE设备共享同一个RB，或者是让两个V-UE共享一个RB。<span class="eng-origin">The main objective is to allow at least one V-UE using direct link to share the same RB with only one C-UE or with one V-UE using cellular link</span></p>
-<h3 data-number="4.1.2" id="rbs-sharing-based-user-clusteringgrouping"><span class="header-section-number">4.1.2</span> RBs Sharing-Based User Clustering/Grouping</h3>
-<p>一般的做法是在不同的簇之前分配非正交的资源，而在簇内分配正交的资源。</p>
-<h3 data-number="4.1.3" id="rbs-sharing-based-user-geographics-locaiton"><span class="header-section-number">4.1.3</span> RBs Sharing-Based User Geographics Locaiton</h3>
-<p>基于地理位置共享RB资源。</p>
-<section class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1" role="doc-endnote"><p>在<a href="https://www.nxp.com/company/our-company/about-nxp:ABOUT-NXP" target="_blank" rel="noopener">NXP</a>(一家企业)的一份<a href="https://www.nxp.com/docs/en/white-paper/CITSCOMPWP.pdf" target="_blank" rel="noopener">文档</a>中提到Therefore, basic safety messages will either only be broadcasted via Rel-14, thus disabling the potential advantages of further technology development, or vehicles equipped with Rel-14 cellularbased V2X technology will not be able to talk to vehicles with Rel-15 or subsequent releases. <strong>Either way, Rel-14 will be obsolete before it is even deployed</strong>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section>
+$$
+
+> 公式长的很像香农公式，可以视为是超过信道容量的概率
+
+其中
+
+- $E_{u}^{all}$ 为分配给车辆$u^{th}$的RB的数量
+- $\rho$ 为RB中复杂符号的数量
+- $\gamma$为第$i$个RB上的SINR
+
+#### 延时要求
+
+部分研究中将延时限制理解为调度时间单元的数量，大部分则认为延时限制是指端到端延时不应该超过100ms。[The latency requirement in some studies is interpreted by the latency constraint that allows V-UEs to allocate their required RBs before the maximum tolerable latency according to scheduling time unit number. Most of the studies designate that C-V2X can support safety services reliably that required an end-to-end latency of nearby 100 milliseconds (msec)]{.eng-origin}
+
+## V2X通信模式
+
+在LTE-V中3GPP提供了两种射频接口：分别是支持V2I的Uu蜂窝网络接口(e.g. enhanced Multimedia Broadcast Multicast Service (eMBMS))和支持V2V通信的PC5接口(direct LTE Sidelink)
+
+### Uu接口
+
+一般说蜂窝网通信(Cellular）的时候是在指车辆节点V-UE与基站eNB的通信，适合于低延时容忍度的通信。eNB在接收到某个V-UE的单播消息时，再广播给范围内的所有V-UE。借助多小区协作，MBMS可以改善小区边缘处的性能。
+
+### PC5接口
+
+LTE-D2D通信可以绕过基站。适合于低延时应用。
+
+这里提到Release 12中的D2D是以延时为代价来降低能耗的，因此Mode 1和Mode 2其实不适合V2X应用。[These modes are designed in order to prolong the devices’ battery lifetime at the cost of increasing the latency]{.eng-origin}
+
+**这篇文章研究的是Mode 3下的的V2X资源分配问题**。
+
+## LTE-V D2D通信
+
+D2D通信中的蜂窝网络资源分配可以以正交(Orthogonal)或者非正交(Nonorthogonal)方式进行。
+
+### V2V-Based D2D 通信模式
+
+一共有两种V2V通信模式，分别是Overlay和Underlay模式。其中Overlay为资源正交分配，Underlay为资源非正交分配。如 @fig:underlay-overlay 所示
+
+![Overlay and Underlay](https://imgs.codewoody.com/uploads/big/9ee178051e60aa3f02fe211044eeba78.png){#fig:underlay-overlay}
+
+在Overlay模式下，D2D通信部分使用一段独立的频谱资源。这会限制基站的性能。不过Overlay的优势在于消除了普通蜂窝设备和车联网设备之间的干扰。
+
+在Underlay模式下，普通蜂窝设备和车联网设备之间共享频谱。这意味着基站需要管理二者之间的干扰问题。
+
+Overlay和Underlay模式下都可以使用下行和上行链路子帧。车联网D2D使用的资源是从UL子帧中分配，原因为：
+
+1. UL具有更低的峰值均值比[peak-to-average power ratio]{.eng-orign}。
+2. UL的负载一般比较低。
+
+### V-UEs间的非正交性
+
+目前正交多址技术是现有的蜂窝网的主流技术。正交多址技术的例子包括OFDMA，TDMA等。5G中选用了非正交多址技术（NOMA)，NOMA允许多个用户共享一个资源块（RB），而在正交多址技术中RB只能被独占使用。因此NOMA技术可以达到恒高的吞吐率。NOMA技术还可以被用来改善延时、减少冲突。
+
+## RRM over LTE
+
+RRM in LTE包含了很多子问题，入射频资源分配，包调度等。其中资源分配问题是LTE-V中被讨论最多的问题。现有的大多数研究都采用了V-UE和C-UE共享蜂窝网频谱的做法，也即Overlay模式。
+
+RRM相关的算法分类方式如 @fig:RRM-classification：
+
+![RRM分类](https://imgs.codewoody.com/uploads/big/2d71899cacf01a8d7d21f6d3bb8d73e4.png){#fig:RRM-classification}
+
+### Underlaying Resource Allocation in V2X Services
+
+这部分将的是使用Underlaying模式，这是大部分现有研究使用的模式。Underlaying模式下的核心问题在于解决C-UE和V-UE之间的干扰问题。 
+
+#### RBs Sharing-Based User Pairing
+
+大多数Underlaying资源分配算法都允许用户设备的基于用户配对来共享RB。这里的配对是指基站能够找到至少包含两个UE的共享RB的最佳组合。其主要目标是让一个V-UE设备和一个C-UE设备共享同一个RB，或者是让两个V-UE共享一个RB。[The main objective is to allow at least one V-UE using direct link to share the same RB with only one C-UE or with one V-UE using cellular link]{.eng-origin}
+
+#### RBs Sharing-Based User Clustering/Grouping
+
+一般的做法是在不同的簇之前分配非正交的资源，而在簇内分配正交的资源。
+
+#### RBs Sharing-Based User Geographics Locaiton
+
+基于地理位置共享RB资源。
 
         
       </div>
@@ -744,17 +784,8 @@ p_u^{out} \triangleq Pr \{
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1026,23 +1057,6 @@ p_u^{out} \triangleq Pr \{
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#v2x-requirements-and-services"><span class="nav-text">1 V2X Requirements and Services</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安全相关的v2x服务"><span class="nav-text">1.1 安全相关的V2X服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非安全相关的v2x服务"><span class="nav-text">1.2 非安全相关的V2X服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v2x通信要求"><span class="nav-text">1.3 V2X通信要求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#可靠性要求"><span class="nav-text">1.3.1 可靠性要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#延时要求"><span class="nav-text">1.3.2 延时要求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#v2x通信模式"><span class="nav-text">2 V2X通信模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#uu接口"><span class="nav-text">2.1 Uu接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pc5接口"><span class="nav-text">2.2 PC5接口</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lte-v-d2d通信"><span class="nav-text">3 LTE-V D2D通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#v2v-based-d2d-通信模式"><span class="nav-text">3.1 V2V-Based D2D 通信模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-ues间的非正交性"><span class="nav-text">3.2 V-UEs间的非正交性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#rrm-over-lte"><span class="nav-text">4 RRM over LTE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#underlaying-resource-allocation-in-v2x-services"><span class="nav-text">4.1 Underlaying Resource Allocation in V2X Services</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rbs-sharing-based-user-pairing"><span class="nav-text">4.1.1 RBs Sharing-Based User Pairing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rbs-sharing-based-user-clusteringgrouping"><span class="nav-text">4.1.2 RBs Sharing-Based User Clustering/Grouping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rbs-sharing-based-user-geographics-locaiton"><span class="nav-text">4.1.3 RBs Sharing-Based User Geographics Locaiton</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
@@ -1594,7 +1608,7 @@ p_u^{out} \triangleq Pr \{
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }

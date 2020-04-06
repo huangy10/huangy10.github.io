@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="watch 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。watch 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，watch 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。  过去我经常手动写 while true; do some command; sleep 1; done来做这个事情，有点傻了。  watch命令的形式非常简单 123">
+  <meta name="description" content="`watch` 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。`watch` 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，`watch` 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。  &amp;gt; 过去我经常手动写 `while true; do some command; sleep 1; done`来做这个事情，有点傻了。  `watch`">
 <meta property="og:type" content="website">
 <meta property="og:title" content="WATCH">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/linux-shell/watch.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="watch 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。watch 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，watch 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。  过去我经常手动写 while true; do some command; sleep 1; done来做这个事情，有点傻了。  watch命令的形式非常简单 123">
+<meta property="og:description" content="`watch` 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。`watch` 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，`watch` 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。  &amp;gt; 过去我经常手动写 `while true; do some command; sleep 1; done`来做这个事情，有点傻了。  `watch`">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-09-17T06:08:01.391Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WATCH">
-<meta name="twitter:description" content="watch 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。watch 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，watch 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。  过去我经常手动写 while true; do some command; sleep 1; done来做这个事情，有点傻了。  watch命令的形式非常简单 123">
+<meta name="twitter:description" content="`watch` 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。`watch` 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，`watch` 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。  &amp;gt; 过去我经常手动写 `while true; do some command; sleep 1; done`来做这个事情，有点傻了。  `watch`">
 
 
 
@@ -538,19 +538,22 @@
       <div class="post-body han-init-context">
         
         
-          <p><code>watch</code> 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。<code>watch</code> 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，<code>watch</code> 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。</p>
-<blockquote>
-<p>过去我经常手动写 <code>while true; do some command; sleep 1; done</code>来做这个事情，有点傻了。</p>
-</blockquote>
-<p><code>watch</code>命令的形式非常简单</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Usage:</span><br><span class="line"> watch [options] command</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -b, --beep             beep if command has a non-zero exit</span><br><span class="line">  -c, --color            interpret ANSI color and style sequences</span><br><span class="line">  -d, --differences[=&lt;permanent&gt;]</span><br><span class="line">                         highlight changes between updates</span><br><span class="line">  -e, --errexit          exit if command has a non-zero exit</span><br><span class="line">  -g, --chgexit          exit when output from command changes</span><br><span class="line">  -n, --interval &lt;secs&gt;  seconds to wait between updates</span><br><span class="line">  -p, --precise          attempt run command in precise intervals</span><br><span class="line">  -t, --no-title         turn off header</span><br><span class="line">  -x, --exec             pass command to exec instead of &quot;sh -c&quot;</span><br><span class="line"></span><br><span class="line"> -h, --help     display this help and exit</span><br><span class="line"> -v, --version  output version information and exit</span><br></pre></td></tr></table></figure>
-<p>其中最常用的是：</p>
-<ol type="1">
-<li><code>-n</code>：确定调用命令的间隔，单位是秒</li>
-<li><code>-d</code>: 高亮显示输出信息的不同之处</li>
-<li><code>-t</code>: 不现实标题</li>
-</ol>
-<p>注意，FreeBSD和Linux下watch命令的不同，在Linux下，watch是周期性的执行下个程序，并全屏显示执行结果，如：watch -n 1 -d netstat -ant，而在FreeBSD下的watch命令是查看其它用户的正在运行的操作，watch允许你偷看其它terminal正在做什么，该命令只能让超级用户使用。</p>
+          
+`watch` 命令以周期性的方式执行给定的指令，指令输出以全屏方式显示。`watch` 是一个非常实用的命令，基本所有的Linux发行版都带有这个小工具，如同名字一样，`watch` 可以帮你监测一个命令的运行结果，省得你一遍遍的手动运行。
+
+> 过去我经常手动写 `while true; do some command; sleep 1; done`来做这个事情，有点傻了。
+
+`watch`命令的形式非常简单
+
+<!--￼0-->
+
+其中最常用的是：
+
+1. `-n`：确定调用命令的间隔，单位是秒
+2. `-d`: 高亮显示输出信息的不同之处
+3. `-t`: 不现实标题
+
+注意，FreeBSD和Linux下watch命令的不同，在Linux下，watch是周期性的执行下个程序，并全屏显示执行结果，如：watch -n 1 -d netstat -ant，而在FreeBSD下的watch命令是查看其它用户的正在运行的操作，watch允许你偷看其它terminal正在做什么，该命令只能让超级用户使用。
 
         
       </div>

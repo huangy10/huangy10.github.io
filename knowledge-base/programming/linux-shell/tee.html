@@ -123,19 +123,17 @@
 
 
 
-  <meta name="description" content="1 简介 tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。  存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲区满，才将数据转存到指定的文件中。若文件内容不到1024个字节，则接收完从标准输入设备读入的数据后，将刷新一次缓冲区，并转存数据到指定文件。 2 使用 1tee [opt">
+  <meta name="description" content="## 简介  tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。  ![](https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif)  存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲">
 <meta property="og:type" content="website">
 <meta property="og:title" content="TEE">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/linux-shell/tee.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="1 简介 tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。  存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲区满，才将数据转存到指定的文件中。若文件内容不到1024个字节，则接收完从标准输入设备读入的数据后，将刷新一次缓冲区，并转存数据到指定文件。 2 使用 1tee [opt">
+<meta property="og:description" content="## 简介  tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。  ![](https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif)  存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif">
 <meta property="og:updated_time" content="2019-09-16T06:01:32.031Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TEE">
-<meta name="twitter:description" content="1 简介 tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。  存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲区满，才将数据转存到指定的文件中。若文件内容不到1024个字节，则接收完从标准输入设备读入的数据后，将刷新一次缓冲区，并转存数据到指定文件。 2 使用 1tee [opt">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif">
+<meta name="twitter:description" content="## 简介  tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。  ![](https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif)  存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲">
 
 
 
@@ -540,18 +538,25 @@
       <div class="post-body han-init-context">
         
         
-          <h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
-<p>tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif"></p>
-<p>存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲区满，才将数据转存到指定的文件中。若文件内容不到1024个字节，则接收完从标准输入设备读入的数据后，将刷新一次缓冲区，并转存数据到指定文件。</p>
-<h1 data-number="2" id="使用"><span class="header-section-number">2</span> 使用</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tee [options] params</span><br></pre></td></tr></table></figure>
-<p>其中options包括：</p>
-<ol type="1">
-<li><code>-a</code>: 向目标文件写入时采用追加模式</li>
-<li><code>-i</code>: 忽略中断信号</li>
-</ol>
-<p>params为输出文件</p>
+          
+## 简介
+
+tee命令用于将数据重定向到文件，另一方面还可以提供一份重定向数据的副本作为后续命令的stdin。简单的说就是把数据重定向到给定文件和屏幕上。
+
+![](https://imgs.codewoody.com/uploads/big/2e6e075cd57ca3a47a0a4155d873063e.gif)
+
+存在缓存机制，每1024个字节将输出一次。若从管道接收输入数据，应该是缓冲区满，才将数据转存到指定的文件中。若文件内容不到1024个字节，则接收完从标准输入设备读入的数据后，将刷新一次缓冲区，并转存数据到指定文件。
+
+## 使用
+
+<!--￼0-->
+
+其中options包括：
+
+1. `-a`: 向目标文件写入时采用追加模式
+2. `-i`: 忽略中断信号
+
+params为输出文件
 
         
       </div>
@@ -655,17 +660,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -937,23 +933,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-text">2 使用</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

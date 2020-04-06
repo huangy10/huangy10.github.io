@@ -132,7 +132,8 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/51367e70a540f85753b5b6604a3a8fcb.png">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fbfaf0a4e3e64cd498cd768e7c3f2318.png">
-<meta property="og:updated_time" content="2020-04-06T10:07:30.035Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/42dd5e92abb5adf9d6680480448c0cc6.png">
+<meta property="og:updated_time" content="2020-04-06T17:20:53.659Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="编队 + C-V2X">
 <meta name="twitter:description" content="文章的标题是Platoon Cooperative in Cellular V2X Networks for 5G and Beyond，是2019年6月的IEEE TWC的文章。 这篇文章研究的是多车道编队系统协作，编队使用C-V2X进行通信。编队协作对于干扰控制和通信可靠性改善非常重要。为了提高编队内的车辆容量，降低能源消耗，作者提出了一种两步资源分配策略。这两步分别是基站层面的调度和每个编队">
@@ -621,9 +622,87 @@ a_{i, j}(t)=a\left[1-\left(\frac{v_{i, j}(t)}{v_{0}}\right)^{4}-\left(\frac{S_{i
 <li><span class="math inline">\(s_0\)</span>为最小车间距</li>
 </ul>
 <p>我们考虑编队内所有车辆都达到均衡点的情况<span class="math inline">\(e\)</span>，即<span class="math inline">\(a_{i,j}(t) = 0, \Delta v_{i, j}(t) = 0\)</span>，均衡状态的下的速度和车间距为<span class="math inline">\(v_e\)</span>和<span class="math inline">\(s_e\)</span>，则</p>
-<p><span class="math display">\[\begin{equation}
+<p><span class="math display">\[
 s_e = \frac{s_0 + v_e T_0}{\sqrt{1 - \left(\frac{v_e}{v_0}\right)^4}}
-\end{equation}\]</span></p>
+\]</span></p>
+<p>那么任意两车之间的距离是</p>
+<p><span class="math display">\[
+d_{i, j_1, i, j_2} = \left|j_1 - j_2\right| \cdot s_e
+\]</span></p>
+<h1 data-number="3" id="问题建模"><span class="header-section-number">3</span> 问题建模</h1>
+<p>问题的核心是这一对矛盾：</p>
+<ul>
+<li>编队大小：编队越大效率越高</li>
+<li>传输功率：功率越小越好</li>
+</ul>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/42dd5e92abb5adf9d6680480448c0cc6.png" id="fig:编队间与编队内优化问题示意图" style="border: none" alt=""><figcaption>图 3: 编队间与编队内优化问题示意图</figcaption>
+</figure>
+<h2 data-number="3.1" id="基站端的子信道分配问题"><span class="header-section-number">3.1</span> 基站端的子信道分配问题</h2>
+<p>基站需要向编队分配资源，该资源用于编队内通信以及编队头和基站的通信。一般来说编队越大，基站会分配更多的资源。在本文中，假设基站基于同编队头尾两辆车之间的通信链路来决定资源分配<span class="eng-origin">the BS allocates the spectrum to each platoon according to the communication link between the platoon head and tail vehicle</span>。这个链路在较大的编队中空间距离也更长。</p>
+<div class="note warning">
+<p>如 <a href="#fig:编队内通信">图 2</a> 中表现以及前文阐述的，本文中编队的尺寸应该是大于广播范围的，那么编队的头尾车辆可能无法直接通信，这里的定义是不是有问题呢？</p>
+</div>
+<p>令<span class="math inline">\(\beta_{i, k}\)</span>为指示函数，表明子信道<span class="math inline">\(k\)</span>被分配给了编队<span class="math inline">\(i\)</span>。那么编队尾部车辆收到来自编队头的信号的SINR为</p>
+<p><span class="math display">\[
+\Gamma_{i, k}=\frac{\beta_{i, k} \cdot P_{0}\left|h_{i, 1, i, N_{i}}^{(k)}\right|^{2}}{\sigma^{2}+\sum_{i^{\prime}=1, i^{\prime} \neq i}^{M} \beta_{i^{\prime}, k} \cdot P_{0}\left|h_{i^{\prime}, 1, i, N_{i}}^{(k)}\right|^{2}}
+\]</span></p>
+<p>其中，假设每辆车的发射功率是固定的，<span class="math inline">\(P_0\)</span>。在得到SINR之后可以计算数据率</p>
+<p><span class="math display">\[
+R_{i,k} = log_2(1 + \Gamma_{i, k})
+\]</span></p>
+<p>基站子信道分配为目标是最大化整体的吞吐率：</p>
+<p><span class="math display">\[
+\begin{array}{l}
+\max _{\beta_{i, k}} \sum_{i=1}^{M} \sum_{k=1}^{K} R_{i, k} \\
+\text { s.t. } \beta_{i, k} \in\{0,1\} \\
+\quad \sum_{k=1}^{K} R_{i, k} \geq R_{t h}, \forall 1 \leq i \leq M \\
+\quad \sum_{k=1}^{K} \beta_{i, k} \geq 3, \forall 1 \leq i \leq M
+\end{array}
+\]</span></p>
+<p>其中 <span class="math inline">\(R_{th}\)</span> 为最低的传输速率要求。为了减少干扰，并且提升编队间和编队内通信的可靠性，假设编队广播，基站-编队通信，以及编队内V2V通信使用正交的通信资源。因此每个编队至少需要分配三个资源。</p>
+<h2 data-number="3.2" id="编队大小最优化问题"><span class="header-section-number">3.2</span> 编队大小最优化问题</h2>
+<p>为了提升编队内通信效率，同时降低功耗，每个编队需要分布式地动态调整其</p>
+<ul>
+<li>编队大小</li>
+<li>编队内容新模式</li>
+<li>编队内子信道分配</li>
+</ul>
+<p>假设编队内的一跳V2V通信链路(发生在空间上相邻的车辆间)是可以服用的，且这个信道和编队投的广播信道是正交的。用指示函数<span class="math inline">\(\theta_{i, j}^{(k)}\)</span>来代表信道<span class="math inline">\(k\)</span>被分配给了车辆<span class="math inline">\(V_j^i\)</span>。因此任意两辆车之间（可以是不同编队）的SINR为(从<span class="math inline">\(V_{j&#39;}^{i&#39;}\)</span>到<span class="math inline">\(V_{j}^i\)</span>)：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\gamma_{i, j, i^{\prime}, j^{\prime}}^{(k)}=&amp; \frac{\theta_{i, j}^{(k)} P_{i, j}^{(k)}\left|h_{i, j, i^{\prime}, j^{\prime}}^{(k)}\right|^{2}}{\sigma^{2}+\sum_{i_{t}=1}^{M} \sum_{j_{t}=1}^{N_{i t}} \theta_{i_{t}, j_{t}}^{(k)} P_{i_{t}, j_{t}}^{(k)}\left|h_{i_{t}, j_{t}, i^{\prime}, j^{\prime}}^{(k)}\right|^{2}}
+\end{aligned}
+\]</span></p>
+<p>其中要求车辆<span class="math inline">\(V_j^i\)</span>和<span class="math inline">\(V_{j_t}^{i_t}\)</span>不是同一辆车，即<span class="math inline">\(|i - i_t| + |j - j_t| \neq 0\)</span>。发送功率<span class="math inline">\(P_{i,j}^{k}\)</span>取决于车辆的不同通信模式。假设车辆在不通信道上的传输功率是相同，那么可以简化标记<span class="math inline">\(P_{i,j}^{(k)} = P_{i,j}, \forall j &gt; 1\)</span>，编队头可以调整自己在不同信道上的传输功率。编队头的功率为<span class="math inline">\(P_{i,1}^{(k)} = P_i^{(k)}\)</span>。因此<span class="math inline">\(V_{j&#39;}^{i&#39;}\)</span>到<span class="math inline">\(V_{j}^i\)</span>的数据率为</p>
+<p><span class="math display">\[
+R_{i,j,i&#39;,j&#39;}^{(k)} = \log_2(1 + \gamma^{(k)}_{i,j,i&#39;,j&#39;})
+\]</span></p>
+<p>我们认为只有当SINR高于一定的阈值时从<span class="math inline">\(V_{j&#39;}^{i&#39;}\)</span>到<span class="math inline">\(V_{j}^i\)</span>的通信才能成功，这个阈值为<span class="math inline">\(\gamma_{th}\)</span>。令<span class="math inline">\(p_l\)</span>为数据包的大小，<span class="math inline">\(\tau_{th}\)</span>为从队首到队尾的通信延时要求的阈值。根据流水线(pipeline)的基本原理，端到端的传输延时收到多跳链路中速度最慢的那一跳的限制。从队首车辆<span class="math inline">\(V_1^i\)</span>到队尾车辆<span class="math inline">\(V_{N_i}^i\)</span>的延时为</p>
+<p><span class="math display">\[
+t_{i}=\frac{p_{l}}{\min \left\{R_{i, 1, i, N_{i}^{b}}^{\left(k_{1}\right)}, R_{i, N_{i}, i, N_{i}^{b}+1}^{\left(k_{2}\right)}, \ldots, R_{i, N_{i}-1, i, N_{i}}^{\left(k_{N}-N_{j}^{b}+1\right)}\right\}} \leq \tau_{th}
+\]</span></p>
+<div class="note warning">
+<p>这里分母中<span class="math inline">\(R\)</span>的脚标很有意思。第一项的是节点1到节点<span class="math inline">\(N_{i}^b\)</span>，之后都是相邻节点之间的速率。因此这里的通信链路应该是队首节点先广播到达<span class="math inline">\(N_i^b\)</span>节点，之后节点向后进行转发的时候，只能以1跳V2V链路逐个向后传递。</p>
+</div>
+<p><span class="math inline">\(\mathcal{K}_i\)</span>代表分配给编队的子信道集合。</p>
+<p>为了评估编队系统<span class="math inline">\(i\)</span>的能源消耗，我们同时考虑编队头的广播功率和中继节点的传输消耗。据此我们可以构建编队尺寸最大化和编队功率最小化的优化问题<span class="math inline">\(\mathbf{PO}\)</span>:</p>
+<p><span class="math display">\[
+\begin{equation}
+\max _{\boldsymbol{\theta}, \boldsymbol{P}, N_{i}, N_{i}^{b}} \sum_{i=1}^{M}\left[N_{i}-\mu\left(P_{i}^{(k)}+\left(N_{i}-N_{i}^{b}-1\right) P_{i, v}\right)\right]  \\
+\begin{aligned}
+s.t. &amp; \\
+&amp; \theta_{i, 1}^{\left(k_{1}\right)} \gamma_{i, 1, i, N_{i}^{b}+1}^{\left(k_{1}\right)} \leq \theta_{i, 1}^{\left(k_{1}\right)} \gamma_{t h}, \theta_{i, 1}^{\left(k_{1}\right)} \gamma_{i, 1, i, j}^{\left(k_{1}\right)} \geq \theta_{i, 1}^{\left(k_{1}\right)} \gamma_{t h} \\
+&amp; 1&lt;j \leq N_{i}^{b}, k_{1} \in \mathcal{K}_{i} \\
+&amp; \theta_{i, j}^{(k)} \gamma_{i, j, i, j+1}^{(k)} \geq \theta_{i, j}^{(k)} \gamma_{t h}, N_{i}^{b} \leq j \leq N_{i}-1, k \in \mathcal{K}_{i} \\
+&amp; P_{i, v} \leq P_{t h}, P_{i}^{(k)} \leq P_{t h}, k \in \mathcal{K}_{i} \\
+&amp; \theta_{i, j}^{k}=0,1&lt;j \leq N_{i}^{b}-1, k \in \mathcal{K}_{i} \\
+&amp; \theta_{i, j}^{k} \cdot \theta_{i, j+1}^{k^{\prime}} \neq 1, N_{i}^{b} \leq j \leq N_{i}-1, k, k^{\prime} \in \mathcal{K}_{i} \\
+&amp; \theta_{i, 1}^{k_{1}} \cdot \theta_{i, j}^{k} \neq 1, N_{i}^{b} \leq j \leq N_{i}-1, k_{1}, k \in \mathcal{K}_{i} \\
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>其中<span class="math inline">\(\mu\)</span>为惩罚系数</p>
 <section class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -1027,7 +1106,7 @@ s_e = \frac{s_0 + v_e T_0}{\sqrt{1 - \left(\frac{v_e}{v_0}\right)^4}}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#intro部分的新内容"><span class="nav-text">1 Intro部分的新内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">2 系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景描述"><span class="nav-text">2.1 场景描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种通信模式"><span class="nav-text">2.2 两种通信模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基站和车辆之间的通信"><span class="nav-text">2.2.1 基站和车辆之间的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编队内通信"><span class="nav-text">2.2.2 编队内通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信道模型"><span class="nav-text">2.3 信道模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运动模型"><span class="nav-text">2.4 运动模型</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#intro部分的新内容"><span class="nav-text">1 Intro部分的新内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">2 系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景描述"><span class="nav-text">2.1 场景描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种通信模式"><span class="nav-text">2.2 两种通信模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基站和车辆之间的通信"><span class="nav-text">2.2.1 基站和车辆之间的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编队内通信"><span class="nav-text">2.2.2 编队内通信</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#信道模型"><span class="nav-text">2.3 信道模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运动模型"><span class="nav-text">2.4 运动模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#问题建模"><span class="nav-text">3 问题建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基站端的子信道分配问题"><span class="nav-text">3.1 基站端的子信道分配问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编队大小最优化问题"><span class="nav-text">3.2 编队大小最优化问题</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1584,7 +1663,7 @@ s_e = \frac{s_0 + v_e T_0}{\sqrt{1 - \left(\frac{v_e}{v_0}\right)^4}}
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }

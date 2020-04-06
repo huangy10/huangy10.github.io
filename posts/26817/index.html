@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的： 1buf.writeUint32BE(now &amp;amp; 0xffffffff, idx) 其中buf是一个Buffer对象，now是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 buf。不过，当now的第三十二位(自低向高)为 1">
+  <meta name="description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：    其中`buf`是一个`Buffer`对象，`now`是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 `buf`。不过，当`now`的第三十二位(自低向高)为 1 时，`now &amp; 0xffffffff`出来的会是负数，这样在`">
 <meta name="keywords" content="js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Javascript中的整型问题">
 <meta property="og:url" content="http://www.codewoody.com/posts/26817/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的： 1buf.writeUint32BE(now &amp;amp; 0xffffffff, idx) 其中buf是一个Buffer对象，now是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 buf。不过，当now的第三十二位(自低向高)为 1">
+<meta property="og:description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：    其中`buf`是一个`Buffer`对象，`now`是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 `buf`。不过，当`now`的第三十二位(自低向高)为 1 时，`now &amp; 0xffffffff`出来的会是负数，这样在`">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.486Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javascript中的整型问题">
-<meta name="twitter:description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的： 1buf.writeUint32BE(now &amp;amp; 0xffffffff, idx) 其中buf是一个Buffer对象，now是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 buf。不过，当now的第三十二位(自低向高)为 1">
+<meta name="twitter:description" content="这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：    其中`buf`是一个`Buffer`对象，`now`是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 `buf`。不过，当`now`的第三十二位(自低向高)为 1 时，`now &amp; 0xffffffff`出来的会是负数，这样在`">
 
 
 
@@ -570,18 +570,26 @@
       
 
       
-        <p>这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.writeUint32BE(now &amp; <span class="number">0xffffffff</span>, idx)</span><br></pre></td></tr></table></figure>
-<p>其中<code>buf</code>是一个<code>Buffer</code>对象，<code>now</code>是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 <code>buf</code>。不过，当<code>now</code>的第三十二位(自低向高)为 1 时，<code>now &amp; 0xffffffff</code>出来的会是负数，这样在<code>writeUint32BE</code>的检查中就会报错，因为这个函数不允许写入负数。</p>
-<p><code>now</code>的位数显然超过了 32 比特，如果在一些类型比较强的语言里面，应该会被视为一个64位整数。那么做位运算之后应该还是一个64位整数。上面这个错误说明在Js中，一个64位整型的数字在位运算之后得到的却是一个32位有符号数。是否是<code>0xffffffff</code>限制了输出的位数呢？</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; a = <span class="number">0xffffffff</span></span><br><span class="line"><span class="number">68719476735</span></span><br><span class="line">&gt; a &amp; <span class="number">0x00000000ffffffff</span></span><br><span class="line"><span class="number">-1</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>0xffffffff 当做32位有符号数就是-1</p>
-</blockquote>
-<p>可见我们用64位的mask去做位运算得到的还是32位有符号数。</p>
-<p>这种乱象的根本原因是，js实际上是使用 <a href="https://en.wikipedia.org/wiki/IEEE_754" target="_blank" rel="noopener">IEEE-754 浮点数</a>来表示所有的数字的，包括整型也是用浮点数来表示的。另外，在js中，位运算的输出总是被当做有符号32位数字<a href="https://stackoverflow.com/questions/15517646/how-are-32-bit-javascript-numbers-resulting-from-a-bit-wise-operation-converted" target="_blank" rel="noopener">source</a>。为了摒除这两个因素的影响，我们就无法用位运算来提取低32位的内容，而应该转而使用取余运算：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt; a = <span class="number">0xffffffff</span></span><br><span class="line"><span class="number">68719476735</span></span><br><span class="line">&gt; mask = <span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">32</span>)</span><br><span class="line"><span class="number">4294967296</span></span><br><span class="line">&gt; lower_32_bits = a % mask</span><br><span class="line"><span class="number">4294967295</span></span><br></pre></td></tr></table></figure>
-<p>其中<code>4294967296 = 0x1000000000</code>, <code>4294967295=0xffffffff</code>。</p>
+        
+这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：
+
+<!--￼0-->
+
+其中`buf`是一个`Buffer`对象，`now`是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 `buf`。不过，当`now`的第三十二位(自低向高)为 1 时，`now & 0xffffffff`出来的会是负数，这样在`writeUint32BE`的检查中就会报错，因为这个函数不允许写入负数。
+
+`now`的位数显然超过了 32 比特，如果在一些类型比较强的语言里面，应该会被视为一个64位整数。那么做位运算之后应该还是一个64位整数。上面这个错误说明在Js中，一个64位整型的数字在位运算之后得到的却是一个32位有符号数。是否是`0xffffffff`限制了输出的位数呢？
+
+<!--￼1-->
+
+> 0xffffffff 当做32位有符号数就是-1
+
+可见我们用64位的mask去做位运算得到的还是32位有符号数。
+
+这种乱象的根本原因是，js实际上是使用 [IEEE-754 浮点数](https://en.wikipedia.org/wiki/IEEE_754)来表示所有的数字的，包括整型也是用浮点数来表示的。另外，在js中，位运算的输出总是被当做有符号32位数字[source](https://stackoverflow.com/questions/15517646/how-are-32-bit-javascript-numbers-resulting-from-a-bit-wise-operation-converted)。为了摒除这两个因素的影响，我们就无法用位运算来提取低32位的内容，而应该转而使用取余运算：
+
+<!--￼2-->
+
+其中`4294967296 = 0x1000000000`, `4294967295=0xffffffff`。
 
       
     </div>

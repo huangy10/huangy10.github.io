@@ -123,20 +123,18 @@
 
 
 
-  <meta name="description" content="汉字标准格式">
+  <meta name="description" content="![汉字标准格式](https://hanzi.pro/img/typefaces.svg)">
 <meta name="keywords" content="教程,Debug,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo启用Han支持过程中发现的问题">
 <meta property="og:url" content="http://www.codewoody.com/posts/36496/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="汉字标准格式">
+<meta property="og:description" content="![汉字标准格式](https://hanzi.pro/img/typefaces.svg)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://hanzi.pro/img/typefaces.svg">
 <meta property="og:updated_time" content="2019-07-12T06:10:47.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo启用Han支持过程中发现的问题">
-<meta name="twitter:description" content="汉字标准格式">
-<meta name="twitter:image" content="https://hanzi.pro/img/typefaces.svg">
+<meta name="twitter:description" content="![汉字标准格式](https://hanzi.pro/img/typefaces.svg)">
 
 
 
@@ -572,17 +570,20 @@
       
 
       
-        <p>Han指的是<a href="https://hanzi.pro/manual/" target="_blank" rel="noopener">「汉字标准格式」</a>。 「汉字标准格式」是一个集合了「语意样式标准化」「文字设计」「高级排版功能」等三大概念的网页排版框架，使用Sass及JavaScript构架而成。其专为汉字网页提供的美观而标准化的环境，不仅符合传统阅读习惯、更为萤幕阅读提供了既成标准，得以完整解决现今汉字网页设计的排版需求。</p>
-<figure>
-<img src="https://hanzi.pro/img/typefaces.svg" alt=""><figcaption>汉字标准格式</figcaption>
-</figure>
-<p>总而言之，使用Han这个框架可以让排版更好看。按道理，启用Han应该在NexT主题中的选项即可</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">han:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>不过这么设置之后还是不行。原因是启用之后只会引入CSS，而没有引入js渲染，导致一些比较高级的排版效果，如<a href="https://hanzi.pro/manual/hang_de_zucheng" target="_blank" rel="noopener">标点调整</a>无法使用。因此，还需要手动调整一下。于<code>themes/next/layout/_layout.swig</code>的<code>body</code>标签底部加入如下内容：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://ethantw.github.io/Han/latest/han.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">void</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.hinst = Han().setRoutine([</span></span><br><span class="line"><span class="javascript">      <span class="string">'initCond'</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">'renderElem'</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">'renderJiya'</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">'renderHanging'</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">'renderHWS'</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">'correctBasicBD'</span>,</span></span><br><span class="line"><span class="javascript">      <span class="string">'substCombLigaWithPUA'</span></span></span><br><span class="line"><span class="undefined">    ]).render()</span></span><br><span class="line"><span class="undefined">  &#125;()</span></span><br><span class="line"><span class="undefined">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注：<a href="https://hanzi.pro/manual/anzhuang_yu_qiyong" target="_blank" rel="noopener">使用文档</a>中给的cloudflare CDN地址里面的js文件渲染有问题，会导致标点不可见，使用<code>github.io</code>这个版本提供的文件就没有问题。另外，如果本地的<code>han.min.css</code>有问题，也可以切换成<code>github.io</code>版本。</p>
-</blockquote>
+        Han指的是[「汉字标准格式」](https://hanzi.pro/manual/)。
+「汉字标准格式」是一个集合了「语意样式标准化」「文字设计」「高级排版功能」等三大概念的网页排版框架，使用Sass及JavaScript构架而成。其专为汉字网页提供的美观而标准化的环境，不仅符合传统阅读习惯、更为萤幕阅读提供了既成标准，得以完整解决现今汉字网页设计的排版需求。
+
+![汉字标准格式](https://hanzi.pro/img/typefaces.svg)
+
+总而言之，使用Han这个框架可以让排版更好看。按道理，启用Han应该在NexT主题中的选项即可
+
+<!--￼0-->
+
+不过这么设置之后还是不行。原因是启用之后只会引入CSS，而没有引入js渲染，导致一些比较高级的排版效果，如[标点调整](https://hanzi.pro/manual/hang_de_zucheng)无法使用。因此，还需要手动调整一下。于`themes/next/layout/_layout.swig`的`body`标签底部加入如下内容：
+
+<!--￼1-->
+
+> 注：[使用文档](https://hanzi.pro/manual/anzhuang_yu_qiyong)中给的cloudflare CDN地址里面的js文件渲染有问题，会导致标点不可见，使用`github.io`这个版本提供的文件就没有问题。另外，如果本地的`han.min.css`有问题，也可以切换成`github.io`版本。
       
     </div>
 

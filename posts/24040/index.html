@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="转换需要使用Pillow这个库： 1pip install Pillow 代码如下： 123from PIL import imageim = Image.open(input_image).convert(&quot;RGB&quot;)im.save(&quot;test.jpg&quot;, &quot;jpeg&quot;)  以上代码参考了文章：Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python">
+  <meta name="description" content="转换需要使用`Pillow`这个库：    代码如下：    &amp;gt; 以上代码参考了文章：[Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python](https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9)">
 <meta name="keywords" content="教程,python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python实现将webp格式的图片转化成jpg&#x2F;png">
 <meta property="og:url" content="http://www.codewoody.com/posts/24040/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="转换需要使用Pillow这个库： 1pip install Pillow 代码如下： 123from PIL import imageim = Image.open(input_image).convert(&quot;RGB&quot;)im.save(&quot;test.jpg&quot;, &quot;jpeg&quot;)  以上代码参考了文章：Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python">
+<meta property="og:description" content="转换需要使用`Pillow`这个库：    代码如下：    &amp;gt; 以上代码参考了文章：[Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python](https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9)">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.488Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python实现将webp格式的图片转化成jpg&#x2F;png">
-<meta name="twitter:description" content="转换需要使用Pillow这个库： 1pip install Pillow 代码如下： 123from PIL import imageim = Image.open(input_image).convert(&quot;RGB&quot;)im.save(&quot;test.jpg&quot;, &quot;jpeg&quot;)  以上代码参考了文章：Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python">
+<meta name="twitter:description" content="转换需要使用`Pillow`这个库：    代码如下：    &amp;gt; 以上代码参考了文章：[Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python](https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9)">
 
 
 
@@ -570,17 +570,25 @@
       
 
       
-        <p>转换需要使用<code>Pillow</code>这个库：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install Pillow</span><br></pre></td></tr></table></figure>
-<p>代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> image</span><br><span class="line">im = Image.open(input_image).convert(<span class="string">"RGB"</span>)</span><br><span class="line">im.save(<span class="string">"test.jpg"</span>, <span class="string">"jpeg"</span>)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>以上代码参考了文章：<a href="https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9" target="_blank" rel="noopener">Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python</a></p>
-</blockquote>
-<p>下面这个代码提供了更加完整的功能，包括支持输入图片的url以完成自动下载和格式转换：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_image</span><span class="params">(url)</span>:</span></span><br><span class="line">    path, _ = urllib.request.urlretrieve(url)</span><br><span class="line">    print(path)</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">'input_file'</span>, help=<span class="string">"输入文件"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'output_file'</span>, help=<span class="string">"输出文件"</span>, nargs=<span class="string">"?"</span>)</span><br><span class="line">    opt = parser.parse_args()</span><br><span class="line">    input_file = opt.input_file</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> input_file.startswith(<span class="string">"http"</span>):</span><br><span class="line">        <span class="keyword">if</span> opt.output_file <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            print(<span class="string">"输入是URL时必须制定输出文件"</span>)</span><br><span class="line">        input_file = download_image(input_file)</span><br><span class="line">    <span class="keyword">elif</span> <span class="keyword">not</span> input_file.endswith(<span class="string">".webp"</span>):</span><br><span class="line">        print(<span class="string">"输入文件不是webp格式的"</span>)</span><br><span class="line">        exit()</span><br><span class="line">    filename = <span class="string">"."</span>.join(input_file.split(<span class="string">"."</span>)[<span class="number">0</span>:<span class="number">-1</span>])</span><br><span class="line">    output_file = opt.output_file <span class="keyword">or</span> (<span class="string">"%s.jpg"</span> % filename)</span><br><span class="line">    im = Image.open(input_file).convert(<span class="string">"RGB"</span>)</span><br><span class="line">    im.save(output_file,  <span class="string">"jpeg"</span>)</span><br><span class="line">    urllib.request.urlcleanup()</span><br></pre></td></tr></table></figure>
-<p>将文件保存为<code>webp2jpg</code>并将其路径加入<code>PATH</code>环境变量，那么就可以以如下方式使用这个脚本:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">webp2jpg input.webp output.jpg</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下面这个命令的输出文件是input.jpg</span></span><br><span class="line">webp2jpg input.webp</span><br><span class="line"></span><br><span class="line">webp2jpg http://host.com/file.webp local_save.jpg</span><br></pre></td></tr></table></figure>
+        
+转换需要使用`Pillow`这个库：
+
+<!--￼0-->
+
+代码如下：
+
+<!--￼1-->
+
+> 以上代码参考了文章：[Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python](https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9)
+
+下面这个代码提供了更加完整的功能，包括支持输入图片的url以完成自动下载和格式转换：
+
+<!--￼2-->
+
+将文件保存为`webp2jpg`并将其路径加入`PATH`环境变量，那么就可以以如下方式使用这个脚本:
+
+<!--￼3-->
+
 
       
     </div>

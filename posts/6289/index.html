@@ -123,20 +123,18 @@
 
 
 
-  <meta name="description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。">
+  <meta name="description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。 ![Hello GFW, Goodbye GFW](https://i">
 <meta name="keywords" content="教程,Shadowsocks">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shadowsocks中继:从IPv4到IPv6">
 <meta property="og:url" content="http://www.codewoody.com/posts/6289/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。">
+<meta property="og:description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。 ![Hello GFW, Goodbye GFW](https://i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/7a59f2881bd41ba1fabc7e1cbce460a4.png">
 <meta property="og:updated_time" content="2019-05-15T05:24:06.458Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shadowsocks中继:从IPv4到IPv6">
-<meta name="twitter:description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/7a59f2881bd41ba1fabc7e1cbce460a4.png">
+<meta name="twitter:description" content="最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。 ![Hello GFW, Goodbye GFW](https://i">
 
 
 
@@ -572,17 +570,27 @@
       
 
       
-        <p>最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。 <img src="https://imgs.codewoody.com/uploads/big/7a59f2881bd41ba1fabc7e1cbce460a4.png" alt="Hello GFW, Goodbye GFW"> <a id="more"></a></p>
-<blockquote>
-<p>我也设想过要不要给代理添加混淆的功能，处于以下几方面的考虑，还是选择了流量转换的方案： 1. 手机端部分ss应用不支持混淆； 2. 未来混淆还是可能被针对性的拦截。但是IPv6则不会。GFW拦截还是拦截大鱼不拦截小鱼的。国内目前IPv6的使用范围仍然非常小，而且基本只限于教育网。因此IPv6在未来的很长一段时间内不会成为GFW的针对目标</p>
-</blockquote>
-<p>我们这里使用HAProxiy来完成这一功能。</p>
-<h1 data-number="1" id="安装haproxy"><span class="header-section-number">1</span> 安装HAProxy</h1>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.haproxy.org/download/1.7/src/haproxy-1.7.2.tar.gz</span><br><span class="line">tar -xzf haproxy-1.7.2.tar.gz</span><br><span class="line">make TARGET=linux2826 USE_GETADDRINFO=1</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
-<p>注意，在倒数第二行的make命令中，TARGET需要根据你的内核版本来选择。<code>USE_GETADDRINFO</code>的作用是使得HAProxy可以对域名采用DNS查询来获取IP。使用包管理器安装的HAProxy是不带这个功能的。</p>
-<h1 data-number="2" id="设置"><span class="header-section-number">2</span> 设置</h1>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">global</span><br><span class="line">        ulimit-n  51200</span><br><span class="line">        daemon  # run as daemon</span><br><span class="line"></span><br><span class="line">defaults</span><br><span class="line">        log    global</span><br><span class="line">        mode    tcp</span><br><span class="line">        option    dontlognull</span><br><span class="line">        timeout connect 1000</span><br><span class="line">        timeout client 150000</span><br><span class="line">        timeout server 150000</span><br><span class="line"></span><br><span class="line">frontend ss-in</span><br><span class="line">        bind *:port # 跳板机监听端口</span><br><span class="line">        default_backend ss-out</span><br><span class="line"></span><br><span class="line">backend ss-out</span><br><span class="line">        server server1 vps_host:vps_ss_port maxconn 20480</span><br></pre></td></tr></table></figure>
-<p>设置文件位于<code>/etc/haproxy/haproxy.cfg</code>。在完成设置后，使用<code>sudo haproxy -f /etc/haproxy/haproxy.cfg</code>来运行。</p>
+        最近墙又双叒叕加高了。在春节前就发现自己的VPS无法连接，后来发现还好只是端口被封禁，换成其他的端口就能使用了。不过这才撑了半个月新的端口访问又不太稳定了。如果再换端口，或许也可以。但是不是长久之计。不过我的VPS是支持IPv6的，一般来说，墙对于IPv6流量的拦截比较弱。或许可以想办法先把自己的流量转换成IPv6然后再出去。
+![Hello GFW, Goodbye GFW](https://imgs.codewoody.com/uploads/big/7a59f2881bd41ba1fabc7e1cbce460a4.png)
+<a id="more"></a>
+
+> 我也设想过要不要给代理添加混淆的功能，处于以下几方面的考虑，还是选择了流量转换的方案：
+> 1. 手机端部分ss应用不支持混淆；
+> 2. 未来混淆还是可能被针对性的拦截。但是IPv6则不会。GFW拦截还是拦截大鱼不拦截小鱼的。国内目前IPv6的使用范围仍然非常小，而且基本只限于教育网。因此IPv6在未来的很长一段时间内不会成为GFW的针对目标
+
+我们这里使用HAProxiy来完成这一功能。
+
+## 安装HAProxy
+
+<!--￼0-->
+
+注意，在倒数第二行的make命令中，TARGET需要根据你的内核版本来选择。`USE_GETADDRINFO`的作用是使得HAProxy可以对域名采用DNS查询来获取IP。使用包管理器安装的HAProxy是不带这个功能的。
+
+## 设置
+
+<!--￼1-->
+
+设置文件位于`/etc/haproxy/haproxy.cfg`。在完成设置后，使用`sudo haproxy -f /etc/haproxy/haproxy.cfg`来运行。
 
       
     </div>
@@ -684,17 +692,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -966,23 +965,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#安装haproxy"><span class="nav-text">1 安装HAProxy</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设置"><span class="nav-text">2 设置</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

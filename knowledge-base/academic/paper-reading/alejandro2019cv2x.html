@@ -123,19 +123,17 @@
 
 
 
-  <meta name="description" content="文章的全标题是C-V2X Assisted mmWave V2V Scheduling，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。 毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。  这意味着C-V2X的频段也是">
+  <meta name="description" content="文章的全标题是C-V2X Assisted mmWave V2V Scheduling，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。  毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。  &amp;gt; 这意味着C-V2X的">
 <meta property="og:type" content="website">
 <meta property="og:title" content="C-V2X辅助毫米波通信-混合协议尝试">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/alejandro2019cv2x.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章的全标题是C-V2X Assisted mmWave V2V Scheduling，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。 毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。  这意味着C-V2X的频段也是">
+<meta property="og:description" content="文章的全标题是C-V2X Assisted mmWave V2V Scheduling，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。  毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。  &amp;gt; 这意味着C-V2X的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/1b1d3401dc1c74788ac094c039051dee.png">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.498Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X辅助毫米波通信-混合协议尝试">
-<meta name="twitter:description" content="文章的全标题是C-V2X Assisted mmWave V2V Scheduling，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。 毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。  这意味着C-V2X的频段也是">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/1b1d3401dc1c74788ac094c039051dee.png">
+<meta name="twitter:description" content="文章的全标题是C-V2X Assisted mmWave V2V Scheduling，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。  毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。  &amp;gt; 这意味着C-V2X的">
 
 
 
@@ -540,52 +538,64 @@
       <div class="post-body han-init-context">
         
         
-          <p>文章的全标题是<i>C-V2X Assisted mmWave V2V Scheduling</i>，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。</p>
-<p>毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。</p>
-<blockquote>
-<p>这意味着C-V2X的频段也是差不多5.9GHz？</p>
-</blockquote>
-<h1 data-number="1" id="背景"><span class="header-section-number">1</span> 背景</h1>
-<p>C-V2X是3GPP为车联网提出的基于LTE的标准。目前的标准工作在5.9GHz频段，其中大多数服务为基于广播的小体积beacon包(这类消息在ITS-G5中称为CAM，在DSRC中称为BSM)。</p>
-<p>作者提出未来车联网通信对带宽的需求很大，sub-6G频带的通信机制的带宽不够。毫米波的频率范围是30 - 300GHz，带宽非常高。</p>
-<p>不过毫米波非常容易被遮挡，传输损耗比较大。一般会通过波束成型来做定向通信以集中发生能量，从而克服传输损耗的问题。定向通信需要发送和接收端对齐。在车联网场景中，这种对齐比较难实现。<span class="citation" data-cites="coll2018evaluation">[1]</span> 中的研究表明目前的毫米波通信标准(IEEE 802.11ad)还具备支持车联网应用场景的能力。为了解决波束对齐与追踪、以及传输调度的问题，现有的研究提出了一些基于边信息(side information)来获取邻居车辆的位置，进而进行毫米波的波束对齐的方法。</p>
-<p>这篇文章提出了一种新的基于sub-6GHz辅助的毫米波V2X通信的MAC机制。这个机制的主要内容是解耦毫米波通信的控制和数据平面，将控制功能放到sub-6GHz通信上。sub-6GHz通信支持进行广播和全向通信，且通信距离也要比毫米波更大。</p>
-<p>文章还研究了发送周期性Beacon和非周期性Beacon两种情况。存在一些关于半持久调度机制对于非周期性Beacon的通信效果不佳的讨论。基于ITS-G5标准，Beacon的产生不是周期性的（C-V2X和IEEE801.1p共享MAC层以上的功能，包括Beacon生成）。这篇文章的研究表明非周期性的beacon会影响到ITS-G5的性能。不过这篇文章提出的机制可以克服这一问题。</p>
-<h1 data-number="2" id="c-v2x通信"><span class="header-section-number">2</span> C-V2X通信</h1>
-<p>C-V2X基于3GPP Release 14。将1ms长（称为子帧），180kHz的资源称为一个RB(Resource Block)。同一个子帧上的RB可以被组合成子信道。车辆使用子信道来传输数据，一个完整的传输称为一个TB(Transmission Block)。控制信息(Sidelink Control Information, SCI)需要和TB同时传输。</p>
-<p>Release 14提供了两种工作模式，其中模式3需要基站参与，模式4不需要基站参与。这篇文章使用模式4。</p>
-<p>在模式4下，MAC层机制使用了基于感知的半持久调度(Sensing-based Semi-Persistent Scheduling, SPS)。</p>
-<p>在SPS机制下，每个节点根据其他节点的资源保有状态和各个子信道探测到信号水平来判断选择哪个子信道。选择过程需要在选择窗口(Selection Window)内完成。选择窗口的最大值为最大允许延时（例如Beacon的周期是10Hz，则最大允许延时为100ms）。这里的资源选择过程会在Beacon产生的时刻和Beacon发送的时刻之间引入一个延时。</p>
-<p>在资源选定以后，车辆可以在接下来的Reselection Counter（重选计数）次数的传输中继续使用该子信道。每次资源选择完成时，RC的值在5到15之间随机选出。每次传输之后RC减一。当RC为0时，资源需要重选。</p>
-<blockquote>
-<p>在其他文献中，RC为0时，会以概率<span class="math inline">\(P\)</span>继续持有该子信道，也就是以概率<span class="math inline">\(1 - P\)</span>进行子信道重选。</p>
-</blockquote>
-<div id="rri-meaning">
+          
+文章的全标题是<i>C-V2X Assisted mmWave V2V Scheduling</i>，其中C-V2X中C指蜂窝网(Cellular)，且一般指5G蜂窝网。
 
-</div>
-<p>当车辆选中子信道时，在接下来的传输中会通过SCI信息来通知周围车辆自己选中的子信道及RC的值。选中的信道之间的间隔是RRI(Reservation Intrerval)。这里需要一个例子才能解释清楚RRI的含义。</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/1b1d3401dc1c74788ac094c039051dee.png"></p>
-<p>如果一辆车在时刻<span class="math inline">\(t = t_{TX}\)</span>时使用子信道<span class="math inline">\(SC_1\)</span>，其会通过SCI信息通知周围的车辆它同时也需要在<span class="math inline">\(t = t_{TX} + RRI\)</span>。这可以避免两辆车选择同样的信道。如果延时限制条件满足，即<span class="math inline">\(t_{TX} + RRI - t_{G2} &lt; maximum\ latency\)</span>，则<span class="math inline">\(t_{G2}\)</span>时生成的包可以使用<span class="math inline">\(SC_1\)</span>进行传输。</p>
-<h1 data-number="3" id="c-v2x辅助毫米波通信"><span class="header-section-number">3</span> C-V2X辅助毫米波通信</h1>
-<p>这篇文章研究的重点是使用C-V2X来实现毫米波的MAC功能。具体而言，毫米波的</p>
-<ul>
-<li>波束对齐与追踪(Beam Alignment and Tracing)</li>
-<li>链路可用性确认(Link Availability Identificiation)</li>
-<li>调度控制函数(Scheduling Control Functions)</li>
-</ul>
-<p>的这些功能需要交给C-V2X来实现。这里提出的方法使用C-V2X的Beacon信息来交换位置信息以实现波束对齐。这些信息还备用来判断链路可用性。Beacon信息也用来做传输调度。（总之就是上面三个问题都解决了）。这里提出的C-V2X辅助方法，使用了逻辑意义上的RTS/CTS机制，且这一机制使用现有的Beacon消息就可以了，不需要给C-V2X传输额外的包。</p>
-<p>本文提出了两个方案，都是基于RTS/CTS交换的，只不过在细节问题上（谁来执行传输调度）。这里的RTS和CTS都是逻辑意义上的，且RTS和CTS信息都是伴随着C-V2X的正常Beacon一起发送。</p>
-<p>例如一个车辆需要进行毫米波传输时，需要等到最近的一次自己的Beacon时刻将RTS的信息发给周围车辆。目标车辆在收到包含RTS的Beacon消息之后，再等到自己的Beacon时候回复CTS。</p>
-<blockquote>
-<p>这么干延时超长啊。</p>
-</blockquote>
-<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
-<div id="refs" class="references" role="doc-bibliography">
-<div id="ref-coll2018evaluation">
-<p>[1] B. Coll-Perales, M. Gruteser, and J. Gozalvez, “Evaluation of ieee 802.11 ad for mmWave v2v communications,” in <em>2018 ieee wireless communications and networking conference workshops (wcncw)</em>, 2018, pp. 290–295.</p>
-</div>
-</div>
+毫米波通信在车联网上的应用受到毫米波传播特点和车辆高动态的影响。为了克服这一障碍，这篇文章的作者提出分离毫米波通信的MAC控制与数据两个平面，使用sub-6GHz V2X通信用于管理毫米波V2X通信的控制层面。
 
+> 这意味着C-V2X的频段也是差不多5.9GHz？
+
+## 背景
+
+C-V2X是3GPP为车联网提出的基于LTE的标准。目前的标准工作在5.9GHz频段，其中大多数服务为基于广播的小体积beacon包(这类消息在ITS-G5中称为CAM，在DSRC中称为BSM)。
+
+作者提出未来车联网通信对带宽的需求很大，sub-6G频带的通信机制的带宽不够。毫米波的频率范围是30 - 300GHz，带宽非常高。
+
+不过毫米波非常容易被遮挡，传输损耗比较大。一般会通过波束成型来做定向通信以集中发生能量，从而克服传输损耗的问题。定向通信需要发送和接收端对齐。在车联网场景中，这种对齐比较难实现。[@coll2018evaluation] 中的研究表明目前的毫米波通信标准(IEEE 802.11ad)还具备支持车联网应用场景的能力。为了解决波束对齐与追踪、以及传输调度的问题，现有的研究提出了一些基于边信息(side information)来获取邻居车辆的位置，进而进行毫米波的波束对齐的方法。
+
+这篇文章提出了一种新的基于sub-6GHz辅助的毫米波V2X通信的MAC机制。这个机制的主要内容是解耦毫米波通信的控制和数据平面，将控制功能放到sub-6GHz通信上。sub-6GHz通信支持进行广播和全向通信，且通信距离也要比毫米波更大。
+
+文章还研究了发送周期性Beacon和非周期性Beacon两种情况。存在一些关于半持久调度机制对于非周期性Beacon的通信效果不佳的讨论。基于ITS-G5标准，Beacon的产生不是周期性的（C-V2X和IEEE801.1p共享MAC层以上的功能，包括Beacon生成）。这篇文章的研究表明非周期性的beacon会影响到ITS-G5的性能。不过这篇文章提出的机制可以克服这一问题。
+
+## C-V2X通信
+
+C-V2X基于3GPP Release 14。将1ms长（称为子帧），180kHz的资源称为一个RB(Resource Block)。同一个子帧上的RB可以被组合成子信道。车辆使用子信道来传输数据，一个完整的传输称为一个TB(Transmission Block)。控制信息(Sidelink Control Information, SCI)需要和TB同时传输。
+
+Release 14提供了两种工作模式，其中模式3需要基站参与，模式4不需要基站参与。这篇文章使用模式4。
+
+在模式4下，MAC层机制使用了基于感知的半持久调度(Sensing-based Semi-Persistent Scheduling, SPS)。
+
+在SPS机制下，每个节点根据其他节点的资源保有状态和各个子信道探测到信号水平来判断选择哪个子信道。选择过程需要在选择窗口(Selection Window)内完成。选择窗口的最大值为最大允许延时（例如Beacon的周期是10Hz，则最大允许延时为100ms）。这里的资源选择过程会在Beacon产生的时刻和Beacon发送的时刻之间引入一个延时。
+
+在资源选定以后，车辆可以在接下来的Reselection Counter（重选计数）次数的传输中继续使用该子信道。每次资源选择完成时，RC的值在5到15之间随机选出。每次传输之后RC减一。当RC为0时，资源需要重选。
+
+> 在其他文献中，RC为0时，会以概率$P$继续持有该子信道，也就是以概率$1 - P$进行子信道重选。
+
+<div id="rri-meaning"></div>
+
+当车辆选中子信道时，在接下来的传输中会通过SCI信息来通知周围车辆自己选中的子信道及RC的值。选中的信道之间的间隔是RRI(Reservation Intrerval)。这里需要一个例子才能解释清楚RRI的含义。
+
+![](https://imgs.codewoody.com/uploads/big/1b1d3401dc1c74788ac094c039051dee.png)
+
+如果一辆车在时刻$t = t_{TX}$时使用子信道$SC_1$，其会通过SCI信息通知周围的车辆它同时也需要在$t = t_{TX} + RRI$。这可以避免两辆车选择同样的信道。如果延时限制条件满足，即$t_{TX} + RRI - t_{G2} < maximum\ latency$，则$t_{G2}$时生成的包可以使用$SC_1$进行传输。
+
+## C-V2X辅助毫米波通信
+
+这篇文章研究的重点是使用C-V2X来实现毫米波的MAC功能。具体而言，毫米波的
+
+- 波束对齐与追踪(Beam Alignment and Tracing)
+- 链路可用性确认(Link Availability Identificiation)
+- 调度控制函数(Scheduling Control Functions)
+
+的这些功能需要交给C-V2X来实现。这里提出的方法使用C-V2X的Beacon信息来交换位置信息以实现波束对齐。这些信息还备用来判断链路可用性。Beacon信息也用来做传输调度。（总之就是上面三个问题都解决了）。这里提出的C-V2X辅助方法，使用了逻辑意义上的RTS/CTS机制，且这一机制使用现有的Beacon消息就可以了，不需要给C-V2X传输额外的包。
+
+本文提出了两个方案，都是基于RTS/CTS交换的，只不过在细节问题上（谁来执行传输调度）。这里的RTS和CTS都是逻辑意义上的，且RTS和CTS信息都是伴随着C-V2X的正常Beacon一起发送。
+
+例如一个车辆需要进行毫米波传输时，需要等到最近的一次自己的Beacon时刻将RTS的信息发给周围车辆。目标车辆在收到包含RTS的Beacon消息之后，再等到自己的Beacon时候回复CTS。
+
+> 这么干延时超长啊。
+
+## Reference
         
       </div>
       
@@ -688,17 +698,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -970,23 +971,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-text">1 背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-v2x通信"><span class="nav-text">2 C-V2X通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-v2x辅助毫米波通信"><span class="nav-text">3 C-V2X辅助毫米波通信</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
@@ -1538,7 +1522,7 @@
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }

@@ -123,23 +123,18 @@
 
 
 
-  <meta name="description" content="还是 VTM 的文章。这次是 2019 年最新一年的文章：Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一个热点方向。  看完了文章可以来写评论了。这篇文章写的就非常简略了，基本上有营养的就只是提到了边">
+  <meta name="description" content="还是 VTM 的文章。这次是 2019 年最新一年的文章：[Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling](https://ieeexplore.ieee.org/document/8581401)。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一">
 <meta name="keywords" content="读论文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[读论文]车联网与边缘计算 2019">
 <meta property="og:url" content="http://www.codewoody.com/posts/17042/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="还是 VTM 的文章。这次是 2019 年最新一年的文章：Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一个热点方向。  看完了文章可以来写评论了。这篇文章写的就非常简略了，基本上有营养的就只是提到了边">
+<meta property="og:description" content="还是 VTM 的文章。这次是 2019 年最新一年的文章：[Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling](https://ieeexplore.ieee.org/document/8581401)。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/0a9e0ebd00eb049b2fb5af26bb266781.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/162bb60ac832cc5b2c5789683c7ef66f.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fc6aa048f0fd666f2bdb7a0703afb8ae.png">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d709e7182f7eabc522e8ee49b3d37074.png">
 <meta property="og:updated_time" content="2019-12-13T10:07:42.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[读论文]车联网与边缘计算 2019">
-<meta name="twitter:description" content="还是 VTM 的文章。这次是 2019 年最新一年的文章：Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一个热点方向。  看完了文章可以来写评论了。这篇文章写的就非常简略了，基本上有营养的就只是提到了边">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/0a9e0ebd00eb049b2fb5af26bb266781.png">
+<meta name="twitter:description" content="还是 VTM 的文章。这次是 2019 年最新一年的文章：[Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling](https://ieeexplore.ieee.org/document/8581401)。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一">
 
 
 
@@ -575,74 +570,102 @@
       
 
       
-        <p>还是 VTM 的文章。这次是 2019 年最新一年的文章：<a href="https://ieeexplore.ieee.org/document/8581401" target="_blank" rel="noopener">Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling</a>。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一个热点方向。</p>
-<blockquote>
-<p>看完了文章可以来写评论了。这篇文章写的就非常简略了，基本上有营养的就只是提到了边缘计算的 <i>System Model</i>。对于具体的机制过程缺少详细的介绍。这也是 Magazine 文章的风格吧。要了解车联网边缘面临的重要问题还是得去看 Transaction 的文章吧。</p>
-</blockquote>
+        
+还是 VTM 的文章。这次是 2019 年最新一年的文章：[Mobile Edge Computing For the Internet of Vechicles: Offloading framework and job scheduling](https://ieeexplore.ieee.org/document/8581401)。文章主要关注了车联网场景下的边缘计算问题。这也是时下研究的一个热点方向。
+
+> 看完了文章可以来写评论了。这篇文章写的就非常简略了，基本上有营养的就只是提到了边缘计算的 <i>System Model</i>。对于具体的机制过程缺少详细的介绍。这也是 Magazine 文章的风格吧。要了解车联网边缘面临的重要问题还是得去看 Transaction 的文章吧。
+
 <a id="more"></a>
-<hr>
-<h1 data-number="1" id="研究背景"><span class="header-section-number">1</span> 研究背景</h1>
-<p>移动边缘计算 (Mobile Edge Computing) 可以使得车辆之间能够共享计算资源。在这篇文章里面，我们提出了一种分布式的车辆边缘计算解决方案: <i>autonomous vehicular edge</i> (AVE)，可以让相邻车辆之间通过 V2V 通信共享计算资源。我们进一步扩展这一想法，提出了 <i>hybrid vehicular edge cloud</i> (HVC) 的概念。在 HVC 中车辆可以访问周围各种不同的计算纪元，包括路边单元 (Roadside Unit, RSU) 以及云上的计算资源。最后我们验证了这里提出了两种去中心化方案的性能，并讨论了一些 Open Problems。</p>
-<p>现代车辆，尤其是自动驾驶车辆内部对于计算性能的要求越来越高。除了驾驶系统本身的需求，乘客的娱乐需求也需要消耗一部分的计算资源。直接升级硬件是最简单的，不过会显著推高成本。此时让车辆能够使用外部的计算资源能够作为一个可行的替代选项。不过利用外部计算资源面临着通信的延时和可靠性困难。</p>
-<p>MEC 技术也被称为雾计算 (fog computting)。MEC 在边缘网络提供了云计算的能力。在车联网场景中，邻接汽车和 RSU 可以作为合适的外部计算资源的来源。现有的边缘计算方案一般收到两个方面的制约：要么只适用于静止的场景；要么是中心化架构，缺少分布式的实现。如何在高动态的车联网场景中提供通用的、高效的边缘计算解决方案目前还是悬而未决的问题。其中的关键问题是如何发现可用的计算以及如何调度计算卸载，并优化性能目标。</p>
-<p>这篇文章针对郊区车联网和城市车联网两种场景分别设计了车联网 MEC 机制。分别是分布式实现版本 AVE 和 Online 实现版本 HVC。</p>
-<p>在 AVE 中我们通过 DSRC 通信协议在车辆之间以去中心化的方式共享计算资源。AVE 机制不涉及基础设施。AVE 的工作流包括计算任务缓存，邻居节点发现，计算任务调度，数据传输，任务执行以及计算结果传输。邻居节点的数据，包括 GPS 数据，会用于邻接节点发现和计算任务调度。</p>
-<p>在 HVC 中，我们扩展了 AVE 机制以支持路边单元和云上服务器（通过蜂窝网络）。这些基础设施相比邻居车辆拥有更强大的计算资源。多址接入技术，如 LTE 以及 毫米波通信，也被引入到 V2X 通信中。我们研究了如何高效的利用这些通信手段，并设计了在线计算卸载调度算法。仿真验证了通信性能对于混合车辆边缘计算框架性能的影响。</p>
-<h1 data-number="2" id="车联网边缘计算框架"><span class="header-section-number">2</span> 车联网边缘计算框架</h1>
-<h2 data-number="2.1" id="系统模型"><span class="header-section-number">2.1</span> 系统模型</h2>
-<p>这里我们用如下的一些通用的指标来度量计算任务：</p>
-<ol type="1">
-<li>Utility 效用: 按成这项计算任务能够带来的用户体验提升；</li>
-<li>Host specified: 提供计算的 processor 必须要满足一定的要求才能处理计算任务；</li>
-<li>Context-free 上下文无关: 一个计算任务包含了完成计算的所有数据，可以在任何节点上完成预算；</li>
-<li>Brief: 为描述计算任务的信息；</li>
-</ol>
-<p>我们这里将客户端程序号成为 application modules，将服务端程序称为 back-end modules，如下图所示。</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/0a9e0ebd00eb049b2fb5af26bb266781.png"></p>
-<p>应用 (Application) 运行于原生操作系统之上，由操作系统管理优先级和资源。后端 (back end) 运行在虚拟机上，虚拟机则由我们的框架管理。框架中的管理模块实现为中间层软件<span class="foot-note-span">【这里的<strong>中间</strong>指介于应用和后端之间】</span>，用来收集计算任务和计算结果的信息，并负责判断和执行计算卸载。</p>
-<p>还有一些定义需要引入。我们称产生计算任务请求的节点为 requester，接受任务请求处理计算的是 processor。计算卸载的两个核心任务是：requester 如何发现附近的可用 processor，以及 requester 按照何种规则将计算任务发送给哪个 processor。</p>
-<h2 data-number="2.2" id="ave-框架"><span class="header-section-number">2.2</span> AVE 框架</h2>
-<h3 data-number="2.2.1" id="workflow"><span class="header-section-number">2.2.1</span> Workflow</h3>
-<p>AVE 是为分布式场景提出。在 AVE 中不涉及基础设施，计算卸载发生在相邻的车辆之间。车间数据交换通过基于 IEEE 802.11p 的 V2V 通信进行。AVE 的工作流如下图所示。</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/162bb60ac832cc5b2c5789683c7ef66f.png" alt=""><figcaption>Workflow of AVE</figcaption>
-</figure>
-<p>上图中的关键步骤如下：</p>
-<ol type="1">
-<li><strong>通过 Beacon 广播发现邻接网络的计算资源</strong>: Beacon 消息比较简单，包含了描述节点的基础信息。对于 requester 来说，周围发送 Beacon 的相对速度比较小的车辆可以成为潜在的 processor。</li>
-<li><strong>计算任务缓冲</strong>: 当计算任务产生时，不会立即调度出去。节点一般会缓冲这个计算任务，以寻找更加合适的任务分配方案，并避免并发的卸载调度请求。</li>
-<li><strong>Processor 发现</strong>：在 Beacon 阶段发现了潜在的 processors，那么 requester 会进入 processor-discovery 阶段。此时 requester 会广播一个消息为缓存中的计算任务寻找可用的 processor。这个广播消息里面会包含计算任务的需求，requester的速度等信息。可用的 processor 会在受到此广播消息后反馈完成该计算任务需要的时间的估计值。</li>
-<li><strong>计算任务调度</strong>：同时有多个就计算任务需要调度到多个车辆上。考虑 DSRC 有限的信道容量。传输时间也是在计算卸载调度中需要考虑的重要因素。</li>
-<li><strong>计算卸载</strong>：从 processor-discovery 到开始卸载中的传输的间隔通常非常短。我们认为这段时间内网络结构没有发生变化，那么计算卸载中的数据传输路径可以采用和发现阶段同样的传输路径。而为了将计算结果返回到 requester，我们采用了一个比较传统的路由协议：<i>ad hoc on-demand distance vector routing</i>。</li>
-</ol>
-<h3 data-number="2.2.2" id="基于-aco-的调度算法"><span class="header-section-number">2.2.2</span> 基于 ACO 的调度算法</h3>
-<p>在计算任务调度过程中，调度需要给出计算任务传输的顺序（这里我们不考虑任务的并行传输）以及每个计算任务分配的 processor，以使得目标函数值最大化。从数学上来看，这个问题是 <i>two-stage hybrid flow-step problem</i>，这类问题是 <a href="https://en.wikipedia.org/wiki/NP-hardness" target="_blank" rel="noopener">NP 难</a>的。而在 AVE 框架中，调度需要在车上进行，计算资源相对受限，因此我们需要一个高线的算法来求解这样的问题。</p>
-<p>我们提出的解决方案采用了基于 ACO 的算法<span class="foot-note-span">【ACO 为蚁群算法，是一种启发式算法】</span>。该算法可以以非常小的计算成本得到次优解。类似于 <i>particle swarm optimization</i> 和 <i>stochastic diffusion search</i>，ACO 算法也是用了群体智能(<i>swarm intelligence</i>)。</p>
-<blockquote>
-<p>具体的 ACO 算法建模方法在文章里面没有说，作者给了一个参考文献，指向文章：<i>AVE: Autonomous vehicular edge computing framework with ACO-based scheduling</i>。这篇文章也是本篇 Magazine 的作者写的。</p>
-</blockquote>
-<h2 data-number="2.3" id="hvc-框架"><span class="header-section-number">2.3</span> HVC 框架</h2>
-<p>HVC 的主要改进是引入了基础设施角色，其中 RSU 还有云端服务器都可以作为计算资源的来源。我们假设 V2X 通信使用的是 IEEE 802.11p 或者是毫米波通信。</p>
-<p>requester 和 processor 之间可以通过毫米波设备进行直接通信，或者可以通过毫米波中继（在我们的 HVC 场景中毫米波通信最多两跳）。毫米波信道建模时引入了一个失败概率，用来模拟毫米波的指向性和易被遮挡的特点。如果计算任务被调度到远端云上处理，这是计算任务的上传通过蜂窝网络进行。如何组织这些计算和通信资源是一个挑战。</p>
-<h3 data-number="2.3.1" id="workflow-1"><span class="header-section-number">2.3.1</span> Workflow</h3>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/fc6aa048f0fd666f2bdb7a0703afb8ae.png" alt=""><figcaption>Workflow of HVC</figcaption>
-</figure>
-<p>上图展示了 HVC 框架的工作流，我们这里关注一下和 AVE 的不同部分。</p>
-<ol type="1">
-<li>Beacon 和 processor 发现：为了减少计算任务的等待时间，这里的 Beacon 消息包含了更多的信息，故后面再做调度时不需要重复再做一遍 processor 发现。当一个车辆收到来自 RSU 或者邻居车辆的 Beacon 消息时，需要估计发送者停留在自己的通信范围内的时间。这个时间指标会应用到计算任务调度的决策环节。</li>
-<li>计算任务调度：当计算任务到达时，调度者立刻开始调度，从而缩短任务的整体完成时间。如果信道或者本地资源目前处于繁忙的状态，那么将计算任务放到相应的队列。调度算法需要在这时确定计算任务在队列中的合适位置。HVC 中调度问题和 AVE 中的调度问题类似，不过具体的目标的函数以及限制要素存在一定的区别。具体的算法内容参见下一个 Subsetion。</li>
-<li>计算卸载：HVC 需要保持计算卸载的可靠性的前提下，进一步减少计算任务的完成时间。因此，在任务卸载到 RSU 或者周围车辆的时候，requester 和 processor 会通过握手协议确定调度的开始时间是否可行<span class="foot-note-span">【原文是 <i>when jobs are offloaded to RSUs or nearby vehicles, handshaking, which exchanges information about the feasibility of scheduled starting time, is used</i>】</span>。当 processor 不可用时，相应的计算任务会被重新调度。</li>
-</ol>
-<h3 data-number="2.3.2" id="hvc-的优化算法"><span class="header-section-number">2.3.2</span> HVC 的优化算法</h3>
-<p>在 HVC 中，计算任务到达时调度算法就需要确定每个任务分配的 processor，同时还需要确定计算任务加入队列中的位置。由于任务立刻被调度，故每次需要同时被调度的任务数量相比于 AVE 要少的多。所以我们采用了一个线性复杂度的 online 的算法来求解调度问题。对于每个等待调度的任务，我们知道当前节点可用的 RSU 和邻居车辆的集合。也知道这些节点的处理速率和完成时间，故通过 IEEE 802.11p 协议卸载计算的时间也能估计出来。下图演示了这个过程。</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/d709e7182f7eabc522e8ee49b3d37074.png"></p>
-<p>图中，(a)中 Job 1 到达，调度到最后的可用的时隙上<span class="foot-note-span">【原文对这里解释的不是很充分】</span>。传输时间需要在处理之前。(b) 中，Job 2 到达，调度到 processor B 上，因为 processor A 没有足够的空余计算资源可用。(c) 中，Job 3 到达，被分配到 processor A 上。这种分配可以达到最短的完成时间。<span class="foot-note-span">【这里的最短是指相比于将计算任务分配到 process B 上而言的，原文仍然没有说清楚为什么要先传输 Job 3，后传输 Job 1】</span>。(d) 中，Job 2 被传输出去。(e) 中，握手协议在发送任务前检查目标 processor 的可用性。如果不可用，会重新调度计算任务。在 (f) 中，前一个任务失败之后立刻开始传输下一个任务。</p>
-<blockquote>
-<p>作者接下来聊了一大通关于效用函数 (Utility Function) 的问题，但是聊的很宽泛，也没有给出效用函数的形式（Magazine文章不允许出现太多的公式）。这里就略过了。</p>
-</blockquote>
-<h1 data-number="3" id="性能分析略"><span class="header-section-number">3</span> 性能分析(略)</h1>
-<p>仿真分析略过。</p>
+
+---
+
+## 研究背景
+
+移动边缘计算 (Mobile Edge Computing) 可以使得车辆之间能够共享计算资源。在这篇文章里面，我们提出了一种分布式的车辆边缘计算解决方案: <i>autonomous vehicular edge</i> (AVE)，可以让相邻车辆之间通过 V2V 通信共享计算资源。我们进一步扩展这一想法，提出了 <i>hybrid vehicular edge cloud</i> (HVC) 的概念。在 HVC 中车辆可以访问周围各种不同的计算纪元，包括路边单元 (Roadside Unit, RSU) 以及云上的计算资源。最后我们验证了这里提出了两种去中心化方案的性能，并讨论了一些 Open Problems。
+
+现代车辆，尤其是自动驾驶车辆内部对于计算性能的要求越来越高。除了驾驶系统本身的需求，乘客的娱乐需求也需要消耗一部分的计算资源。直接升级硬件是最简单的，不过会显著推高成本。此时让车辆能够使用外部的计算资源能够作为一个可行的替代选项。不过利用外部计算资源面临着通信的延时和可靠性困难。
+
+MEC 技术也被称为雾计算 (fog computting)。MEC 在边缘网络提供了云计算的能力。在车联网场景中，邻接汽车和 RSU 可以作为合适的外部计算资源的来源。现有的边缘计算方案一般收到两个方面的制约：要么只适用于静止的场景；要么是中心化架构，缺少分布式的实现。如何在高动态的车联网场景中提供通用的、高效的边缘计算解决方案目前还是悬而未决的问题。其中的关键问题是如何发现可用的计算以及如何调度计算卸载，并优化性能目标。
+
+这篇文章针对郊区车联网和城市车联网两种场景分别设计了车联网 MEC 机制。分别是分布式实现版本 AVE 和 Online 实现版本 HVC。
+
+在 AVE 中我们通过 DSRC 通信协议在车辆之间以去中心化的方式共享计算资源。AVE 机制不涉及基础设施。AVE 的工作流包括计算任务缓存，邻居节点发现，计算任务调度，数据传输，任务执行以及计算结果传输。邻居节点的数据，包括 GPS 数据，会用于邻接节点发现和计算任务调度。
+
+在 HVC 中，我们扩展了 AVE 机制以支持路边单元和云上服务器（通过蜂窝网络）。这些基础设施相比邻居车辆拥有更强大的计算资源。多址接入技术，如 LTE 以及 毫米波通信，也被引入到 V2X 通信中。我们研究了如何高效的利用这些通信手段，并设计了在线计算卸载调度算法。仿真验证了通信性能对于混合车辆边缘计算框架性能的影响。
+
+## 车联网边缘计算框架
+
+### 系统模型
+
+这里我们用如下的一些通用的指标来度量计算任务：
+
+1. Utility 效用: 按成这项计算任务能够带来的用户体验提升；
+2. Host specified: 提供计算的 processor 必须要满足一定的要求才能处理计算任务；
+3. Context-free 上下文无关: 一个计算任务包含了完成计算的所有数据，可以在任何节点上完成预算；
+4. Brief: 为描述计算任务的信息；
+
+我们这里将客户端程序号成为 application modules，将服务端程序称为  back-end modules，如下图所示。
+
+![](https://imgs.codewoody.com/uploads/big/0a9e0ebd00eb049b2fb5af26bb266781.png)
+
+应用 (Application) 运行于原生操作系统之上，由操作系统管理优先级和资源。后端 (back end) 运行在虚拟机上，虚拟机则由我们的框架管理。框架中的管理模块实现为中间层软件<span class="foot-note-span">【这里的**中间**指介于应用和后端之间】</span>，用来收集计算任务和计算结果的信息，并负责判断和执行计算卸载。
+
+还有一些定义需要引入。我们称产生计算任务请求的节点为 requester，接受任务请求处理计算的是 processor。计算卸载的两个核心任务是：requester 如何发现附近的可用 processor，以及 requester 按照何种规则将计算任务发送给哪个 processor。
+
+### AVE 框架
+
+#### Workflow
+
+AVE 是为分布式场景提出。在 AVE 中不涉及基础设施，计算卸载发生在相邻的车辆之间。车间数据交换通过基于 IEEE 802.11p 的 V2V 通信进行。AVE 的工作流如下图所示。
+
+![Workflow of AVE](https://imgs.codewoody.com/uploads/big/162bb60ac832cc5b2c5789683c7ef66f.png)
+
+上图中的关键步骤如下：
+
+1. **通过 Beacon 广播发现邻接网络的计算资源**: Beacon 消息比较简单，包含了描述节点的基础信息。对于 requester 来说，周围发送 Beacon 的相对速度比较小的车辆可以成为潜在的 processor。
+2. **计算任务缓冲**: 当计算任务产生时，不会立即调度出去。节点一般会缓冲这个计算任务，以寻找更加合适的任务分配方案，并避免并发的卸载调度请求。
+3. **Processor 发现**：在 Beacon 阶段发现了潜在的 processors，那么 requester 会进入 processor-discovery 阶段。此时 requester 会广播一个消息为缓存中的计算任务寻找可用的 processor。这个广播消息里面会包含计算任务的需求，requester的速度等信息。可用的 processor 会在受到此广播消息后反馈完成该计算任务需要的时间的估计值。
+4. **计算任务调度**：同时有多个就计算任务需要调度到多个车辆上。考虑 DSRC 有限的信道容量。传输时间也是在计算卸载调度中需要考虑的重要因素。
+5. **计算卸载**：从 processor-discovery 到开始卸载中的传输的间隔通常非常短。我们认为这段时间内网络结构没有发生变化，那么计算卸载中的数据传输路径可以采用和发现阶段同样的传输路径。而为了将计算结果返回到 requester，我们采用了一个比较传统的路由协议：<i>ad hoc on-demand distance vector routing</i>。
+
+#### 基于 ACO 的调度算法
+
+在计算任务调度过程中，调度需要给出计算任务传输的顺序（这里我们不考虑任务的并行传输）以及每个计算任务分配的 processor，以使得目标函数值最大化。从数学上来看，这个问题是 <i>two-stage hybrid flow-step problem</i>，这类问题是 [NP 难](https://en.wikipedia.org/wiki/NP-hardness)的。而在 AVE 框架中，调度需要在车上进行，计算资源相对受限，因此我们需要一个高线的算法来求解这样的问题。
+
+我们提出的解决方案采用了基于 ACO 的算法<span class="foot-note-span">【ACO 为蚁群算法，是一种启发式算法】</span>。该算法可以以非常小的计算成本得到次优解。类似于 <i>particle swarm optimization</i> 和 <i>stochastic diffusion search</i>，ACO 算法也是用了群体智能(<i>swarm intelligence</i>)。
+
+> 具体的 ACO 算法建模方法在文章里面没有说，作者给了一个参考文献，指向文章：<i>AVE: Autonomous vehicular edge computing framework with ACO-based scheduling</i>。这篇文章也是本篇 Magazine 的作者写的。
+
+### HVC 框架
+
+HVC 的主要改进是引入了基础设施角色，其中 RSU 还有云端服务器都可以作为计算资源的来源。我们假设 V2X 通信使用的是 IEEE 802.11p 或者是毫米波通信。
+
+requester 和 processor 之间可以通过毫米波设备进行直接通信，或者可以通过毫米波中继（在我们的 HVC 场景中毫米波通信最多两跳）。毫米波信道建模时引入了一个失败概率，用来模拟毫米波的指向性和易被遮挡的特点。如果计算任务被调度到远端云上处理，这是计算任务的上传通过蜂窝网络进行。如何组织这些计算和通信资源是一个挑战。
+
+#### Workflow
+
+![Workflow of HVC](https://imgs.codewoody.com/uploads/big/fc6aa048f0fd666f2bdb7a0703afb8ae.png)
+
+上图展示了 HVC 框架的工作流，我们这里关注一下和 AVE 的不同部分。
+
+1. Beacon 和 processor 发现：为了减少计算任务的等待时间，这里的 Beacon 消息包含了更多的信息，故后面再做调度时不需要重复再做一遍 processor 发现。当一个车辆收到来自 RSU 或者邻居车辆的 Beacon 消息时，需要估计发送者停留在自己的通信范围内的时间。这个时间指标会应用到计算任务调度的决策环节。
+2. 计算任务调度：当计算任务到达时，调度者立刻开始调度，从而缩短任务的整体完成时间。如果信道或者本地资源目前处于繁忙的状态，那么将计算任务放到相应的队列。调度算法需要在这时确定计算任务在队列中的合适位置。HVC 中调度问题和 AVE 中的调度问题类似，不过具体的目标的函数以及限制要素存在一定的区别。具体的算法内容参见下一个 Subsetion。
+3. 计算卸载：HVC 需要保持计算卸载的可靠性的前提下，进一步减少计算任务的完成时间。因此，在任务卸载到 RSU 或者周围车辆的时候，requester 和 processor 会通过握手协议确定调度的开始时间是否可行<span class="foot-note-span">【原文是 <i>when jobs are offloaded to
+RSUs or nearby vehicles, handshaking, which exchanges information about the feasibility of scheduled starting time, is used</i>】</span>。当 processor 不可用时，相应的计算任务会被重新调度。
+
+#### HVC 的优化算法
+
+在 HVC 中，计算任务到达时调度算法就需要确定每个任务分配的 processor，同时还需要确定计算任务加入队列中的位置。由于任务立刻被调度，故每次需要同时被调度的任务数量相比于 AVE 要少的多。所以我们采用了一个线性复杂度的 online 的算法来求解调度问题。对于每个等待调度的任务，我们知道当前节点可用的 RSU 和邻居车辆的集合。也知道这些节点的处理速率和完成时间，故通过 IEEE 802.11p 协议卸载计算的时间也能估计出来。下图演示了这个过程。
+
+![](https://imgs.codewoody.com/uploads/big/d709e7182f7eabc522e8ee49b3d37074.png)
+
+图中，(a)中 Job 1 到达，调度到最后的可用的时隙上<span class="foot-note-span">【原文对这里解释的不是很充分】</span>。传输时间需要在处理之前。(b) 中，Job 2 到达，调度到 processor B 上，因为 processor A 没有足够的空余计算资源可用。(c) 中，Job 3 到达，被分配到 processor A 上。这种分配可以达到最短的完成时间。<span class="foot-note-span">【这里的最短是指相比于将计算任务分配到 process B 上而言的，原文仍然没有说清楚为什么要先传输 Job 3，后传输 Job 1】</span>。(d) 中，Job 2 被传输出去。(e) 中，握手协议在发送任务前检查目标 processor 的可用性。如果不可用，会重新调度计算任务。在 (f) 中，前一个任务失败之后立刻开始传输下一个任务。
+
+> 作者接下来聊了一大通关于效用函数 (Utility Function) 的问题，但是聊的很宽泛，也没有给出效用函数的形式（Magazine文章不允许出现太多的公式）。这里就略过了。
+
+## 性能分析(略)
+
+仿真分析略过。
 
       
     </div>
@@ -742,17 +765,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1024,23 +1038,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#研究背景"><span class="nav-text">1 研究背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#车联网边缘计算框架"><span class="nav-text">2 车联网边缘计算框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型"><span class="nav-text">2.1 系统模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ave-框架"><span class="nav-text">2.2 AVE 框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#workflow"><span class="nav-text">2.2.1 Workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于-aco-的调度算法"><span class="nav-text">2.2.2 基于 ACO 的调度算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hvc-框架"><span class="nav-text">2.3 HVC 框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#workflow-1"><span class="nav-text">2.3.1 Workflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hvc-的优化算法"><span class="nav-text">2.3.2 HVC 的优化算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能分析略"><span class="nav-text">3 性能分析(略)</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

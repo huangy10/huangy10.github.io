@@ -570,52 +570,84 @@
       
 
       
-        <p>Dependency Injection这个概念是我之前在实习的时候做Java开发的时候接触的。Dependency Injection可以大大降低模块之间的耦合度，提高系统的可扩展性和鲁棒性，不过这个概念对于新人来说理解起来还是存在比较大的障碍。由于当时实习的时间比较短，对于这个概念我并没有吃透。这次学习Node.js的时候，又在awilix这个库里面遇到了这个概念。以此为契机就来好好学习一些Dependency Injection和其后的设计逻辑与方法。</p>
-<p>下面的内容翻译自：<a href="https://blog.risingstack.com/dependency-injection-in-node-js/" target="_blank" rel="noopener">Dependency Injection in Node.js</a>。这篇文章浅显地介绍了Dependency Injection的基本理念。选择这篇文章是因为我在阅读awilix模块作者关于Dependency Injection的系列文章中时，作者在开篇提议阅读此文。</p>
-<p>不过这篇文章毕竟是2015年的文章，在js的一些语法和模块细节上和今时今日的有些不同，但是并不妨碍我们对于其核心理念的理解。<a id="more"></a></p>
-<h1 data-number="1" id="使用dependency-injection的理由"><span class="header-section-number">1</span> 使用Dependency Injection的理由</h1>
-<h2 data-number="1.1" id="解耦-decoupling"><span class="header-section-number">1.1</span> 解耦 (Decoupling)</h2>
-<p>Dependency Injection使你的模块耦合度降低，从而提升代码的可维护性。</p>
-<h2 data-number="1.2" id="更简单的单元测试"><span class="header-section-number">1.2</span> 更简单的单元测试</h2>
-<p>比起需要硬编码的依赖关系，你可以将依赖关系传输进入你要用的模块。在大多数场合下使用这种范式你不必要使用proxyquire这样的模块。</p>
-<blockquote>
-<p>这一段作者写的比较含糊。其实意思是在使用Dependency Injection场景下，我们在独立测试一些单元功能的时候，对于其他模块可以通过注入Mock对象，从而将待测试的模块独立出来进行测试。</p>
-</blockquote>
-<h2 data-number="1.3" id="更快速的开发"><span class="header-section-number">1.3</span> 更快速的开发</h2>
-<p>在使用了Dependency Injection的场景下，在接口定义好了以后，开发会更加容易，Merge conflict会更少。</p>
-<h1 data-number="2" id="如何在node.js中使用dependency-injection"><span class="header-section-number">2</span> 如何在Node.js中使用Dependency Injection</h1>
-<p>下面我们来看看如何在不适用Dependency Injection的前提下开发应用，然后看看如何进行转化。</p>
-<h2 data-number="2.1" id="不使用dependency-injection的例子"><span class="header-section-number">2.1</span> 不使用Dependency Injection的例子</h2>
-<p>下面是一段简单的没有使用Dependency Injection的代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// team.js</span></span><br><span class="line"><span class="keyword">var</span> User = <span class="built_in">require</span>(<span class="string">'./user'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getTeam</span>(<span class="params">teamId</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> User.find(&#123;<span class="attr">teamId</span>: teamId&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.getTeam = getTeam;</span><br></pre></td></tr></table></figure>
-<p>对应的测试可能是：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// team.spec.js</span></span><br><span class="line"><span class="keyword">var</span> Team = <span class="built_in">require</span>(<span class="string">'./team'</span>);</span><br><span class="line"><span class="keyword">var</span> User = <span class="built_in">require</span>(<span class="string">'/user'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Team'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'#getTeam'</span>, <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> users = [&#123;<span class="attr">id</span>: <span class="number">1</span>, <span class="attr">id</span>: <span class="number">2</span>&#125;];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">this</span>.sandbox.stub(User, find, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(users);</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> team = <span class="keyword">yield</span> team.getTeam();</span><br><span class="line"></span><br><span class="line">        expect(team).to.eql(users);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>在上面的代码中我们做的是创建了一个名为<code>team.js</code>的模块，该模块可以返回属于一个team的用户列表。为了实现这一功能，我们导入<code>User</code>模块，然后我们再调用其<code>find</code>方法返回用户列表。</p>
-<p>看起来不错，是吗？但是当我们需要进行测试时，我们必须要使用<a href="https://sinonjs.org/" target="_blank" rel="noopener">sinon</a>的test stubs.</p>
-<p>在测试文件中，我们需要引入User模块，为其stub一个<code>find</code>方法。注意，我们在这里要使用sandbox功能，这样我们不需在测试完成后回复<code>find</code>的原函数。</p>
-<blockquote>
-<p>注意：如果原始对象使用了<code>Object.freeze</code>，那么stubs将不会起作用。</p>
-</blockquote>
-<h2 data-number="2.2" id="使用dependency-injection的例子"><span class="header-section-number">2.2</span> 使用Dependency Injection的例子</h2>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// team.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Team</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.options = options;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Team.prototype.getTeam = <span class="function"><span class="keyword">function</span>(<span class="params">teamId</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.options.User.find(&#123;<span class="attr">teamId</span>: teamId&#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">create</span>(<span class="params">options</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Team(options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>你可以使用下面的这个文件来进行测试</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// team.spec.js</span></span><br><span class="line"><span class="keyword">var</span> Team =- <span class="built_in">require</span>(<span class="string">'./team'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'Team'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    it(<span class="string">'#getTeam'</span>, <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> users = [&#123;<span class="attr">id</span>: <span class="number">1</span>, <span class="attr">id</span>: <span class="number">2</span>&#125;];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> fakeUser = &#123;</span><br><span class="line">            find: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(users);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> team = Team.create(&#123;</span><br><span class="line">            User: fakeUser</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> team = <span class="keyword">yield</span> team.getTeam();</span><br><span class="line"></span><br><span class="line">        expect(team).to.eql(users);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>那么，使用了Dependency Injection的版本同之前的版本有什么区别呢？首先你可能注意到的是这里使用了<a href="https://blog.risingstack.com/fundamental-node-js-design-patterns/" target="_blank" rel="noopener">工厂模式</a>：我们使用这种设计模式来将options/dependencies inject到新创建的对象中 - 这里是我们注入<code>User</code>模块的方法。</p>
-<p>在测试文件中我们还需要创建一个fake model来代表<code>User</code>模块，然后将这个伪造的模块传递给工厂函数。很简单，不是吗？</p>
-<h1 data-number="3" id="dependency-injection-in-real-projects"><span class="header-section-number">3</span> Dependency Injection in Real Projects</h1>
-<p>你可以在非常多的开源项目中发现Dependency Injection的例子。例如，你在日常工作中常常用到的Express/Koa的大部分中间件都使用了这种技术。</p>
-<h2 data-number="3.1" id="express-middlewares"><span class="header-section-number">3.1</span> Express Middlewares</h2>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">'express-session'</span>);</span><br><span class="line"></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    store: <span class="built_in">require</span>(<span class="string">'connect-session-knex'</span>);</span><br><span class="line">&#125;))</span><br></pre></td></tr></table></figure>
-<p>上面的代码片段使用了基于工厂模式的Dependency Injection：对应session中间件我们传递了一个<code>connect-session-knex</code>模块。这个模块需要实现<code>session</code>模块调用需要的借口。</p>
-<p>在这个例子中，<code>connect-session-knex</code>模块需要实现下面的方法：</p>
-<ul>
-<li><code>store.destroy(sid, callback)</code></li>
-<li><code>store.get(sid, callback)</code></li>
-<li><code>store.set(sid, session, callback)</code></li>
-</ul>
-<h2 data-number="3.2" id="hapi-plugins"><span class="header-section-number">3.2</span> Hapi plugins</h2>
-<p>Dependency Injection的概念还可以在Hapi中找到。下面的例子中，<code>handlebars</code>模块被作为view engine注入给Hapi使用:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server.views(&#123;</span><br><span class="line">    engines: &#123;</span><br><span class="line">        html: <span class="built_in">require</span>(<span class="string">'handlebars`)</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    relativeTo: __dirname,</span></span><br><span class="line"><span class="string">    path: '</span>templates<span class="string">'</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
+        Dependency Injection这个概念是我之前在实习的时候做Java开发的时候接触的。Dependency Injection可以大大降低模块之间的耦合度，提高系统的可扩展性和鲁棒性，不过这个概念对于新人来说理解起来还是存在比较大的障碍。由于当时实习的时间比较短，对于这个概念我并没有吃透。这次学习Node.js的时候，又在awilix这个库里面遇到了这个概念。以此为契机就来好好学习一些Dependency Injection和其后的设计逻辑与方法。
+
+下面的内容翻译自：[Dependency Injection in Node.js](https://blog.risingstack.com/dependency-injection-in-node-js/)。这篇文章浅显地介绍了Dependency Injection的基本理念。选择这篇文章是因为我在阅读awilix模块作者关于Dependency Injection的系列文章中时，作者在开篇提议阅读此文。
+
+不过这篇文章毕竟是2015年的文章，在js的一些语法和模块细节上和今时今日的有些不同，但是并不妨碍我们对于其核心理念的理解。<a id="more"></a>
+
+## 使用Dependency Injection的理由
+
+### 解耦 (Decoupling)
+
+Dependency Injection使你的模块耦合度降低，从而提升代码的可维护性。
+
+### 更简单的单元测试
+
+比起需要硬编码的依赖关系，你可以将依赖关系传输进入你要用的模块。在大多数场合下使用这种范式你不必要使用proxyquire这样的模块。
+
+> 这一段作者写的比较含糊。其实意思是在使用Dependency Injection场景下，我们在独立测试一些单元功能的时候，对于其他模块可以通过注入Mock对象，从而将待测试的模块独立出来进行测试。
+
+### 更快速的开发
+
+在使用了Dependency Injection的场景下，在接口定义好了以后，开发会更加容易，Merge conflict会更少。
+
+## 如何在Node.js中使用Dependency Injection
+
+下面我们来看看如何在不适用Dependency Injection的前提下开发应用，然后看看如何进行转化。
+
+### 不使用Dependency Injection的例子
+
+下面是一段简单的没有使用Dependency Injection的代码：
+
+<!--￼0-->
+
+对应的测试可能是：
+
+<!--￼1-->
+
+在上面的代码中我们做的是创建了一个名为`team.js`的模块，该模块可以返回属于一个team的用户列表。为了实现这一功能，我们导入`User`模块，然后我们再调用其`find`方法返回用户列表。
+
+看起来不错，是吗？但是当我们需要进行测试时，我们必须要使用[sinon](https://sinonjs.org/)的test stubs.
+
+在测试文件中，我们需要引入User模块，为其stub一个`find`方法。注意，我们在这里要使用sandbox功能，这样我们不需在测试完成后回复`find`的原函数。
+
+> 注意：如果原始对象使用了`Object.freeze`，那么stubs将不会起作用。
+
+### 使用Dependency Injection的例子
+
+<!--￼2-->
+
+你可以使用下面的这个文件来进行测试
+
+<!--￼3-->
+
+那么，使用了Dependency Injection的版本同之前的版本有什么区别呢？首先你可能注意到的是这里使用了[工厂模式](https://blog.risingstack.com/fundamental-node-js-design-patterns/)：我们使用这种设计模式来将options/dependencies inject到新创建的对象中 - 这里是我们注入`User`模块的方法。
+
+在测试文件中我们还需要创建一个fake model来代表`User`模块，然后将这个伪造的模块传递给工厂函数。很简单，不是吗？
+
+## Dependency Injection in Real Projects
+
+你可以在非常多的开源项目中发现Dependency Injection的例子。例如，你在日常工作中常常用到的Express/Koa的大部分中间件都使用了这种技术。
+
+### Express Middlewares
+
+<!--￼4-->
+
+上面的代码片段使用了基于工厂模式的Dependency Injection：对应session中间件我们传递了一个`connect-session-knex`模块。这个模块需要实现`session`模块调用需要的借口。
+
+在这个例子中，`connect-session-knex`模块需要实现下面的方法：
+
+- `store.destroy(sid, callback)`
+- `store.get(sid, callback)`
+- `store.set(sid, session, callback)`
+
+### Hapi plugins
+
+Dependency Injection的概念还可以在Hapi中找到。下面的例子中，`handlebars`模块被作为view engine注入给Hapi使用:
+
+<!--￼5-->
+
 
       
     </div>
@@ -717,17 +749,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -999,23 +1022,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用dependency-injection的理由"><span class="nav-text">1 使用Dependency Injection的理由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解耦-decoupling"><span class="nav-text">1.1 解耦 (Decoupling)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更简单的单元测试"><span class="nav-text">1.2 更简单的单元测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更快速的开发"><span class="nav-text">1.3 更快速的开发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何在node.js中使用dependency-injection"><span class="nav-text">2 如何在Node.js中使用Dependency Injection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#不使用dependency-injection的例子"><span class="nav-text">2.1 不使用Dependency Injection的例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用dependency-injection的例子"><span class="nav-text">2.2 使用Dependency Injection的例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dependency-injection-in-real-projects"><span class="nav-text">3 Dependency Injection in Real Projects</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#express-middlewares"><span class="nav-text">3.1 Express Middlewares</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hapi-plugins"><span class="nav-text">3.2 Hapi plugins</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

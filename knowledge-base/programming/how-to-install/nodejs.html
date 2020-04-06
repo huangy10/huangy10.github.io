@@ -123,19 +123,17 @@
 
 
 
-  <meta name="description" content="1 Ubuntu 16.04 1234567891011sudo apt-get updatesudo apt-get install nodejssudo apt-get install npm# 以下是安装yarn的方法# 如果没有安装 curl 使用 sudo apt-get install curl 安装curl -sS https://dl.yarnpkg.com/debian/pubk">
+  <meta name="description" content="## Ubuntu 16.04    ### yarn使用出错的问题  安装 yarn 后可能会出现 Unexpected token 问题，如下图：  ![](https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png)  这是因为默认情况下安装的 nodejs 版本比较老 (我这里显示是v4.2.6)">
 <meta property="og:type" content="website">
 <meta property="og:title" content="如何安装node.js">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/how-to-install/nodejs.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="1 Ubuntu 16.04 1234567891011sudo apt-get updatesudo apt-get install nodejssudo apt-get install npm# 以下是安装yarn的方法# 如果没有安装 curl 使用 sudo apt-get install curl 安装curl -sS https://dl.yarnpkg.com/debian/pubk">
+<meta property="og:description" content="## Ubuntu 16.04    ### yarn使用出错的问题  安装 yarn 后可能会出现 Unexpected token 问题，如下图：  ![](https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png)  这是因为默认情况下安装的 nodejs 版本比较老 (我这里显示是v4.2.6)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png">
 <meta property="og:updated_time" content="2020-01-22T05:23:13.931Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何安装node.js">
-<meta name="twitter:description" content="1 Ubuntu 16.04 1234567891011sudo apt-get updatesudo apt-get install nodejssudo apt-get install npm# 以下是安装yarn的方法# 如果没有安装 curl 使用 sudo apt-get install curl 安装curl -sS https://dl.yarnpkg.com/debian/pubk">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png">
+<meta name="twitter:description" content="## Ubuntu 16.04    ### yarn使用出错的问题  安装 yarn 后可能会出现 Unexpected token 问题，如下图：  ![](https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png)  这是因为默认情况下安装的 nodejs 版本比较老 (我这里显示是v4.2.6)">
 
 
 
@@ -540,16 +538,27 @@
       <div class="post-body han-init-context">
         
         
-          <h1 data-number="1" id="ubuntu-16.04"><span class="header-section-number">1</span> Ubuntu 16.04</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install nodejs</span><br><span class="line">sudo apt-get install npm</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 以下是安装yarn的方法</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 如果没有安装 curl 使用 sudo apt-get install curl 安装</span></span><br><span class="line">curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -</span><br><span class="line">echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list</span><br><span class="line"></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install yarn</span><br></pre></td></tr></table></figure>
-<h2 data-number="1.1" id="yarn使用出错的问题"><span class="header-section-number">1.1</span> yarn使用出错的问题</h2>
-<p>安装 yarn 后可能会出现 Unexpected token 问题，如下图：</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png"></p>
-<p>这是因为默认情况下安装的 nodejs 版本比较老 (我这里显示是v4.2.6)。要升级到10.x版本，可以采用下面的办法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -</span><br><span class="line"></span><br><span class="line">apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
-<h2 data-number="1.2" id="yarn-global-安装的工具命令不可用的问题"><span class="header-section-number">1.2</span> yarn global 安装的工具命令不可用的问题</h2>
-<p>这是因为yarn global安装的路径不在环境变量 PATH 里面。将下面的内容添加到shell配置里面就可以了。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH="$PATH:$(yarn global bin)"</span><br></pre></td></tr></table></figure>
+          
+## Ubuntu 16.04
+
+<!--￼0-->
+
+### yarn使用出错的问题
+
+安装 yarn 后可能会出现 Unexpected token 问题，如下图：
+
+![](https://imgs.codewoody.com/uploads/big/e52a61dc48dadc1ed5c8d33c9dccde1c.png)
+
+这是因为默认情况下安装的 nodejs 版本比较老 (我这里显示是v4.2.6)。要升级到10.x版本，可以采用下面的办法：
+
+<!--￼1-->
+
+### yarn global 安装的工具命令不可用的问题
+
+这是因为yarn global安装的路径不在环境变量 PATH 里面。将下面的内容添加到shell配置里面就可以了。
+
+<!--￼2-->
+
 
         
       </div>
@@ -653,17 +662,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -935,23 +935,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ubuntu-16.04"><span class="nav-text">1 Ubuntu 16.04</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn使用出错的问题"><span class="nav-text">1.1 yarn使用出错的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-global-安装的工具命令不可用的问题"><span class="nav-text">1.2 yarn global 安装的工具命令不可用的问题</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

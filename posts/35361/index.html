@@ -123,20 +123,18 @@
 
 
 
-  <meta name="keywords" content="教程,翻译,转载,sqlite">
+  <meta name="description" content="![](https://imgs.codewoody.com/uploads/big/34274a932d5bced7fbe1fed335fb4567.png)">
+<meta name="keywords" content="教程,翻译,转载,sqlite">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Sqlite: window function">
 <meta property="og:url" content="http://www.codewoody.com/posts/35361/index.html">
 <meta property="og:site_name" content="治部少辅">
+<meta property="og:description" content="![](https://imgs.codewoody.com/uploads/big/34274a932d5bced7fbe1fed335fb4567.png)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.sqlite.org/images/syntax/window-function-invocation.gif">
-<meta property="og:image" content="https://www.sqlite.org/images/syntax/window-defn.gif">
-<meta property="og:image" content="https://www.sqlite.org/images/syntax/frame-spec.gif">
-<meta property="og:image" content="https://www.sqlite.org/images/syntax/filter.gif">
 <meta property="og:updated_time" content="2019-07-23T09:52:36.789Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Sqlite: window function">
-<meta name="twitter:image" content="https://www.sqlite.org/images/syntax/window-function-invocation.gif">
+<meta name="twitter:description" content="![](https://imgs.codewoody.com/uploads/big/34274a932d5bced7fbe1fed335fb4567.png)">
 
 
 
@@ -572,78 +570,115 @@
       
 
       
-        <p></p>
-<p><a href="https://www.sqlite.org/windowfunctions.html" target="_blank" rel="noopener">Sqlite Window Function</a></p>
-<h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
-<p>之前我们接触的SQL命令的结果，一般都是逐行的。即SQL命令返回的结果，都是来自原表的同一行。Window Function则赋予了我们在SQL 结果中，获得来自一组行的数据的能力。这样的组被称为「Window」。</p>
-<p>Window Function最鲜明的特征是<code>OVER</code>关键字。如果 以一个函数有<code>OVER</code>子句，则此函数为Window Function。反之，如果这个函数不带<code>OVER</code>子句，则这个函数是简单的聚合(Aggregate)函数或者标量(Scalar)函数。Window Function在函数和<code>OVER</code>子句之间，还可能带有<code>FILTER</code>子句。</p>
-<p>Window Function的语法结构如下：</p>
-<figure>
-<img src="https://www.sqlite.org/images/syntax/window-function-invocation.gif" alt=""><figcaption>Window function invocation</figcaption>
-</figure>
-<p>不同于普通的函数，Window Function不能使用Distinct子句。另外，Window Function只能出现在查询结果中和<code>ORDER BY</code>后面。</p>
-<p>Window Function可以划归为的两种不同类型：聚合窗函数(Aggregate Window Function)和内建窗函数(Built-in Window Function)。每个聚合窗函数也可以当做普通的聚合函数使用（只需要舍去<code>OVER</code>和<code>FILTER</code>子句即可）。内建窗函数，也可以通过合适地配置<code>OVER</code>子句从而具备聚合函数的功能。在应用中，我们也可以通过<a href="https://www.sqlite.org/c3ref/create_function.html" target="_blank" rel="noopener">sqlite3_create_window_function()</a>接口（C）来自定义新的聚合窗函数。</p>
-<p>下面是使用内建的<code>row_number()</code>窗函数的例子：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t0(x <span class="built_in">INTEGER</span> PRIMARY <span class="keyword">KEY</span>, y <span class="built_in">TEXT</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t0 <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="string">'aaa'</span>), (<span class="number">2</span>, <span class="string">'ccc'</span>), (<span class="number">3</span>, <span class="string">'bbb'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- The following SELECT statement returns:</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="comment">--   x | y | row_number</span></span><br><span class="line"><span class="comment">-----------------------</span></span><br><span class="line"><span class="comment">--   1 | aaa | 1</span></span><br><span class="line"><span class="comment">--   2 | ccc | 3</span></span><br><span class="line"><span class="comment">--   3 | bbb | 2</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="keyword">SELECT</span> x, y, row_number() <span class="keyword">OVER</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> y) <span class="keyword">AS</span> row_number <span class="keyword">FROM</span> t0 <span class="keyword">ORDER</span> <span class="keyword">BY</span> x;</span><br></pre></td></tr></table></figure>
-<p><code>row_number()</code>窗函数函数可以每行添加一个行号。行号的顺序通过<code>OVER</code>后面的<code>ORDER BY y</code>确定。注意，<code>OVER</code>后面的<code>ORDER BY y</code>不会影响<code>SELECT</code>返回的查询结果的顺序。在上面的例子中，<code>SELECT</code>返回的顺序还是根据<code>x</code>来排序的。比对上面的「Window function invocation」图，<code>OVER</code>后的子句体称为<code>window-defn</code>。我们还可以在<code>SELECT</code>语句中通过<code>WINDOW</code>子句来声明<code>named window-defn</code></p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> x, y, row_number() <span class="keyword">OVER</span> win1, <span class="keyword">rank</span>() <span class="keyword">OVER</span> win2</span><br><span class="line"><span class="keyword">FROM</span> t0</span><br><span class="line">WINDOW win1 <span class="keyword">AS</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> y <span class="keyword">RANGE</span> <span class="keyword">BETWEEN</span> <span class="keyword">UNBOUNDED</span> <span class="keyword">PRECEDING</span> <span class="keyword">AND</span> <span class="keyword">CURRENT</span> <span class="keyword">ROW</span>),</span><br><span class="line">       win2 <span class="keyword">AS</span> (<span class="keyword">PARTITION</span> <span class="keyword">BY</span> y <span class="keyword">ORDER</span> <span class="keyword">BY</span> x)</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> x;</span><br></pre></td></tr></table></figure>
-<p><code>WINDOW</code>子句，应当位于<code>HAVING</code>之后，<code>ORDER BY</code>之前。</p>
-<h1 data-number="2" id="聚合窗函数"><span class="header-section-number">2</span> 聚合窗函数</h1>
-<p>在这个部分我们假设所有的数据库的结构都是：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> t1(a <span class="built_in">INTEGER</span> PRIMARY <span class="keyword">KEY</span>, b, c);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t1 <span class="keyword">VALUES</span>   (<span class="number">1</span>, <span class="string">'A'</span>, <span class="string">'one'</span>  ),</span><br><span class="line">                        (<span class="number">2</span>, <span class="string">'B'</span>, <span class="string">'two'</span>  ),</span><br><span class="line">                        (<span class="number">3</span>, <span class="string">'C'</span>, <span class="string">'three'</span>),</span><br><span class="line">                        (<span class="number">4</span>, <span class="string">'D'</span>, <span class="string">'one'</span>  ),</span><br><span class="line">                        (<span class="number">5</span>, <span class="string">'E'</span>, <span class="string">'two'</span>  ),</span><br><span class="line">                        (<span class="number">6</span>, <span class="string">'F'</span>, <span class="string">'three'</span>),</span><br><span class="line">                        (<span class="number">7</span>, <span class="string">'G'</span>, <span class="string">'one'</span>  );</span><br></pre></td></tr></table></figure>
-<p>聚合窗函数类似于一般的聚合函数，添加聚合窗函数不会改变查询返回的行数。相反，聚合窗函数会将于「Window frame」中运行的得到的聚合结果添加到原本的每一行结果中。例如</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- The following SELECT statement returns:</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="comment">--   a | b | group_concat</span></span><br><span class="line"><span class="comment">-------------------------</span></span><br><span class="line"><span class="comment">--   1 | A | A.B</span></span><br><span class="line"><span class="comment">--   2 | B | A.B.C</span></span><br><span class="line"><span class="comment">--   3 | C | B.C.D</span></span><br><span class="line"><span class="comment">--   4 | D | C.D.E</span></span><br><span class="line"><span class="comment">--   5 | E | D.E.F</span></span><br><span class="line"><span class="comment">--   6 | F | E.F.G</span></span><br><span class="line"><span class="comment">--   7 | G | F.G</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="keyword">SELECT</span> a, b, <span class="keyword">group_concat</span>(b, <span class="string">'.'</span>) <span class="keyword">OVER</span> (</span><br><span class="line">  <span class="keyword">ORDER</span> <span class="keyword">BY</span> a <span class="keyword">ROWS</span> <span class="keyword">BETWEEN</span> <span class="number">1</span> <span class="keyword">PRECEDING</span> <span class="keyword">AND</span> <span class="number">1</span> <span class="keyword">FOLLOWING</span></span><br><span class="line">) <span class="keyword">AS</span> <span class="keyword">group_concat</span> <span class="keyword">FROM</span> t1;</span><br></pre></td></tr></table></figure>
-<p>在上面的例子中，我们要做的将本行与上下两行的结果拼起来，而上下行关系，是根据<code>OVER</code>子句中的<code>ORDER BY</code>来确定的。</p>
-<h2 data-number="2.1" id="partition-by-子句"><span class="header-section-number">2.1</span> <code>PARTITION BY</code> 子句</h2>
-<p>为了计算窗函数，查询的返回结果通过<code>PARTITION BY</code>子句分割成多个「partitions」。<code>PARTITION BY</code>类似于<code>GROUP BY</code>，可以将查询结果中，于<code>PARTITION BY</code>后的<code>window-defn</code>所指定列拥有相通值的行组成组。若没有<code>PARTITION BY</code>子句，则所有的查询结果组成一个单一的组。窗函数在各个「partition」上运行。</p>
-<p>例如</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- The following SELECT statement returns:</span></span><br><span class="line"><span class="comment">-- </span></span><br><span class="line"><span class="comment">--   c     | a | b | group_concat</span></span><br><span class="line"><span class="comment">---------------------------------</span></span><br><span class="line"><span class="comment">--   one   | 1 | A | A.D.G       </span></span><br><span class="line"><span class="comment">--   one   | 4 | D | D.G         </span></span><br><span class="line"><span class="comment">--   one   | 7 | G | G           </span></span><br><span class="line"><span class="comment">--   three | 3 | C | C.F         </span></span><br><span class="line"><span class="comment">--   three | 6 | F | F           </span></span><br><span class="line"><span class="comment">--   two   | 2 | B | B.E         </span></span><br><span class="line"><span class="comment">--   two   | 5 | E | E           </span></span><br><span class="line"><span class="comment">-- </span></span><br><span class="line"><span class="keyword">SELECT</span> c, a, b, <span class="keyword">group_concat</span>(b, <span class="string">'.'</span>) <span class="keyword">OVER</span> (</span><br><span class="line">  <span class="keyword">PARTITION</span> <span class="keyword">BY</span> c <span class="keyword">ORDER</span> <span class="keyword">BY</span> a <span class="keyword">RANGE</span> <span class="keyword">BETWEEN</span> <span class="keyword">CURRENT</span> <span class="keyword">ROW</span> <span class="keyword">AND</span> <span class="keyword">UNBOUNDED</span> <span class="keyword">FOLLOWING</span></span><br><span class="line">) <span class="keyword">AS</span> <span class="keyword">group_concat</span></span><br><span class="line"><span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> c, a;</span><br></pre></td></tr></table></figure>
-<p>在上面的查询例子中，<code>PARTITION BY c</code>将查询结果划分成了三个Partition。第一个Parition的<code>c = one</code>，第二个Partition的<code>c = three</code>，第三个Partition的<code>c = two</code>。注意，Partiion的划分，及其后续的的<code>ORDER BY</code>的排序，和最终查询结果的顺序是没有关系的。上面的查询的例子的输出也可能是：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- The following SELECT statement returns:</span></span><br><span class="line"><span class="comment">-- </span></span><br><span class="line"><span class="comment">--   c     | a | b | group_concat</span></span><br><span class="line"><span class="comment">---------------------------------</span></span><br><span class="line"><span class="comment">--   one   | 1 | A | A.D.G       </span></span><br><span class="line"><span class="comment">--   two   | 2 | B | B.E         </span></span><br><span class="line"><span class="comment">--   three | 3 | C | C.F         </span></span><br><span class="line"><span class="comment">--   one   | 4 | D | D.G         </span></span><br><span class="line"><span class="comment">--   two   | 5 | E | E           </span></span><br><span class="line"><span class="comment">--   three | 6 | F | F           </span></span><br><span class="line"><span class="comment">--   one   | 7 | G | G           </span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="keyword">SELECT</span> c, a, b, <span class="keyword">group_concat</span>(b, <span class="string">'.'</span>) <span class="keyword">OVER</span> (</span><br><span class="line">  <span class="keyword">PARTITION</span> <span class="keyword">BY</span> c <span class="keyword">ORDER</span> <span class="keyword">BY</span> a <span class="keyword">RANGE</span> <span class="keyword">BETWEEN</span> <span class="keyword">CURRENT</span> <span class="keyword">ROW</span> <span class="keyword">AND</span> <span class="keyword">UNBOUNDED</span> <span class="keyword">FOLLOWING</span></span><br><span class="line">) <span class="keyword">AS</span> <span class="keyword">group_concat</span></span><br><span class="line"><span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> a;</span><br></pre></td></tr></table></figure>
-<h2 data-number="2.2" id="frame-specification"><span class="header-section-number">2.2</span> Frame Specification</h2>
-<p>Frame Specification是<code>OVER</code>子句的一个部分，规定了聚合窗函数读取的输出行的范围。<code>frame-spec</code>在<code>window-defn</code>中的位置如下:</p>
-<p><img src="https://www.sqlite.org/images/syntax/window-defn.gif"></p>
-<p><code>frame-spec</code>包含如下四个部分：</p>
-<ul>
-<li>Frame type: either ROWS, RANGE or GROUPS;</li>
-<li>A starting frame boundary;</li>
-<li>An ending frame broundary;</li>
-<li>An EXCLUDE clause;</li>
-</ul>
-<p>细节的语法结构如下：</p>
-<p><img src="https://www.sqlite.org/images/syntax/frame-spec.gif"></p>
-<p>其中ending frame boundary可以被省略，此时默认情况下ending frame boundary默认为 <code>CURRENT ROW</code>。</p>
-<p>如果frame type为<code>RANGE</code>或者<code>GROUPS</code>，那么在<code>ORDER BY</code>所指定的列上具有相同值的行被归为一组「peers」。如果没有<code>ORDER BY</code>，那么所有的行归于一组Peer。注意Peers总是属于相同的frame。</p>
-<p>默认的<code>frame-spec</code>为</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS</span><br></pre></td></tr></table></figure>
-<p>默认的配置的意思是，聚合窗函数从Partition的开头开始读取直到当前的行的所有Peers。同Peer组的行对从窗函数获取的返回值是相通的（其Window frame是相同的）。例如</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- The following SELECT statement returns:</span></span><br><span class="line"><span class="comment">-- </span></span><br><span class="line"><span class="comment">--   a | b | c | group_concat</span></span><br><span class="line"><span class="comment">-----------------------------</span></span><br><span class="line"><span class="comment">--   1 | A | one   | A.D.G       </span></span><br><span class="line"><span class="comment">--   2 | B | two   | A.D.G.C.F.B.E</span></span><br><span class="line"><span class="comment">--   3 | C | three | A.D.G.C.F   </span></span><br><span class="line"><span class="comment">--   4 | D | one   | A.D.G       </span></span><br><span class="line"><span class="comment">--   5 | E | two   | A.D.G.C.F.B.E</span></span><br><span class="line"><span class="comment">--   6 | F | three | A.D.G.C.F   </span></span><br><span class="line"><span class="comment">--   7 | G | one   | A.D.G       </span></span><br><span class="line"><span class="comment">-- </span></span><br><span class="line"><span class="keyword">SELECT</span> a, b, c,</span><br><span class="line">       <span class="keyword">group_concat</span>(b, <span class="string">'.'</span>) <span class="keyword">OVER</span> (<span class="keyword">ORDER</span> <span class="keyword">BY</span> c) <span class="keyword">AS</span> <span class="keyword">group_concat</span> </span><br><span class="line"><span class="keyword">FROM</span> t1 <span class="keyword">ORDER</span> <span class="keyword">BY</span> a;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>关于Frame的更多细节，参考出处原文（页面顶部）</p>
-</blockquote>
-<h2 data-number="2.3" id="filter-子句"><span class="header-section-number">2.3</span> <code>FILTER</code> 子句</h2>
-<p><img src="https://www.sqlite.org/images/syntax/filter.gif"></p>
-<p>如果出现了<code>FILTER</code>子句，那么只有<code>expr</code>指定的行才会被包含到window frame中。这里的<code>FILTER</code>不会过滤查询结果，只是决定了窗函数作用的范围。</p>
-<h1 data-number="3" id="内建窗函数"><span class="header-section-number">3</span> 内建窗函数</h1>
-<p>内建窗函数也具备和聚合窗函数同样的<code>PARTITION BY</code>子句功能：每个行都从属于一个Partition，而每个Partition被单独地进行处理。<code>ORDER BY</code>的作用，我们在下面进行阐述。有一些特定的窗函数（<code>rank()</code>, <code>dense_rank</code>, <code>percent_rank</code> and <code>ntile()</code>）采用了<code>peer group</code>的概念（rows within the same partition that have the same values for all ORDER BY expressions）。此时<code>frame-spec</code>中<code>frame type</code>(<code>ROWS</code>, <code>GROUPS</code>, <code>RANGE</code>) 就不起作用了。</p>
-<p>SQLite支持如下11个内建的窗函数</p>
-<ul>
-<li><code>row_number()</code>: 当前行位于Partition中的位置（行号），从1开始排列，顺序由窗函数的<code>ORDER BY</code>决定。</li>
-<li><code>rank()</code>: 每一个Group（同一个Partition内在<code>ORDER BY</code>指定的列上具有相同值的行归于一个Group）中的第一个peer（行）的<code>row_number</code>值。<code>rank</code>获取的序号可能是不连续的。</li>
-<li><code>dense_rank()</code>: 相比于<code>rank()</code>, 压缩了序号的间隙，得到的序号总是连续的。从1开始排。</li>
-<li><code>percent_rank()</code>: 将rank转化成百分比，等于<code>(rank - 1)/(partition-rows - 1)</code>。如果只有一个组，返回0.</li>
-<li><code>cume_dist()</code>: 累积分布，等于<code>row-number/partition-rows</code>。</li>
-<li><code>ntile(N)</code>: 参数N为整数，这个函数将partition划分为尽可能均匀的N份，并为每份分配一个1到N的整数，顺序由<code>ORDER BY</code>决定（若无<code>ORDER BY</code>，则为乱序）。如果需要的话，较大的组会先出现。</li>
-<li><code>lag(expr)</code></li>
-<li><code>lag(expr, offset)</code></li>
-<li><code>lag(expr, offset, default)</code>: 返回对上一行执行<code>expr</code>得到的结果。如果没有上一行，返回空。可以通过<code>offset</code>修改偏移量（如设为2，返回往上数第二行执行结果，必须为费复制）。<code>offset</code>为0表示对当前行执行。<code>default</code>表示目标行不存在时需要返回的默认值。</li>
-<li><code>lead(expr)</code></li>
-<li><code>lead(expr, offset)</code></li>
-<li><code>lead(expr, offset, default)</code>: 和<code>lag</code>函数类似，不过是向下获取。</li>
-<li><code>first_value(expr)</code>: 返回第一个行的数据</li>
-<li><code>last_value(expr)</code>: 返回最后一行的数据</li>
-<li><code>nth_value(expr, N)</code>: 返回第N行的数据。</li>
-</ul>
+        [Sqlite Window Function](https://www.sqlite.org/windowfunctions.html)
+
+## 简介
+
+之前我们接触的SQL命令的结果，一般都是逐行的。即SQL命令返回的结果，都是来自原表的同一行。Window Function则赋予了我们在SQL
+结果中，获得来自一组行的数据的能力。这样的组被称为「Window」。
+
+Window Function最鲜明的特征是`OVER`关键字。如果 以一个函数有`OVER`子句，则此函数为Window Function。反之，如果这个函数不带`OVER`子句，则这个函数是简单的聚合(Aggregate)函数或者标量(Scalar)函数。Window Function在函数和`OVER`子句之间，还可能带有`FILTER`子句。
+
+Window Function的语法结构如下：
+
+![Window function invocation](https://www.sqlite.org/images/syntax/window-function-invocation.gif)
+
+不同于普通的函数，Window Function不能使用Distinct子句。另外，Window Function只能出现在查询结果中和`ORDER BY`后面。
+
+Window Function可以划归为的两种不同类型：聚合窗函数(Aggregate Window Function)和内建窗函数(Built-in Window Function)。每个聚合窗函数也可以当做普通的聚合函数使用（只需要舍去`OVER`和`FILTER`子句即可）。内建窗函数，也可以通过合适地配置`OVER`子句从而具备聚合函数的功能。在应用中，我们也可以通过[sqlite3_create_window_function()](https://www.sqlite.org/c3ref/create_function.html)接口（C）来自定义新的聚合窗函数。
+
+下面是使用内建的`row_number()`窗函数的例子：
+
+<!--￼0-->
+
+`row_number()`窗函数函数可以每行添加一个行号。行号的顺序通过`OVER`后面的`ORDER BY y`确定。注意，`OVER`后面的`ORDER BY y`不会影响`SELECT`返回的查询结果的顺序。在上面的例子中，`SELECT`返回的顺序还是根据`x`来排序的。比对上面的「Window function invocation」图，`OVER`后的子句体称为`window-defn`。我们还可以在`SELECT`语句中通过`WINDOW`子句来声明`named window-defn`
+
+<!--￼1-->
+
+`WINDOW`子句，应当位于`HAVING`之后，`ORDER BY`之前。
+
+## 聚合窗函数
+
+在这个部分我们假设所有的数据库的结构都是：
+
+<!--￼2-->
+
+聚合窗函数类似于一般的聚合函数，添加聚合窗函数不会改变查询返回的行数。相反，聚合窗函数会将于「Window frame」中运行的得到的聚合结果添加到原本的每一行结果中。例如
+
+<!--￼3-->
+
+在上面的例子中，我们要做的将本行与上下两行的结果拼起来，而上下行关系，是根据`OVER`子句中的`ORDER BY`来确定的。
+
+### `PARTITION BY` 子句
+
+为了计算窗函数，查询的返回结果通过`PARTITION BY`子句分割成多个「partitions」。`PARTITION BY`类似于`GROUP BY`，可以将查询结果中，于`PARTITION BY`后的`window-defn`所指定列拥有相通值的行组成组。若没有`PARTITION BY`子句，则所有的查询结果组成一个单一的组。窗函数在各个「partition」上运行。
+
+例如
+
+<!--￼4-->
+
+在上面的查询例子中，`PARTITION BY c`将查询结果划分成了三个Partition。第一个Parition的`c = one`，第二个Partition的`c = three`，第三个Partition的`c = two`。注意，Partiion的划分，及其后续的的`ORDER BY`的排序，和最终查询结果的顺序是没有关系的。上面的查询的例子的输出也可能是：
+
+<!--￼5-->
+
+### Frame Specification
+
+Frame Specification是`OVER`子句的一个部分，规定了聚合窗函数读取的输出行的范围。`frame-spec`在`window-defn`中的位置如下:
+
+![](https://www.sqlite.org/images/syntax/window-defn.gif)
+
+`frame-spec`包含如下四个部分：
+
+- Frame type: either ROWS, RANGE or GROUPS;
+- A starting frame boundary;
+- An ending frame broundary;
+- An EXCLUDE clause;
+
+细节的语法结构如下：
+
+![](https://www.sqlite.org/images/syntax/frame-spec.gif)
+
+其中ending frame boundary可以被省略，此时默认情况下ending frame boundary默认为 `CURRENT ROW`。
+
+如果frame type为`RANGE`或者`GROUPS`，那么在`ORDER BY`所指定的列上具有相同值的行被归为一组「peers」。如果没有`ORDER BY`，那么所有的行归于一组Peer。注意Peers总是属于相同的frame。
+
+默认的`frame-spec`为
+
+<!--￼6-->
+
+默认的配置的意思是，聚合窗函数从Partition的开头开始读取直到当前的行的所有Peers。同Peer组的行对从窗函数获取的返回值是相通的（其Window frame是相同的）。例如
+
+<!--￼7-->
+
+> 关于Frame的更多细节，参考出处原文（页面顶部）
+
+### `FILTER` 子句
+
+![](https://www.sqlite.org/images/syntax/filter.gif)
+
+如果出现了`FILTER`子句，那么只有`expr`指定的行才会被包含到window frame中。这里的`FILTER`不会过滤查询结果，只是决定了窗函数作用的范围。
+
+## 内建窗函数
+
+内建窗函数也具备和聚合窗函数同样的`PARTITION BY`子句功能：每个行都从属于一个Partition，而每个Partition被单独地进行处理。`ORDER BY`的作用，我们在下面进行阐述。有一些特定的窗函数（`rank()`, `dense_rank`, `percent_rank` and `ntile()`）采用了`peer group`的概念（rows within the same partition that have the same values for all ORDER BY expressions）。此时`frame-spec`中`frame type`(`ROWS`, `GROUPS`, `RANGE`) 就不起作用了。
+
+SQLite支持如下11个内建的窗函数
+
+- `row_number()`: 当前行位于Partition中的位置（行号），从1开始排列，顺序由窗函数的`ORDER BY`决定。
+- `rank()`: 每一个Group（同一个Partition内在`ORDER BY`指定的列上具有相同值的行归于一个Group）中的第一个peer（行）的`row_number`值。`rank`获取的序号可能是不连续的。
+- `dense_rank()`: 相比于`rank()`, 压缩了序号的间隙，得到的序号总是连续的。从1开始排。
+- `percent_rank()`: 将rank转化成百分比，等于`(rank - 1)/(partition-rows - 1)`。如果只有一个组，返回0.
+- `cume_dist()`: 累积分布，等于`row-number/partition-rows`。
+- `ntile(N)`: 参数N为整数，这个函数将partition划分为尽可能均匀的N份，并为每份分配一个1到N的整数，顺序由`ORDER BY`决定（若无`ORDER BY`，则为乱序）。如果需要的话，较大的组会先出现。
+- `lag(expr)`
+- `lag(expr, offset)`
+- `lag(expr, offset, default)`: 返回对上一行执行`expr`得到的结果。如果没有上一行，返回空。可以通过`offset`修改偏移量（如设为2，返回往上数第二行执行结果，必须为费复制）。`offset`为0表示对当前行执行。`default`表示目标行不存在时需要返回的默认值。
+- `lead(expr)`
+- `lead(expr, offset)`
+- `lead(expr, offset, default)`: 和`lag`函数类似，不过是向下获取。
+- `first_value(expr)`: 返回第一个行的数据
+- `last_value(expr)`: 返回最后一行的数据
+- `nth_value(expr, N)`: 返回第N行的数据。
       
     </div>
 
@@ -748,17 +783,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1030,23 +1056,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#聚合窗函数"><span class="nav-text">2 聚合窗函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#partition-by-子句"><span class="nav-text">2.1 PARTITION BY 子句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#frame-specification"><span class="nav-text">2.2 Frame Specification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filter-子句"><span class="nav-text">2.3 FILTER 子句</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内建窗函数"><span class="nav-text">3 内建窗函数</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

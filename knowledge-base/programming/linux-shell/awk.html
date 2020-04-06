@@ -123,22 +123,17 @@
 
 
 
-  <meta name="description" content="这篇文章转载自Linux三剑客老大 awk  1 概述 awk同sed命令类似，只不过sed擅长取行，awk命令擅长取列。（根据了解awk是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel） 原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理 用法: 1awk [可选的命令行选项] &apos;BEGIN&amp;#123;命令 &amp;#125; pattern&amp;#123;">
+  <meta name="description" content="&amp;gt; 这篇文章转载自[Linux三剑客老大 awk](https://zhuanlan.zhihu.com/p/68188159)  ## 概述  `awk`同`sed`命令类似，只不过`sed`擅长取行，`awk`命令擅长取列。（根据了解`awk`是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel）  原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理">
 <meta property="og:type" content="website">
 <meta property="og:title" content="AWK">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/linux-shell/awk.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这篇文章转载自Linux三剑客老大 awk  1 概述 awk同sed命令类似，只不过sed擅长取行，awk命令擅长取列。（根据了解awk是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel） 原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理 用法: 1awk [可选的命令行选项] &apos;BEGIN&amp;#123;命令 &amp;#125; pattern&amp;#123;">
+<meta property="og:description" content="&amp;gt; 这篇文章转载自[Linux三剑客老大 awk](https://zhuanlan.zhihu.com/p/68188159)  ## 概述  `awk`同`sed`命令类似，只不过`sed`擅长取行，`awk`命令擅长取列。（根据了解`awk`是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel）  原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ee482b07210cb8a084e47bac43f443be.jpg">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/d69ae9c3151c623014bc9b558db9d8c2.jpg">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e2c04dd8198326358eae142bdfc5ee81.jpg">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/e8b569cd74ad3509519e49502b858bb1.jpg">
 <meta property="og:updated_time" content="2019-10-09T06:53:15.402Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AWK">
-<meta name="twitter:description" content="这篇文章转载自Linux三剑客老大 awk  1 概述 awk同sed命令类似，只不过sed擅长取行，awk命令擅长取列。（根据了解awk是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel） 原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理 用法: 1awk [可选的命令行选项] &apos;BEGIN&amp;#123;命令 &amp;#125; pattern&amp;#123;">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/ee482b07210cb8a084e47bac43f443be.jpg">
+<meta name="twitter:description" content="&amp;gt; 这篇文章转载自[Linux三剑客老大 awk](https://zhuanlan.zhihu.com/p/68188159)  ## 概述  `awk`同`sed`命令类似，只不过`sed`擅长取行，`awk`命令擅长取列。（根据了解`awk`是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel）  原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理">
 
 
 
@@ -543,83 +538,113 @@
       <div class="post-body han-init-context">
         
         
-          <blockquote>
-<p>这篇文章转载自<a href="https://zhuanlan.zhihu.com/p/68188159" target="_blank" rel="noopener">Linux三剑客老大 awk</a></p>
-</blockquote>
-<h1 data-number="1" id="概述"><span class="header-section-number">1</span> 概述</h1>
-<p><code>awk</code>同<code>sed</code>命令类似，只不过<code>sed</code>擅长取行，<code>awk</code>命令擅长取列。（根据了解<code>awk</code>是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel）</p>
-<p>原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理</p>
-<p>用法:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [可选的命令行选项] 'BEGIN&#123;命令 &#125; pattern&#123; 命令 &#125; END&#123; 命令 &#125;'  文件名</span><br></pre></td></tr></table></figure>
-<h1 data-number="2" id="打印某几列"><span class="header-section-number">2</span> 打印某几列</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">'I love you'</span> | awk <span class="string">'&#123;print $3 $2 $1&#125;'</span></span></span><br><span class="line">youloveI</span><br></pre></td></tr></table></figure>
-<p>我们将字符串 <code>I love you</code> 通过管道传递给<code>awk</code>命令，相当于<code>awk</code>处理一个文件，该文件的内容就是<code>I love you</code>,默认通过空格作为分隔符(不管列之间有多少个空格都将当作一个空格处理)<code>I love you</code>就分割成三列了。</p>
-<p>假如分割符号为 <code>.</code> ，可以这样用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">'192.168.1.1'</span> | awk -F <span class="string">"."</span> <span class="string">'&#123;print $2&#125;'</span></span></span><br><span class="line">168</span><br></pre></td></tr></table></figure>
-<p>如果要打印某个范围内的所有行，可以使用如下的<a href="https://stackoverflow.com/questions/5081916/how-to-print-all-the-columns-after-a-particular-number-using-awk" target="_blank" rel="noopener">方法</a>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk '&#123; s = ""; for (i = 9; i &lt;= NF; i++) s = s $i " "; print s &#125;'</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这里可以看出为什么开头说awk是一种语言了</p>
-</blockquote>
-<h1 data-number="3" id="条件过滤"><span class="header-section-number">3</span> 条件过滤</h1>
-<p>我们知道<code>awk</code>的用法是这样的，那么<code>pattern</code>部分怎么用呢？</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">awk [可选的命令行选项] 'BEGIN&#123;命令 &#125; pattern&#123; 命令 &#125; END&#123; 命令 &#125;'  文件名</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat score.txt</span></span><br><span class="line">tom 60 60 60</span><br><span class="line">kitty 90 95 87</span><br><span class="line">jack 72 84 99</span><br><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'$2&gt;=90&#123;print $0&#125;'</span> score.txt</span></span><br><span class="line">kitty 90 95 87</span><br></pre></td></tr></table></figure>
-<p><code>$2&gt;=90</code> 表示如果当前行的第2列的值大于90则处理当前行，否则不处理。说白了<code>pattern</code>部分是用来从文件中筛选出需要处理的行进行处理的，这部分是空的代表全部处理。pattern部分可以是任何条件表达式的判断结果，例如&gt;，&lt;，==，&gt;=，&lt;=，!=同时还可以使用+，-，*，/运算与条件表达式相结合的复合表达式，逻辑 &amp;&amp;，||，!同样也可以使用进来。另外pattern部分还可以使用 <code>/正则/</code> 选择需要处理的行。</p>
-<h1 data-number="4" id="判断语句"><span class="header-section-number">4</span> 判断语句</h1>
-<p>判断语句是写在<code>pattern{ 命令 }</code>命令中的，他具备条件过滤一样的作用，同时他也可以让输出更丰富</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'&#123;if($2&gt;=90 )print $0&#125;'</span> score.txt</span></span><br><span class="line">kitty 90 95 87</span><br><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'&#123;if($2&gt;=90 )print $1,"优秀"; else print $1,"良好"&#125;'</span> score.txt</span></span><br><span class="line">tom 良好</span><br><span class="line">kitty 优秀</span><br><span class="line">jack 良好</span><br></pre></td></tr></table></figure>
-<h1 data-number="5" id="begin-定义表头"><span class="header-section-number">5</span> BEGIN 定义表头</h1>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [可选的命令行选项] 'BEGIN&#123;命令 &#125; pattern&#123; 命令 &#125; END&#123; 命令 &#125;'  文件名</span><br></pre></td></tr></table></figure>
-<p>使用方法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'BEGIN&#123;print "姓名 语文 数学 英语"&#125;&#123;printf "%-8s%-5d%-5d%-5d\n",$1,$2,$3,$4&#125;'</span> score.txt</span></span><br><span class="line">姓名 语文数学英语</span><br><span class="line">tom 60 60 60</span><br><span class="line">kitty 90 95 87</span><br><span class="line">jack 72 84 99</span><br></pre></td></tr></table></figure>
-<p>这里要注意，我为了输出格式好看，做了左对齐的操作(%-8s左对齐，宽8位)，<code>printf</code>用法和c++类似。</p>
-<p>不仅可以用来定义表头，还可以做一些变量初始化的工作，例如</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'BEGIN&#123;OFMT="%.2f";print 1.2567,12E-2&#125;'</span></span></span><br><span class="line">1.26 0.12</span><br></pre></td></tr></table></figure>
-<p>这里OFMT是个内置变量，初始化数字输出格式，保留小数点后两位。</p>
-<h1 data-number="6" id="end-添加结尾符"><span class="header-section-number">6</span> END 添加结尾符</h1>
-<p>和BEGIN用法类似</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> ok | awk <span class="string">'&#123;print $1&#125;END&#123;print "end"&#125;'</span></span></span><br><span class="line">ok</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
-<h1 data-number="7" id="数据计算"><span class="header-section-number">7</span> 数据计算</h1>
-<p>这个地方我要放大招了！上面的知识点你都记住了吗？</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> awk <span class="string">'BEGIN&#123;print "姓名 语文 数学 英语 总成绩"; \</span></span></span><br><span class="line">sum1=0;sum2=0;sum3=0;sumall=0&#125; \</span><br><span class="line">&#123;printf "%5s%5d%5d%5d%5d\n",$1,$2,$3,$4,$2+$3+$4;\</span><br><span class="line">sum1+=$2;sum2+=$3;sum3+=$4;sumall+=$2+$3+$4&#125;\</span><br><span class="line">END&#123;printf "%5s%5d%5d%5d%5d\n","总成绩",sum1,sum2,sum3,sumall&#125;'\</span><br><span class="line"> score.txt</span><br><span class="line">姓名 语文 数学 英语 总成绩</span><br><span class="line">  tom 60 60 60 180</span><br><span class="line">kitty 90 95 87 272</span><br><span class="line"> jack 72 84 99 255</span><br><span class="line">总成绩 222 239 246 707</span><br></pre></td></tr></table></figure>
-<p>因为命令太长，末尾我用。。</p>
-<ul>
-<li>BEGIN体里我输出了表头，并给四个变量初始化0</li>
-<li>pattern体里我输出了每一行，并累加运算</li>
-<li>END体里我输出了总统计结果</li>
-</ul>
-<p>当然了，一个正常人在用linux命令的时候是不会输入那么多格式化符号来对齐的，所以新命令又来了</p>
-<p><code>column -t</code>（鬼知道我为什么会记得这么多乱七八糟的命令。）</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/ee482b07210cb8a084e47bac43f443be.jpg" alt=""><figcaption>图1</figcaption>
-</figure>
-<h1 data-number="8" id="有用的内置变量"><span class="header-section-number">8</span> 有用的内置变量</h1>
-<ul>
-<li>NF:表示当前行有多少个字段，因此$NF就代表最后一个字段</li>
-<li>NR:表示当前处理的是第几行</li>
-<li>FILENAME：当前文件名</li>
-<li>OFMT：数字输出的格式，默认为％.6g。表示只打印小数点后6 位</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> awk -F <span class="string">':'</span> <span class="string">'&#123;print NR ") " $1&#125;'</span> demo.txt</span></span><br><span class="line">1) root</span><br><span class="line">2) daemon</span><br><span class="line">3) bin</span><br><span class="line">4) sys</span><br><span class="line">5) sync</span><br></pre></td></tr></table></figure>
-<h1 data-number="9" id="内置函数"><span class="header-section-number">9</span> 内置函数</h1>
-<p>awk定义了很多内置函数，用awk来写shell脚本倒是一个不错的选择，但是大多数我们是用不上的，以下是常用函数</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> 1 2 | awk <span class="string">'&#123;print $1+sqrt($2)&#125;'</span></span></span><br><span class="line"></span><br><span class="line">2.41421</span><br></pre></td></tr></table></figure>
-<p>随机数，先设置种子再随机</p>
-<p><code>rand() 0 &lt;= n &lt; 1,srand([expr])</code>将 rand 函数的种子值设置为 Expr 参数的值，或如果省略 Expr 参数则使用某天的时间。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> 1 | awk <span class="string">'BEGIN&#123;srand()&#125;&#123;print rand()&#125;'</span></span></span><br><span class="line"></span><br><span class="line">0.929885</span><br></pre></td></tr></table></figure>
-<p>字符串</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/d69ae9c3151c623014bc9b558db9d8c2.jpg" alt=""><figcaption>图2</figcaption>
-</figure>
-<p>系统常用</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/e2c04dd8198326358eae142bdfc5ee81.jpg" alt=""><figcaption>图3</figcaption>
-</figure>
-<p>不常用算数：</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/e8b569cd74ad3509519e49502b858bb1.jpg" alt=""><figcaption>图4</figcaption>
-</figure>
+          
+> 这篇文章转载自[Linux三剑客老大 awk](https://zhuanlan.zhihu.com/p/68188159)
 
+## 概述
+
+`awk`同`sed`命令类似，只不过`sed`擅长取行，`awk`命令擅长取列。（根据了解`awk`是一种语言，不过我们只关注他处理文本的功能，用的好的话几乎可以取代excel）
+
+原理：一般是遍历一个文件中的每一行，然后分别对文件的每一行进行处理
+
+用法:
+
+<!--￼0-->
+
+## 打印某几列
+
+<!--￼1-->
+
+我们将字符串 `I love you` 通过管道传递给`awk`命令，相当于`awk`处理一个文件，该文件的内容就是`I love you`,默认通过空格作为分隔符(不管列之间有多少个空格都将当作一个空格处理)`I love you`就分割成三列了。
+
+假如分割符号为 `.` ，可以这样用
+
+<!--￼2-->
+
+如果要打印某个范围内的所有行，可以使用如下的[方法](https://stackoverflow.com/questions/5081916/how-to-print-all-the-columns-after-a-particular-number-using-awk)：
+
+<!--￼3-->
+
+> 这里可以看出为什么开头说awk是一种语言了
+
+## 条件过滤
+
+我们知道`awk`的用法是这样的，那么`pattern`部分怎么用呢？
+
+<!--￼4-->
+
+`$2>=90` 表示如果当前行的第2列的值大于90则处理当前行，否则不处理。说白了`pattern`部分是用来从文件中筛选出需要处理的行进行处理的，这部分是空的代表全部处理。pattern部分可以是任何条件表达式的判断结果，例如>，<，==，>=，<=，!=同时还可以使用+，-，*， 运算与条件表达式相结合的复合表达式，逻辑="" &&，||，!同样也可以使用进来。另外pattern部分还可以使用="" `="" 正则="" 选择需要处理的行。="" ##="" 判断语句="" 判断语句是写在`pattern{="" 命令="" }`命令中的，他具备条件过滤一样的作用，同时他也可以让输出更丰富="" <!--￼5--="">
+
+## BEGIN 定义表头
+
+<!--￼6-->
+
+使用方法如下：
+
+<!--￼7-->
+
+这里要注意，我为了输出格式好看，做了左对齐的操作(%-8s左对齐，宽8位)，`printf`用法和c++类似。
+
+不仅可以用来定义表头，还可以做一些变量初始化的工作，例如
+
+<!--￼8-->
+
+这里OFMT是个内置变量，初始化数字输出格式，保留小数点后两位。
+
+## END 添加结尾符
+
+和BEGIN用法类似
+
+<!--￼9-->
+
+## 数据计算
+
+这个地方我要放大招了！上面的知识点你都记住了吗？
+
+<!--￼10-->
+
+因为命令太长，末尾我用\符号换行了。。
+
+- BEGIN体里我输出了表头，并给四个变量初始化0
+- pattern体里我输出了每一行，并累加运算
+- END体里我输出了总统计结果
+
+当然了，一个正常人在用linux命令的时候是不会输入那么多格式化符号来对齐的，所以新命令又来了
+
+`column -t`（鬼知道我为什么会记得这么多乱七八糟的命令。）
+
+![图1](https://imgs.codewoody.com/uploads/big/ee482b07210cb8a084e47bac43f443be.jpg)
+
+## 有用的内置变量
+
+- NF:表示当前行有多少个字段，因此$NF就代表最后一个字段
+- NR:表示当前处理的是第几行
+- FILENAME：当前文件名
+- OFMT：数字输出的格式，默认为％.6g。表示只打印小数点后6 位
+
+<!--￼11-->
+
+## 内置函数
+
+awk定义了很多内置函数，用awk来写shell脚本倒是一个不错的选择，但是大多数我们是用不上的，以下是常用函数
+
+<!--￼12-->
+
+随机数，先设置种子再随机
+
+`rand() 0 <= n="" <="" 1,srand([expr])`将="" rand="" 函数的种子值设置为="" expr="" 参数的值，或如果省略="" 参数则使用某天的时间。="" <!--￼13--="">
+
+字符串
+
+![图2](https://imgs.codewoody.com/uploads/big/d69ae9c3151c623014bc9b558db9d8c2.jpg)
+
+系统常用
+
+![图3](https://imgs.codewoody.com/uploads/big/e2c04dd8198326358eae142bdfc5ee81.jpg)
+
+不常用算数：
+
+![图4](https://imgs.codewoody.com/uploads/big/e8b569cd74ad3509519e49502b858bb1.jpg)</=></=，!=同时还可以使用+，-，*，></，==，>
         
       </div>
       
@@ -722,17 +747,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1004,23 +1020,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印某几列"><span class="nav-text">2 打印某几列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件过滤"><span class="nav-text">3 条件过滤</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#判断语句"><span class="nav-text">4 判断语句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#begin-定义表头"><span class="nav-text">5 BEGIN 定义表头</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#end-添加结尾符"><span class="nav-text">6 END 添加结尾符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据计算"><span class="nav-text">7 数据计算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#有用的内置变量"><span class="nav-text">8 有用的内置变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内置函数"><span class="nav-text">9 内置函数</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

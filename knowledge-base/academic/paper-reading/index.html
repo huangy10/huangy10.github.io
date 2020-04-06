@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF I">
+  <meta name="description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF">
 <meta property="og:type" content="website">
 <meta property="og:title" content="读论文">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF I">
+<meta property="og:description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-04T12:46:48.454Z">
+<meta property="og:updated_time" content="2020-04-06T10:55:00.948Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文">
-<meta name="twitter:description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF I">
+<meta name="twitter:description" content="li ul li {   font-size: 12px;   color: gray;   font-style: none; }  .post-body li a {   font-style: italic; }  .post-body li {   text-align: left;   font-family: &quot;Biaodian Pro Serif GB&quot;,&quot;Numeral LF">
 
 
 
@@ -524,7 +524,8 @@
       <div class="post-body han-init-context">
         
         
-          <style>
+          
+<style>
 li ul li {
   font-size: 12px;
   color: gray;
@@ -545,9 +546,11 @@ span.add-date {
   color: gray;
 }
 </style>
-<div style="text-align: center">
-<p>目前梳理的文章总是是: <span id="paper-cnt">counting</span></p>
-</div>
+
+::: {style="text-align: center"}
+目前梳理的文章总是是: [counting]{#paper-cnt}
+:::
+
 <script>
 (function() {
   let oldOnLoad = window.onload
@@ -564,103 +567,78 @@ span.add-date {
   }
 })()
 </script>
-<h1 id="section">2017</h1>
-<ul>
-<li><a href="./griffith2017physical.html">Physical Sidelink Control Channel (PSCCH) in Mode 2: Performance Analysis</a> <span class="add-date">added 2020-03-21</span>
-<ul>
-<li>PSCCH (PSCH) 与 3GPP Release 12 Mode 2，<a href="/knowledge-base/academic/its/c-v2x/3GPP/PSCCH/">额外补充信息</a></li>
-<li>sidelink的概念：区分于uplink和downlink，使用不同的频段</li>
-</ul></li>
-</ul>
-<h1 id="section-1">2018</h1>
-<ul>
-<li><a href="./konstantinos2018flexible.html">Flexible SDN control in tactical ad hoc network</a></li>
-<li><a href="./malik2018hybrid.html">A Hybrid Routing Protocol for Wireless Distributed Networks</a></li>
-<li><a href="./rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a>
-<ul>
-<li>这里对模式3和模式4的介绍比较多。</li>
-</ul></li>
-<li><a href="./fakhar2018hybrid.html">A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks</a> <span class="add-date">added 2020-03-24</span>
-<ul>
-<li>C-V2X和IEEE802.11p的混合协议，ICC workshop文章</li>
-</ul></li>
-<li><a href="./amr2018performance.html">Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks</a> <span class="add-date">added 2020-04-02</span>
-<ul>
-<li>ProSe (Mode 2) 的延时是一个问题</li>
-<li>给出了一个开源的Mode 4仿真器</li>
-<li>在基站的覆盖范围内也可以使用 Mode 4 进行 V2X 通信。</li>
-<li>HARQ</li>
-</ul></li>
-</ul>
-<h1 id="section-2">2019</h1>
-<ul>
-<li><a href="./kongstantinos2019hybrid.html">Hybrid SDN Control in Mobile Ad Hoc Networks</a></li>
-<li><a href="/posts/34309/">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a> <span class="eng-origin">added 2020-02-24</span>
-<ul>
-<li>应该是用的Mode 3 甚至是 Mode 1 ProSe；</li>
-<li>登上过TVT的Popular Articles</li>
-</ul></li>
-<li><a href="./yong2019ai-agent.html">AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization</a></li>
-<li><a href="./valerian2019comparison.html">A Comparison of the V2X Communication System: ITS-G5 and C-V2X</a> <span class="add-date">added 2020-03-17</span>
-<ul>
-<li>C-V2X在低密度（密度小于<span class="math inline">\(150\ users/km^2\)</span>）的情况下性能比ITS-G5好，之后就急剧恶化。</li>
-<li>HARQ · 可靠性</li>
-</ul></li>
-<li><a href="./alejandro2019cv2x.html">C-V2X Assisted mmWave V2V Scheduling</a>
-<ul>
-<li>这里提到C-V2X使用的是sub-6GHz频段，即差不多也是5.9GHz频段，这和WAVE使用的频段相近？剩下的问题是，C-V2X有几个频段呢？如果只有一个频段，那总带宽还不如WAVE呢。</li>
-<li>非周期beacon对于C-V2X的通信有重要影响</li>
-<li>没有提资源重选概率<span class="math inline">\(P\)</span></li>
-<li>RRI (Resource Reservation Interval)</li>
-</ul></li>
-<li><a href="./behrad2019spatio.html">Spatio-temporal Dynamics of Cellular V2X Communication in Dense Vehicular Network</a> <span class="add-date">added 2020-03-20</span>
-<ul>
-<li>提到了一个开源的C-V2X的<a href="https://arxiv.org/abs/1907.09977" target="_blank" rel="noopener">仿真器</a>。</li>
-</ul></li>
-<li><a href="./ahlem2019survey.html">A Survey on Radio Resource Allocation for V2X Communications</a> <span class="add-date">added 2020-03-26</span>
-<ul>
-<li>这篇文章里讲的D2D通信是基于Mode 3的，即D2D调度是基站完成的</li>
-<li><a href="/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">Overlay &amp; Underlay 定义阐述</a></li>
-<li>对于V2X通信系统的性能要求的一些具体量化参数值</li>
-<li>Release 12中的D2D是以延时为代价来降低能耗的，因此Mode 1和Mode 2其实不适合V2X应用。</li>
-<li>脚注中提到的文件提到Rel-14 will be obsolete before it is even deployed.</li>
-</ul></li>
-<li><a href="./chen2019deep.html">A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems</a> <span class="add-date">added 2020-03-27</span>
-<ul>
-<li>Underlaying模式</li>
-</ul></li>
-<li><a href="./zhang2019stackelberg.html">Stackelberg Game-Based Power Allocation for V2X Communications</a> <span class="add-date">added 2020-03-29</span>
-<ul>
-<li>博弈论角度(<a href="/knowledge-base/academic/基础知识/博弈论/stackelberg.html">Stackelberg博弈</a>)解决资源分配问题</li>
-<li>URLLC (Ultra-reliable low-latency communication)</li>
-</ul></li>
-<li><a href="./alessandro2019survey.html">Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era</a> <span class="add-date">added 2020-03-31</span>
-<ul>
-<li>对IEEE802.11p和C-V2X的历史发展脉络梳理的比较多</li>
-<li>IEEE 802.11 bd</li>
-<li>IEEE802.11p在处理大小不同的包上更加灵活，LTE-V2X则比较困难</li>
-<li>每个RB上的符号数</li>
-</ul></li>
-<li><a href="./adel2019first.html">A First Investigation of Congestion Control for LTE-V2X Mode 4</a> <span class="add-date">added 2020-04-03</span>
-<ul>
-<li>所有的子信道具有相同的大小；这里给出了标准规定的可能的子信道的大小（包含的RB数量）</li>
-<li>SB-SPS的机制描述非常清晰，且讨论了SB-SPS的冲突问题</li>
-</ul></li>
-<li><a href="./pengfei2019platoon.html">Platoon Cooperative in Cellular V2X Networks for 5G and Beyond</a> <span class="add-date">added 2020-04-04</span></li>
-</ul>
-<h1 id="section-3">2020</h1>
-<ul>
-<li><a href="./gao2020pora.html">PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems</a></li>
-</ul>
-<h1 id="待读">待读</h1>
-<ul>
-<li>Bazzi, A.; Masini, B.M.; Zanella, A.; Thibault, I. <strong>Beaconing from connected vehicles: IEEE 802.11p vs. LTE-V2V</strong>. In Proceedings of the 2016 IEEE 27th Annual International Symposium on Personal, Indoor, and Mobile Radio Communications (PIMRC), Valencia, Spain, 4–8 September 2016; pp. 1–6.</li>
-<li>R. Molina-Masegosa and J. Gozalvez, “System level evaluation of LTEV2V mode 4 communications and its distributed scheduling,” Proc. IEEE VTC2017-Spring, pp. 1-5, June 2017.</li>
-<li>R. Molina-Masegosa and J. Gozalvez, “LTE-V for Sidelink 5G V2X,” IEEE Veh. Tec. Mag., Vol. 12, Iss. 4, pp. 30-39, Dec. 2017.</li>
-<li>C-V2X Security Requirements and Procedures: Survey and Research Directions</li>
-<li>Analytical Models of the Performance of C-V2X Mode 4 Vehicular Communications</li>
-</ul>
 
+## 2017
+
+- [Physical Sidelink Control Channel (PSCCH) in Mode 2: Performance Analysis](./griffith2017physical.html) <span class="add-date">added 2020-03-21</span>
+    - PSCCH (PSCH) 与 3GPP Release 12 Mode 2，[额外补充信息](/knowledge-base/academic/its/c-v2x/3GPP/PSCCH/)
+    - sidelink的概念：区分于uplink和downlink，使用不同的频段
+
+## 2018
+
+- [Flexible SDN control in tactical ad hoc network](./konstantinos2018flexible.html)
+- [A Hybrid Routing Protocol for Wireless Distributed Networks](./malik2018hybrid.html)
+- [Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications](./rafael2018configuration.html)
+    - 这里对模式3和模式4的介绍比较多。
+- [A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks](./fakhar2018hybrid.html) <span class="add-date">added 2020-03-24</span>
+    - C-V2X和IEEE802.11p的混合协议，ICC workshop文章
+- [Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks](./amr2018performance.html) [added 2020-04-02]{.add-date}
+    - ProSe (Mode 2) 的延时是一个问题
+    - 给出了一个开源的Mode 4仿真器
+    - 在基站的覆盖范围内也可以使用 Mode 4 进行 V2X 通信。
+    - HARQ
+
+## 2019
+
+- [Hybrid SDN Control in Mobile Ad Hoc  Networks](./kongstantinos2019hybrid.html)
+- [Deep Reinforcement Learning Based Resource Allocation for V2V Communications](/posts/34309/) [added 2020-02-24]{.eng-origin}
+    - 应该是用的Mode 3 甚至是 Mode 1 ProSe；
+    - 登上过TVT的Popular Articles
+- [AI Agent in Software-defined Network: Agent-based Network Service Prediction and Wireless Resource Scheduling Optimization](./yong2019ai-agent.html)
+- [A Comparison of the V2X Communication System: ITS-G5 and C-V2X](./valerian2019comparison.html) <span class="add-date">added 2020-03-17</span>
+    - C-V2X在低密度（密度小于$150\ users/km^2$）的情况下性能比ITS-G5好，之后就急剧恶化。
+    - HARQ · 可靠性
+- [C-V2X Assisted mmWave V2V Scheduling](./alejandro2019cv2x.html)
+    - 这里提到C-V2X使用的是sub-6GHz频段，即差不多也是5.9GHz频段，这和WAVE使用的频段相近？剩下的问题是，C-V2X有几个频段呢？如果只有一个频段，那总带宽还不如WAVE呢。
+    - 非周期beacon对于C-V2X的通信有重要影响
+    - 没有提资源重选概率$P$
+    - RRI (Resource Reservation Interval)
+- [Spatio-temporal Dynamics of Cellular V2X Communication in Dense Vehicular Network](./behrad2019spatio.html) <span class="add-date">added 2020-03-20</span>
+    - 提到了一个开源的C-V2X的[仿真器](https://arxiv.org/abs/1907.09977)。
+- [A Survey on Radio Resource Allocation for V2X Communications](./ahlem2019survey.html) [added 2020-03-26]{.add-date}
+    - 这篇文章里讲的D2D通信是基于Mode 3的，即D2D调度是基站完成的
+    - [Overlay & Underlay 定义阐述](/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F)
+    - 对于V2X通信系统的性能要求的一些具体量化参数值
+    - Release 12中的D2D是以延时为代价来降低能耗的，因此Mode 1和Mode 2其实不适合V2X应用。
+    - 脚注中提到的文件提到Rel-14 will be obsolete before it is even deployed.
+- [A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems](./chen2019deep.html) [added 2020-03-27]{.add-date}
+    - Underlaying模式
+- [Stackelberg Game-Based Power Allocation for V2X Communications](./zhang2019stackelberg.html) [added 2020-03-29]{.add-date}
+    - 博弈论角度([Stackelberg博弈](/knowledge-base/academic/基础知识/博弈论/stackelberg.html))解决资源分配问题
+    - URLLC (Ultra-reliable low-latency communication)
+- [Survey and Perspectives of Vehicular Wi-Fi versus Sidelink Cellular-V2X in the 5G Era](./alessandro2019survey.html) [added 2020-03-31]{.add-date}
+    - 对IEEE802.11p和C-V2X的历史发展脉络梳理的比较多
+    - IEEE 802.11 bd
+    - IEEE802.11p在处理大小不同的包上更加灵活，LTE-V2X则比较困难
+    - 每个RB上的符号数
+- [A First Investigation of Congestion Control for LTE-V2X Mode 4](./adel2019first.html) [added 2020-04-03]{.add-date}
+    - 所有的子信道具有相同的大小；这里给出了标准规定的可能的子信道的大小（包含的RB数量）
+    - SB-SPS的机制描述非常清晰，且讨论了SB-SPS的冲突问题
+- [Platoon Cooperative in Cellular V2X Networks for 5G and Beyond](./pengfei2019platoon.html) [added 2020-04-04]{.add-date}
+    - 没有拘泥于具体的C-V2X标准，而是提出了非常通用的假设
+    - 理论模型有很大的参考意义
+
+## 2020
+
+- [PROA: Predictive Offloading and Resource Allocation in Dynamic Fog Computing Systems](./gao2020pora.html)
+
+## 待读
+
+- Bazzi, A.; Masini, B.M.; Zanella, A.; Thibault, I. **Beaconing from connected vehicles: IEEE 802.11p vs. LTE-V2V**. In Proceedings of the 2016 IEEE 27th Annual International Symposium on Personal, Indoor, and Mobile Radio Communications (PIMRC), Valencia, Spain, 4–8 September 2016; pp. 1–6.
+- R. Molina-Masegosa and J. Gozalvez, “System level evaluation of LTEV2V mode 4 communications and its distributed scheduling,” Proc. IEEE VTC2017-Spring, pp. 1-5, June 2017. 
+- R. Molina-Masegosa and J. Gozalvez, “LTE-V for Sidelink 5G V2X,” IEEE Veh. Tec. Mag., Vol. 12, Iss. 4, pp. 30-39, Dec. 2017. 
+- C-V2X Security Requirements and Procedures: Survey and Research Directions
+- Analytical Models of the Performance of C-V2X Mode 4 Vehicular Communications 
         
       </div>
       
@@ -749,17 +727,8 @@ span.add-date {
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1031,23 +1000,6 @@ span.add-date {
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#section"><span class="nav-text">2017</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-1"><span class="nav-text">2018</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-2"><span class="nav-text">2019</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-3"><span class="nav-text">2020</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#待读"><span class="nav-text">待读</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
@@ -1599,7 +1551,7 @@ span.add-date {
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }

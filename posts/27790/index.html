@@ -123,21 +123,18 @@
 
 
 
-  <meta name="description" content="本文翻译自Optimizing images for the web - an in-depth guide  这篇文章提供了Web开发中涉及图像的一些优化问题：">
+  <meta name="description" content="本文翻译自[Optimizing images for the web - an in-depth guide](https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d)  ![](https://imgs.codewoody.com/uploads/big/11095b11da720ac41968e">
 <meta name="keywords" content="翻译,web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[翻译]网页中的图像优化指南">
 <meta property="og:url" content="http://www.codewoody.com/posts/27790/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="本文翻译自Optimizing images for the web - an in-depth guide  这篇文章提供了Web开发中涉及图像的一些优化问题：">
+<meta property="og:description" content="本文翻译自[Optimizing images for the web - an in-depth guide](https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d)  ![](https://imgs.codewoody.com/uploads/big/11095b11da720ac41968e">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/11095b11da720ac41968ed26b81beb9d.jpg">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/aa65cd49aef46db5741f02d249826ba5.jpeg">
 <meta property="og:updated_time" content="2019-12-04T13:25:27.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[翻译]网页中的图像优化指南">
-<meta name="twitter:description" content="本文翻译自Optimizing images for the web - an in-depth guide  这篇文章提供了Web开发中涉及图像的一些优化问题：">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/11095b11da720ac41968ed26b81beb9d.jpg">
+<meta name="twitter:description" content="本文翻译自[Optimizing images for the web - an in-depth guide](https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d)  ![](https://imgs.codewoody.com/uploads/big/11095b11da720ac41968e">
 
 
 
@@ -543,78 +540,108 @@
       
 
       
-        <p>本文翻译自<a href="https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d" target="_blank" rel="noopener">Optimizing images for the web - an in-depth guide</a></p>
-<p><img src="https://imgs.codewoody.com/uploads/big/11095b11da720ac41968ed26b81beb9d.jpg"></p>
-<p>这篇文章提供了Web开发中涉及图像的一些优化问题：</p>
-<a id="more"></a>
-<ul>
-<li>计算JPG图像文件大小</li>
-<li>在线图像优化</li>
-<li>自动化方案</li>
-<li>图像载入优化</li>
-<li>使用CDN</li>
-<li>WebP图像格式</li>
-<li>为高像素密度的屏幕的优化</li>
-</ul>
-<blockquote>
-<p>上面的目录的前几个部分其实讲的就是图像压缩的问题，不过这里他将的特别的入门级，显得比较啰嗦，我会进行一定的简化。</p>
-</blockquote>
-<p>图像性能常常是网页性能糟糕的一个重要因素，尤其是在初始载入的时候。根据的分辨率和图像质量不同，图像的大小可能占据网站总体积的70%以上。不注重图像性能优化很容易让网站的体验变得非常糟糕。没有经验的开发者则常常忽视这个问题。他们也未能及时接触到相关的优化工具。这篇文章的主旨就在于为Web开发者提供网页中图像性能优化的指南。</p>
-<h1 data-number="1" id="图像压缩"><span class="header-section-number">1</span> 图像压缩</h1>
-<p>未被压缩的图像大小和很容易通过像素数量乘以通道数确定：长 * 宽 * 24bits（RGB颜色系统）。原始图像的大小是非常大的，因此图像压缩就非常重要。</p>
-<p>有一些在线的网站能够提供图像压缩的功能，如：</p>
-<ul>
-<li><a href="https://compressor.io/" target="_blank" rel="noopener">Compressor.io - JPG, PNG, SVG, GIF - 1 file at the time</a></li>
-<li><a href="https://squoosh.app/" target="_blank" rel="noopener">Squoosh - JPG, PNG, SVG, GIF - 1 file at the time</a></li>
-<li><a href="https://imagecompressor.com/" target="_blank" rel="noopener">Optimizilla - JPG and PNG - up to 20 images at the time</a></li>
-<li><a href="https://tinypng.com/" target="_blank" rel="noopener">TinyPNG - JPG and PNG - up to 20 images at the time</a></li>
-<li><a href="https://www.svgminify.com/" target="_blank" rel="noopener">SVGMinify - SVG - 1 file at the time</a></li>
-<li><a href="https://jakearchibald.github.io/svgomg/" target="_blank" rel="noopener">svgomg - SVG - 1 file at the time</a></li>
-</ul>
-<p>不过在开发中大批量的图像处理就不适合用这些网页工具了。在复杂的Web工程中我们一般都会使用一些自动化的构建工具，例如 Gulp, Webpack, Parcel 等。这些自动化工具一般都包含有图像优化的插件，可以完全自动化图像优化处理的过程。这样可以确保所有的图像能够正确地优化。</p>
-<p>这里坐着推荐的插件是 <a href="https://www.npmjs.com/package/imagemin" target="_blank" rel="noopener">imagemin</a>。这一插件非常方便与各种CLI工具或者构建工具集成：</p>
-<ul>
-<li><a href="https://github.com/imagemin/imagemin-cli" target="_blank" rel="noopener">imagemin - CLI</a></li>
-<li><a href="https://github.com/sindresorhus/gulp-imagemin" target="_blank" rel="noopener">imagemin - Gulp</a></li>
-<li><a href="https://github.com/itgalaxy/imagemin-webpack" target="_blank" rel="noopener">imagemin - Webpack</a></li>
-<li><a href="https://github.com/DeMoorJasper/parcel-plugin-imagemin" target="_blank" rel="noopener">imagemin - Parcel</a></li>
-</ul>
-<h1 data-number="2" id="图像载入优化"><span class="header-section-number">2</span> 图像载入优化</h1>
-<p>上面已经介绍了通过压缩图像而不减低分辨率以减少前端需要下载文件体积的方法。不过如果一次性载入的图像数量比较多，网页的性能还是会很糟糕。</p>
-<h2 data-number="2.1" id="lazy-loading"><span class="header-section-number">2.1</span> Lazy Loading</h2>
-<p>Lazy Loading 是指在需要的时候才载入素材的理念。在我们的场景中，只有位于当前用户可视区域内的图像才需要进行载入。</p>
-<p>最简单的 Lazy Loading 方法是：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.jpg"</span> <span class="attr">loading</span>=<span class="string">"lazy"</span> <span class="attr">alt</span>=<span class="string">"sample image"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>也有一些基于 JavaScript 的解决方案：</p>
-<ul>
-<li><a href="https://github.com/verlok/lazyload" target="_blank" rel="noopener">verlok/lazyload</a></li>
-<li><a href="https://github.com/malchata/yall.js/" target="_blank" rel="noopener">yall.js</a></li>
-<li><a href="https://github.com/dinbror/blazy" target="_blank" rel="noopener">Blazy (not actively maintained)</a></li>
-</ul>
-<h2 data-number="2.2" id="progressive-images"><span class="header-section-number">2.2</span> Progressive images</h2>
-<p>Lazy Loading 的问题在于，从 UX 设计角度来看，用户在等待图像载入的时候，面对的是一个空的画面，这个设计不是特别的友好。Progressive images 的概念就是，我们可以先载入一个低质量的图像放在那里，然后载入高质量的图像。低质量的图像体积要小很多，可以很快的完成。这个图像质量逐渐改善的过程也可以分成多步，如下图：</p>
-<p><img src="https://imgs.codewoody.com/uploads/big/aa65cd49aef46db5741f02d249826ba5.jpeg"></p>
-<p>这种设计给予用户一种速度的错觉。用户可以看着图片变得越来越清晰，而非只是盯着一个空白区域。这里是一个 JavaScript 实现的 Progressive images: <a href="https://www.npmjs.com/package/progressive-image" target="_blank" rel="noopener">progressive-image</a>。</p>
-<h2 data-number="2.3" id="responsive-images"><span class="header-section-number">2.3</span> Responsive images</h2>
-<p>使用正确尺寸的图像也是一个需要注意的点。</p>
-<p>例如，我们有一个图像，在桌面端的最大宽度为<code>1920px</code>，在平板端的最大宽度为<code>1024px</code>，移动端的最大宽度为<code>568px</code>。简单的方法是使用一个<code>1920px</code>的图像用于所有的情况。但是这样就意味着平板用户和移动用户需要载入其实完全不必要的数据。</p>
-<p>我么可以使用 <code>picture</code> 元素来告诉浏览器根据设备类型去下载哪个图片。这个元素大约被93%的用户的浏览器支持，不过我们可以内嵌使用 <code>img</code> 元素来实现 fallback。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 1025px)"</span> <span class="attr">srcset</span>=<span class="string">"image_desktop.jpg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 769px)"</span> <span class="attr">srcset</span>=<span class="string">"image_tablet.jpg"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image_mobile.jpg"</span> <span class="attr">alt</span>=<span class="string">"Sample image"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 data-number="3" id="使用-cdn"><span class="header-section-number">3</span> 使用 CDN</h1>
-<p>一些 CDN，例如 Cloudinary 还有 Cloudflare 可以在服务器上进行图像优化。如果你使用了 CDN 服务，注意留意一下 CDN 服务提供商是否提供了图像优化的服务。这就可以让我们省下很多功夫了。</p>
-<h1 data-number="4" id="webp-图像格式"><span class="header-section-number">4</span> WebP 图像格式</h1>
-<blockquote>
-<p>最近看到了好多 WebP 格式的图像啊，尤其是微信公众号的文章里都是这种格式。别的优点还不清楚，不过给图像直接下载设置了一点障碍。</p>
-</blockquote>
-<p>WebP 图像格式由 Google 开发，是一种特别针对 Web 场景优化的格式。根据 canIUse 的数据，WebP 格式的图像在大约 80% 的场景下使用。为了保险设计 Fallback机制，例如：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">srcset</span>=<span class="string">"image.webp"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"image.jpg"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image.jpg"</span> <span class="attr">alt</span>=<span class="string">"Sample image"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>有很多在线转化工具可以将图像转化成 WebP 格式。如果 CDN 能够提供这种支持就是最为省心了。</p>
-<h1 data-number="5" id="为高像素密度的屏幕的优化"><span class="header-section-number">5</span> 为高像素密度的屏幕的优化</h1>
-<p>这更多的是 UX 方面的改善，而非性能方面的改善。例如在我们子啊一个 <code>768px</code> 宽度的屏幕中展示 <code>768px x 320px</code> 的图像，而这个设备的像素密度是2x，则设备屏幕实际的像素宽度是 <code>2 x 768 = 1536px</code>。那么实际上我们是将一个 <code>768px</code> 的图像拉伸了两倍。为了最优化图像在高分辨率设备上的显示，我们需要额外指定一个两倍甚至三倍分辨率的图像。这一图像通过<code>srcset</code>属性来设置：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"image-1x.jpg"</span> <span class="attr">srcset</span>=<span class="string">"image-2x.jpg 2x"</span> <span class="attr">alt</span>=<span class="string">"Sample image"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<p>一个完整的响应式的，支持 WebP/PNG 格式以及高分辨率屏幕的例子：</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/webp/hero-image-420-min.webp 1x, ./images/webp/hero-image-760-min.webp 2x"</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">media</span>=<span class="string">"(max-width: 440px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/minified/hero-image-420-min.png 1x, ./images/minified/hero-image-760-min.png 2x"</span> <span class="attr">media</span>=<span class="string">"(max-width: 440px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/webp/hero-image-550-min.webp 1x, ./images/webp/hero-image-960-min.webp 2x"</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">media</span>=<span class="string">"(max-width: 767px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/minified/hero-image-550-min.png 1x, ./images/minified/hero-image-960-min.png 2x"</span> <span class="attr">media</span>=<span class="string">"(max-width: 767px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/webp/hero-image-420-min.webp 1x, ./images/webp/hero-image-760-min.webp 2x"</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">media</span>=<span class="string">"(max-width: 1023px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/minified/hero-image-420-min.png 1x, ./images/minified/hero-image-760-min.png 2x"</span> <span class="attr">media</span>=<span class="string">"(max-width: 1023px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/webp/hero-image-760-min.webp 1x, ./images/webp/hero-image-960-min.webp 2x"</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">media</span>=<span class="string">"(max-width: 1919px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/minified/hero-image-760-min.png 1x, ./images/minified/hero-image-960-min.png 2x"</span> <span class="attr">media</span>=<span class="string">"(max-width: 1919px)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/webp/hero-image-960-min.webp"</span> <span class="attr">type</span>=<span class="string">"image/webp"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">"./images/minified/hero-image-960-min.png"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span>  <span class="attr">src</span>=<span class="string">"./images/minified/hero-image-960-min.png"</span> <span class="attr">alt</span>=<span class="string">"Example"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
+        
+本文翻译自[Optimizing images for the web - an in-depth guide](https://dev.to/prototyp/optimizing-images-for-the-web-an-in-depth-guide-4j7d)
 
+![](https://imgs.codewoody.com/uploads/big/11095b11da720ac41968ed26b81beb9d.jpg)
+
+这篇文章提供了Web开发中涉及图像的一些优化问题：
+
+<a id="more"></a>
+
+- 计算JPG图像文件大小
+- 在线图像优化
+- 自动化方案
+- 图像载入优化
+- 使用CDN
+- WebP图像格式
+- 为高像素密度的屏幕的优化
+
+> 上面的目录的前几个部分其实讲的就是图像压缩的问题，不过这里他将的特别的入门级，显得比较啰嗦，我会进行一定的简化。
+
+图像性能常常是网页性能糟糕的一个重要因素，尤其是在初始载入的时候。根据的分辨率和图像质量不同，图像的大小可能占据网站总体积的70%以上。不注重图像性能优化很容易让网站的体验变得非常糟糕。没有经验的开发者则常常忽视这个问题。他们也未能及时接触到相关的优化工具。这篇文章的主旨就在于为Web开发者提供网页中图像性能优化的指南。
+
+## 图像压缩
+
+未被压缩的图像大小和很容易通过像素数量乘以通道数确定：长 \* 宽 \* 24bits（RGB颜色系统）。原始图像的大小是非常大的，因此图像压缩就非常重要。
+
+有一些在线的网站能够提供图像压缩的功能，如：
+
+- [Compressor.io - JPG, PNG, SVG, GIF - 1 file at the time](https://compressor.io/)
+- [Squoosh - JPG, PNG, SVG, GIF - 1 file at the time](https://squoosh.app/)
+- [Optimizilla - JPG and PNG - up to 20 images at the time](https://imagecompressor.com/)
+- [TinyPNG - JPG and PNG - up to 20 images at the time](https://tinypng.com/)
+- [SVGMinify - SVG - 1 file at the time](https://www.svgminify.com/)
+- [svgomg - SVG - 1 file at the time](https://jakearchibald.github.io/svgomg/)
+
+不过在开发中大批量的图像处理就不适合用这些网页工具了。在复杂的Web工程中我们一般都会使用一些自动化的构建工具，例如 Gulp, Webpack, Parcel 等。这些自动化工具一般都包含有图像优化的插件，可以完全自动化图像优化处理的过程。这样可以确保所有的图像能够正确地优化。
+
+这里坐着推荐的插件是 [imagemin](https://www.npmjs.com/package/imagemin)。这一插件非常方便与各种CLI工具或者构建工具集成：
+
+- [imagemin - CLI](https://github.com/imagemin/imagemin-cli)
+- [imagemin - Gulp](https://github.com/sindresorhus/gulp-imagemin)
+- [imagemin - Webpack](https://github.com/itgalaxy/imagemin-webpack)
+- [imagemin - Parcel](https://github.com/DeMoorJasper/parcel-plugin-imagemin)
+
+## 图像载入优化
+
+上面已经介绍了通过压缩图像而不减低分辨率以减少前端需要下载文件体积的方法。不过如果一次性载入的图像数量比较多，网页的性能还是会很糟糕。
+
+### Lazy Loading
+
+Lazy Loading 是指在需要的时候才载入素材的理念。在我们的场景中，只有位于当前用户可视区域内的图像才需要进行载入。
+
+最简单的 Lazy Loading 方法是：
+
+<!--￼0-->
+
+也有一些基于 JavaScript 的解决方案：
+
+- [verlok/lazyload](https://github.com/verlok/lazyload)
+- [yall.js](https://github.com/malchata/yall.js/)
+- [Blazy (not actively maintained)](https://github.com/dinbror/blazy)
+
+### Progressive images
+
+Lazy Loading 的问题在于，从 UX 设计角度来看，用户在等待图像载入的时候，面对的是一个空的画面，这个设计不是特别的友好。Progressive images 的概念就是，我们可以先载入一个低质量的图像放在那里，然后载入高质量的图像。低质量的图像体积要小很多，可以很快的完成。这个图像质量逐渐改善的过程也可以分成多步，如下图：
+
+![](https://imgs.codewoody.com/uploads/big/aa65cd49aef46db5741f02d249826ba5.jpeg)
+
+这种设计给予用户一种速度的错觉。用户可以看着图片变得越来越清晰，而非只是盯着一个空白区域。这里是一个 JavaScript 实现的 Progressive images: [progressive-image](https://www.npmjs.com/package/progressive-image)。
+
+### Responsive images
+
+使用正确尺寸的图像也是一个需要注意的点。
+
+例如，我们有一个图像，在桌面端的最大宽度为`1920px`，在平板端的最大宽度为`1024px`，移动端的最大宽度为`568px`。简单的方法是使用一个`1920px`的图像用于所有的情况。但是这样就意味着平板用户和移动用户需要载入其实完全不必要的数据。
+
+我么可以使用 `picture` 元素来告诉浏览器根据设备类型去下载哪个图片。这个元素大约被93%的用户的浏览器支持，不过我们可以内嵌使用 `img` 元素来实现 fallback。
+
+<!--￼1-->
+
+## 使用 CDN
+
+一些 CDN，例如 Cloudinary 还有 Cloudflare 可以在服务器上进行图像优化。如果你使用了 CDN 服务，注意留意一下 CDN 服务提供商是否提供了图像优化的服务。这就可以让我们省下很多功夫了。
+
+## WebP 图像格式
+
+> 最近看到了好多 WebP 格式的图像啊，尤其是微信公众号的文章里都是这种格式。别的优点还不清楚，不过给图像直接下载设置了一点障碍。
+
+WebP 图像格式由 Google 开发，是一种特别针对 Web 场景优化的格式。根据 canIUse 的数据，WebP 格式的图像在大约 80% 的场景下使用。为了保险设计 Fallback机制，例如：
+
+<!--￼2-->
+
+有很多在线转化工具可以将图像转化成 WebP 格式。如果 CDN 能够提供这种支持就是最为省心了。
+
+## 为高像素密度的屏幕的优化
+
+这更多的是 UX 方面的改善，而非性能方面的改善。例如在我们子啊一个 `768px` 宽度的屏幕中展示 `768px x 320px` 的图像，而这个设备的像素密度是2x，则设备屏幕实际的像素宽度是 `2 x 768 = 1536px`。那么实际上我们是将一个 `768px` 的图像拉伸了两倍。为了最优化图像在高分辨率设备上的显示，我们需要额外指定一个两倍甚至三倍分辨率的图像。这一图像通过`srcset`属性来设置：
+
+<!--￼3-->
+
+一个完整的响应式的，支持 WebP/PNG 格式以及高分辨率屏幕的例子：
+
+<!--￼4-->
       
     </div>
 
@@ -715,17 +742,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -997,23 +1015,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像压缩"><span class="nav-text">1 图像压缩</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图像载入优化"><span class="nav-text">2 图像载入优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lazy-loading"><span class="nav-text">2.1 Lazy Loading</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#progressive-images"><span class="nav-text">2.2 Progressive images</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#responsive-images"><span class="nav-text">2.3 Responsive images</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用-cdn"><span class="nav-text">3 使用 CDN</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webp-图像格式"><span class="nav-text">4 WebP 图像格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为高像素密度的屏幕的优化"><span class="nav-text">5 为高像素密度的屏幕的优化</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

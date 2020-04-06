@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="1 Ubuntu 1.1 安装Python 1.1.1 python3.7 以下安装脚本在Ubuntu 16.04上测试通过，引用自How to Install Python 3.7 on Ubuntu 18.04 123456789101112sudo apt updatesudo apt install software-properties-commonsudo add-apt-reposi">
+  <meta name="description" content="## Ubuntu  ### 安装Python  #### python3.7  以下安装脚本在Ubuntu 16.04上测试通过，引用自[How to Install Python 3.7 on Ubuntu 18.04](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/)    &amp;gt; 在`sudo add-">
 <meta property="og:type" content="website">
 <meta property="og:title" content="如何安装Python">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/how-to-install/python.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="1 Ubuntu 1.1 安装Python 1.1.1 python3.7 以下安装脚本在Ubuntu 16.04上测试通过，引用自How to Install Python 3.7 on Ubuntu 18.04 123456789101112sudo apt updatesudo apt install software-properties-commonsudo add-apt-reposi">
+<meta property="og:description" content="## Ubuntu  ### 安装Python  #### python3.7  以下安装脚本在Ubuntu 16.04上测试通过，引用自[How to Install Python 3.7 on Ubuntu 18.04](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/)    &amp;gt; 在`sudo add-">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-05-08T14:03:30.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何安装Python">
-<meta name="twitter:description" content="1 Ubuntu 1.1 安装Python 1.1.1 python3.7 以下安装脚本在Ubuntu 16.04上测试通过，引用自How to Install Python 3.7 on Ubuntu 18.04 123456789101112sudo apt updatesudo apt install software-properties-commonsudo add-apt-reposi">
+<meta name="twitter:description" content="## Ubuntu  ### 安装Python  #### python3.7  以下安装脚本在Ubuntu 16.04上测试通过，引用自[How to Install Python 3.7 on Ubuntu 18.04](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/)    &amp;gt; 在`sudo add-">
 
 
 
@@ -538,54 +538,78 @@
       <div class="post-body han-init-context">
         
         
-          <h1 data-number="1" id="ubuntu"><span class="header-section-number">1</span> Ubuntu</h1>
-<h2 data-number="1.1" id="安装python"><span class="header-section-number">1.1</span> 安装Python</h2>
-<h3 data-number="1.1.1" id="python3.7"><span class="header-section-number">1.1.1</span> python3.7</h3>
-<p>以下安装脚本在Ubuntu 16.04上测试通过，引用自<a href="https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/" target="_blank" rel="noopener">How to Install Python 3.7 on Ubuntu 18.04</a></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install software-properties-common</span><br><span class="line"></span><br><span class="line">sudo add-apt-repository ppa:deadsnakes/ppa</span><br><span class="line"><span class="meta">#</span><span class="bash"> When prompted press Enter to <span class="built_in">continue</span>:</span></span><br><span class="line"></span><br><span class="line">sudo apt install python3.7</span><br><span class="line"></span><br><span class="line">python3.7 -v</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 这里安装后只有python3.7的命令可以用，为了使用python命令，使用如下命令</span></span><br><span class="line">sudo ln -s $(which python3.7) /usr/bin/python</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>在<code>sudo add-apt-repository ppa:deadsnakes/ppa</code>命令中可能出现<code>/etc/apt/sources.list</code>文件无法访问问题。如果你改用了国内镜像，其内容包含了中文的注释，那么这个错误可能是由于locale设置导致的。通过<code>export LC_ALL="zh_CN.UTF-8"</code>可以消除这个问题。</p>
-</blockquote>
-<blockquote>
-<p>注意，可以在安装pip的同时一并安装python3。详情见下面。</p>
-</blockquote>
-<h2 data-number="1.2" id="安装pip"><span class="header-section-number">1.2</span> 安装pip</h2>
-<h3 data-number="1.2.1" id="pip-for-python3.6"><span class="header-section-number">1.2.1</span> pip for python3.6</h3>
-<p>为Python3安装pip的方法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo apt update</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo apt install python3-pip</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> pip3 --version</span></span><br><span class="line"></span><br><span class="line">pip 9.0.1 from /usr/lib/python3/dist-packages (python 3.6)</span><br></pre></td></tr></table></figure>
-<p>注意，按照这种方法会连通python3一起安装。如果你用上面的方法安装了python3.7，那么在运行上面的脚本以后会同时存在3.7和3.6两个版本的python.</p>
-<h3 data-number="1.2.2" id="pip-for-python3.7"><span class="header-section-number">1.2.2</span> pip for python3.7</h3>
-<p>经过实验，比较保险可靠的是如下的方法：</p>
-<ol type="1">
-<li>首先按照前面的方法安装好Python3.7</li>
-<li>执行下面的命令：</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s -L https://bootstrap.pypa.io/get-pip.py | sudo python3.7</span><br></pre></td></tr></table></figure>
-<p>如果不需要在全局安装python3.7的pip工具，只是在虚拟环境中使用的话，直接使用<code>python3.7</code>创建虚拟环境就可以了，虚拟环境中的pip会自动安装。虚拟环境的创建方法范例见下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv -p $(which python3.7) env</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意这个方法安装的pip会强制覆盖已有的pip</p>
-</blockquote>
-<h3 data-number="1.2.3" id="pip-for-python2"><span class="header-section-number">1.2.3</span> pip for python2</h3>
-<p>为python2安装pip的方法如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install python-pip</span><br><span class="line">pip --version</span><br></pre></td></tr></table></figure>
-<p>同样，上面的脚本也会自动安装python2及其他必要的依赖。</p>
-<h3 data-number="1.2.4" id="pip的国内镜像配置方法"><span class="header-section-number">1.2.4</span> pip的国内镜像配置方法</h3>
-<p>我这里使用<a href="https://mirrors.tuna.tsinghua.edu.cn/help/pypi/" target="_blank" rel="noopener">清华大学开源软件镜像站</a>提供的资源。设置方法如下：</p>
-<h4 data-number="1.2.4.1" id="临时使用"><span class="header-section-number">1.2.4.1</span> 临时使用</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple some-package</span><br></pre></td></tr></table></figure>
-<p>注意，<code>simple</code>不能少, 是<code>https</code>而不是<code>http</code></p>
-<h4 data-number="1.2.4.2" id="设置为默认"><span class="header-section-number">1.2.4.2</span> 设置为默认</h4>
-<p>升级 pip 到最新的版本 (&gt;=10.0.0) 后进行配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install pip -U</span><br><span class="line">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
-<p>如果您到 pip 默认源的网络连接较差，临时使用本镜像站来升级 pip：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U</span><br></pre></td></tr></table></figure>
-<h1 data-number="2" id="reference"><span class="header-section-number">2</span> Reference</h1>
-<ul>
-<li><a href="https://stackoverflow.com/questions/54633657/how-to-install-pip-for-python-3-7-on-ubuntu-18" target="_blank" rel="noopener">How to Install pip for python 3.7 on Ubuntu 18?</a></li>
-<li><a href="https://bootstrap.pypa.io/get-pip.py" target="_blank" rel="noopener">get-pip.py</a></li>
-</ul>
+          
+## Ubuntu
 
+### 安装Python
+
+#### python3.7
+
+以下安装脚本在Ubuntu 16.04上测试通过，引用自[How to Install Python 3.7 on Ubuntu 18.04](https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/)
+
+<!--￼0-->
+
+> 在`sudo add-apt-repository ppa:deadsnakes/ppa`命令中可能出现`/etc/apt/sources.list`文件无法访问问题。如果你改用了国内镜像，其内容包含了中文的注释，那么这个错误可能是由于locale设置导致的。通过`export LC_ALL="zh_CN.UTF-8"`可以消除这个问题。
+
+> 注意，可以在安装pip的同时一并安装python3。详情见下面。
+
+### 安装pip
+
+#### pip for python3.6
+
+为Python3安装pip的方法如下：
+
+<!--￼1-->
+
+注意，按照这种方法会连通python3一起安装。如果你用上面的方法安装了python3.7，那么在运行上面的脚本以后会同时存在3.7和3.6两个版本的python.
+
+#### pip for python3.7
+
+经过实验，比较保险可靠的是如下的方法：
+
+1. 首先按照前面的方法安装好Python3.7
+2. 执行下面的命令：
+
+<!--￼2-->
+
+如果不需要在全局安装python3.7的pip工具，只是在虚拟环境中使用的话，直接使用`python3.7`创建虚拟环境就可以了，虚拟环境中的pip会自动安装。虚拟环境的创建方法范例见下：
+
+<!--￼3-->
+
+> 注意这个方法安装的pip会强制覆盖已有的pip
+
+#### pip for python2
+
+为python2安装pip的方法如下：
+
+<!--￼4-->
+
+同样，上面的脚本也会自动安装python2及其他必要的依赖。
+
+#### pip的国内镜像配置方法
+
+我这里使用[清华大学开源软件镜像站](https://mirrors.tuna.tsinghua.edu.cn/help/pypi/)提供的资源。设置方法如下：
+
+##### 临时使用
+
+<!--￼5-->
+
+注意，`simple`不能少, 是`https`而不是`http`
+
+##### 设置为默认
+
+升级 pip 到最新的版本 (>=10.0.0) 后进行配置：
+
+<!--￼6-->
+
+如果您到 pip 默认源的网络连接较差，临时使用本镜像站来升级 pip：
+
+<!--￼7-->
+
+## Reference
+
+- [How to Install pip for python 3.7 on Ubuntu 18?](https://stackoverflow.com/questions/54633657/how-to-install-pip-for-python-3-7-on-ubuntu-18)
+- [get-pip.py](https://bootstrap.pypa.io/get-pip.py)
         
       </div>
       
@@ -688,17 +712,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -970,23 +985,6 @@
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ubuntu"><span class="nav-text">1 Ubuntu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装python"><span class="nav-text">1.1 安装Python</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#python3.7"><span class="nav-text">1.1.1 python3.7</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装pip"><span class="nav-text">1.2 安装pip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pip-for-python3.6"><span class="nav-text">1.2.1 pip for python3.6</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip-for-python3.7"><span class="nav-text">1.2.2 pip for python3.7</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip-for-python2"><span class="nav-text">1.2.3 pip for python2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pip的国内镜像配置方法"><span class="nav-text">1.2.4 pip的国内镜像配置方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#临时使用"><span class="nav-text">1.2.4.1 临时使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置为默认"><span class="nav-text">1.2.4.2 设置为默认</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">2 Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       

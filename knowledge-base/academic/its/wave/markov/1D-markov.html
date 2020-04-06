@@ -123,19 +123,17 @@
 
 
 
-  <meta name="description" content="1 前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。">
+  <meta name="description" content="## 前言  一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的[二维马尔科夫链](../wave.html)中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。  这里整理的一维马尔科夫过程的研究主要来自于[@wa">
 <meta property="og:type" content="website">
 <meta property="og:title" content="一维马尔科夫过程的使用">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/markov/1D-markov.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="1 前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。">
+<meta property="og:description" content="## 前言  一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的[二维马尔科夫链](../wave.html)中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。  这里整理的一维马尔科夫过程的研究主要来自于[@wa">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
 <meta property="og:updated_time" content="2019-06-20T05:45:04.052Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一维马尔科夫过程的使用">
-<meta name="twitter:description" content="1 前言 一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的二维马尔科夫链中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。 这里整理的一维马尔科夫过程的研究主要来自于[1]，同时包含饱和以及不饱和场景的性能分析。">
-<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png">
+<meta name="twitter:description" content="## 前言  一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的[二维马尔科夫链](../wave.html)中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。  这里整理的一维马尔科夫过程的研究主要来自于[@wa">
 
 
 
@@ -564,68 +562,83 @@
       <div class="post-body han-init-context">
         
         
-          <h1 data-number="1" id="前言"><span class="header-section-number">1</span> 前言</h1>
-<p>一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的<a href="../wave.html">二维马尔科夫链</a>中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。</p>
-<p>这里整理的一维马尔科夫过程的研究主要来自于<span class="citation" data-cites="wang2009characterising">[1]</span>，同时包含饱和以及不饱和场景的性能分析。</p>
-<h1 data-number="2" id="一维马尔科夫链"><span class="header-section-number">2</span> 一维马尔科夫链</h1>
-<p>网络结构为的单跳Adhoc网络，节点总数为<span class="math inline">\(n\)</span>。传输环境为：a two-ray propagation model with no hidden terminal or capture effects，即所有的包丢失都是由于碰撞(Collision)导致的。假设每个节点每次只能缓存一个数据包，且包的到达过程为到达率为<span class="math inline">\(\lambda\)</span>的Poisson过程，</p>
-<figure>
-<img src="https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png" alt=""><figcaption>非饱和状态下的一维马尔科夫链状态转移图</figcaption>
-</figure>
-<p>如上图所示，退避窗口为<span class="math inline">\(W\)</span>，意味着退避状态一共有<span class="math inline">\(W\)</span>个，以及一个额外的Idle状态（记为<span class="math inline">\(I\)</span>）。同时记包的到达概率为<span class="math inline">\(q\)</span>，信道繁忙的概率为<span class="math inline">\(q_b\)</span>，则有下面的概率转移矩阵：</p>
-<p><span class="math display">\[\begin{equation}
+          
+## 前言
+
+一维马尔科夫链主要应用于广播消息的性能分析。在广播通信中，不存在ACK机制，因此发送者无法判断发送是否，因此也就无法增加退避窗口并且发起重传，传统的[二维马尔科夫链](../wave.html)中的二元状态变量中的backoff stage失去意义，因此只需要用backoff counter这一个变量即可表征广播接入信道的过程。
+
+这里整理的一维马尔科夫过程的研究主要来自于[@wang2009characterising]，同时包含饱和以及不饱和场景的性能分析。
+
+## 一维马尔科夫链
+
+网络结构为的单跳Adhoc网络，节点总数为$n$。传输环境为：a two-ray propagation model with no hidden terminal or capture effects，即所有的包丢失都是由于碰撞(Collision)导致的。假设每个节点每次只能缓存一个数据包，且包的到达过程为到达率为$\lambda$的Poisson过程，
+
+![非饱和状态下的一维马尔科夫链状态转移图](https://imgs.codewoody.com/uploads/big/bcb65007d6aa7bc769fb3e51530d1ead.png)
+
+如上图所示，退避窗口为$W$，意味着退避状态一共有$W$个，以及一个额外的Idle状态（记为$I$）。同时记包的到达概率为$q$，信道繁忙的概率为$q_b$，则有下面的概率转移矩阵：
+
+\begin{equation}
 \left\{\begin{array}{l}{P\{I | I\}=1-q} \\ {P\{k | I\}=q / W} \\ {P\{k | I+1\}=1-p_{b}} \\ {P\{k | k\}=p_{b}} \\ {P\{I | 0\}=1}\end{array}\right.
-\end{equation}\]</span></p>
-<p>下面求解稳态分布<span class="math inline">\(b_k (k \in [0, W - 1])\)</span>（Idle状态的稳态概率为<span class="math inline">\(b_I\)</span>），我们通过转移概率可以得到如下的方程：</p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+下面求解稳态分布$b_k (k \in [0, W - 1])$（Idle状态的稳态概率为$b_I$），我们通过转移概率可以得到如下的方程：
+
+\begin{equation}
 b_I = \frac{1}{q}b_0
-\end{equation}\]</span></p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+\begin{equation}
 b_{k}=\frac{(W-k) q}{W\left(1-P_{b}\right)} b_{I}=\frac{(W-k)}{W\left(1-P_{b}\right)} b_{0} \quad k \in[1, W-1]
-\end{equation}\]</span></p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+\begin{equation}
 b_{I}+b_{0}+\sum_{k=1}^{W-1} b_{k}=1
-\end{equation}\]</span></p>
-<p>当backoff counter为0时节点开发发送，则<span class="math inline">\(b_0\)</span>为传输概率(transmission probability) <span class="math inline">\(\tau\)</span>。通过上面的三个公式组成的方程，我们可以得到：</p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+当backoff counter为0时节点开发发送，则$b_0$为传输概率(transmission probability) $\tau$。通过上面的三个公式组成的方程，我们可以得到：
+
+\begin{equation}
 \label{tau}
 \tau=b_{0}=\left(\frac{1}{q}+1+\frac{(W-1)}{2\left(1-P_{b}\right)}\right)^{-1}
-\end{equation}\]</span></p>
-<p>在得到传输概率以后，通过经典文章<span class="citation" data-cites="bianchi2000performance">[2]</span>我们可以计算吞吐率性能。不过我们在这里的模型中增加了Idle状态，因此分析会有一点不同。</p>
-<p>记<span class="math inline">\(P_b\)</span>为信道繁忙的概率，<span class="math inline">\(P_s\)</span>为传输成功的概率，则：</p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+在得到传输概率以后，通过经典文章[@bianchi2000performance]我们可以计算吞吐率性能。不过我们在这里的模型中增加了Idle状态，因此分析会有一点不同。
+
+记$P_b$为信道繁忙的概率，$P_s$为传输成功的概率，则：
+
+\begin{equation}
 \label{Pb}
-\begin{aligned} P_{b} &amp;=1-(1-\tau)^{n-1} \\ P_{s} &amp;=n \tau(1-\tau)^{n-1} \end{aligned}
-\end{equation}\]</span></p>
-<p>按照<span class="citation" data-cites="bianchi2000performance">[2]</span>的方法，将两次backoff状态之间的间隔定义为一个slot（virtual slot），则virtual slot可能包含一个空的slot，一次冲突，或者一次成功的发送。那么有：</p>
-<p><span class="math display">\[\begin{equation}
+\begin{aligned} P_{b} &=1-(1-\tau)^{n-1} \\ P_{s} &=n \tau(1-\tau)^{n-1} \end{aligned}
+\end{equation}
+
+按照[@bianchi2000performance]的方法，将两次backoff状态之间的间隔定义为一个slot（virtual slot），则virtual slot可能包含一个空的slot，一次冲突，或者一次成功的发送。那么有：
+
+\begin{equation}
 \text {SlotTime}=(1-\tau)^{n} \sigma+\left(1-(1-\tau)^{n}\right) T
-\end{equation}\]</span></p>
-<p>由于在广播中，没有RTS/CTS，也没有ACK，那么一次冲突和一次成功发送占用信道的时间是一样的：</p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+由于在广播中，没有RTS/CTS，也没有ACK，那么一次冲突和一次成功发送占用信道的时间是一样的：
+
+\begin{equation}
 T=\frac{H+E[P]}{R}+D I F S+\delta
-\end{equation}\]</span></p>
-<p>这里<span class="math inline">\(H\)</span>为物理层帧头和MAC层帧头的大小，<span class="math inline">\(R\)</span>为发送速率。由于我们假定包的生成过程是Poisson过程，则</p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+这里$H$为物理层帧头和MAC层帧头的大小，$R$为发送速率。由于我们假定包的生成过程是Poisson过程，则
+
+\begin{equation}
 \label{q}
 q=1-e^{-\lambda S l o t T i m e}
-\end{equation}\]</span></p>
-<p>通过联立求解<span class="math inline">\(\eqref{tau}, \eqref{Pb}, \eqref{q}\)</span>非线性方程组，我们可以得到归一化吞吐率性能</p>
-<p><span class="math display">\[\begin{equation}
+\end{equation}
+
+通过联立求解$\eqref{tau}, \eqref{Pb}, \eqref{q}$非线性方程组，我们可以得到归一化吞吐率性能
+
+\begin{equation}
 S=\frac{P_{s} E[P]}{S l o t T i m e}
-\end{equation}\]</span></p>
-<blockquote>
-<p>上面描述的是非饱和状态下的性能计算过程，但是当<span class="math inline">\(\lambda\)</span>趋近于无穷大，即<span class="math inline">\(q\)</span>趋向于1时，即可以得到饱和场景下的通信性能。</p>
-</blockquote>
-<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
-<div id="refs" class="references" role="doc-bibliography">
-<div id="ref-wang2009characterising">
-<p>[1] J.-P. Wang, M. Abolhasan, D. R. Franklin, and F. Safaei, “Characterising the behaviour of ieee 802.11 broadcast transmissions in ad hoc wireless lans,” in <em>2009 ieee international conference on communications</em>, 2009, pp. 1–5.</p>
-</div>
-<div id="ref-bianchi2000performance">
-<p>[2] G. Bianchi, “Performance analysis of the ieee 802.11 distributed coordination function,” <em>IEEE Journal on Selected Areas in Communications</em>, vol. 18, no. 3, pp. 535–547, 2000.</p>
-</div>
-</div>
+\end{equation}
+
+> 上面描述的是非饱和状态下的性能计算过程，但是当$\lambda$趋近于无穷大，即$q$趋向于1时，即可以得到饱和场景下的通信性能。
+
+## Reference
 
         
       </div>
@@ -753,17 +766,8 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <div class="site-overview-wrap sidebar-panel">
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1035,23 +1039,6 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
         </div>
       </div>
 
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一维马尔科夫链"><span class="nav-text">2 一维马尔科夫链</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
       
 
       
@@ -1603,7 +1590,7 @@ S=\frac{P_{s} E[P]}{S l o t T i m e}
     TeX: {
       
       equationNumbers: {
-        autoNumber: 'AMS'
+        autoNumber: 'all'
       },
       
     }
