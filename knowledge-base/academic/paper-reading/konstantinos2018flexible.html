@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="## 概述  这篇文章的题目时Flexible SDN control in tactical ad hoc network  战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较**概念性**的内容。  这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要">
+  <meta name="description" content="1 概述 这篇文章的题目时Flexible SDN control in tactical ad hoc network 战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较概念性的内容。 这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路">
 <meta property="og:type" content="website">
 <meta property="og:title" content="读论文-SDN与战术自组网">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/konstantinos2018flexible.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## 概述  这篇文章的题目时Flexible SDN control in tactical ad hoc network  战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较**概念性**的内容。  这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要">
+<meta property="og:description" content="1 概述 这篇文章的题目时Flexible SDN control in tactical ad hoc network 战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较概念性的内容。 这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.502Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="读论文-SDN与战术自组网">
-<meta name="twitter:description" content="## 概述  这篇文章的题目时Flexible SDN control in tactical ad hoc network  战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较**概念性**的内容。  这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要">
+<meta name="twitter:description" content="1 概述 这篇文章的题目时Flexible SDN control in tactical ad hoc network 战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较概念性的内容。 这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路">
 
 
 
@@ -538,50 +538,34 @@
       <div class="post-body han-init-context">
         
         
-          
-## 概述
-
-这篇文章的题目时Flexible SDN control in tactical ad hoc network
-
-战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较**概念性**的内容。
-
-这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路和高动态拓扑。
-
-> In this paper, we propose flexible protocols that split the control of the ad hoc network between the centralized SDN controller and the date plane nodes. The latter can dynamically decide whether to follow the controller instructions or adapt to network changes in a distributed manner.
-
-文章的这个提法其实是介于完全的中心化和完全的分布式之间。既存在一个中心管理者，同时各个节点对于中心管理者的调度不是完全遵守，可以根据局部环境进行调整。
-
-> ... while the extra overheads are one order of magnitude lower than the control message overheads of traditional OpenFlow systems.
-
-开销也非常低。
-
-Introduction环节主要是和AODV还有OLSR这种分布式的路由协议对比了。作者这里提出的协议是尝试将SDN的可编程性和AODV/OLSR这种分布式路由协议(MANET)的灵活性，可靠性结合起来。
-
-> In this paper, we answer this question affirmatively with flexible SDN, an architecture for the control of tactical ad hoc networks that borrows ideas from the existing MANET protocols to address potential limitations of SDN in this context.
-
-## 系统模型
-
-每个节点上运行程序，称为local agents。这些程序负责在节点之间交换分发链路状态变化信息。这种行为类似于MANET的路由协议。其区别在于这种信息交换不是flooding的，而是针对特定的目标节点。因此这些程序相比于MANET路由协议来说更加轻量级一些。这些信息会帮助节点决定是否要遵循SDN的中央控制器的指令。一般来说在SDN中央控制服务的获得比较方便的时候，节点偏好SDN指令。当SDN控制器无法访问时，则使用local agents获得的信息来自行组织路由表。
-
-在实现层面上，实现两种策略的切换主要通过对OpenFlow加入一个状态管理的扩展来实现。这些扩展允许节点根据网络状态选择转发规则。
-
-验证平台采用了一些安卓智能手机和笔记本电脑，这些设备上运行了 Open VSwitch SDN 组件，以及作者设计的 local agent 程序。作者测试了 local agents 和 Openflow 对于无线连接 (Wifi) 中断的反应及恢复的时间。
-
-而后是Overhead方面的研究，主要是研究为了满足拓扑重建需要的控制消息发送频率。
-
-## 机制内容
-
-这里主要关心local agents以何种规则来进行信息交换以实现较小的Overhead。
-
-每个节点存储一个邻居节点列表。邻居节点通过周期性的心跳包广播来探测。典型的MANET协议会在所有节点之间以Flooding的方式来传递邻居节点表。这种方式开销很大。为了取得consistency和overhead的平衡，这里作者采用了基于订阅(subscription)的方法
-
-## 评价
-
-其实这篇论文还有后面的内容，包括最优的控制信息广播频率等。不过由于这里提到的机制太简单，后面的不需要关注太多。这里就做个总结吧。
-
-这篇文章提出的机制其实非常简单，就是传统的中心式的SDN加上MANET协议。如果SDN给出的链路挂了就用MANET给的链路。文章里面提到用一个订阅式的办法解决MANET路由同步开销的问题，但是没有说订阅机制的细节。后面的理论部分就是推算为了最低广播频率，其实也是很传统的MANET问题。
-
-这篇文章做的太粗糙了。就SDN和MANET部分来说都没有做什么显著的优化，就是两个硬拼在一起，SDN为主，SDN给的链路挂了就用MANET的链路。SDN + MANET的思路其实可以，但是结合要更有机一点。比如SDN其实也是要向中央控制器汇报信息的，MANET需要同步消息，这俩可以联合优化之类的。文章这两个同步流程是完全分开的，其实非常浪费。然后SDN和MANET给出的链路哪个好，这个决策可以加入AI的东西。现在这篇文章就是SDN挂了用MANET，没有比较链路的区别。
+          <h1 data-number="1" id="概述"><span class="header-section-number">1</span> 概述</h1>
+<p>这篇文章的题目时Flexible SDN control in tactical ad hoc network</p>
+<p>战术网络这个话题因为和军事技术有关，其实真正前沿，各国军队使用中的方案都是保密的，很难在公开的论文中看到，因此相关的论文谈论的其实一般都是比较<strong>概念性</strong>的内容。</p>
+<p>这篇论文是讲的SDN，即软件定义网络在战术自组网中的应用。这样，SDN也会面临自组网的一般性问题，主要是不稳定的通信链路和高动态拓扑。</p>
+<blockquote>
+<p>In this paper, we propose flexible protocols that split the control of the ad hoc network between the centralized SDN controller and the date plane nodes. The latter can dynamically decide whether to follow the controller instructions or adapt to network changes in a distributed manner.</p>
+</blockquote>
+<p>文章的这个提法其实是介于完全的中心化和完全的分布式之间。既存在一个中心管理者，同时各个节点对于中心管理者的调度不是完全遵守，可以根据局部环境进行调整。</p>
+<blockquote>
+<p>... while the extra overheads are one order of magnitude lower than the control message overheads of traditional OpenFlow systems.</p>
+</blockquote>
+<p>开销也非常低。</p>
+<p>Introduction环节主要是和AODV还有OLSR这种分布式的路由协议对比了。作者这里提出的协议是尝试将SDN的可编程性和AODV/OLSR这种分布式路由协议(MANET)的灵活性，可靠性结合起来。</p>
+<blockquote>
+<p>In this paper, we answer this question affirmatively with flexible SDN, an architecture for the control of tactical ad hoc networks that borrows ideas from the existing MANET protocols to address potential limitations of SDN in this context.</p>
+</blockquote>
+<h1 data-number="2" id="系统模型"><span class="header-section-number">2</span> 系统模型</h1>
+<p>每个节点上运行程序，称为local agents。这些程序负责在节点之间交换分发链路状态变化信息。这种行为类似于MANET的路由协议。其区别在于这种信息交换不是flooding的，而是针对特定的目标节点。因此这些程序相比于MANET路由协议来说更加轻量级一些。这些信息会帮助节点决定是否要遵循SDN的中央控制器的指令。一般来说在SDN中央控制服务的获得比较方便的时候，节点偏好SDN指令。当SDN控制器无法访问时，则使用local agents获得的信息来自行组织路由表。</p>
+<p>在实现层面上，实现两种策略的切换主要通过对OpenFlow加入一个状态管理的扩展来实现。这些扩展允许节点根据网络状态选择转发规则。</p>
+<p>验证平台采用了一些安卓智能手机和笔记本电脑，这些设备上运行了 Open VSwitch SDN 组件，以及作者设计的 local agent 程序。作者测试了 local agents 和 Openflow 对于无线连接 (Wifi) 中断的反应及恢复的时间。</p>
+<p>而后是Overhead方面的研究，主要是研究为了满足拓扑重建需要的控制消息发送频率。</p>
+<h1 data-number="3" id="机制内容"><span class="header-section-number">3</span> 机制内容</h1>
+<p>这里主要关心local agents以何种规则来进行信息交换以实现较小的Overhead。</p>
+<p>每个节点存储一个邻居节点列表。邻居节点通过周期性的心跳包广播来探测。典型的MANET协议会在所有节点之间以Flooding的方式来传递邻居节点表。这种方式开销很大。为了取得consistency和overhead的平衡，这里作者采用了基于订阅(subscription)的方法</p>
+<h1 data-number="4" id="评价"><span class="header-section-number">4</span> 评价</h1>
+<p>其实这篇论文还有后面的内容，包括最优的控制信息广播频率等。不过由于这里提到的机制太简单，后面的不需要关注太多。这里就做个总结吧。</p>
+<p>这篇文章提出的机制其实非常简单，就是传统的中心式的SDN加上MANET协议。如果SDN给出的链路挂了就用MANET给的链路。文章里面提到用一个订阅式的办法解决MANET路由同步开销的问题，但是没有说订阅机制的细节。后面的理论部分就是推算为了最低广播频率，其实也是很传统的MANET问题。</p>
+<p>这篇文章做的太粗糙了。就SDN和MANET部分来说都没有做什么显著的优化，就是两个硬拼在一起，SDN为主，SDN给的链路挂了就用MANET的链路。SDN + MANET的思路其实可以，但是结合要更有机一点。比如SDN其实也是要向中央控制器汇报信息的，MANET需要同步消息，这俩可以联合优化之类的。文章这两个同步流程是完全分开的，其实非常浪费。然后SDN和MANET给出的链路哪个好，这个决策可以加入AI的东西。现在这篇文章就是SDN挂了用MANET，没有比较链路的区别。</p>
 
         
       </div>
@@ -685,8 +669,17 @@ Introduction环节主要是和AODV还有OLSR这种分布式的路由协议对比
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -958,6 +951,23 @@ Introduction环节主要是和AODV还有OLSR这种分布式的路由协议对比
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">2 系统模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机制内容"><span class="nav-text">3 机制内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评价"><span class="nav-text">4 评价</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

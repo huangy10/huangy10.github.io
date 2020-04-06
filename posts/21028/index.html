@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="## Problem  这篇文章的缘由是我在尝试使用[ns3](https://www.nsnam.org)带的NetAnim程序时，显示了下面这个错误：">
+  <meta name="description" content="1 Problem 这篇文章的缘由是我在尝试使用ns3带的NetAnim程序时，显示了下面这个错误： 1234dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim  Reason: im">
 <meta name="keywords" content="macOS,Debug,ns3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MAC: @rpath的坑">
 <meta property="og:url" content="http://www.codewoody.com/posts/21028/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## Problem  这篇文章的缘由是我在尝试使用[ns3](https://www.nsnam.org)带的NetAnim程序时，显示了下面这个错误：">
+<meta property="og:description" content="1 Problem 这篇文章的缘由是我在尝试使用ns3带的NetAnim程序时，显示了下面这个错误： 1234dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim  Reason: im">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-06-28T08:40:45.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MAC: @rpath的坑">
-<meta name="twitter:description" content="## Problem  这篇文章的缘由是我在尝试使用[ns3](https://www.nsnam.org)带的NetAnim程序时，显示了下面这个错误：">
+<meta name="twitter:description" content="1 Problem 这篇文章的缘由是我在尝试使用ns3带的NetAnim程序时，显示了下面这个错误： 1234dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim  Reason: im">
 
 
 
@@ -558,30 +558,20 @@
       
 
       
-        ## Problem
-
-这篇文章的缘由是我在尝试使用[ns3](https://www.nsnam.org)带的NetAnim程序时，显示了下面这个错误：
-
-<!--￼0-->
-
+        <h1 data-number="1" id="problem"><span class="header-section-number">1</span> Problem</h1>
+<p>这篇文章的缘由是我在尝试使用<a href="https://www.nsnam.org" target="_blank" rel="noopener">ns3</a>带的NetAnim程序时，显示了下面这个错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dyld: Library not loaded: @rpath/QtGui.framework/Versions/4/QtGui</span><br><span class="line">  Referenced from: /path/to/ns-allinone-3.28/netanim-3.108/./NetAnim</span><br><span class="line">  Reason: image not found</span><br><span class="line">[1]    86663 abort      ./NetAnim</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
+<p>这是一个动态链接的错误，所以没法通过编译的时候添加<code>LDFLAGS</code>来解决。不过错误里面的<code>@rpath</code>这个东西倒是挺有意思，显然并不是环境变量。我在网上查了很多，但是大多数是围绕xcode讨论的，不太适用于我面临的场景（命令行）。不过这些文章（如<a href="http://www.tanhao.me/pieces/1361.html/" target="_blank" rel="noopener">这篇</a>)能够大致阐明<code>@rpath</code>的用途。简而言之，<code>@rpath</code>是一个类似Shell中的<code>PATH</code>的变量，程序在执行时会从<code>@rpath</code>指定的路径中寻找动态链接库文件。那么剩下的问题就是我们如何操作这个变量了。</p>
+<h1 data-number="2" id="solution"><span class="header-section-number">2</span> Solution</h1>
+<p>通过<code>otool</code>我们可以查看一个程序的动态链接文件搜索地址，例如我要用的<code>NetAnim</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ otool -L ./NetAnim</span><br><span class="line">./NetAnim:</span><br><span class="line">	@rpath/QtGui.framework/Versions/4/QtGui (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">	@rpath/QtCore.framework/Versions/4/QtCore (compatibility version 4.8.0, current version 4.8.7)</span><br><span class="line">	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)</span><br><span class="line">	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)</span><br></pre></td></tr></table></figure>
+<p>而我们可以通过<code>install_name_tool</code>来对这些地址进行操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ install_name_tool -h</span><br><span class="line">Usage: /Library/Developer/CommandLineTools/usr/bin/install_name_tool [-change old new] ... [-rpath old new] ... [-add_rpath new] ... [-delete_rpath old] ... [-id name] input</span><br></pre></td></tr></table></figure>
+<p>对我而言，我需要将Qt4的动态链接库添加到<code>NetAdmin</code>的搜索路径中去，可以使用如下的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">install_name_tool -add_rpath /usr/<span class="built_in">local</span>/Cellar/qt@4/4.8.7_3/lib ./NetAnim</span><br></pre></td></tr></table></figure>
+<p>大功告成。</p>
 
-这是一个动态链接的错误，所以没法通过编译的时候添加`LDFLAGS`来解决。不过错误里面的`@rpath`这个东西倒是挺有意思，显然并不是环境变量。我在网上查了很多，但是大多数是围绕xcode讨论的，不太适用于我面临的场景（命令行）。不过这些文章（如[这篇](http://www.tanhao.me/pieces/1361.html/))能够大致阐明`@rpath`的用途。简而言之，`@rpath`是一个类似Shell中的`PATH`的变量，程序在执行时会从`@rpath`指定的路径中寻找动态链接库文件。那么剩下的问题就是我们如何操作这个变量了。
-
-## Solution
-通过`otool`我们可以查看一个程序的动态链接文件搜索地址，例如我要用的`NetAnim`：
-
-<!--￼1-->
-
-而我们可以通过`install_name_tool`来对这些地址进行操作。
-
-<!--￼2-->
-
-对我而言，我需要将Qt4的动态链接库添加到`NetAdmin`的搜索路径中去，可以使用如下的命令：
-
-<!--￼3-->
-
-大功告成。
       
     </div>
 
@@ -684,8 +674,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -957,6 +956,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#problem"><span class="nav-text">1 Problem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#solution"><span class="nav-text">2 Solution</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

@@ -558,22 +558,14 @@
       
 
       
-        
-ns3使用了waf编译系统，因此在ns3中尝试引入第三方模块时，就没有make那么直接了。
-
+        <p>ns3使用了waf编译系统，因此在ns3中尝试引入第三方模块时，就没有make那么直接了。</p>
 <a id="more"></a>
-
-其实思路的核心还是想办法最终为编译器提供`-L`和`-I`的设置。这个过程我们通过`wscript`中的`configure`函数来实现。这里我们假设模块使用的库的位置放在模块源码目录下的`libs`子目录。库的名字为`example-lib`。目录结构如下:
-
-<!--￼0-->
-
-其中，`include`文件夹内为头文件，`libexample-lib.a`为静态库文件。
-
-修改`wscript`文件中的configure函数，如下
-
-<!--￼1-->
-
-修改`configure`函数之后要重新运行`./waf configure`命令来让设置生效。
+<p>其实思路的核心还是想办法最终为编译器提供<code>-L</code>和<code>-I</code>的设置。这个过程我们通过<code>wscript</code>中的<code>configure</code>函数来实现。这里我们假设模块使用的库的位置放在模块源码目录下的<code>libs</code>子目录。库的名字为<code>example-lib</code>。目录结构如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">libs</span><br><span class="line">└── example-lib</span><br><span class="line">  ├── include</span><br><span class="line">  └── libexample-lib.a</span><br></pre></td></tr></table></figure>
+<p>其中，<code>include</code>文件夹内为头文件，<code>libexample-lib.a</code>为静态库文件。</p>
+<p>修改<code>wscript</code>文件中的configure函数，如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">configure</span><span class="params">(conf)</span>:</span></span><br><span class="line">    root_dir = conf.path.abspath()</span><br><span class="line">    example_lib_dir = os.path.join(root_dir, <span class="string">"libs/example-lib"</span>)</span><br><span class="line">    conf.env.append_value(<span class="string">"LINKFLAGS"</span>, </span><br><span class="line">        [<span class="string">"-L%s/"</span> % example_lib_dir])</span><br><span class="line">    conf.env.append_value(<span class="string">"LIB"</span>, [<span class="string">"example-lib"</span>])</span><br><span class="line">    conf.env.append_value(<span class="string">"CPPFLAGS"</span>, </span><br><span class="line">        [<span class="string">"-I%s/include"</span> % example_lib_dir, ])</span><br></pre></td></tr></table></figure>
+<p>修改<code>configure</code>函数之后要重新运行<code>./waf configure</code>命令来让设置生效。</p>
 
       
     </div>

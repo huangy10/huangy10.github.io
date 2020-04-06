@@ -123,19 +123,21 @@
 
 
 
-  <meta name="description" content="我参考[http://zetcode.com/gui/qt5/introduction/](http://zetcode.com/gui/qt5/introduction/)这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。">
+  <meta name="description" content="我参考http://zetcode.com/gui/qt5/introduction/这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。">
 <meta name="keywords" content="教程,C++,Qt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Qt on Mac摸索记录 - 其一">
 <meta property="og:url" content="http://www.codewoody.com/posts/46595/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="我参考[http://zetcode.com/gui/qt5/introduction/](http://zetcode.com/gui/qt5/introduction/)这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。">
+<meta property="og:description" content="我参考http://zetcode.com/gui/qt5/introduction/这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/a9f573fd0cf4761bfac223bce02a0560.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ea0c02b56040b78459362caf3e6b191d.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/cd840ad4822bc2779c19877df931bcf5.png">
 <meta property="og:updated_time" content="2019-09-18T17:10:35.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Qt on Mac摸索记录 - 其一">
-<meta name="twitter:description" content="我参考[http://zetcode.com/gui/qt5/introduction/](http://zetcode.com/gui/qt5/introduction/)这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。">
+<meta name="twitter:description" content="我参考http://zetcode.com/gui/qt5/introduction/这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/a9f573fd0cf4761bfac223bce02a0560.png">
 
 
@@ -572,227 +574,121 @@
       
 
       
-        
-我参考[http://zetcode.com/gui/qt5/introduction/](http://zetcode.com/gui/qt5/introduction/)这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。
-
+        <p>我参考<a href="http://zetcode.com/gui/qt5/introduction/" target="_blank" rel="noopener">http://zetcode.com/gui/qt5/introduction/</a>这个链接入坑，使用macOS。网上看起来是Windows和Linux的教程居多，这个链接里的教程初看起来应该也是基于Linux的。谁让Mac的市场占有率低呢。</p>
 <a id="more"></a>
+<h1 data-number="1" id="first-try"><span class="header-section-number">1</span> First Try</h1>
+<h2 data-number="1.1" id="show-version"><span class="header-section-number">1.1</span> Show version</h2>
+<p>首先是从官网下载了GUI形式的安装器安装的Qt，Qt的默认安装位置是<code>~/Qt</code>。安装的Qt版本是5.13.1。首先参照教程熟悉一下编译过程。教程链接里给出的例子是：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// version.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QtCore&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Qt version: "</span> &lt;&lt; qVersion() &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译的命令是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o version version.cpp -I/usr/local/qt5/include/QtCore -I/usr/local/qt5/include -L/usr/local/qt5/lib -lQt5Core -fPIC</span><br></pre></td></tr></table></figure>
+<p>不过这个编译命令在Mac上无法成功。我使用的是如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">g++ -o version version.cpp \</span><br><span class="line"><span class="meta">#</span><span class="bash"> Include path，需要指向包含QtCore的头文件的位置</span></span><br><span class="line">-Ipath/to/qt/5.13.1/clang_64/lib/QtCore.framework/Headers \</span><br><span class="line"><span class="meta">#</span><span class="bash"> -F指定framework的路径，-framework则用来指明使用的framework的名字</span></span><br><span class="line">-F/Users/lena/qt/5.13.1/clang_64/lib -framework QtCore</span><br><span class="line"><span class="meta">#</span><span class="bash"> 在mac上g++其实也是调用的clang，这里加上这个避免一些warning</span></span><br><span class="line">-isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.13.sdk \</span><br><span class="line">-mmacosx-version-min=10.12 \</span><br><span class="line"><span class="meta">#</span><span class="bash"> rpath是程序在运行的时候载入动态库（即QtCore.framework）的位置</span></span><br><span class="line">-Wl,-rpath,/path/to/5.13.1/clang_64/lib</span><br><span class="line">-pipe -stdlib=libc++ -O2 -std=gnu++11  -Wall -W -fPIC</span><br></pre></td></tr></table></figure>
+<p>编译成功后调用<code>./version</code>就可以看到运行成功并输出Qt版本了。</p>
+<h2 data-number="1.2" id="first-gui"><span class="header-section-number">1.2</span> First GUI</h2>
+<p>下面我们来测试一个简单的GUI例子。首先新建一个文件如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// simple.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QWidget&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QApplication <span class="title">app</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line"></span><br><span class="line">    QWidget window;</span><br><span class="line"></span><br><span class="line">    window.resize(<span class="number">250</span>, <span class="number">150</span>);</span><br><span class="line">    window.setWindowTitle(<span class="string">"Simple example"</span>);</span><br><span class="line">    window.show();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> app.exec();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后使用<code>qmake</code>工具，运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qmake -project</span><br></pre></td></tr></table></figure>
+<p>这个命令会创建一个项目文件<code>simple.pro</code><span class="foot-note-span">【文件的名字与根目录文件夹的名字相同】</span>。文件的内容应该类似于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">######################################################################</span><br><span class="line"># Automatically generated by qmake (3.0) Fri Oct 30 17:11:00 2015</span><br><span class="line">######################################################################</span><br><span class="line"></span><br><span class="line">TEMPLATE = app</span><br><span class="line">TARGET = simple</span><br><span class="line">INCLUDEPATH += .</span><br><span class="line"></span><br><span class="line"># Input</span><br><span class="line">SOURCES += simple.cpp</span><br><span class="line"></span><br><span class="line">QT += widgets</span><br></pre></td></tr></table></figure>
+<p>注意最后一行，需要我们手动添加QtWidget模块。然后运行<code>qmake</code>命令，生成编译使用的Makefile。然后就可以编译了：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+<p>程序运行后会弹出一个空的窗口。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/a9f573fd0cf4761bfac223bce02a0560.png" style="width: 50%; border: none"></p>
+<h1 data-number="2" id="strings"><span class="header-section-number">2</span> Strings</h1>
+<p>Qt 引入了<code>QString</code>来加强字符串处理的能力。</p>
+<p><code>QtString</code>表示一个Unicode字符串，其存储字符串为16比特的<code>QChars</code>。每个<code>QChar</code>代表一个Unicode 4.0字符。不同于很多其他的变成语言，<code>QtString</code>可以被修改<span class="foot-note-span">【如Python的字符串就是静态的，“修改”字符串实际是生成新的字符串】</span>。</p>
+<p>这里主要是了解<code>QtString</code>的能力，汇总记录就可以了，没有必要编译运行。</p>
+<h2 data-number="2.1" id="初始化"><span class="header-section-number">2.1</span> 初始化</h2>
+<p>有多种初始化方法，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QString str1 = <span class="string">"The night train"</span>;</span><br><span class="line">   out &lt;&lt; str1 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">QString <span class="title">str2</span><span class="params">(<span class="string">"A yellow rose"</span>)</span></span>;</span><br><span class="line">   out &lt;&lt; str2 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="built_in">std</span>::<span class="built_in">string</span> s1 = <span class="string">"A blue sky"</span>;</span><br><span class="line">   QString str3 = s1.c_str(); </span><br><span class="line">   out &lt;&lt; str3 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="built_in">std</span>::<span class="built_in">string</span> s2 = <span class="string">"A thick fog"</span>;</span><br><span class="line">   QString str4 = QString::fromLatin1(s2.data(), s2.size());</span><br><span class="line">   out &lt;&lt; str4 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">char</span> s3[] = <span class="string">"A deep forest"</span>;</span><br><span class="line">   <span class="function">QString <span class="title">str5</span><span class="params">(s3)</span></span>;</span><br><span class="line">   out &lt;&lt; str5 &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.2" id="访问字符串元素"><span class="header-section-number">2.2</span> 访问字符串元素</h2>
+<p>如前文所述，<code>QString</code>由<code>QChar</code>组成，我们可以使用<code>[]</code>操作符或者<code>at()</code>函数来访问元素：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QString a = <span class="string">"Eagle"</span>;</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; a[<span class="number">0</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; a[<span class="number">4</span>] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; a.at(<span class="number">0</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (a.at(<span class="number">5</span>).isNull()) &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"Outside the range of the string"</span> &lt;&lt; <span class="built_in">endl</span>;  </span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.3" id="字符串长度"><span class="header-section-number">2.3</span> 字符串长度</h2>
+<p>与字符串长度相关的函数有三个： <code>size()</code>, <code>count()</code>和<code>length</code>。三个函数的作用是一样的。</p>
+<h2 data-number="2.4" id="字符串构建"><span class="header-section-number">2.4</span> 字符串构建</h2>
+<p>参考如下的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span> <span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  QString s1 = <span class="string">"There are %1 white roses"</span>;</span><br><span class="line">  <span class="keyword">int</span> n = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line">  out &lt;&lt; s1.args(n) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  QString s2 = <span class="string">"The tree is %1 m high"</span>;</span><br><span class="line">  <span class="keyword">double</span> h = <span class="number">5.65</span>;</span><br><span class="line"></span><br><span class="line">  out &lt;&lt; s2.args(h) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  QString s3 = <span class="string">"We have %1 lemons and %2 oranges"</span>;</span><br><span class="line">  <span class="keyword">int</span> ln = <span class="number">12</span>;</span><br><span class="line">  <span class="keyword">int</span> on = <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">  out &lt;&lt; s3.arg(ln).arg(on) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>待被替换的占位符用<code>%</code>开头，后面借数字。需要注意的是多个占位符需要替换时，需要多次调用<code>args()</code>函数，而非为<code>args()</code>函数传递多个参数。</p>
+<h2 data-number="2.5" id="子字符串substring"><span class="header-section-number">2.5</span> 子字符串(Substring)</h2>
+<p>这里涉及<code>left()</code>，<code>mid()</code>，<code>right()</code>三个函数，分别代表从左侧开始的Substring，中间一段的Substring，右侧开始的Substring。见下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QString str = <span class="string">"The night train"</span>;</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; str.right(<span class="number">5</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; str.left(<span class="number">9</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; str.mid(<span class="number">4</span>, <span class="number">5</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function">QString <span class="title">str2</span><span class="params">(<span class="string">"The big apple"</span>)</span></span>;</span><br><span class="line">   <span class="function">QStringRef <span class="title">sub</span><span class="params">(&amp;str2, <span class="number">0</span>, <span class="number">7</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; sub.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.6" id="遍历字符串"><span class="header-section-number">2.6</span> 遍历字符串</h2>
+<p><code>QString</code>遵循了C++的通常做法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  QString str = <span class="string">"There are many stars."</span>;</span><br><span class="line">  </span><br><span class="line">  foreach (QChar qc, str) &#123;</span><br><span class="line">    out &lt;&lt; qc &lt;&lt; <span class="string">" "</span>;  </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> (QChar *it=str.begin(); it!=str.end(); ++it) &#123;</span><br><span class="line">    out &lt;&lt; *it &lt;&lt; <span class="string">" "</span> ;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; str.size(); ++i) &#123;</span><br><span class="line">    out &lt;&lt; str.at(i) &lt;&lt; <span class="string">" "</span>;    </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.7" id="字符串比较"><span class="header-section-number">2.7</span> 字符串比较</h2>
+<p><code>QString::compare()</code>函数用来比较两个字符串。该函数返回一个整型数。如果返回值小于0，那么第一个字符串小于第二个字符串；如果返回0，两个字符串相等；如果返回值大于0，那么第一个字符串大于第二个字符串。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STR_EQUAL 0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QString a = <span class="string">"Rain"</span>;</span><br><span class="line">   QString b = <span class="string">"rain"</span>;</span><br><span class="line">   QString c = <span class="string">"rain\n"</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (QString::compare(a, b) == STR_EQUAL) &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"a, b are equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"a, b are not equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; <span class="string">"In case insensitive comparison:"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (QString::compare(a, b, Qt::CaseInsensitive) == STR_EQUAL) &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"a, b are equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"a, b are not equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (QString::compare(b, c) == STR_EQUAL) &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"b, c are equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"b, c are not equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   c.chop(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; <span class="string">"After removing the new line character"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (QString::compare(b, c) == STR_EQUAL) &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"b, c are equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"b, c are not equal"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>Qt::CaseInsensitive</code>表示无视大小写的比较。</p>
+<h2 data-number="2.8" id="字符串解析"><span class="header-section-number">2.8</span> 字符串解析</h2>
+<p>这里指将字符串解析为数字类型。这里涉及<code>toInt()</code>, <code>toFloat()</code>, <code>toLong()</code>等函数。反过来，<code>setNum()</code>函数可以将数字类型转化成字符串。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  QString s1 = <span class="string">"12"</span>;</span><br><span class="line">  QString s2 = <span class="string">"15"</span>;</span><br><span class="line">  QString s3, s4;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; s1.toInt() + s2.toInt() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> n1 = <span class="number">30</span>;</span><br><span class="line">  <span class="keyword">int</span> n2 = <span class="number">40</span>;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; s3.setNum(n1) + s4.setNum(n2) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.9" id="字符类型"><span class="header-section-number">2.9</span> 字符类型</h2>
+<p><code>QChar</code>类型可以肥尾数字，祖母，空格以及标点符号，<code>QChar</code>提供了识别这些类型的函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line">  <span class="keyword">int</span> digits  = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> letters = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> spaces  = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> puncts  = <span class="number">0</span>;</span><br><span class="line">  </span><br><span class="line">  QString str = <span class="string">"7 white, 3 red roses."</span>;</span><br><span class="line">  </span><br><span class="line">  foreach(QChar s, str) &#123;</span><br><span class="line">    <span class="keyword">if</span> (s.isDigit()) &#123;</span><br><span class="line">      digits++;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s.isLetter()) &#123;</span><br><span class="line">      letters++;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s.isSpace()) &#123;</span><br><span class="line">      spaces++;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s.isPunct()) &#123;</span><br><span class="line">      puncts++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  out &lt;&lt; QString(<span class="string">"There are %1 characters"</span>).arg(str.count()) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; QString(<span class="string">"There are %1 letters"</span>).arg(letters) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; QString(<span class="string">"There are %1 digits"</span>).arg(digits) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; QString(<span class="string">"There are %1 spaces"</span>).arg(spaces) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  out &lt;&lt; QString(<span class="string">"There are %1 punctuation characters"</span>).arg(puncts) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.10" id="修改字符串"><span class="header-section-number">2.10</span> 修改字符串</h2>
+<p>修改字符串的函数可以分为两类，一类返回一个修改后的副本，原字符串保持不变(如<code>toLower()</code>)；另一类是直接原地修改原字符串。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QString str = <span class="string">"Lovely"</span>;</span><br><span class="line">   str.append(<span class="string">" season"</span>);</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   str.remove(<span class="number">10</span>, <span class="number">3</span>);</span><br><span class="line">   out &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   str.replace(<span class="number">7</span>, <span class="number">3</span>, <span class="string">"girl"</span>);</span><br><span class="line">   out &lt;&lt; str &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">   str.clear();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (str.isEmpty()) &#123;</span><br><span class="line">     out &lt;&lt; <span class="string">"The string is empty"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.11" id="字符串对齐"><span class="header-section-number">2.11</span> 字符串对齐</h2>
+<p>这里指输出格式调整，将输出的内容左对齐(<code>leftJustified()</code>)或者右对齐(<code>rightJustified()</code>)。如下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QString field1 = <span class="string">"Name: "</span>;</span><br><span class="line">   QString field2 = <span class="string">"Occupation: "</span>;</span><br><span class="line">   QString field3 = <span class="string">"Residence: "</span>;</span><br><span class="line">   QString field4 = <span class="string">"Marital status: "</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">int</span> width = field4.size();</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; field1.rightJustified(width, <span class="string">' '</span>) &lt;&lt; <span class="string">"Robert\n"</span>;</span><br><span class="line">   out &lt;&lt; field2.rightJustified(width, <span class="string">' '</span>) &lt;&lt; <span class="string">"programmer\n"</span>;</span><br><span class="line">   out &lt;&lt; field3.rightJustified(width, <span class="string">' '</span>) &lt;&lt; <span class="string">"New York\n"</span>;</span><br><span class="line">   out &lt;&lt; field4.rightJustified(width, <span class="string">' '</span>) &lt;&lt; <span class="string">"single\n"</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">          Name: Robert</span><br><span class="line">    Occupation: programmer</span><br><span class="line">     Residence: New York</span><br><span class="line">Marital status: single</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.12" id="escaping"><span class="header-section-number">2.12</span> Escaping</h2>
+<p>Qt5 提供了 <code>toHtmlEscapted()</code> 方法，将字符串中涉及的html下特殊的字符，如<code>&lt;, &gt;, &amp;, "</code>等，替换成HTML下的编码。如</p>
+<p>处理文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main(void) &#123;</span><br><span class="line"></span><br><span class="line">    for (int i=1; i&lt;=10; i++) &#123;</span><br><span class="line">        printf(&quot;Bottle %d\n&quot;, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// html_escape.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QFile&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"cprog.c"</span>)</span></span>;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (!file.open(QIODevice::ReadOnly)) &#123;</span><br><span class="line">        qWarning(<span class="string">"Cannot open file for reading"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">QTextStream <span class="title">in</span><span class="params">(&amp;file)</span></span>;</span><br><span class="line"></span><br><span class="line">    QString allText = in.readAll();</span><br><span class="line">    out &lt;&lt; allText.toHtmlEscaped() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    file.close();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> ./html_escape</span></span><br><span class="line"><span class="meta">#</span><span class="bash">include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line">int main(void) &#123;</span><br><span class="line"></span><br><span class="line">    for (int i=1; i&amp;lt;=10; i++) &#123;</span><br><span class="line">        printf(&amp;quot;Bottle %d\n&amp;quot;, i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 data-number="3" id="date-and-time"><span class="header-section-number">3</span> Date and Time</h1>
+<p>这个部分还是继续讲 Qt 扩展的数据类型。本次涉及<code>QDate</code>，<code>QTime</code> 和 <code>QDateTime</code> 三个类。</p>
+<p><code>QDate</code> 用于管理格里高利历的日历。<code>QTime</code>处理时钟，<code>QDateTime</code>则是二者的结合。</p>
+<h2 data-number="3.1" id="初始化-日期时间对象"><span class="header-section-number">3.1</span> 初始化 日期&amp;时间对象</h2>
+<p>日期和时间对象的初始化有两种基本方法：要么用构造函数直接复制，要么构造一个空的对象后续赋值。参见下面的粒子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDate&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTime&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 年 - 月 - 日</span></span><br><span class="line">  <span class="function">QDate <span class="title">dt1</span><span class="params">(<span class="number">2015</span>, <span class="number">4</span>, <span class="number">12</span>)</span></span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"The date is "</span> &lt;&lt; dt1.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  QDate dt2;</span><br><span class="line">  dt2.setDate(<span class="number">2015</span>, <span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line">  out &lt;&lt; <span class="string">"The date is "</span> &lt;&lt; dt2.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 时 - 分 - 秒 - 毫秒</span></span><br><span class="line">  <span class="function">QTime <span class="title">tm1</span><span class="params">(<span class="number">17</span>, <span class="number">30</span>, <span class="number">12</span>, <span class="number">55</span>)</span></span>;</span><br><span class="line">  out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; tm1.toString(<span class="string">"hh:mm:ss.zzz"</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">  QTime tm2;</span><br><span class="line">  tm2.setHMS(<span class="number">13</span>, <span class="number">52</span>, <span class="number">45</span>, <span class="number">155</span>);</span><br><span class="line">  out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; tm2.toString(<span class="string">"hh:mm:ss.zzz"</span>) &lt;&lt; <span class="built_in">endl</span>;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="3.2" id="当前时间"><span class="header-section-number">3.2</span> 当前时间</h2>
+<p>见下面的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTime&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDate&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QDate cd = QDate::currentDate();</span><br><span class="line">   QTime ct = QTime::currentTime();</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; <span class="string">"Current date is: "</span> &lt;&lt; cd.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Current time is: "</span> &lt;&lt; ct.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，源文件不能叫<code>time.cpp</code>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QDate cd = QDate::currentDate();</span><br></pre></td></tr></table></figure>
+<p>返回的当前的日期。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QTime ct = QTime::currentTime();</span><br></pre></td></tr></table></figure>
+<p>返回当前的时间。<code>toString()</code>函数则将的日期和时间对象转化成字符串。</p>
+<h2 data-number="3.3" id="比较日期"><span class="header-section-number">3.3</span> 比较日期</h2>
+<p>关系操作符和用来比较日期（在日历上的位置）。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDate&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function">QDate <span class="title">dt1</span><span class="params">(<span class="number">2015</span>, <span class="number">4</span>, <span class="number">5</span>)</span></span>;</span><br><span class="line">  <span class="function">QDate <span class="title">dt2</span><span class="params">(<span class="number">2014</span>, <span class="number">4</span>, <span class="number">5</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (dt1 &lt; dt2) &#123;</span><br><span class="line">    out &lt;&lt; dt1.toString() &lt;&lt; <span class="string">" comes before "</span></span><br><span class="line">      &lt;&lt; dt2.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    out &lt;&lt; dt1.toString() &lt;&lt; <span class="string">" comes after "</span></span><br><span class="line">      &lt;&lt; dt2.toString() &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="3.4" id="闰年"><span class="header-section-number">3.4</span> 闰年</h2>
+<p>使用<code>QDate::isLeapYear()</code>函数来判断</p>
+<h2 data-number="3.5" id="日期时间-格式"><span class="header-section-number">3.5</span> 日期/时间 格式</h2>
+<h3 data-number="3.5.1" id="预定义日期格式"><span class="header-section-number">3.5.1</span> 预定义日期格式</h3>
+<p>Qt 有一些内建的日期格式。<code>QDate</code> 的 <code>toString()</code>函数可以接收一个日期格式描述对象作为参数。默认的参数是<code>Qt::TextDate</code>。一些其他的格式见下面的粒子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dateformats.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QDate&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QDate cd = QDate::currentDate();</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::TextDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::ISODate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::SystemLocaleShortDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::SystemLocaleLongDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::DefaultLocaleShortDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::DefaultLocaleLongDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::SystemLocaleDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"Today is "</span> &lt;&lt; cd.toString(Qt::LocaleDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Today is Sat Oct 31 2015</span><br><span class="line">Today is 2015-10-31</span><br><span class="line">Today is 10/31/15</span><br><span class="line">Today is Saturday, October 31, 2015</span><br><span class="line">Today is 10/31/15</span><br><span class="line">Today is Saturday, October 31, 2015</span><br><span class="line">Today is 10/31/15</span><br><span class="line">Today is 10/31/15</span><br></pre></td></tr></table></figure>
+<h3 data-number="3.5.2" id="自定义日期格式"><span class="header-section-number">3.5.2</span> 自定义日期格式</h3>
+<p>如下表：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/ea0c02b56040b78459362caf3e6b191d.png"></p>
+<h3 data-number="3.5.3" id="预定义时间格式"><span class="header-section-number">3.5.3</span> 预定义时间格式</h3>
+<p>和日期的类似，时钟对象的<code>toString()</code>也接收格式描述对象参数。默认的是<code>Qt::TextDate</code>。其他格式如下例子</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTextStream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QTime&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function">QTextStream <span class="title">out</span><span class="params">(<span class="built_in">stdout</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">   QTime ct = QTime::currentTime();</span><br><span class="line"></span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::TextDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::ISODate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::SystemLocaleShortDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::SystemLocaleLongDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::DefaultLocaleShortDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::DefaultLocaleLongDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::SystemLocaleDate) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">   out &lt;&lt; <span class="string">"The time is "</span> &lt;&lt; ct.toString(Qt::LocaleDate) &lt;&lt; <span class="built_in">endl</span>;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The time is 15:58:26</span><br><span class="line">The time is 15:58:26</span><br><span class="line">The time is 3:58 PM</span><br><span class="line">The time is 3:58:26 PM CET</span><br><span class="line">The time is 3:58 PM</span><br><span class="line">The time is 3:58:26 PM CET</span><br><span class="line">The time is 3:58 PM</span><br><span class="line">The time is 3:58 PM</span><br></pre></td></tr></table></figure>
+<h3 data-number="3.5.4" id="自定义时间格式"><span class="header-section-number">3.5.4</span> 自定义时间格式</h3>
+<p><img src="https://imgs.codewoody.com/uploads/big/cd840ad4822bc2779c19877df931bcf5.png"></p>
+<h2 data-number="3.6" id="其他工具函数"><span class="header-section-number">3.6</span> 其他工具函数</h2>
+<ul>
+<li><code>daysOfWeek()</code>: 周几，1表示周一，7表示周日；</li>
+<li><code>daysInMonth()</code>: 在月中的第几天；</li>
+<li><code>daysInYear():</code>: 在年中的第几天；</li>
+<li><code>isValid()</code>: 验证日期是否有效；</li>
+<li><code>daysTo()</code>，<code>daysFrom</code>：计算日期的间距；</li>
+</ul>
+<h2 data-number="3.7" id="qdatetime类"><span class="header-section-number">3.7</span> <code>QDateTime</code>类</h2>
+<p><code>QDateTime</code>类是日期和时间的组合，其接口也非常类似。</p>
 
-## First Try
-
-### Show version
-
-首先是从官网下载了GUI形式的安装器安装的Qt，Qt的默认安装位置是`~/Qt`。安装的Qt版本是5.13.1。首先参照教程熟悉一下编译过程。教程链接里给出的例子是：
-
-<!--￼0-->
-
-编译的命令是
-
-<!--￼1-->
-
-不过这个编译命令在Mac上无法成功。我使用的是如下命令：
-
-<!--￼2-->
-
-编译成功后调用`./version`就可以看到运行成功并输出Qt版本了。
-
-### First GUI
-
-下面我们来测试一个简单的GUI例子。首先新建一个文件如下
-
-<!--￼3-->
-
-然后使用`qmake`工具，运行
-
-<!--￼4-->
-
-这个命令会创建一个项目文件`simple.pro`<span class="foot-note-span">【文件的名字与根目录文件夹的名字相同】</span>。文件的内容应该类似于：
-
-<!--￼5-->
-
-注意最后一行，需要我们手动添加QtWidget模块。然后运行`qmake`命令，生成编译使用的Makefile。然后就可以编译了：
-
-<!--￼6-->
-
-程序运行后会弹出一个空的窗口。
-
-<img src="https://imgs.codewoody.com/uploads/big/a9f573fd0cf4761bfac223bce02a0560.png" style="width: 50%; border: none">
-
-## Strings
-
-Qt 引入了`QString`来加强字符串处理的能力。
-
-`QtString`表示一个Unicode字符串，其存储字符串为16比特的`QChars`。每个`QChar`代表一个Unicode 4.0字符。不同于很多其他的变成语言，`QtString`可以被修改<span class="foot-note-span">【如Python的字符串就是静态的，“修改”字符串实际是生成新的字符串】</span>。
-
-这里主要是了解`QtString`的能力，汇总记录就可以了，没有必要编译运行。
-
-### 初始化
-
-有多种初始化方法，如下：
-
-<!--￼7-->
-
-### 访问字符串元素
-
-如前文所述，`QString`由`QChar`组成，我们可以使用`[]`操作符或者`at()`函数来访问元素：
-
-<!--￼8-->
-
-### 字符串长度
-
-与字符串长度相关的函数有三个： `size()`, `count()`和`length`。三个函数的作用是一样的。
-
-### 字符串构建
-
-参考如下的例子：
-
-<!--￼9-->
-
-待被替换的占位符用`%`开头，后面借数字。需要注意的是多个占位符需要替换时，需要多次调用`args()`函数，而非为`args()`函数传递多个参数。
-
-### 子字符串(Substring)
-
-这里涉及`left()`，`mid()`，`right()`三个函数，分别代表从左侧开始的Substring，中间一段的Substring，右侧开始的Substring。见下面的例子：
-
-<!--￼10-->
-
-### 遍历字符串
-
-`QString`遵循了C++的通常做法：
-
-<!--￼11-->
-
-### 字符串比较
-
-`QString::compare()`函数用来比较两个字符串。该函数返回一个整型数。如果返回值小于0，那么第一个字符串小于第二个字符串；如果返回0，两个字符串相等；如果返回值大于0，那么第一个字符串大于第二个字符串。
-
-<!--￼12-->
-
-其中`Qt::CaseInsensitive`表示无视大小写的比较。
-
-### 字符串解析
-
-这里指将字符串解析为数字类型。这里涉及`toInt()`, `toFloat()`, `toLong()`等函数。反过来，`setNum()`函数可以将数字类型转化成字符串。
-
-<!--￼13-->
-
-### 字符类型
-
-`QChar`类型可以肥尾数字，祖母，空格以及标点符号，`QChar`提供了识别这些类型的函数：
-
-<!--￼14-->
-
-### 修改字符串
-
-修改字符串的函数可以分为两类，一类返回一个修改后的副本，原字符串保持不变(如`toLower()`)；另一类是直接原地修改原字符串。
-
-<!--￼15-->
-
-### 字符串对齐
-
-这里指输出格式调整，将输出的内容左对齐(`leftJustified()`)或者右对齐(`rightJustified()`)。如下面的例子：
-
-<!--￼16-->
-
-输出为
-
-<!--￼17-->
-
-### Escaping
-
-Qt5 提供了 `toHtmlEscapted()` 方法，将字符串中涉及的html下特殊的字符，如`<,>, &, "`等，替换成HTML下的编码。如
-
-处理文件
-
-<!--￼18-->
-
-使用如下
-
-<!--￼19-->
-
-输出内容如下：
-
-<!--￼20-->
-
-## Date and Time
-
-这个部分还是继续讲 Qt 扩展的数据类型。本次涉及`QDate`，`QTime` 和 `QDateTime` 三个类。
-
-`QDate` 用于管理格里高利历的日历。`QTime`处理时钟，`QDateTime`则是二者的结合。
-
-### 初始化 日期&时间对象
-
-日期和时间对象的初始化有两种基本方法：要么用构造函数直接复制，要么构造一个空的对象后续赋值。参见下面的粒子：
-
-<!--￼21-->
-
-### 当前时间
-
-见下面的例子：
-
-<!--￼22-->
-
-注意，源文件不能叫`time.cpp`。
-
-<!--￼23-->
-
-返回的当前的日期。
-
-<!--￼24-->
-
-返回当前的时间。`toString()`函数则将的日期和时间对象转化成字符串。
-
-### 比较日期
-
-关系操作符和用来比较日期（在日历上的位置）。
-
-<!--￼25-->
-
-### 闰年
-
-使用`QDate::isLeapYear()`函数来判断
-
-### 日期/时间 格式
-
-#### 预定义日期格式
-
-Qt 有一些内建的日期格式。`QDate` 的 `toString()`函数可以接收一个日期格式描述对象作为参数。默认的参数是`Qt::TextDate`。一些其他的格式见下面的粒子：
-
-<!--￼26-->
-
-<!--￼27-->
-
-#### 自定义日期格式
-
-如下表：
-
-![](https://imgs.codewoody.com/uploads/big/ea0c02b56040b78459362caf3e6b191d.png)
-
-#### 预定义时间格式
-
-和日期的类似，时钟对象的`toString()`也接收格式描述对象参数。默认的是`Qt::TextDate`。其他格式如下例子
-
-<!--￼28-->
-
-输出为
-
-<!--￼29-->
-
-#### 自定义时间格式
-
-![](https://imgs.codewoody.com/uploads/big/cd840ad4822bc2779c19877df931bcf5.png)
-
-### 其他工具函数
-
-- `daysOfWeek()`: 周几，1表示周一，7表示周日；
-- `daysInMonth()`: 在月中的第几天；
-- `daysInYear():`: 在年中的第几天；
-- `isValid()`: 验证日期是否有效；
-- `daysTo()`，`daysFrom`：计算日期的间距；
-
-### `QDateTime`类
-
-`QDateTime`类是日期和时间的组合，其接口也非常类似。
-</,>
       
     </div>
 
@@ -895,8 +791,17 @@ Qt 有一些内建的日期格式。`QDate` 的 `toString()`函数可以接收�
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1168,6 +1073,23 @@ Qt 有一些内建的日期格式。`QDate` 的 `toString()`函数可以接收�
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#first-try"><span class="nav-text">1 First Try</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#show-version"><span class="nav-text">1.1 Show version</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#first-gui"><span class="nav-text">1.2 First GUI</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#strings"><span class="nav-text">2 Strings</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-text">2.1 初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问字符串元素"><span class="nav-text">2.2 访问字符串元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串长度"><span class="nav-text">2.3 字符串长度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串构建"><span class="nav-text">2.4 字符串构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子字符串substring"><span class="nav-text">2.5 子字符串(Substring)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遍历字符串"><span class="nav-text">2.6 遍历字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串比较"><span class="nav-text">2.7 字符串比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串解析"><span class="nav-text">2.8 字符串解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符类型"><span class="nav-text">2.9 字符类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改字符串"><span class="nav-text">2.10 修改字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串对齐"><span class="nav-text">2.11 字符串对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#escaping"><span class="nav-text">2.12 Escaping</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#date-and-time"><span class="nav-text">3 Date and Time</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化-日期时间对象"><span class="nav-text">3.1 初始化 日期&amp;时间对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当前时间"><span class="nav-text">3.2 当前时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较日期"><span class="nav-text">3.3 比较日期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#闰年"><span class="nav-text">3.4 闰年</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日期时间-格式"><span class="nav-text">3.5 日期/时间 格式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预定义日期格式"><span class="nav-text">3.5.1 预定义日期格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义日期格式"><span class="nav-text">3.5.2 自定义日期格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#预定义时间格式"><span class="nav-text">3.5.3 预定义时间格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义时间格式"><span class="nav-text">3.5.4 自定义时间格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他工具函数"><span class="nav-text">3.6 其他工具函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#qdatetime类"><span class="nav-text">3.7 QDateTime类</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

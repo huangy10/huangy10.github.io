@@ -123,17 +123,20 @@
 
 
 
-  <meta name="description" content="p {   text-align: left; }   这篇文章的标题是[[A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8886105)]{style=&quot;f">
+  <meta name="description" content="p {   text-align: left; }  这篇文章的标题是A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems。2019年ICNC的会议文章。 之前我看过一篇关于深度增强学习+C-V2X的文章：Deep Reinforcement Learning Based Resou">
 <meta property="og:type" content="website">
 <meta property="og:title" content="深度学习 + C-V2X">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/chen2019deep.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="p {   text-align: left; }   这篇文章的标题是[[A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8886105)]{style=&quot;f">
+<meta property="og:description" content="p {   text-align: left; }  这篇文章的标题是A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems。2019年ICNC的会议文章。 之前我看过一篇关于深度增强学习+C-V2X的文章：Deep Reinforcement Learning Based Resou">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ea17a495831fc208cd98ad2b31dce918.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/0c76e5bd28e3556756e8645853eaf485.png">
 <meta property="og:updated_time" content="2020-03-29T11:19:39.407Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度学习 + C-V2X">
-<meta name="twitter:description" content="p {   text-align: left; }   这篇文章的标题是[[A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8886105)]{style=&quot;f">
+<meta name="twitter:description" content="p {   text-align: left; }  这篇文章的标题是A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems。2019年ICNC的会议文章。 之前我看过一篇关于深度增强学习+C-V2X的文章：Deep Reinforcement Learning Based Resou">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/ea17a495831fc208cd98ad2b31dce918.png">
 
 
 
@@ -538,153 +541,129 @@
       <div class="post-body han-init-context">
         
         
-          
-<style>
+          <style>
 p {
   text-align: left;
 }
 </style>
-
-这篇文章的标题是[[A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8886105)]{style="font-style:italic"}。2019年ICNC的会议文章。
-
-之前我看过一篇关于深度增强学习+C-V2X的文章：[Deep Reinforcement Learning Based Resource Allocation for V2V Communications](/posts/34309/)。本文章没有提增强学习的模型。我们来看脱离了增强学习的框架如何来解决C-V2X的资源分配问题。
-
-在车联网通信中，小区内干扰(intracell interference)<span class="foot-note-span">【有小区内干扰的要求，说明是Mode 3的，而非Mode 4的】</span>和严格的延时要求是车联网的主要挑战。本文开率了V2V和V2I混合通信中的频谱复用和功率分配的联合问题。优化的目标是最大化加权后的通信能力和延时要求的总和。通过将原问题分解为分类子问题和回归子问题，本文提出了基于卷积神经网络(CNN)的达到频谱复用和功率分配的实时决策方法。且本方法需要的计算量比较小。
-
-## 简介
-
-延时敏感的通信发生在邻居节点之间，故不需要考虑多跳的问题。\
-为了改善频谱效率，V2V通信和V2I通信需要采用[Underlay模式](/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F)共享信道。此时小区内干扰管理是一个非常重要的问题。\
-延时是非常重要的指标。有些文章只考虑了V2V的优化，没有考虑V2I的性能。这篇文章考虑的是两种通信模式并存的情形。
-
-现有的研究大多用迭代式算法来求解优化问题。在迭代式算法中，结果收敛之前需要进行大量的迭代计算，因此计算成本非常高，无法做到实时化部署。
-
-这篇文章针对V2I和V2V通信并存的系统，提出了基于CNN的资源调度方法。主要贡献内容如下
-
-- 问题建模：频谱复用功率分配问题。优化的指标是通信能力（应该是指带宽）和延时。[Considering a hybrid V2I and V2V communication scenario, we formulate the resource allocation task as a joint spectrum reuse and power allocation problem. Recognizing the stringent latency requirement for V2V links, we maximize the weighted sum of the capacities and latency requirement for vehicular communications.]{.eng-origin}
-- 将原始问题分解为分类子问题和回归子问题。[decomposes the original problem of vehicular communications into a classification subproblem and a regression subproblem]{.eng-origin}
-- 仿真结果限制本文的方案在取得和[Exhaustive方法](#exhaustive-method)同等的性能的同时减少了计算量。
-
-## 系统模型
-
-系统模型如 @fig:sys-model 所示。图中的车辆都在**同一个基站**的覆盖范围之内。$M$辆车与基站(BS)进行V2I通信，这些车辆被称为C-UEs，同时有$N$对车辆进行V2V通信，这些车辆被称为V-UEs。数学上的标记分别为
-
-- $\mathcal{M} := \{1, 2, \dots, M\}$
-- $\mathcal{S} := \{1, 2, \dots, N\}$: V2V的发送者
-- $\mathcal{D} := \{1, 2, \dots, N\}$: V2V的接受者
-
-进一步假设每辆车只同时处于下面一种状态：
-
-- C-UEs
-- V-UE发送者
-- V-UE接受者
-- 空闲
-
-![系统模型图](https://imgs.codewoody.com/uploads/big/ea17a495831fc208cd98ad2b31dce918.png){#fig:sys-model}
-
-为了提升频谱利用效率，假设被正交地分配给C-UE的上行链路可以被V-UE复用。为了减少干扰水平，这里假设一个C-UE的频谱资源只能被一个V-UE复用。且V-UE只能访问一个C-UE的资源。
-
-> 这里类似于[这篇Survey](/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-通信模式)中提出的RB Sharing-Based User pairing
-
-$m^{th}$ C-UE到BS的信道功率增益为
-
-$$
+<p>这篇文章的标题是<span style="font-style:italic"><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8886105" target="_blank" rel="noopener">A Deep Learning Based Resource Allocation Scheme in Vehicular Communication Systems</a></span>。2019年ICNC的会议文章。</p>
+<p>之前我看过一篇关于深度增强学习+C-V2X的文章：<a href="/posts/34309/">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>。本文章没有提增强学习的模型。我们来看脱离了增强学习的框架如何来解决C-V2X的资源分配问题。</p>
+<p>在车联网通信中，小区内干扰(intracell interference)<span class="foot-note-span">【有小区内干扰的要求，说明是Mode 3的，而非Mode 4的】</span>和严格的延时要求是车联网的主要挑战。本文开率了V2V和V2I混合通信中的频谱复用和功率分配的联合问题。优化的目标是最大化加权后的通信能力和延时要求的总和。通过将原问题分解为分类子问题和回归子问题，本文提出了基于卷积神经网络(CNN)的达到频谱复用和功率分配的实时决策方法。且本方法需要的计算量比较小。</p>
+<h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
+<p>延时敏感的通信发生在邻居节点之间，故不需要考虑多跳的问题。<br>
+为了改善频谱效率，V2V通信和V2I通信需要采用<a href="/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F">Underlay模式</a>共享信道。此时小区内干扰管理是一个非常重要的问题。<br>
+延时是非常重要的指标。有些文章只考虑了V2V的优化，没有考虑V2I的性能。这篇文章考虑的是两种通信模式并存的情形。</p>
+<p>现有的研究大多用迭代式算法来求解优化问题。在迭代式算法中，结果收敛之前需要进行大量的迭代计算，因此计算成本非常高，无法做到实时化部署。</p>
+<p>这篇文章针对V2I和V2V通信并存的系统，提出了基于CNN的资源调度方法。主要贡献内容如下</p>
+<ul>
+<li>问题建模：频谱复用功率分配问题。优化的指标是通信能力（应该是指带宽）和延时。<span class="eng-origin">Considering a hybrid V2I and V2V communication scenario, we formulate the resource allocation task as a joint spectrum reuse and power allocation problem. Recognizing the stringent latency requirement for V2V links, we maximize the weighted sum of the capacities and latency requirement for vehicular communications.</span></li>
+<li>将原始问题分解为分类子问题和回归子问题。<span class="eng-origin">decomposes the original problem of vehicular communications into a classification subproblem and a regression subproblem</span></li>
+<li>仿真结果限制本文的方案在取得和<a href="#exhaustive-method">Exhaustive方法</a>同等的性能的同时减少了计算量。</li>
+</ul>
+<h1 data-number="2" id="系统模型"><span class="header-section-number">2</span> 系统模型</h1>
+<p>系统模型如 <a href="#fig:sys-model">图 1</a> 所示。图中的车辆都在<strong>同一个基站</strong>的覆盖范围之内。<span class="math inline">\(M\)</span>辆车与基站(BS)进行V2I通信，这些车辆被称为C-UEs，同时有<span class="math inline">\(N\)</span>对车辆进行V2V通信，这些车辆被称为V-UEs。数学上的标记分别为</p>
+<ul>
+<li><span class="math inline">\(\mathcal{M} := \{1, 2, \dots, M\}\)</span></li>
+<li><span class="math inline">\(\mathcal{S} := \{1, 2, \dots, N\}\)</span>: V2V的发送者</li>
+<li><span class="math inline">\(\mathcal{D} := \{1, 2, \dots, N\}\)</span>: V2V的接受者</li>
+</ul>
+<p>进一步假设每辆车只同时处于下面一种状态：</p>
+<ul>
+<li>C-UEs</li>
+<li>V-UE发送者</li>
+<li>V-UE接受者</li>
+<li>空闲</li>
+</ul>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/ea17a495831fc208cd98ad2b31dce918.png" id="fig:sys-model" alt=""><figcaption>图 1: 系统模型图</figcaption>
+</figure>
+<p>为了提升频谱利用效率，假设被正交地分配给C-UE的上行链路可以被V-UE复用。为了减少干扰水平，这里假设一个C-UE的频谱资源只能被一个V-UE复用。且V-UE只能访问一个C-UE的资源。</p>
+<blockquote>
+<p>这里类似于<a href="/knowledge-base/academic/paper-reading/ahlem2019survey.html#v2v-based-d2d-通信模式">这篇Survey</a>中提出的RB Sharing-Based User pairing</p>
+</blockquote>
+<p><span class="math inline">\(m^{th}\)</span> C-UE到BS的信道功率增益为</p>
+<p><span class="math display">\[
 h_{m, B} = g_{m, B}\alpha_{m, B}
-$$
-
-其中$g_{m, B}$为小尺度快速衰减项，为单位均值的负指数形式。$\alpha_{m, B}$则为大尺度的述案件项目，包含了pathloss和shadowing。V2V的信道增益$h_{s, d}$为$s$到$d$的增益。另外，$h_{s, B}$为V2V给基站的干扰的信道增益，$h_{m, d}$为V2I给V2V带来的干扰增益。分别用$\gamma_m^c$和$\gamma_d^{v}$代表基站处和V2V的接收端处的SINR：
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(g_{m, B}\)</span>为小尺度快速衰减项，为单位均值的负指数形式。<span class="math inline">\(\alpha_{m, B}\)</span>则为大尺度的述案件项目，包含了pathloss和shadowing。V2V的信道增益<span class="math inline">\(h_{s, d}\)</span>为<span class="math inline">\(s\)</span>到<span class="math inline">\(d\)</span>的增益。另外，<span class="math inline">\(h_{s, B}\)</span>为V2V给基站的干扰的信道增益，<span class="math inline">\(h_{m, d}\)</span>为V2I给V2V带来的干扰增益。分别用<span class="math inline">\(\gamma_m^c\)</span>和<span class="math inline">\(\gamma_d^{v}\)</span>代表基站处和V2V的接收端处的SINR：</p>
+<p><span class="math display">\[
 \begin{array}{c}
 \gamma_{m}^{c}=\frac{P_{m}^{c} h_{m, B}}{N_{0}+\sum_{s \in \mathcal{S}, d \in \mathcal{D}} \rho_{m, s} P_{s}^{v} h_{s, B}} \\
 \gamma_{d}^{v}=\frac{P_{s}^{v} h_{s, d}}{N_{0}+\sum_{m \in \mathcal{M}} \rho_{m, s} P_{m}^{c} h_{m, d}}
 \end{array}
-$$
-
-其中$P_m^c$和$P_s^v$分别代表对应的C-UE和V-UE的发射功率。$N_0$为噪声功率，$\rho_{m, s}$为频谱服用状态，应该是指示函数。$\sum_{s \in \mathcal{S}, d\in \mathcal{D}} \rho_{m, s}P_{s}^v h_{s, B}$代表了基站处收到的干扰总和。而$\sum_{m\in \mathcal{M}}\rho_{m, s}P_{m}^c h_{m, d}$则代表了V2I通信给V2V接受的干扰。$\rho_{m, s} = 1$代表$m$车辆和$s$车辆使用同样的频谱资源。
-
-分别令$C_{m}$和$C_s$代表对应的C-UE和V-UE的平均信道容量，则
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(P_m^c\)</span>和<span class="math inline">\(P_s^v\)</span>分别代表对应的C-UE和V-UE的发射功率。<span class="math inline">\(N_0\)</span>为噪声功率，<span class="math inline">\(\rho_{m, s}\)</span>为频谱服用状态，应该是指示函数。<span class="math inline">\(\sum_{s \in \mathcal{S}, d\in \mathcal{D}} \rho_{m, s}P_{s}^v h_{s, B}\)</span>代表了基站处收到的干扰总和。而<span class="math inline">\(\sum_{m\in \mathcal{M}}\rho_{m, s}P_{m}^c h_{m, d}\)</span>则代表了V2I通信给V2V接受的干扰。<span class="math inline">\(\rho_{m, s} = 1\)</span>代表<span class="math inline">\(m\)</span>车辆和<span class="math inline">\(s\)</span>车辆使用同样的频谱资源。</p>
+<p>分别令<span class="math inline">\(C_{m}\)</span>和<span class="math inline">\(C_s\)</span>代表对应的C-UE和V-UE的平均信道容量，则</p>
+<p><span class="math display">\[
 \begin{array}{l}
 C_{m}=\mathbb{E}\left[\log _{2}\left(1+\gamma_{m}^{c}\right) | g_{m, B}, m \in \mathcal{M}\right] \\
 C_{s}=\mathbb{E}\left[\log _{2}\left(1+\gamma_{d}^{v}\right) | g_{s, d}, s \in \mathcal{S}, d \in \mathcal{D}\right]
 \end{array}
-$$
-
-记$B$为平均包大小，$L$为最大容许延时。那么V-UE的目标传输速率为$R = B / L$<span class="foot-note-span">【应该是最小传输速率】</span>，为了反映V2V的延时要求，我们选择所有V-UE中平均信道容量最小的值$C_{ss}$，并计算信道容量大于的$R$的概率
-
-$$
+\]</span></p>
+<p>记<span class="math inline">\(B\)</span>为平均包大小，<span class="math inline">\(L\)</span>为最大容许延时。那么V-UE的目标传输速率为<span class="math inline">\(R = B / L\)</span><span class="foot-note-span">【应该是最小传输速率】</span>，为了反映V2V的延时要求，我们选择所有V-UE中平均信道容量最小的值<span class="math inline">\(C_{ss}\)</span>，并计算信道容量大于的<span class="math inline">\(R\)</span>的概率</p>
+<p><span class="math display">\[
 \xi = P_{L}\{C_{ss}(k) \geq R \}, k = 1, 2, \dots
-$$
-
-另外，我们定义C-UEs与基站的通信的QoS要求一个最小的信道容量限制。我们的优化目标是最大化以下项目的加权和：
-
-1. V2I和V2I的平均信道容量
-2. V2V链路的延时要求
-
-而我们可控的部分是频谱复用系数$\rho_{m, s}$和功率分配$\{P_{m}^c, P_s^v\}$。综上，完整的资源分配问题建模为：
-
-\begin{equation}
+\]</span></p>
+<p>另外，我们定义C-UEs与基站的通信的QoS要求一个最小的信道容量限制。我们的优化目标是最大化以下项目的加权和：</p>
+<ol type="1">
+<li>V2I和V2I的平均信道容量</li>
+<li>V2V链路的延时要求</li>
+</ol>
+<p>而我们可控的部分是频谱复用系数<span class="math inline">\(\rho_{m, s}\)</span>和功率分配<span class="math inline">\(\{P_{m}^c, P_s^v\}\)</span>。综上，完整的资源分配问题建模为：</p>
+<p><span class="math display">\[\begin{equation}
 \begin{aligned}
-\max _{\left\{\rho_{m, s}, P_{m}^{c}, P_{s}^{v}\right\}} & \sum_{m \in \mathcal{M}} C_{m}+\omega_{1} \sum_{s \in \mathcal{S}, d \in \mathcal{D}} C_{s}+\omega_{2} \xi \\
-\text { s.t. } & \omega_{1}, \omega_{2}>0 \\
-& \log \left(1+\gamma_{m}^{c}\right) \geq r_{0}^{c}, \quad \forall m \in \mathcal{M} \\
-& 0 \leq P_{m}^{c} \leq P_{\max }^{c}, \forall m \in \mathcal{M} \\
-& 0 \leq P_{s}^{v} \leq P_{\max }^{v}, \forall n \in \mathcal{S} \\
-& \sum_{s \in \mathcal{S}, d \in \mathcal{D}} \rho_{m, s} \leq 1, \forall m \in \mathcal{M} \\
-& \sum_{m \in \mathcal{M}} \rho_{m, s} \leq 1, \forall s \in \mathcal{S} \\
-& \rho_{m, s} \in\{0,1\}, \forall m \in \mathcal{M}, s \in \mathcal{S}
+\max _{\left\{\rho_{m, s}, P_{m}^{c}, P_{s}^{v}\right\}} &amp; \sum_{m \in \mathcal{M}} C_{m}+\omega_{1} \sum_{s \in \mathcal{S}, d \in \mathcal{D}} C_{s}+\omega_{2} \xi \\
+\text { s.t. } &amp; \omega_{1}, \omega_{2}&gt;0 \\
+&amp; \log \left(1+\gamma_{m}^{c}\right) \geq r_{0}^{c}, \quad \forall m \in \mathcal{M} \\
+&amp; 0 \leq P_{m}^{c} \leq P_{\max }^{c}, \forall m \in \mathcal{M} \\
+&amp; 0 \leq P_{s}^{v} \leq P_{\max }^{v}, \forall n \in \mathcal{S} \\
+&amp; \sum_{s \in \mathcal{S}, d \in \mathcal{D}} \rho_{m, s} \leq 1, \forall m \in \mathcal{M} \\
+&amp; \sum_{m \in \mathcal{M}} \rho_{m, s} \leq 1, \forall s \in \mathcal{S} \\
+&amp; \rho_{m, s} \in\{0,1\}, \forall m \in \mathcal{M}, s \in \mathcal{S}
 \end{aligned}
 \label{eq:optimization-problem}
-\end{equation}
-
-其中$\omega_1$和$\omega_2$为权重系数, $r_0^c$为每条V2I链路要求的最小信道容量。$P_{max}^c$和$P_{max}^v$分别为V2I和V2V链路的最大功率。上面的约束条件中倒数第三、第二个是限制RB的共享行为<span class="foot-note-span">【即前面提到的“为了减少干扰水平，这里假设一个C-UE的频谱资源只能被一个V-UE复用。且V-UE只能访问一个C-UE的资源。”】</span>。
-
-## 深度学习应用
-
-### Data Generation
-
-给定预先生成的信道增益$\mathbf{h} := \{h_{m, B}, h_{m, d}, h_{s, d}, h_{s, B}, \forall m, d, s\}$，以及预先确定的参数$P_{max}^c$, $P_{max}^v$和$r_{0}^c$，我们可以使用Exhausive方法生成对应的频谱复用状态$\{\rho_{m, s}, \forall m, s\}$和功率分配$\{ P_m^c, P_s^v, \forall m, s \}$。所谓Exhaustive方法即为暴力解法。[The Exhaustive method iteratively calculates and compares the objective in (7a) for all possible schemes and chooses one of the scheme that maximizes the objective as the optimal solution.]{.eng-origin #exhaustive-method} Exhaustive方法为性能对比设定了一个对比的锚点。重复上述过程我们就可以生成训练数据集$\{\mathbf{h}, \rho_{m, s}, P_{m}^c, P_s^v, \forall m, d, s\}$。
-
-> 从这里的描述来看，作者使用暴力穷举的方法生成数据集，然后用CNN模型去拟合暴力穷举的结果。从而在达到暴力穷举的结果的同时大幅度减少计算量。
-
-> 这也是一种有意思的思路: 对于传统的计算量很大的方法，可以用神经网络去拟合以减少计算量。另一方面在研究神经网络问题时，也可以使用暴力方法寻找最优解，并将最优解作为训练数据。
-
-如前面提到，这篇文章将原优化问题$\eqref{eq:optimization-problem}$拆分成一个解决频谱复用的多标签分类问题和一个解决功率分配的回归问题。
-
-将$\{\rho_{m, s}, \forall m, s\}$写作矩阵$\mathbf{A} \in M \times N$。$\mathbf{A}$的每个取值对应一个频谱复用方案，这些方案被划分为若干类别。
-
-> 原文这里说的比较「含混」，当然每个$mathbf{A}$的取值对应一种频谱复用方案（需要满足一定的正则化条件），不过这些方案的「分类」的意义是什么？类别的分类的标准是怎样的。原文后面还有一句话，上面没有加入翻译内容：
->
-> > Each class is indexed by a **one-hot encoded** vector as its label, say $\rho_j$. Here, $j$ is the index number of all classes.
->
-> 所以这里涉及一个编码机制，而这个编码机制没有得到明确的说明。
-
-### 模型网络架构
-
-![模型架构](https://imgs.codewoody.com/uploads/big/0c76e5bd28e3556756e8645853eaf485.png){#fig:模型架构}
-
-模型如 @fig:模型架构 所示，包含一个输入层，多个隐藏层和一个输出层。
-
-- **输入层**: 输入的数据是$\{\mathbf{h}, \rho_{m, s}, P_{m}^c, P_s^v, \forall m, d, s\}$；
-- **隐藏层**: 隐藏高层由三个卷积层和是哪个全连接层组成，激励函数为ReLU。使用卷积层可以发现信道增益的空间关联信息，并且相比于全连接层，卷积层可以减少参数数量。
-- **输出层**: 输出层需要输出三个量。第一个是信道复用，我们选择softmax函数作为输出的激励函数；剩下两个分别是V2I和V2V的功率分配。
-
-### 损失函数
-
-这里提出的CNN网络需要解决不同的子问题（分类问题和回归问题），不同的子问题需要不同的损失函数定义。
-
-- MSE:
-$$
-  L_{reg} = \frac{\lVert \tilde{\mathbf{P}} - \mathbf{P} \rVert ^ 2}{K}
-$$
-
-- 分类交叉熵
-
-$$
+\end{equation}\]</span></p>
+<p>其中<span class="math inline">\(\omega_1\)</span>和<span class="math inline">\(\omega_2\)</span>为权重系数, <span class="math inline">\(r_0^c\)</span>为每条V2I链路要求的最小信道容量。<span class="math inline">\(P_{max}^c\)</span>和<span class="math inline">\(P_{max}^v\)</span>分别为V2I和V2V链路的最大功率。上面的约束条件中倒数第三、第二个是限制RB的共享行为<span class="foot-note-span">【即前面提到的“为了减少干扰水平，这里假设一个C-UE的频谱资源只能被一个V-UE复用。且V-UE只能访问一个C-UE的资源。”】</span>。</p>
+<h1 data-number="3" id="深度学习应用"><span class="header-section-number">3</span> 深度学习应用</h1>
+<h2 data-number="3.1" id="data-generation"><span class="header-section-number">3.1</span> Data Generation</h2>
+<p>给定预先生成的信道增益<span class="math inline">\(\mathbf{h} := \{h_{m, B}, h_{m, d}, h_{s, d}, h_{s, B}, \forall m, d, s\}\)</span>，以及预先确定的参数<span class="math inline">\(P_{max}^c\)</span>, <span class="math inline">\(P_{max}^v\)</span>和<span class="math inline">\(r_{0}^c\)</span>，我们可以使用Exhausive方法生成对应的频谱复用状态<span class="math inline">\(\{\rho_{m, s}, \forall m, s\}\)</span>和功率分配<span class="math inline">\(\{ P_m^c, P_s^v, \forall m, s \}\)</span>。所谓Exhaustive方法即为暴力解法。<span id="exhaustive-method" class="eng-origin">The Exhaustive method iteratively calculates and compares the objective in (7a) for all possible schemes and chooses one of the scheme that maximizes the objective as the optimal solution.</span> Exhaustive方法为性能对比设定了一个对比的锚点。重复上述过程我们就可以生成训练数据集<span class="math inline">\(\{\mathbf{h}, \rho_{m, s}, P_{m}^c, P_s^v, \forall m, d, s\}\)</span>。</p>
+<blockquote>
+<p>从这里的描述来看，作者使用暴力穷举的方法生成数据集，然后用CNN模型去拟合暴力穷举的结果。从而在达到暴力穷举的结果的同时大幅度减少计算量。</p>
+</blockquote>
+<blockquote>
+<p>这也是一种有意思的思路: 对于传统的计算量很大的方法，可以用神经网络去拟合以减少计算量。另一方面在研究神经网络问题时，也可以使用暴力方法寻找最优解，并将最优解作为训练数据。</p>
+</blockquote>
+<p>如前面提到，这篇文章将原优化问题<span class="math inline">\(\eqref{eq:optimization-problem}\)</span>拆分成一个解决频谱复用的多标签分类问题和一个解决功率分配的回归问题。</p>
+<p>将<span class="math inline">\(\{\rho_{m, s}, \forall m, s\}\)</span>写作矩阵<span class="math inline">\(\mathbf{A} \in M \times N\)</span>。<span class="math inline">\(\mathbf{A}\)</span>的每个取值对应一个频谱复用方案，这些方案被划分为若干类别。</p>
+<blockquote>
+<p>原文这里说的比较「含混」，当然每个<span class="math inline">\(mathbf{A}\)</span>的取值对应一种频谱复用方案（需要满足一定的正则化条件），不过这些方案的「分类」的意义是什么？类别的分类的标准是怎样的。原文后面还有一句话，上面没有加入翻译内容：</p>
+<blockquote>
+<p>Each class is indexed by a <strong>one-hot encoded</strong> vector as its label, say <span class="math inline">\(\rho_j\)</span>. Here, <span class="math inline">\(j\)</span> is the index number of all classes.</p>
+</blockquote>
+<p>所以这里涉及一个编码机制，而这个编码机制没有得到明确的说明。</p>
+</blockquote>
+<h2 data-number="3.2" id="模型网络架构"><span class="header-section-number">3.2</span> 模型网络架构</h2>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/0c76e5bd28e3556756e8645853eaf485.png" id="fig:模型架构" alt=""><figcaption>图 2: 模型架构</figcaption>
+</figure>
+<p>模型如 <a href="#fig:模型架构">图 2</a> 所示，包含一个输入层，多个隐藏层和一个输出层。</p>
+<ul>
+<li><strong>输入层</strong>: 输入的数据是<span class="math inline">\(\{\mathbf{h}, \rho_{m, s}, P_{m}^c, P_s^v, \forall m, d, s\}\)</span>；</li>
+<li><strong>隐藏层</strong>: 隐藏高层由三个卷积层和是哪个全连接层组成，激励函数为ReLU。使用卷积层可以发现信道增益的空间关联信息，并且相比于全连接层，卷积层可以减少参数数量。</li>
+<li><strong>输出层</strong>: 输出层需要输出三个量。第一个是信道复用，我们选择softmax函数作为输出的激励函数；剩下两个分别是V2I和V2V的功率分配。</li>
+</ul>
+<h2 data-number="3.3" id="损失函数"><span class="header-section-number">3.3</span> 损失函数</h2>
+<p>这里提出的CNN网络需要解决不同的子问题（分类问题和回归问题），不同的子问题需要不同的损失函数定义。</p>
+<ul>
+<li><p>MSE: <span class="math display">\[
+L_{reg} = \frac{\lVert \tilde{\mathbf{P}} - \mathbf{P} \rVert ^ 2}{K}
+\]</span></p></li>
+<li><p>分类交叉熵</p></li>
+</ul>
+<p><span class="math display">\[
 L_{cls} = \sum_{j} \rho_j \log (\tilde{\rho}_j)
-$$
+\]</span></p>
+
         
       </div>
       
@@ -787,8 +766,17 @@ $$
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1060,6 +1048,23 @@ $$
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">2 系统模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深度学习应用"><span class="nav-text">3 深度学习应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#data-generation"><span class="nav-text">3.1 Data Generation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型网络架构"><span class="nav-text">3.2 模型网络架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#损失函数"><span class="nav-text">3.3 损失函数</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

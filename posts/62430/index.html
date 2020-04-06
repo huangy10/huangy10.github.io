@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="之前我们讨论了[C++中将结构体放置在std::vector容器内的操作风险](C++中将结构体放置在std::vector容器内的操作风险)。这里我们来进一步讨论如何处理在容器中存储的结构体数据。">
+  <meta name="description" content="之前我们讨论了C++中将结构体放置在std::vector容器内的操作风险。这里我们来进一步讨论如何处理在容器中存储的结构体数据。">
 <meta name="keywords" content="C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Struct in Vector: 进一步讨论">
 <meta property="og:url" content="http://www.codewoody.com/posts/62430/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="之前我们讨论了[C++中将结构体放置在std::vector容器内的操作风险](C++中将结构体放置在std::vector容器内的操作风险)。这里我们来进一步讨论如何处理在容器中存储的结构体数据。">
+<meta property="og:description" content="之前我们讨论了C++中将结构体放置在std::vector容器内的操作风险。这里我们来进一步讨论如何处理在容器中存储的结构体数据。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-07-12T06:10:07.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Struct in Vector: 进一步讨论">
-<meta name="twitter:description" content="之前我们讨论了[C++中将结构体放置在std::vector容器内的操作风险](C++中将结构体放置在std::vector容器内的操作风险)。这里我们来进一步讨论如何处理在容器中存储的结构体数据。">
+<meta name="twitter:description" content="之前我们讨论了C++中将结构体放置在std::vector容器内的操作风险。这里我们来进一步讨论如何处理在容器中存储的结构体数据。">
 
 
 
@@ -570,19 +570,12 @@
       
 
       
-        
-之前我们讨论了[C++中将结构体放置在std::vector容器内的操作风险](C++中将结构体放置在std::vector容器内的操作风险)。这里我们来进一步讨论如何处理在容器中存储的结构体数据。
-
+        <p>之前我们讨论了<a href="C++中将结构体放置在std::vector容器内的操作风险">C++中将结构体放置在std::vector容器内的操作风险</a>。这里我们来进一步讨论如何处理在容器中存储的结构体数据。</p>
 <a id="more"></a>
-
-前文中提到，如果我们尝试获取容器中的结构体时，我们直接拿到的是该结构体的拷贝，如果要对结构体成员修改，我们需要整体进行两次复制：
-
-<!--￼0-->
-
-放在遍历的场景中，可以使用如下的形式：
-
-<!--￼1-->
-
+<p>前文中提到，如果我们尝试获取容器中的结构体时，我们直接拿到的是该结构体的拷贝，如果要对结构体成员修改，我们需要整体进行两次复制：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct A&gt; data;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> <span class="title">val</span> = <span class="title">data</span>.<span class="title">at</span> (0);</span></span><br><span class="line">val.b = c;</span><br><span class="line">data[<span class="number">0</span>] = val;</span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">这种操作显然是不经济。一种『粗暴』的方法是使用`<span class="built_in">std</span>::<span class="built_in">vector</span>::data`函数获取底层数据的指针，然后操作这个指针。但是这种方法不太优雅，也不安全。合适的做法是使用引用</span><br><span class="line"></span><br><span class="line">```cpp</span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct A&gt; data;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">A</span> &amp; <span class="title">val</span> = <span class="title">data</span>[0];</span></span><br><span class="line">val.b = c;</span><br></pre></td></tr></table></figure>
+<p>放在遍历的场景中，可以使用如下的形式：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct A&gt; data;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">auto</span>&amp; val : data) &#123;...&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>

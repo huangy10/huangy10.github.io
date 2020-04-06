@@ -123,18 +123,20 @@
 
 
 
-  <meta name="description" content="研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用[现有图床](/posts/65048/)，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了[Minio](https://github.com/minio/minio)这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：  - 可以Dock">
+  <meta name="description" content="研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用现有图床，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了Minio这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：  可以Docker部署，非常省事 文档完善 全面的平台支持 多种客户端语言支持（有完善的JS SDK）">
 <meta name="keywords" content="教程,Hexo,Minio,OSS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开源对象存储服务(OSS) Minio 及其在Hexo中的使用">
 <meta property="og:url" content="http://www.codewoody.com/posts/5440/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用[现有图床](/posts/65048/)，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了[Minio](https://github.com/minio/minio)这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：  - 可以Dock">
+<meta property="og:description" content="研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用现有图床，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了Minio这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：  可以Docker部署，非常省事 文档完善 全面的平台支持 多种客户端语言支持（有完善的JS SDK）">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fa25ef81a937d5b26195632cf8aff37a.png">
 <meta property="og:updated_time" content="2019-05-15T05:38:33.089Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="开源对象存储服务(OSS) Minio 及其在Hexo中的使用">
-<meta name="twitter:description" content="研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用[现有图床](/posts/65048/)，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了[Minio](https://github.com/minio/minio)这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：  - 可以Dock">
+<meta name="twitter:description" content="研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用现有图床，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了Minio这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：  可以Docker部署，非常省事 文档完善 全面的平台支持 多种客户端语言支持（有完善的JS SDK）">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/fa25ef81a937d5b26195632cf8aff37a.png">
 
 
 
@@ -570,53 +572,34 @@
       
 
       
-        
-研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用[现有图床](/posts/65048/)，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了[Minio](https://github.com/minio/minio)这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：
-
-- 可以Docker部署，非常省事
-- 文档完善
-- 全面的平台支持
-- 多种客户端语言支持（有完善的JS SDK）
-<a id="more"></a>
-## 1. Minio部署
-
-使用Docker部署可以说是非常方便省事了。我的部署命令如下：
-
-<!--￼0-->
-
-其中的访问秘钥对需要替换成你自己设置的值。这一对值稍后会用于网页端的登录。然后用
-
-<!--￼1-->
-
-来启动镜像。完成后就可以在[http://domain.com:9000](http://domain.com:9000)中访问到了，输入docker命令中的秘钥对来登录。
-
-![登录界面](https://imgs.codewoody.com/uploads/big/fa25ef81a937d5b26195632cf8aff37a.png)
-
-而后你可以按照[Lychee图床教程](/posts/65048/)中的做法，添加Nginx反向代理和HTTPS支持。
-
-## 2. Hexo中使用
-
-部署完成后我才发现一个问题，那就是Minio生成的外链是强制有过期时间的，而且长度最多只七天。那我就不能像直接复制粘贴外链来使用了，同时，手动来每七天更新一次链接也是不可接受的。因此用Hexo脚本来自动实现了利用Minio的API接口来更新下载链接。脚本内容如下：
-
-<!--￼2-->
-
-在博客工程的根目录下创建一个文件夹`scripts`,在其中创建一个js文件，如`index.js`，然后将上述脚本内容粘贴进去。然后在这个目录下创建设置文件，`minio_key.yml`，文件中需要包含如下信息：
-
-<!--￼3-->
-
-然后还需要安装依赖
-
-<!--￼4-->
-
-至此我们完成了脚本的安装。脚本为我们提供了一个[标签插件](https://hexo.io/zh-cn/docs/tag-plugins.html)，其使用范例如下：
-
-<!--￼5-->
-
-在使用Hexo进行静态页面渲染时，这部分内容会被自动渲染成下载链接：
-
-<!--￼6-->
-
-不过这种方法还是有一个显而易见的缺点：你需要是一个非常勤奋的作者，每周都来发布一次文章，不然旧文章的链接还是会失效。
+        <p>研究对象存储服务(OSS)是因为考虑到将来可能会有在博客上放出一些可供分享的文件下载的服务需求，直接使用<a href="/posts/65048/">现有图床</a>，容易混杂乱。因此我考虑重新建立一个独立OSS存储服务。直接Google搜到了<a href="https://github.com/minio/minio" target="_blank" rel="noopener">Minio</a>这个框架，10k+的Star，就决定选择这个了。Minio框架有如下几个优势：</p>
+<ul>
+<li>可以Docker部署，非常省事</li>
+<li>文档完善</li>
+<li>全面的平台支持</li>
+<li>多种客户端语言支持（有完善的JS SDK） <a id="more"></a> ## 1. Minio部署</li>
+</ul>
+<p>使用Docker部署可以说是非常方便省事了。我的部署命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker create -p 9000:9000 \</span><br><span class="line">-e <span class="string">"MINIO_ACCESS_KEY=your-access-key"</span> \</span><br><span class="line">-e <span class="string">"MINIO_SECRET_KEY=your-secret-key"</span> \</span><br><span class="line">--name=minio \</span><br><span class="line">-v /path/to/minio/data:/data \</span><br><span class="line">-v /path/to/minio/config:/root/.minio \</span><br><span class="line">minio/minio server /data</span><br></pre></td></tr></table></figure>
+<p>其中的访问秘钥对需要替换成你自己设置的值。这一对值稍后会用于网页端的登录。然后用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container start minio</span><br></pre></td></tr></table></figure>
+<p>来启动镜像。完成后就可以在<a href="http://domain.com:9000" target="_blank" rel="noopener">http://domain.com:9000</a>中访问到了，输入docker命令中的秘钥对来登录。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/fa25ef81a937d5b26195632cf8aff37a.png" alt=""><figcaption>登录界面</figcaption>
+</figure>
+<p>而后你可以按照<a href="/posts/65048/">Lychee图床教程</a>中的做法，添加Nginx反向代理和HTTPS支持。</p>
+<h1 data-number="1" id="hexo中使用"><span class="header-section-number">1</span> 2. Hexo中使用</h1>
+<p>部署完成后我才发现一个问题，那就是Minio生成的外链是强制有过期时间的，而且长度最多只七天。那我就不能像直接复制粘贴外链来使用了，同时，手动来每七天更新一次链接也是不可接受的。因此用Hexo脚本来自动实现了利用Minio的API接口来更新下载链接。脚本内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Minio = <span class="built_in">require</span>(<span class="string">'minio'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> hexo = hexo || &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> fs = fs || <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">var</span> yaml = yaml || <span class="built_in">require</span>(<span class="string">'js-yaml'</span>);</span><br><span class="line"><span class="keyword">var</span> minio_client  = minio_client || </span><br><span class="line">    <span class="keyword">new</span> Minio.Client(yaml.safeLoad(fs.readFileSync(__dirname + <span class="string">"/minio_key.yml"</span>, <span class="string">'utf8'</span>)));</span><br><span class="line"></span><br><span class="line">hexo.extend.tag.register(<span class="string">'minio'</span>, <span class="keyword">async</span> (args, content) =&gt; &#123;</span><br><span class="line">    <span class="keyword">var</span> </span><br><span class="line">        bucket = <span class="string">'default'</span>,</span><br><span class="line">        resource_name = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">if</span> (args.length == <span class="number">1</span>) &#123;</span><br><span class="line">        resource_name = args[<span class="number">0</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        resource_name = args[<span class="number">1</span>];</span><br><span class="line">        bucket = args[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> file_url = <span class="keyword">await</span> minio_client.presignedGetObject(bucket, resource_name);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`&lt;a target="_blank" href="<span class="subst">$&#123;file_url&#125;</span>"&gt;<span class="subst">$&#123;content&#125;</span>&lt;/a&gt;`</span>;</span><br><span class="line">&#125;, &#123;<span class="attr">async</span>: <span class="literal">true</span>, <span class="attr">ends</span>:<span class="literal">true</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>在博客工程的根目录下创建一个文件夹<code>scripts</code>,在其中创建一个js文件，如<code>index.js</code>，然后将上述脚本内容粘贴进去。然后在这个目录下创建设置文件，<code>minio_key.yml</code>，文件中需要包含如下信息：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">endPoint:</span> <span class="string">'minio.domain.com'</span></span><br><span class="line"><span class="attr">accessKey:</span> <span class="string">'your-access-key'</span></span><br><span class="line"><span class="attr">secretKey:</span> <span class="string">'your-secret-key'</span></span><br><span class="line"><span class="attr">useSSL:</span> <span class="literal">true</span>    <span class="comment"># 是否使用https</span></span><br></pre></td></tr></table></figure>
+<p>然后还需要安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save minio</span><br></pre></td></tr></table></figure>
+<p>至此我们完成了脚本的安装。脚本为我们提供了一个<a href="https://hexo.io/zh-cn/docs/tag-plugins.html" target="_blank" rel="noopener">标签插件</a>，其使用范例如下：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% minio 'bucket<span class="emphasis">_name' 'resource_</span>name' %&#125;</span><br><span class="line">下载链接</span><br><span class="line">&#123;% endminio %&#125;</span><br></pre></td></tr></table></figure>
+<p>在使用Hexo进行静态页面渲染时，这部分内容会被自动渲染成下载链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a target=&quot;_blank&quot; href=&quot;download_url&quot;&gt;下载链接&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>不过这种方法还是有一个显而易见的缺点：你需要是一个非常勤奋的作者，每周都来发布一次文章，不然旧文章的链接还是会失效。</p>
 
       
     </div>
@@ -722,8 +705,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -995,6 +987,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hexo中使用"><span class="nav-text">1 2. Hexo中使用</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

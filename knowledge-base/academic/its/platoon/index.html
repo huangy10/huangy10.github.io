@@ -123,17 +123,19 @@
 
 
 
-  <meta name="description" content="## 前言  车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[@amoozadeh2015platoon][@tan1998demonstration]。  本文的主体框架基于[@jia">
+  <meta name="description" content="1 前言 车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[1][2]。 本文的主体框架基于[3]。 2 编队的优势 以编队方式形式有如下优势：  编队内的车间距更小，故而可以提升道路承载能">
 <meta property="og:type" content="website">
 <meta property="og:title" content="车辆编队体系研究">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/platoon/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## 前言  车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[@amoozadeh2015platoon][@tan1998demonstration]。  本文的主体框架基于[@jia">
+<meta property="og:description" content="1 前言 车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[1][2]。 本文的主体框架基于[3]。 2 编队的优势 以编队方式形式有如下优势：  编队内的车间距更小，故而可以提升道路承载能">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/fa3e23f5f855d0c9644b452580ef1aad.png">
 <meta property="og:updated_time" content="2019-05-10T06:09:52.541Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="车辆编队体系研究">
-<meta name="twitter:description" content="## 前言  车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[@amoozadeh2015platoon][@tan1998demonstration]。  本文的主体框架基于[@jia">
+<meta name="twitter:description" content="1 前言 车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[1][2]。 本文的主体框架基于[3]。 2 编队的优势 以编队方式形式有如下优势：  编队内的车间距更小，故而可以提升道路承载能">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/fa3e23f5f855d0c9644b452580ef1aad.png">
 
 
 
@@ -536,36 +538,40 @@
       <div class="post-body han-init-context">
         
         
-          
-## 前言
-
-车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗[@amoozadeh2015platoon][@tan1998demonstration]。
-
-本文的主体框架基于[@jia2016survey]。
-
-## 编队的优势
-
-以编队方式形式有如下优势：
-
-1. 编队内的车间距更小，故而可以提升道路承载能力(road capacity)，缓解交通拥堵。
-2. 由于空气阻力降低，行驶的能耗也得到了降低，汽车排放量也减少了。
-3. 在先进技术的辅助下，编队形式也能提升交通安全，提升驾驶/乘坐的舒适性、
-4. 由于编队内的相对位置固定，车辆间的协作通信应用的效率能够改进，提升车联网的性能。
-
-## Platoon as VCPS
-
-这里的VCPS是指Vehicular [Cyber-Physical System](https://en.wikipedia.org/wiki/Cyber-physical_system)，CPS一般译为“赛博物理系统”，这个概念着重强调计算机及网络系统，与物理世界中的传感器和促动器(Acturator)的互动与联合。汽车编队可以视为是一种赛博物理系统。
-
-![Platoon as VCPS](https://imgs.codewoody.com/uploads/big/fa3e23f5f855d0c9644b452580ef1aad.png)
-
-从VCPS的角度看待编队系统，可以发现汽车编队的运动性能(mobility)和网络性能(VANETs)是彼此耦合，互相影响的。
-
-## 文章条目
-
-1. [多编队系统](./multi-platoon.html)
-2. [基于Platoon的车间通信(V2V)机制设计](./platoon-v2v.html)
-
-## Reference
+          <h1 data-number="1" id="前言"><span class="header-section-number">1</span> 前言</h1>
+<p>车辆编队(platoon)是指多辆车，借助于车载传感器，车载计算机，车间通信系统等手段排成列或者更复杂的结构。编队系统可以减少车间距，提高道路承载能力。另一方面，基于空气动力学的特点，编队内车辆的阻力(aerodynamic drag)能够降低，从而降低能耗<span class="citation" data-cites="amoozadeh2015platoon">[1]</span><span class="citation" data-cites="tan1998demonstration">[2]</span>。</p>
+<p>本文的主体框架基于<span class="citation" data-cites="jia2016survey">[3]</span>。</p>
+<h1 data-number="2" id="编队的优势"><span class="header-section-number">2</span> 编队的优势</h1>
+<p>以编队方式形式有如下优势：</p>
+<ol type="1">
+<li>编队内的车间距更小，故而可以提升道路承载能力(road capacity)，缓解交通拥堵。</li>
+<li>由于空气阻力降低，行驶的能耗也得到了降低，汽车排放量也减少了。</li>
+<li>在先进技术的辅助下，编队形式也能提升交通安全，提升驾驶/乘坐的舒适性、</li>
+<li>由于编队内的相对位置固定，车辆间的协作通信应用的效率能够改进，提升车联网的性能。</li>
+</ol>
+<h1 data-number="3" id="platoon-as-vcps"><span class="header-section-number">3</span> Platoon as VCPS</h1>
+<p>这里的VCPS是指Vehicular <a href="https://en.wikipedia.org/wiki/Cyber-physical_system" target="_blank" rel="noopener">Cyber-Physical System</a>，CPS一般译为“赛博物理系统”，这个概念着重强调计算机及网络系统，与物理世界中的传感器和促动器(Acturator)的互动与联合。汽车编队可以视为是一种赛博物理系统。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/fa3e23f5f855d0c9644b452580ef1aad.png" alt=""><figcaption>Platoon as VCPS</figcaption>
+</figure>
+<p>从VCPS的角度看待编队系统，可以发现汽车编队的运动性能(mobility)和网络性能(VANETs)是彼此耦合，互相影响的。</p>
+<h1 data-number="4" id="文章条目"><span class="header-section-number">4</span> 文章条目</h1>
+<ol type="1">
+<li><a href="./multi-platoon.html">多编队系统</a></li>
+<li><a href="./platoon-v2v.html">基于Platoon的车间通信(V2V)机制设计</a></li>
+</ol>
+<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-amoozadeh2015platoon">
+<p>[1] M. Amoozadeh, H. Deng, C.-N. Chuah, H. M. Zhang, and D. Ghosal, “Platoon management with cooperative adaptive cruise control enabled by vanet,” <em>Vehicular Communications</em>, vol. 2, no. 2, pp. 110–123, 2015.</p>
+</div>
+<div id="ref-tan1998demonstration">
+<p>[2] Han-Shue Tan, R. Rajamani, and Wei-Bin Zhang, “Demonstration of an automated highway platoon system,” in <em>Proceedings of the 1998 american control conference. ACC (ieee cat. No.98CH36207)</em>, 1998, vol. 3, pp. 1823–1827 vol.3.</p>
+</div>
+<div id="ref-jia2016survey">
+<p>[3] D. Jia, K. Lu, J. Wang, X. Zhang, and X. Shen, “A survey on platoon-based vehicular cyber-physical systems,” <em>IEEE communications surveys &amp; tutorials</em>, vol. 18, no. 1, pp. 263–284, 2016.</p>
+</div>
+</div>
 
         
       </div>
@@ -667,8 +673,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -940,6 +955,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编队的优势"><span class="nav-text">2 编队的优势</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#platoon-as-vcps"><span class="nav-text">3 Platoon as VCPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文章条目"><span class="nav-text">4 文章条目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

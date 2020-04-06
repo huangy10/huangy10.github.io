@@ -123,18 +123,22 @@
 
 
 
-  <meta name="description" content="![](https://imgs.codewoody.com/uploads/big/4c50d020f4346ef8aab039fdd6c09527.jpg) Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Uplo">
+  <meta name="description" content="Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with ev">
 <meta name="keywords" content="教程,折腾">
 <meta property="og:type" content="article">
 <meta property="og:title" content="自建图床: Lychee">
 <meta property="og:url" content="http://www.codewoody.com/posts/65048/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="![](https://imgs.codewoody.com/uploads/big/4c50d020f4346ef8aab039fdd6c09527.jpg) Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Uplo">
+<meta property="og:description" content="Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with ev">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/16c748b80a481535efeb2d271e14e4dd.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/257d81510bc5d03dfac4948844222f46.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/2ac1ded0feb822e54fad9838655f1bdb.png">
 <meta property="og:updated_time" content="2018-11-13T10:37:32.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自建图床: Lychee">
-<meta name="twitter:description" content="![](https://imgs.codewoody.com/uploads/big/4c50d020f4346ef8aab039fdd6c09527.jpg) Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Uplo">
+<meta name="twitter:description" content="Lychee is a free photo-management tool, which runs on your server or web-space. Installing is a matter of seconds. Upload, manage and share photos like from a native application. Lychee comes with ev">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/16c748b80a481535efeb2d271e14e4dd.png">
 
 
 
@@ -558,73 +562,50 @@
       
 
       
-        之前用的图床sm.ms的图片突然挂了。不知道为何，图片还是能够上传，但是访问图片的链接会出`ERR_SPDY_PROTOCOL_ERROR`的错误。
-
-![ERR_SPDY_PROTOCOL_ERROR错误示意图](https://imgs.codewoody.com/uploads/big/16c748b80a481535efeb2d271e14e4dd.png)
-
-正好我自己的翻墙服务器的硬盘长期富余。虽然只有十几个G，搭建一个自己图床还是够用的。更重要的是，Dogital Ocean的服务器的流量非常多（我买的$5的服务器的流量有一个T）。我选择的开源图床框架是[Lychee](https://github.com/electerious/Lychee)。这个框架支持Docker安装，可以省很多事情。
-
-## 1. Docker安装Lychee
-
-常规的安装方法可以参考[官方文档](https://github.com/electerious/Lychee/blob/master/docs/Installation.md)。我这里只介绍Docker方式。如果你没有什么特别的需求，Docker方式应该是非常适合你的。
-
-> 注：这篇教程只是对于我的操作过程的一个记录，因此对于一些依赖环境的安装没有面面俱到。这些问题，都可以面向google进行解决。
-
-### 1.1 Docker环境准备
-
-首先你要安装一个Docker环境。在Ubuntu上，安装非常简单：
-
-<!--￼0-->
-
-有时还需要将你当前用户加入到`docker`组中，这样每次执行`docker`命令不需要加`sudo`了。这个操作可能在安装过程中自动完成了，如果你发现`docker`命令执行时提示有权限相关的问题，可以运行
-
-<!--￼1-->
-
-注意确保一下`docker-compose`也安装完毕了。我们需要通过`docker-compose`来将Lychee和数据库组装在一起。
-
-<!--￼2-->
-
-### 1.2 安装Lychee
-
-首先创建好目录树：
-
-<!--￼3-->
-
-其中，`config`和`pictures`分别用来存储Lychee的设置和图片文件。`db`文件夹则是用于数据库，这三个文件夹需要你手动创建。`docker-compose.yml`文件内容如下：
-
-<!--￼4-->
-
-> 目前我没发现lychee的这个镜像支持用环境变量来配置数据库信息。所以上面对应的数据库信息后续需要在网页端手动输入。
-
-然后在这个文件夹下运行
-
-<!--￼5-->
-
-然后访问`http://yourdoman.com:8000`就可以访问了。
-
-### 1.3 Lychee配置
-
-在访问上述网页之后，Lychee会提示我们输入数据库信息。
-
-![Lychee 配置](https://imgs.codewoody.com/uploads/big/257d81510bc5d03dfac4948844222f46.png)
-
-注意这里的Database Host要填写`lychee-db`。其他的设置与上面的`docker-compose.yml`文件中的一致即可。
-
-而后按照提示创建登录账户：
-
-![创建账户](https://imgs.codewoody.com/uploads/big/2ac1ded0feb822e54fad9838655f1bdb.png)
-
-## 2. Lychee Advanced
-
-### 2.1 使用Nginx进行反向代理
-
-Nginx配置文件如下：
-
-<!--￼6-->
-
-### 2.2 启用HTTPS
-
-目前来看，[Let's encrypt](https://letsencrypt.org/)仍然是个人建站启用HTTPS的不二之选。其使用教程可以说是非常简明了，具体参考[certbot](https://certbot.eff.org/)。
+        之前用的图床sm.ms的图片突然挂了。不知道为何，图片还是能够上传，但是访问图片的链接会出<code>ERR_SPDY_PROTOCOL_ERROR</code>的错误。<p></p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/16c748b80a481535efeb2d271e14e4dd.png" alt=""><figcaption>ERR_SPDY_PROTOCOL_ERROR错误示意图</figcaption>
+</figure>
+<p>正好我自己的翻墙服务器的硬盘长期富余。虽然只有十几个G，搭建一个自己图床还是够用的。更重要的是，Dogital Ocean的服务器的流量非常多（我买的$5的服务器的流量有一个T）。我选择的开源图床框架是<a href="https://github.com/electerious/Lychee" target="_blank" rel="noopener">Lychee</a>。这个框架支持Docker安装，可以省很多事情。</p>
+<h1 data-number="1" id="docker安装lychee"><span class="header-section-number">1</span> 1. Docker安装Lychee</h1>
+<p>常规的安装方法可以参考<a href="https://github.com/electerious/Lychee/blob/master/docs/Installation.md" target="_blank" rel="noopener">官方文档</a>。我这里只介绍Docker方式。如果你没有什么特别的需求，Docker方式应该是非常适合你的。</p>
+<blockquote>
+<p>注：这篇教程只是对于我的操作过程的一个记录，因此对于一些依赖环境的安装没有面面俱到。这些问题，都可以面向google进行解决。</p>
+</blockquote>
+<h2 data-number="1.1" id="docker环境准备"><span class="header-section-number">1.1</span> 1.1 Docker环境准备</h2>
+<p>首先你要安装一个Docker环境。在Ubuntu上，安装非常简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt install docker-io</span><br></pre></td></tr></table></figure>
+<p>有时还需要将你当前用户加入到<code>docker</code>组中，这样每次执行<code>docker</code>命令不需要加<code>sudo</code>了。这个操作可能在安装过程中自动完成了，如果你发现<code>docker</code>命令执行时提示有权限相关的问题，可以运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser user docker</span><br></pre></td></tr></table></figure>
+<p>注意确保一下<code>docker-compose</code>也安装完毕了。我们需要通过<code>docker-compose</code>来将Lychee和数据库组装在一起。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose -v</span><br><span class="line">docker-compose version 1.17.1, build 6d101fb</span><br></pre></td></tr></table></figure>
+<h2 data-number="1.2" id="安装lychee"><span class="header-section-number">1.2</span> 1.2 安装Lychee</h2>
+<p>首先创建好目录树：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">lychee</span><br><span class="line">|-- config</span><br><span class="line">|-- db</span><br><span class="line">|-- pictures</span><br><span class="line">|-- docker-compose.yml</span><br></pre></td></tr></table></figure>
+<p>其中，<code>config</code>和<code>pictures</code>分别用来存储Lychee的设置和图片文件。<code>db</code>文件夹则是用于数据库，这三个文件夹需要你手动创建。<code>docker-compose.yml</code>文件内容如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  lychee:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="string">linuxserver/lychee</span></span><br><span class="line"><span class="attr">    links:</span></span><br><span class="line"><span class="attr">      - lychee-db:</span><span class="string">lychee-db</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/path/to/lychee/config:/config</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/path/to/lychee/pictures:/pictures</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">8000</span><span class="string">:80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">  lychee-db:</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">mariadb:10</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">/path/to/lychee/db:/var/lib/mysql</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_ROOT_PASSWORD=&lt;choose</span> <span class="string">root</span> <span class="string">password&gt;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_DATABASE=&lt;db</span> <span class="string">name&gt;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_USER=&lt;username&gt;</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">MYSQL_PASSWORD=&lt;username&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>目前我没发现lychee的这个镜像支持用环境变量来配置数据库信息。所以上面对应的数据库信息后续需要在网页端手动输入。</p>
+</blockquote>
+<p>然后在这个文件夹下运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker-compose up -d</span><br></pre></td></tr></table></figure>
+<p>然后访问<code>http://yourdoman.com:8000</code>就可以访问了。</p>
+<h2 data-number="1.3" id="lychee配置"><span class="header-section-number">1.3</span> 1.3 Lychee配置</h2>
+<p>在访问上述网页之后，Lychee会提示我们输入数据库信息。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/257d81510bc5d03dfac4948844222f46.png" alt=""><figcaption>Lychee 配置</figcaption>
+</figure>
+<p>注意这里的Database Host要填写<code>lychee-db</code>。其他的设置与上面的<code>docker-compose.yml</code>文件中的一致即可。</p>
+<p>而后按照提示创建登录账户：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/2ac1ded0feb822e54fad9838655f1bdb.png" alt=""><figcaption>创建账户</figcaption>
+</figure>
+<h1 data-number="2" id="lychee-advanced"><span class="header-section-number">2</span> 2. Lychee Advanced</h1>
+<h2 data-number="2.1" id="使用nginx进行反向代理"><span class="header-section-number">2.1</span> 2.1 使用Nginx进行反向代理</h2>
+<p>Nginx配置文件如下：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">	<span class="attribute">server_name</span> imgs.codewoody.com;</span><br><span class="line">	<span class="attribute">client_max_body_size</span> <span class="number">50M</span>;</span><br><span class="line"></span><br><span class="line">	<span class="attribute">location</span> / &#123;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> Host <span class="variable">$host</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Forwarded-Proto <span class="variable">$scheme</span>;</span><br><span class="line">		<span class="attribute">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line"></span><br><span class="line">		<span class="attribute">proxy_pass</span> http://localhost:8000;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.2" id="启用https"><span class="header-section-number">2.2</span> 2.2 启用HTTPS</h2>
+<p>目前来看，<a href="https://letsencrypt.org/" target="_blank" rel="noopener">Let's encrypt</a>仍然是个人建站启用HTTPS的不二之选。其使用教程可以说是非常简明了，具体参考<a href="https://certbot.eff.org/" target="_blank" rel="noopener">certbot</a>。</p>
       
     </div>
 
@@ -725,8 +706,17 @@ Nginx配置文件如下：
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -998,6 +988,23 @@ Nginx配置文件如下：
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker安装lychee"><span class="nav-text">1 1. Docker安装Lychee</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker环境准备"><span class="nav-text">1.1 1.1 Docker环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装lychee"><span class="nav-text">1.2 1.2 安装Lychee</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lychee配置"><span class="nav-text">1.3 1.3 Lychee配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#lychee-advanced"><span class="nav-text">2 2. Lychee Advanced</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用nginx进行反向代理"><span class="nav-text">2.1 2.1 使用Nginx进行反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启用https"><span class="nav-text">2.2 2.2 启用HTTPS</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

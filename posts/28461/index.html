@@ -123,18 +123,22 @@
 
 
 
-  <meta name="description" content="![Cocoa Touch Framework](https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg)  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过[Cocoa Touch Framework](http">
+  <meta name="description" content="Cocoa Touch Framework  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过Cocoa Touch Framework实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编">
 <meta name="keywords" content="教程,ios,swift">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Universal(Fat) Framework for Swift Projects">
 <meta property="og:url" content="http://www.codewoody.com/posts/28461/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="![Cocoa Touch Framework](https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg)  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过[Cocoa Touch Framework](http">
+<meta property="og:description" content="Cocoa Touch Framework  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过Cocoa Touch Framework实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png">
 <meta property="og:updated_time" content="2019-04-03T05:59:46.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Universal(Fat) Framework for Swift Projects">
-<meta name="twitter:description" content="![Cocoa Touch Framework](https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg)  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过[Cocoa Touch Framework](http">
+<meta name="twitter:description" content="Cocoa Touch Framework  最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过Cocoa Touch Framework实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg">
 
 
 
@@ -558,30 +562,29 @@
       
 
       
-        ![Cocoa Touch Framework](https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg)
+        <figure>
+<img src="https://imgs.codewoody.com/uploads/big/ec2894c1da024327344a0c2fb0f0e55a.jpg" alt=""><figcaption>Cocoa Touch Framework</figcaption>
+</figure>
+<p>最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过<a href="https://medium.com/@Rageeni16/create-cocoa-touch-framework-and-publish-it-be9ad6535f33" target="_blank" rel="noopener">Cocoa Touch Framework</a>实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编译出同时支持模拟器和真机的Framework，即Universal(Fat) Framework。这一需求还需要进一步地利用一些系统脚本来实现。 <a id="more"></a></p>
+<p>这里假设你已经有了一个能够正常工作，编译的包含Cocoa Touch Framework的工程。我这里实现时使用的是Xcode10.2。</p>
+<blockquote>
+<p>事实上我在调研中发现了很多不同的实现编译Universal Framework的教程，但是他们并不总是有用，我这里只遴选了我自己测试通过没有问题的思路。这一思路通过Archive过程来打包输出framework</p>
+</blockquote>
+<p>首先从Xcode左上角选择Cocoa Touch Framework的默认scheme，然后点击Edit Scheme</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png" alt=""><figcaption>Edit Scheme</figcaption>
+</figure>
+<p>在Archive的post-action中添加一个运行脚本(New Run Script Action)</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png" alt=""><figcaption>New Run Script Action</figcaption>
+</figure>
+<p>脚本内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> &gt; /tmp/<span class="variable">$&#123;PROJECT_NAME&#125;</span>_archive.log 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line">UNIVERSAL_OUTPUTFOLDER=<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-universal</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">"true"</span> == <span class="variable">$&#123;ALREADYINVOKED:-false&#125;</span> ]</span><br><span class="line"><span class="keyword">then</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"RECURSION: Detected, stopping"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="built_in">export</span> ALREADYINVOKED=<span class="string">"true"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># make sure the output directory exists</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Building for iPhoneSimulator"</span></span><br><span class="line">xcodebuild -workspace <span class="string">"<span class="variable">$&#123;WORKSPACE_PATH&#125;</span>"</span> -scheme <span class="string">"<span class="variable">$&#123;TARGET_NAME&#125;</span>"</span> -configuration <span class="variable">$&#123;CONFIGURATION&#125;</span> -sdk iphonesimulator -destination <span class="string">'platform=iOS Simulator,name=iPhone 6'</span> ONLY_ACTIVE_ARCH=NO ARCHS=<span class="string">'i386 x86_64'</span> BUILD_DIR=<span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>"</span> BUILD_ROOT=<span class="string">"<span class="variable">$&#123;BUILD_ROOT&#125;</span>"</span> ENABLE_BITCODE=YES OTHER_CFLAGS=<span class="string">"-fembed-bitcode"</span> BITCODE_GENERATION_MODE=bitcode clean build</span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 1. Copy the framework structure (from iphoneos build) to the universal folder</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Copying to output folder"</span></span><br><span class="line"><span class="comment"># 这行是在我参考的脚本的基础上添加进去的。脚本在运行过程中有一个问题：在试图将</span></span><br><span class="line"><span class="comment"># archive过程中生成的device framework拷贝进来时，总是拷贝的framework文件夹</span></span><br><span class="line"><span class="comment"># 的内容，而非整个文件夹，所以我们这里手动创建这个文件夹</span></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span></span><br><span class="line">cp -R <span class="string">"<span class="variable">$&#123;ARCHIVE_PRODUCTS_PATH&#125;</span><span class="variable">$&#123;INSTALL_PATH&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 2. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory</span></span><br><span class="line">SIMULATOR_SWIFT_MODULES_DIR=<span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-iphonesimulator/<span class="variable">$&#123;TARGET_NAME&#125;</span>.framework/Modules/<span class="variable">$&#123;TARGET_NAME&#125;</span>.swiftmodule/."</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"SIMULATOR_SWIFT_MODULES_DIR: <span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span></span><br><span class="line"><span class="keyword">if</span> [ -d <span class="string">"<span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">cp -R <span class="string">"<span class="variable">$&#123;SIMULATOR_SWIFT_MODULES_DIR&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;TARGET_NAME&#125;</span>.framework/Modules/<span class="variable">$&#123;TARGET_NAME&#125;</span>.swiftmodule"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 3. Create universal binary file using lipo and place the combined executable in the copied framework directory</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Combining executables"</span></span><br><span class="line">lipo -create -output <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;BUILD_DIR&#125;</span>/<span class="variable">$&#123;CONFIGURATION&#125;</span>-iphonesimulator/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;ARCHIVE_PRODUCTS_PATH&#125;</span><span class="variable">$&#123;INSTALL_PATH&#125;</span>/<span class="variable">$&#123;EXECUTABLE_PATH&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 4. Create universal binaries for embedded frameworks</span></span><br><span class="line"><span class="comment">#for SUB_FRAMEWORK in $( ls "$&#123;UNIVERSAL_OUTPUTFOLDER&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks" ); do</span></span><br><span class="line"><span class="comment">#BINARY_NAME="$&#123;SUB_FRAMEWORK%.*&#125;"</span></span><br><span class="line"><span class="comment">#lipo -create -output "$&#123;UNIVERSAL_OUTPUTFOLDER&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;" "$&#123;BUILD_DIR&#125;/$&#123;CONFIGURATION&#125;-iphonesimulator/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;" "$&#123;ARCHIVE_PRODUCTS_PATH&#125;$&#123;INSTALL_PATH&#125;/$&#123;TARGET_NAME&#125;.framework/Frameworks/$&#123;SUB_FRAMEWORK&#125;/$&#123;BINARY_NAME&#125;"</span></span><br><span class="line"><span class="comment">#done</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Step 5. Convenience step to copy the framework to the project's directory</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Copying to project dir"</span></span><br><span class="line">yes | cp -Rf <span class="string">"<span class="variable">$&#123;UNIVERSAL_OUTPUTFOLDER&#125;</span>/<span class="variable">$&#123;FULL_PRODUCT_NAME&#125;</span>"</span> <span class="string">"<span class="variable">$&#123;PROJECT_DIR&#125;</span>"</span></span><br><span class="line"></span><br><span class="line">open <span class="string">"<span class="variable">$&#123;PROJECT_DIR&#125;</span>"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上述脚本的内容主要来自于<a href="https://gist.github.com/eladnava/0824d08da8f99419ef2c7b7fb6d4cc78" target="_blank" rel="noopener">export-fat-swift-dynamic-framework</a>，我在这里根据实际情况进行了更改</p>
+</blockquote>
+<p>此时执行archive操作(Product-&gt;Archive)完成后会自动弹出Finder窗口显示新生成的framework的位置（应当就是位于项目根目录下）。</p>
 
-最近在给朋友做一个项目，要求将涉及到的算法内容整理成一个单独的framework，这样可以隐藏算法细节，方便交付。这个需求可以很容易地通过[Cocoa Touch Framework](https://medium.com/@Rageeni16/create-cocoa-touch-framework-and-publish-it-be9ad6535f33)实现。不过在交付的时候存在一个头疼的问题：默认情况下，Xcode在编译Cocoa Touch Framework时只会编译出支持模拟器或者真机的Framework，而无法编译出同时支持模拟器和真机的Framework，即Universal(Fat) Framework。这一需求还需要进一步地利用一些系统脚本来实现。
-<a id="more"></a>
-
-这里假设你已经有了一个能够正常工作，编译的包含Cocoa Touch Framework的工程。我这里实现时使用的是Xcode10.2。
-
-> 事实上我在调研中发现了很多不同的实现编译Universal Framework的教程，但是他们并不总是有用，我这里只遴选了我自己测试通过没有问题的思路。这一思路通过Archive过程来打包输出framework
-
-首先从Xcode左上角选择Cocoa Touch Framework的默认scheme，然后点击Edit Scheme
-
-![Edit Scheme](https://imgs.codewoody.com/uploads/big/c98bd864a870a5fa23da8ec4b330fd51.png)
-
-在Archive的post-action中添加一个运行脚本(New Run Script Action)
-
-![New Run Script Action](https://imgs.codewoody.com/uploads/big/8928535c1633ad1bfab117bd46b5b20c.png)
-
-脚本内容如下：
-
-<!--￼0-->
-
-> 上述脚本的内容主要来自于[export-fat-swift-dynamic-framework](https://gist.github.com/eladnava/0824d08da8f99419ef2c7b7fb6d4cc78)，我在这里根据实际情况进行了更改
-
-此时执行archive操作(Product->Archive)完成后会自动弹出Finder窗口显示新生成的framework的位置（应当就是位于项目根目录下）。
       
     </div>
 

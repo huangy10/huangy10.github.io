@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="文章标题是[A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8403512&amp;tag=1)，ICC Workshop文章。  这篇文章讨论的是C-V2X和IEEE80">
+  <meta name="description" content="文章标题是A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks，ICC Workshop文章。 这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。 每个车辆周期性地检查自己的包的寿命【应该指的延时限制】，并请求蜂窝网基站(eNodeB)建">
 <meta property="og:type" content="website">
 <meta property="og:title" content="混合协议 C-V2X &amp; IEE802.11p">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/fakhar2018hybrid.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章标题是[A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8403512&amp;tag=1)，ICC Workshop文章。  这篇文章讨论的是C-V2X和IEEE80">
+<meta property="og:description" content="文章标题是A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks，ICC Workshop文章。 这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。 每个车辆周期性地检查自己的包的寿命【应该指的延时限制】，并请求蜂窝网基站(eNodeB)建">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-26T13:06:57.374Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="混合协议 C-V2X &amp; IEE802.11p">
-<meta name="twitter:description" content="文章标题是[A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8403512&amp;tag=1)，ICC Workshop文章。  这篇文章讨论的是C-V2X和IEEE80">
+<meta name="twitter:description" content="文章标题是A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks，ICC Workshop文章。 这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。 每个车辆周期性地检查自己的包的寿命【应该指的延时限制】，并请求蜂窝网基站(eNodeB)建">
 
 
 
@@ -538,110 +538,86 @@
       <div class="post-body han-init-context">
         
         
-          
-文章标题是[A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8403512&tag=1)，ICC Workshop文章。
-
-这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。
-
-每个车辆周期性地检查自己的包的寿命<span class="foot-note-span">【应该指的延时限制】</span>，并请求蜂窝网基站(eNodeB)建立D2D链接。在eNodeB上，为车辆分配资源为一个优化问题，目标是优化整体延时。这篇文章提出了建模延时和PDR的期望的方法。文章还提出了一种基于贪婪策略的D2D链路选择方法。
-
-## 简介
-
-作者强调了LTE的部署能够为车联网提供替代方案，而传统的IEEE802.11p协议的缺点在于由于通信距离受限，信道随机访问的特点（CSMA/CA），因此通信的有效性和可靠性得不到保证。\
-LTE D2D通信的核心问题是如何在车联网用户之间分配通信资源，同时不对其他蜂窝网用户产生太大的干扰。\
-现有研究关注Throughput性能的比较多。而延时和可靠性考虑的比较少。这篇文章提出以延时为目标建立D2D资源分配框架。
-
-相比于IEEE802.11p，LTE D2D通信拥有更高的数据率和更远的通信距离。那么使用C-V2X可以让原本断开的链路能够抽芯连接。
-
-文章中提到基于蜂窝网的D2D通信是无冲突的，因此延时可以消除。[Moreover, since cellular based D2D communications are contention free, the latency can be removed.]{.eng-origin}
-
-> 关于这一点我存疑。是否是竞争与延时的长短没有必然关系，无竞争协议也可能引入结构性的延时。
-
-文章的主要贡献：
-
-- 提出基于C-V2X和IEEE802.11p的混合协议以改善延时，PDR和吞吐率性能；
-- 考虑延时最小化的D2D资源分配问题。[A latency-minimized resource allocation problem is considered to select a set of cellular based D2D links and assign them an appropriate channel to maximize the total network weighted latency reduction under the SINR constraints of the selected links, where the weight depends on expected latency and packet tiem period]{.eng-origin}
-- 基于贪婪策略的D2D链路选择算法，并给出了理论上的性能限制。
-
-## 系统模型与问题建模
-
-### 系统模型
-
-- **每辆车都装备有两套射频设备：IEEE802.11p和C-V2X**。每当车辆有一个包需要发送时（自己产生的或者需要转发的），车辆会使用两种接口中的一种。或者可以同时使用两个接口进行通信。具体而言，接口选择的规则是如果基站允许使用D2D链路，那么有限使用D2D（作者认为D2D是无竞争的，使用IEEE802.11p会增加对应通信资源的竞争水平），否则使用IEEE802.11p
-
-> 这两套设备的频谱范围是重合的，无法同时工作的。不过IEEE802.11p拥有多个10Mhz的信道，要是合适选择信道还是能够错开的。
-
-- 考虑多车道的高速公路场景，车辆总数为$N$，其相对速度服从正态分布。每辆车（车速为$V$）每次只能请求D2D发送一个包，每次D2D传输的时间是固定的。
-- 车载GPS负责提供运动信息。将运动信息和信道分配过程结合起来，基站负责选择D2D链路并为了链路分配固定数量的RB资源^📒^。[In this sense, along with channel allocation, the system ca be implemented that such taht the cellular eNodeB actually selects D2D links and allocates resource blocks with a fixed number of slots for D2D link]{.eng-origin}
-
-- 考虑一个随机的小区，小区覆盖范围内的所有车辆集合为$\Omega_i$。所有的车辆会周期性地检查他们剩余的包传输时间，保证剩余的时间的长度足够用来发起D2D请求并完成随后的D2D传输。所有的车辆会在检查自己的包传输时间的同时将自己的位置信息更新到基站。
-  考虑一个随机的周期内，请求D2D链路的车辆的集合为$\Omega_z$。在收到请求以后，基站决定哪些D2D链路可以建立，这一D2D链路集合为$L$。选择的标准是这些节点通信时使用D2D要比不使用D2D性能更好（主要是延时）。记$M_{v_i}^u$为不使用D2D时的延时水平，$M_{v_i}^{d}$为使用了D2D的延时水平。则延时下降的量为
-
-  $$
-  \Delta M_{v_i} = E[M_{v_i}^u] - E[M_{v_i}^d]
-  $$
-
-  基站调度的目标是最大化
-
-  $$
-  \max \sum_{v_i \in \Omega_i} w_{v_i}(L)
-  $$
-  
-  其中$w_{v_i}(L) \approx (1 / t_{v_i}) \Delta M_{v_i}(L)$ 为加权平均延时减小量。$t_{v_{i}}$应该是剩余包传输时间。即剩余的时间越少，权重越大，基站优先为这些节点分配D2D链路。同时$L$中的D2D链路还要求满足SINR条件
-
-  $$
-  \frac{P_{t_{x}(l)} \beta_{t_{x}(l), r_{x}(l)}^{-1}}{\sum_{l \in L} P_{r_{x}(i)} \beta_{t_{x}(l), r_{x}(l)}^{-1}+u_{r}} \geq \bar{\gamma}
-  $$
-
-  其中$t_x(l)$和$r_x(l)$分别代表链路$l$的发送者和接受者。$P_x$代表车辆$v_j$的发送功率，$\beta_{x, v}$为从$v_j$到$v_i$的传输损耗，$u_r$为接收端的噪声水平，$\bar{\gamma}$为SINR阈值。综上基站的优化问题可以表达成:
-
-  :::: {style="font-size: 120%"}
-  $$
-  \begin{array}{c}
-  \max _{L} \sum_{v_{i} \in \Omega_{i}} w_{v_{i}}(L) \\
-  \frac{P_{t_{x}(l)} \beta_{t_{x}(l), r_{x}(l)}^{-1}}{\sum_{i \in L} P_{r_{x}(i)} \beta_{t_{x}(i), r_{x}(l)}^{-1}+u_{r}} \geq \bar{\gamma} \text { holds } \forall l \in L \\
-  t_{x}(l) \in \Omega_{z} \forall l \in L
-  \end{array}
-  $$
-  ::::
-
-### 竞争延时分析
-
-对于任意车辆$v_x$，定义$\tau_x$和$p_x$分别为信道访问概率和传输成功的概率。(这里应该是采用的经典的Bianchi的分析方法，这个方法我在[这里](/knowledge-base/academic/its/wave/wave.html#mac%E5%B1%82%E6%80%A7%E8%83%BD%E7%9A%84%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC)做了梳理)。在任意时刻知道所有车辆的位置之后，对于车辆$v_x$我们可以定义通信节点集合$N_x$和干扰车辆集合$T_x$。根据Bianchi的简单广播模型有
-
-$$
+          <p>文章标题是<a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8403512&amp;tag=1" target="_blank" rel="noopener">A Hybrid Low-Latency D2D Resource Allocation Scheme Based on Cellular V2X Networks</a>，ICC Workshop文章。</p>
+<p>这篇文章讨论的是C-V2X和IEEE802.11p的混合协议，其中C-V2X的D2D是由基站控制的。</p>
+<p>每个车辆周期性地检查自己的包的寿命<span class="foot-note-span">【应该指的延时限制】</span>，并请求蜂窝网基站(eNodeB)建立D2D链接。在eNodeB上，为车辆分配资源为一个优化问题，目标是优化整体延时。这篇文章提出了建模延时和PDR的期望的方法。文章还提出了一种基于贪婪策略的D2D链路选择方法。</p>
+<h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
+<p>作者强调了LTE的部署能够为车联网提供替代方案，而传统的IEEE802.11p协议的缺点在于由于通信距离受限，信道随机访问的特点（CSMA/CA），因此通信的有效性和可靠性得不到保证。<br>
+LTE D2D通信的核心问题是如何在车联网用户之间分配通信资源，同时不对其他蜂窝网用户产生太大的干扰。<br>
+现有研究关注Throughput性能的比较多。而延时和可靠性考虑的比较少。这篇文章提出以延时为目标建立D2D资源分配框架。</p>
+<p>相比于IEEE802.11p，LTE D2D通信拥有更高的数据率和更远的通信距离。那么使用C-V2X可以让原本断开的链路能够抽芯连接。</p>
+<p>文章中提到基于蜂窝网的D2D通信是无冲突的，因此延时可以消除。<span class="eng-origin">Moreover, since cellular based D2D communications are contention free, the latency can be removed.</span></p>
+<blockquote>
+<p>关于这一点我存疑。是否是竞争与延时的长短没有必然关系，无竞争协议也可能引入结构性的延时。</p>
+</blockquote>
+<p>文章的主要贡献：</p>
+<ul>
+<li>提出基于C-V2X和IEEE802.11p的混合协议以改善延时，PDR和吞吐率性能；</li>
+<li>考虑延时最小化的D2D资源分配问题。<span class="eng-origin">A latency-minimized resource allocation problem is considered to select a set of cellular based D2D links and assign them an appropriate channel to maximize the total network weighted latency reduction under the SINR constraints of the selected links, where the weight depends on expected latency and packet tiem period</span></li>
+<li>基于贪婪策略的D2D链路选择算法，并给出了理论上的性能限制。</li>
+</ul>
+<h1 data-number="2" id="系统模型与问题建模"><span class="header-section-number">2</span> 系统模型与问题建模</h1>
+<h2 data-number="2.1" id="系统模型"><span class="header-section-number">2.1</span> 系统模型</h2>
+<ul>
+<li><strong>每辆车都装备有两套射频设备：IEEE802.11p和C-V2X</strong>。每当车辆有一个包需要发送时（自己产生的或者需要转发的），车辆会使用两种接口中的一种。或者可以同时使用两个接口进行通信。具体而言，接口选择的规则是如果基站允许使用D2D链路，那么有限使用D2D（作者认为D2D是无竞争的，使用IEEE802.11p会增加对应通信资源的竞争水平），否则使用IEEE802.11p</li>
+</ul>
+<blockquote>
+<p>这两套设备的频谱范围是重合的，无法同时工作的。不过IEEE802.11p拥有多个10Mhz的信道，要是合适选择信道还是能够错开的。</p>
+</blockquote>
+<ul>
+<li><p>考虑多车道的高速公路场景，车辆总数为<span class="math inline">\(N\)</span>，其相对速度服从正态分布。每辆车（车速为<span class="math inline">\(V\)</span>）每次只能请求D2D发送一个包，每次D2D传输的时间是固定的。</p></li>
+<li><p>车载GPS负责提供运动信息。将运动信息和信道分配过程结合起来，基站负责选择D2D链路并为了链路分配固定数量的RB资源<sup>📒</sup>。<span class="eng-origin">In this sense, along with channel allocation, the system ca be implemented that such taht the cellular eNodeB actually selects D2D links and allocates resource blocks with a fixed number of slots for D2D link</span></p></li>
+<li><p>考虑一个随机的小区，小区覆盖范围内的所有车辆集合为<span class="math inline">\(\Omega_i\)</span>。所有的车辆会周期性地检查他们剩余的包传输时间，保证剩余的时间的长度足够用来发起D2D请求并完成随后的D2D传输。所有的车辆会在检查自己的包传输时间的同时将自己的位置信息更新到基站。 考虑一个随机的周期内，请求D2D链路的车辆的集合为<span class="math inline">\(\Omega_z\)</span>。在收到请求以后，基站决定哪些D2D链路可以建立，这一D2D链路集合为<span class="math inline">\(L\)</span>。选择的标准是这些节点通信时使用D2D要比不使用D2D性能更好（主要是延时）。记<span class="math inline">\(M_{v_i}^u\)</span>为不使用D2D时的延时水平，<span class="math inline">\(M_{v_i}^{d}\)</span>为使用了D2D的延时水平。则延时下降的量为</p>
+<p><span class="math display">\[
+\Delta M_{v_i} = E[M_{v_i}^u] - E[M_{v_i}^d]
+\]</span></p>
+<p>基站调度的目标是最大化</p>
+<p><span class="math display">\[
+\max \sum_{v_i \in \Omega_i} w_{v_i}(L)
+\]</span></p>
+<p>其中<span class="math inline">\(w_{v_i}(L) \approx (1 / t_{v_i}) \Delta M_{v_i}(L)\)</span> 为加权平均延时减小量。<span class="math inline">\(t_{v_{i}}\)</span>应该是剩余包传输时间。即剩余的时间越少，权重越大，基站优先为这些节点分配D2D链路。同时<span class="math inline">\(L\)</span>中的D2D链路还要求满足SINR条件</p>
+<p><span class="math display">\[
+\frac{P_{t_{x}(l)} \beta_{t_{x}(l), r_{x}(l)}^{-1}}{\sum_{l \in L} P_{r_{x}(i)} \beta_{t_{x}(l), r_{x}(l)}^{-1}+u_{r}} \geq \bar{\gamma}
+\]</span></p>
+<p>其中<span class="math inline">\(t_x(l)\)</span>和<span class="math inline">\(r_x(l)\)</span>分别代表链路<span class="math inline">\(l\)</span>的发送者和接受者。<span class="math inline">\(P_x\)</span>代表车辆<span class="math inline">\(v_j\)</span>的发送功率，<span class="math inline">\(\beta_{x, v}\)</span>为从<span class="math inline">\(v_j\)</span>到<span class="math inline">\(v_i\)</span>的传输损耗，<span class="math inline">\(u_r\)</span>为接收端的噪声水平，<span class="math inline">\(\bar{\gamma}\)</span>为SINR阈值。综上基站的优化问题可以表达成:</p>
+<div style="font-size: 120%">
+<p><span class="math display">\[
+\begin{array}{c}
+\max _{L} \sum_{v_{i} \in \Omega_{i}} w_{v_{i}}(L) \\
+\frac{P_{t_{x}(l)} \beta_{t_{x}(l), r_{x}(l)}^{-1}}{\sum_{i \in L} P_{r_{x}(i)} \beta_{t_{x}(i), r_{x}(l)}^{-1}+u_{r}} \geq \bar{\gamma} \text { holds } \forall l \in L \\
+t_{x}(l) \in \Omega_{z} \forall l \in L
+\end{array}
+\]</span></p>
+</div></li>
+</ul>
+<h2 data-number="2.2" id="竞争延时分析"><span class="header-section-number">2.2</span> 竞争延时分析</h2>
+<p>对于任意车辆<span class="math inline">\(v_x\)</span>，定义<span class="math inline">\(\tau_x\)</span>和<span class="math inline">\(p_x\)</span>分别为信道访问概率和传输成功的概率。(这里应该是采用的经典的Bianchi的分析方法，这个方法我在<a href="/knowledge-base/academic/its/wave/wave.html#mac%E5%B1%82%E6%80%A7%E8%83%BD%E7%9A%84%E7%90%86%E8%AE%BA%E6%8E%A8%E5%AF%BC">这里</a>做了梳理)。在任意时刻知道所有车辆的位置之后，对于车辆<span class="math inline">\(v_x\)</span>我们可以定义通信节点集合<span class="math inline">\(N_x\)</span>和干扰车辆集合<span class="math inline">\(T_x\)</span>。根据Bianchi的简单广播模型有</p>
+<p><span class="math display">\[
 \tau_{v_i} = \frac{2p_{v_{i}}}{W_i + 1}
-$$
-
-$$
+\]</span></p>
+<p><span class="math display">\[
 p_{v_{i}}=\left(\prod_{v_{x} \in N_{v_{i}}}\left(1-\tau_{v_{x}}\right)\right)\left(\prod_{v_{x} \in N_{v_{j}} \cap N_{v_{i}}}\left(1-\tau_{v_{x}}\right)\right)^{K_{v_{i}}}
-$$
-
-其中$K_{v_i}$为可能发生隐藏终端问题导致的时间段。因此竞争延时的期望为：
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(K_{v_i}\)</span>为可能发生隐藏终端问题导致的时间段。因此竞争延时的期望为：</p>
+<p><span class="math display">\[
 E[M_{contention, v_i}] = \frac{T_{slot}, v_i}{\tau_{v_i}, P_{v_i}}
-$$
-
-其中 $E[T_{slot}, v_i]$为时隙大小（这里的时隙不是TDMA意义上的时隙概念，具体参考Bianchi的论文）。
-
-$$
+\]</span></p>
+<p>其中 <span class="math inline">\(E[T_{slot}, v_i]\)</span>为时隙大小（这里的时隙不是TDMA意义上的时隙概念，具体参考Bianchi的论文）。</p>
+<p><span class="math display">\[
 T_{slot, v_i} = p_{ideal, v_i^\sigma} + p_{t_x, v_i}T_z^P{t_x} + p_{coll, v_i} T_{coll}^{t_x}
-$$
-
-## 算法
-
-文章提出的核心问题是如何确定D2D链路集合$L$。该优化问题是NP难问题。
-
-> 算法具体问题不太重要，这里不做整理。具体见原论文。
-
-## 总结
-
-这篇论文的总体思路是由基站来调度D2D通信，当D2D无法满足要求时再使用IEEE802.11p做backup。调度的核心标准是延时。文章有如下特点：
-
-1. 这里的D2D通信是需要基站来调度的，对应的是3GPP Release 14 Mode 3 或者是 Release 12 Mode 1的模式。而一般C-V2X都是采用Mode 4或者至少Mode 2。
-2. 作者认为D2D通信只有传输延时，至于其他结构性延时要素则没有考虑。
-3. IEEE802.11p方面采用了经典的Bianchi模型。
+\]</span></p>
+<h1 data-number="3" id="算法"><span class="header-section-number">3</span> 算法</h1>
+<p>文章提出的核心问题是如何确定D2D链路集合<span class="math inline">\(L\)</span>。该优化问题是NP难问题。</p>
+<blockquote>
+<p>算法具体问题不太重要，这里不做整理。具体见原论文。</p>
+</blockquote>
+<h1 data-number="4" id="总结"><span class="header-section-number">4</span> 总结</h1>
+<p>这篇论文的总体思路是由基站来调度D2D通信，当D2D无法满足要求时再使用IEEE802.11p做backup。调度的核心标准是延时。文章有如下特点：</p>
+<ol type="1">
+<li>这里的D2D通信是需要基站来调度的，对应的是3GPP Release 14 Mode 3 或者是 Release 12 Mode 1的模式。而一般C-V2X都是采用Mode 4或者至少Mode 2。</li>
+<li>作者认为D2D通信只有传输延时，至于其他结构性延时要素则没有考虑。</li>
+<li>IEEE802.11p方面采用了经典的Bianchi模型。</li>
+</ol>
 
         
       </div>
@@ -745,8 +721,17 @@ $$
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1018,6 +1003,23 @@ $$
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型与问题建模"><span class="nav-text">2 系统模型与问题建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型"><span class="nav-text">2.1 系统模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#竞争延时分析"><span class="nav-text">2.2 竞争延时分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法"><span class="nav-text">3 算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">4 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

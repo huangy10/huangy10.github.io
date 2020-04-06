@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个`std::vector`。例如    由于C++是采用值传递的方式，每次对`std::vector`进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。">
+  <meta name="description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个std::vector。例如 1void f(std::vector&amp;lt;struct ExampleStruct&amp;gt; data); 由于C++是采用值传递的方式，每次对std::vector进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方">
 <meta name="keywords" content="Debug,ns3,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++中将结构体放置在std::vector容器内的操作风险">
 <meta property="og:url" content="http://www.codewoody.com/posts/35148/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个`std::vector`。例如    由于C++是采用值传递的方式，每次对`std::vector`进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。">
+<meta property="og:description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个std::vector。例如 1void f(std::vector&amp;lt;struct ExampleStruct&amp;gt; data); 由于C++是采用值传递的方式，每次对std::vector进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-07-02T02:04:32.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++中将结构体放置在std::vector容器内的操作风险">
-<meta name="twitter:description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个`std::vector`。例如    由于C++是采用值传递的方式，每次对`std::vector`进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。">
+<meta name="twitter:description" content="有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个std::vector。例如 1void f(std::vector&amp;lt;struct ExampleStruct&amp;gt; data); 由于C++是采用值传递的方式，每次对std::vector进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方">
 
 
 
@@ -570,31 +570,18 @@
       
 
       
-        
-有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个`std::vector`。例如
-
-<!--￼0-->
-
-由于C++是采用值传递的方式，每次对`std::vector`进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。
-
+        <p>有一组长度不固定的参数需要传输，且参数形式为结构体，那么一个比较简单的方法是将这些参数作为一个<code>std::vector</code>。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct ExampleStruct&gt; data)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>由于C++是采用值传递的方式，每次对<code>std::vector</code>进行元素的存取操作时，都会对涉及的结构体进行复制。如果结构体的数量比较多，或者结构体的体积比加大，那么这种方式对于计算和内存资源的浪费就比较大了。</p>
 <a id="more"></a>
-
-那么，折中的办法是在`std::vector`中存放指针。例如
-
-<!--￼1-->
-
-不过，这就给指针的生命周期管理带来了很大的挑战，而且可能会引入非常多耦合性很强的代码。如果函数是state-less，即只对输入参数进行计算，而不更改其他的状态变量，问题倒不是很严重。反之，就会存在很多比较大的漏洞。
-
-由于局部变量存在作用范围的限制
-
-<!--￼2-->
-
-当离开调用`f`的函数的作用域时，`a`就会被释放，后续在其他地方访问`data`时，对应的指针指向的内存区域已经被释放掉了，对其进行访问会导致错误。使用`new`来讲结构体创建在堆内存上可以解决这个问题，但是这意味着后续这一数据已经利用完之后，要确保此处申请的内存被恰当地释放掉。随着业务逻辑的复杂化，要准确做到这一点会非常困难，强行实现也会带来很多强耦合的代码，扩大引入bug的风险。
-
-我们剩下的选择，就是使用智能指针`std::shared_ptr`自动管理堆内存的声明周期。就是形式有点复杂了：
-
-<!--￼3-->
-
+<p>那么，折中的办法是在<code>std::vector</code>中存放指针。例如</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;struct ExampleStruct *&gt; data)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>不过，这就给指针的生命周期管理带来了很大的挑战，而且可能会引入非常多耦合性很强的代码。如果函数是state-less，即只对输入参数进行计算，而不更改其他的状态变量，问题倒不是很严重。反之，就会存在很多比较大的漏洞。</p>
+<p>由于局部变量存在作用范围的限制</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">ExampleStruct</span> <span class="title">a</span>;</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  data.push_back (&amp;a);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  f (data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当离开调用<code>f</code>的函数的作用域时，<code>a</code>就会被释放，后续在其他地方访问<code>data</code>时，对应的指针指向的内存区域已经被释放掉了，对其进行访问会导致错误。使用<code>new</code>来讲结构体创建在堆内存上可以解决这个问题，但是这意味着后续这一数据已经利用完之后，要确保此处申请的内存被恰当地释放掉。随着业务逻辑的复杂化，要准确做到这一点会非常困难，强行实现也会带来很多强耦合的代码，扩大引入bug的风险。</p>
+<p>我们剩下的选择，就是使用智能指针<code>std::shared_ptr</code>自动管理堆内存的声明周期。就是形式有点复杂了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span>&lt;<span class="built_in">std</span>::share_ptr&lt;struct ExampleStruct&gt;&gt; data)</span></span>;</span><br></pre></td></tr></table></figure>
 
       
     </div>

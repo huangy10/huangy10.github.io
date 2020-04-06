@@ -123,17 +123,24 @@
 
 
 
-  <meta name="description" content="文章的标题是[Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks](https://ieeexplore.ieee.org/abstract/document/8690600)，为2018年的VTC文章。  这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-S">
+  <meta name="description" content="文章的标题是Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks，为2018年的VTC文章。 这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-SPS的性能，尤其是在拥堵情况下的性能（Congested radio environments)。这篇文章做了一个开源">
 <meta property="og:type" content="website">
 <meta property="og:title" content="C-V2X MAC(SB-SPS) 性能分析">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/amr2018performance.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="文章的标题是[Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks](https://ieeexplore.ieee.org/abstract/document/8690600)，为2018年的VTC文章。  这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-S">
+<meta property="og:description" content="文章的标题是Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks，为2018年的VTC文章。 这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-SPS的性能，尤其是在拥堵情况下的性能（Congested radio environments)。这篇文章做了一个开源">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/62bc490ccf16d358f77d068162a007ca.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/38af1f10f5a5f2c3cfeed58a894d33ad.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8336d1f9a4ec8191b099e4302910857d.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/6c4601e0c60258332211eaaeb904e344.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/57f0edba16fa11ad649602ee9ead85f5.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/dedfd50375e203e7e8b9ae2472b34eb4.png">
 <meta property="og:updated_time" content="2020-04-03T14:32:37.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X MAC(SB-SPS) 性能分析">
-<meta name="twitter:description" content="文章的标题是[Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks](https://ieeexplore.ieee.org/abstract/document/8690600)，为2018年的VTC文章。  这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-S">
+<meta name="twitter:description" content="文章的标题是Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks，为2018年的VTC文章。 这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-SPS的性能，尤其是在拥堵情况下的性能（Congested radio environments)。这篇文章做了一个开源">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/62bc490ccf16d358f77d068162a007ca.png">
 
 
 
@@ -538,107 +545,94 @@
       <div class="post-body han-init-context">
         
         
-          
-文章的标题是[Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks](https://ieeexplore.ieee.org/abstract/document/8690600)，为2018年的VTC文章。
-
-这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-SPS的性能，尤其是在拥堵情况下的性能（Congested radio environments)。这篇文章做了一个开源的模拟器来做C-V2X的研究。这个模拟器是基于NS-3的。文章研究了Mode4下资源池配置以及一些SPS关键参数配置对于调度性能的影响。文章发现资源保留间隔(Resoure Reservation Interval, RRI)对于数据率有显著的影响，而资源重选概率在高密度情况下的影响比较小。
-
-这篇文章关注Mode 4。Mode 4是针对DSRC的替代方案。文章研究的是Mode 4使用的SB-SPS MAC方案。该方案用来调度和分配无线通信资源。
-
-> 文章里的提到RB的大小是180kHz $\times$ 0.5ms。但是资源调度的单位长度是1ms。
-
-## 资源池
-
-PSCCH和PSSCH传输配置有两种，如 @fig:传输配置 。分别是相邻模式和非相邻模式。在相邻模式中SCH数据的传输在相邻的RB中进行，非相邻模式则相反，此时PSCCH和PSSCH的**资源池**是独立的。
-
-![PSCCH和PSSCH传输的两种配置](https://imgs.codewoody.com/uploads/big/62bc490ccf16d358f77d068162a007ca.png){#fig:传输配置}
-
-## SPS(Semi-Persistent Scheduling)
-
-SPS的设计目标是为延时敏感业务提供支持[supporting services that require deterministic latency]{.eng-origin}。Mode 4采用了这一设计理念，并使用基于感知的方法来确定资源分配方式。
-
-![感知窗口和选择窗口](https://imgs.codewoody.com/uploads/big/38af1f10f5a5f2c3cfeed58a894d33ad.png){#fig:感知窗口和选择窗口}
-
-定义候选单子帧资源为同一个子帧(1ms)上的**连续**子信道，连续子信道的数量为1到$L$，具体取决于消息大小。UE需要在选择窗口中选出一组跨多个子帧的候选的单子帧资源[ The UE shall select a set of candidate single-subframe resources within the selection window that spans a number of subframes]{.eng-origin}。资源的总数为$M$。$T_1$和$T_2$这两个参数确定了选择窗口的大小。其中$T_2$是延时要求的函数。
-
-SPS流程图如下：
-
-![SPS流程图，图片的原始来源是: European Telecommunications Standards Institute (ETSI), “Physical layer procedures (Release 14),” 3GPP TS 36.213, V14.2.0, April 2017. ](https://imgs.codewoody.com/uploads/big/8336d1f9a4ec8191b099e4302910857d.png){#fig:SPS流程图}
-
-1. UE 持续监听各个子帧，记录下解码出来的SCI信息和侧链接受信号强度(Sidelink Received Singal Strength Indicator, S-RSSI)。这里会连续记录1000个子帧。
-2. UE 设置信号功率门限 $Th$，以及两个初始集合 $S_A$ 和 $S_B$，前者初始包含所有的资源块，后者为空。
-3. UE 检查所有的单子帧资源块，在 $S_A$ 中排除UE 在感知窗口中未曾检测过的部分。
-4. 在剩下的单子帧资源中，已经被别的节点占用、或者检测到的PSCCH的接受信号强度超过阈值 $Th$ 的部分从 $S_A$ 排除。
-5. 如果经过上述两步筛选剩下的资源户数量占据总资源数量的比例不超过20%，则将 $Th$ 升高 3dB，并回到第三步。
-6. 否则，计算S-RSSI的平均数（应该是在每个子资源块上，计算时间尺度上的历史平均值），并根军平均S-RSSI，从 $S_A$ 中筛选出最小的占据总资源数 20% 的资源放入集合 $S_B$。
-7. MAC层从 $S_B$ 中随机选择一个资源用于初次传输。
-8. 如果HARQ (Hybrid automaic repeat request)的值为2，则对于选中的传输机会$t_{n+k}, k=0,1,\dots,K$，则另一个传输机会集合$t_{n+k+j}$的集合也会被选中，其中$j\neq 0, -15 \leq j \leq 15$。【~原文这里似乎没有说清楚$K$是个啥】
-
-SPS选中的资源会在接下来的 $ResourceCounter$ (RC) 次传输中继续使用，其中RC的值从下面的范围内随机选出：
-
-- [5, 15] if resource reservation interval ≥ 100 ms,
-- [10, 30] if resource reservation interval = 50 ms, or
-- [25, 75] if resource reservation interval = 20 ms. 
-
-当 RC 为 0 时，UE 以概率 $P$ 继续保持上一轮的资源，$P \in [0, 0.8]$。
-
-## 仿真
-
-这篇文章的一个特色是给出了一个开源的支持 Mode 4 的仿真工具。本文的工作是基于NIST团队的仿真器进行的。
-
-### 仿真场景
-
-运动场景设置：
-
-- 高速场景，每辆车的平均速度相同，仿真中考虑70km/h和140km/h这两个速度；
-- 双向六车道，每个方向三个；
-- 道路长度是2km；
-- 每辆车在路上的初始位置服从空间高斯过程；
-- 每条车道上车辆的密度的选取方法是 $2s \times speed$ 的倒数（即平均车间距是车速的两倍）；【~因此不同车速本质上是指不同的车流密度】
-- 道路端点的处理方式是车辆到达道路的一端时，立刻移动到道路的另一端进入。
-
-通信场景设置：
-
-- 路径损耗模型是line of sight model in WINNER+B1
-- 天线高度是1.5m
-- 3m以内的路径损耗以3m处计算[The path loss for distances less than 3 m is set using the value at a transmitter-receiver separation of 3 m. ]{.eng-origin}
-- Shadowing分布为Log-normal，标准差为3dB
-- Shadowing spatial correlation is implemented with a decorrelation distance of 25 m
-- 车辆在5.9GHz频段以23dBm的功率传输
-- 车辆间同步是完美的
-
-消息和帧设置:
-
-- 每辆车的BSM通信方式为4个短消息，随后一个长消息，包的大小分别为$\{190, 190, 190, 190, 300\}$字节；
-- 相邻两个包之间的间隔初始设置为 100ms；
-- 网络设置为使用相邻模式的PSCCH + PSSCH配置；
-- 每个子帧上有$L$个子信道，每个子信道使用 12 个RB；
-- 编码速率是$\frac{1}{2}$，调制方式为 QPSK；
-- 每个短消息可以在一个子信道上传输完成，长消息需要在两个子信道上完成传输；
-- $T_1 = 4, T_2 = 20$；
-- RRI、资源重选概率、子信道数量为仿真要考虑的变量。
-
-### 仿真结果
-
-评估的指标是Packet Delivery Ratio。
-
-#### 子信道数量的影响
-
-![子信道数量的影响](https://imgs.codewoody.com/uploads/big/6c4601e0c60258332211eaaeb904e344.png){#fig:子信道数量的影响}
-
-首先车流密度较大时PDR要更低一些（蓝色线），因为碰撞概率高。提升子信道数量可以降低碰撞概率，故提高了PDR。
-
-#### SPS RRI的影响
-
-![RRI的影响，横轴表示100X ms](https://imgs.codewoody.com/uploads/big/57f0edba16fa11ad649602ee9ead85f5.png){#fig:RRI的影响}
-
-RRI越长那么UE使用信道的频率就越低，因此碰撞概率就越低。不过增加RRI会降低数据率，增加延时。
-
-#### 资源重选概率的影响
-
-![资源重选概率的影响，图中X表示不同的RRI值](https://imgs.codewoody.com/uploads/big/dedfd50375e203e7e8b9ae2472b34eb4.png){#fig:资源重选概率的影响}
-
-图中体现出资源重选概率对于PDR的影响很小。
+          <p>文章的标题是<a href="https://ieeexplore.ieee.org/abstract/document/8690600" target="_blank" rel="noopener">Performance Analysis of Sensing-Based Semi-Persistent Scheduling in C-V2X Networks</a>，为2018年的VTC文章。</p>
+<p>这里讨论的是Release 14中提出的C-V2X。本文的重点是评估SB-SPS的性能，尤其是在拥堵情况下的性能（Congested radio environments)。这篇文章做了一个开源的模拟器来做C-V2X的研究。这个模拟器是基于NS-3的。文章研究了Mode4下资源池配置以及一些SPS关键参数配置对于调度性能的影响。文章发现资源保留间隔(Resoure Reservation Interval, RRI)对于数据率有显著的影响，而资源重选概率在高密度情况下的影响比较小。</p>
+<p>这篇文章关注Mode 4。Mode 4是针对DSRC的替代方案。文章研究的是Mode 4使用的SB-SPS MAC方案。该方案用来调度和分配无线通信资源。</p>
+<blockquote>
+<p>文章里的提到RB的大小是180kHz <span class="math inline">\(\times\)</span> 0.5ms。但是资源调度的单位长度是1ms。</p>
+</blockquote>
+<h1 data-number="1" id="资源池"><span class="header-section-number">1</span> 资源池</h1>
+<p>PSCCH和PSSCH传输配置有两种，如 <a href="#fig:传输配置">图 1</a> 。分别是相邻模式和非相邻模式。在相邻模式中SCH数据的传输在相邻的RB中进行，非相邻模式则相反，此时PSCCH和PSSCH的<strong>资源池</strong>是独立的。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/62bc490ccf16d358f77d068162a007ca.png" id="fig:传输配置" alt=""><figcaption>图 1: PSCCH和PSSCH传输的两种配置</figcaption>
+</figure>
+<h1 data-number="2" id="spssemi-persistent-scheduling"><span class="header-section-number">2</span> SPS(Semi-Persistent Scheduling)</h1>
+<p>SPS的设计目标是为延时敏感业务提供支持<span class="eng-origin">supporting services that require deterministic latency</span>。Mode 4采用了这一设计理念，并使用基于感知的方法来确定资源分配方式。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/38af1f10f5a5f2c3cfeed58a894d33ad.png" id="fig:感知窗口和选择窗口" alt=""><figcaption>图 2: 感知窗口和选择窗口</figcaption>
+</figure>
+<p>定义候选单子帧资源为同一个子帧(1ms)上的<strong>连续</strong>子信道，连续子信道的数量为1到<span class="math inline">\(L\)</span>，具体取决于消息大小。UE需要在选择窗口中选出一组跨多个子帧的候选的单子帧资源<span class="eng-origin">The UE shall select a set of candidate single-subframe resources within the selection window that spans a number of subframes</span>。资源的总数为<span class="math inline">\(M\)</span>。<span class="math inline">\(T_1\)</span>和<span class="math inline">\(T_2\)</span>这两个参数确定了选择窗口的大小。其中<span class="math inline">\(T_2\)</span>是延时要求的函数。</p>
+<p>SPS流程图如下：</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/8336d1f9a4ec8191b099e4302910857d.png" id="fig:SPS流程图" alt=""><figcaption>图 3: SPS流程图，图片的原始来源是: European Telecommunications Standards Institute (ETSI), “Physical layer procedures (Release 14),” 3GPP TS 36.213, V14.2.0, April 2017.</figcaption>
+</figure>
+<ol type="1">
+<li>UE 持续监听各个子帧，记录下解码出来的SCI信息和侧链接受信号强度(Sidelink Received Singal Strength Indicator, S-RSSI)。这里会连续记录1000个子帧。</li>
+<li>UE 设置信号功率门限 <span class="math inline">\(Th\)</span>，以及两个初始集合 <span class="math inline">\(S_A\)</span> 和 <span class="math inline">\(S_B\)</span>，前者初始包含所有的资源块，后者为空。</li>
+<li>UE 检查所有的单子帧资源块，在 <span class="math inline">\(S_A\)</span> 中排除UE 在感知窗口中未曾检测过的部分。</li>
+<li>在剩下的单子帧资源中，已经被别的节点占用、或者检测到的PSCCH的接受信号强度超过阈值 <span class="math inline">\(Th\)</span> 的部分从 <span class="math inline">\(S_A\)</span> 排除。</li>
+<li>如果经过上述两步筛选剩下的资源户数量占据总资源数量的比例不超过20%，则将 <span class="math inline">\(Th\)</span> 升高 3dB，并回到第三步。</li>
+<li>否则，计算S-RSSI的平均数（应该是在每个子资源块上，计算时间尺度上的历史平均值），并根军平均S-RSSI，从 <span class="math inline">\(S_A\)</span> 中筛选出最小的占据总资源数 20% 的资源放入集合 <span class="math inline">\(S_B\)</span>。</li>
+<li>MAC层从 <span class="math inline">\(S_B\)</span> 中随机选择一个资源用于初次传输。</li>
+<li>如果HARQ (Hybrid automaic repeat request)的值为2，则对于选中的传输机会<span class="math inline">\(t_{n+k}, k=0,1,\dots,K\)</span>，则另一个传输机会集合<span class="math inline">\(t_{n+k+j}\)</span>的集合也会被选中，其中<span class="math inline">\(j\neq 0, -15 \leq j \leq 15\)</span>。【~原文这里似乎没有说清楚<span class="math inline">\(K\)</span>是个啥】</li>
+</ol>
+<p>SPS选中的资源会在接下来的 <span class="math inline">\(ResourceCounter\)</span> (RC) 次传输中继续使用，其中RC的值从下面的范围内随机选出：</p>
+<ul>
+<li>[5, 15] if resource reservation interval ≥ 100 ms,</li>
+<li>[10, 30] if resource reservation interval = 50 ms, or</li>
+<li>[25, 75] if resource reservation interval = 20 ms.</li>
+</ul>
+<p>当 RC 为 0 时，UE 以概率 <span class="math inline">\(P\)</span> 继续保持上一轮的资源，<span class="math inline">\(P \in [0, 0.8]\)</span>。</p>
+<h1 data-number="3" id="仿真"><span class="header-section-number">3</span> 仿真</h1>
+<p>这篇文章的一个特色是给出了一个开源的支持 Mode 4 的仿真工具。本文的工作是基于NIST团队的仿真器进行的。</p>
+<h2 data-number="3.1" id="仿真场景"><span class="header-section-number">3.1</span> 仿真场景</h2>
+<p>运动场景设置：</p>
+<ul>
+<li>高速场景，每辆车的平均速度相同，仿真中考虑70km/h和140km/h这两个速度；</li>
+<li>双向六车道，每个方向三个；</li>
+<li>道路长度是2km；</li>
+<li>每辆车在路上的初始位置服从空间高斯过程；</li>
+<li>每条车道上车辆的密度的选取方法是 <span class="math inline">\(2s \times speed\)</span> 的倒数（即平均车间距是车速的两倍）；【~因此不同车速本质上是指不同的车流密度】</li>
+<li>道路端点的处理方式是车辆到达道路的一端时，立刻移动到道路的另一端进入。</li>
+</ul>
+<p>通信场景设置：</p>
+<ul>
+<li>路径损耗模型是line of sight model in WINNER+B1</li>
+<li>天线高度是1.5m</li>
+<li>3m以内的路径损耗以3m处计算<span class="eng-origin">The path loss for distances less than 3 m is set using the value at a transmitter-receiver separation of 3 m.</span></li>
+<li>Shadowing分布为Log-normal，标准差为3dB</li>
+<li>Shadowing spatial correlation is implemented with a decorrelation distance of 25 m</li>
+<li>车辆在5.9GHz频段以23dBm的功率传输</li>
+<li>车辆间同步是完美的</li>
+</ul>
+<p>消息和帧设置:</p>
+<ul>
+<li>每辆车的BSM通信方式为4个短消息，随后一个长消息，包的大小分别为<span class="math inline">\(\{190, 190, 190, 190, 300\}\)</span>字节；</li>
+<li>相邻两个包之间的间隔初始设置为 100ms；</li>
+<li>网络设置为使用相邻模式的PSCCH + PSSCH配置；</li>
+<li>每个子帧上有<span class="math inline">\(L\)</span>个子信道，每个子信道使用 12 个RB；</li>
+<li>编码速率是<span class="math inline">\(\frac{1}{2}\)</span>，调制方式为 QPSK；</li>
+<li>每个短消息可以在一个子信道上传输完成，长消息需要在两个子信道上完成传输；</li>
+<li><span class="math inline">\(T_1 = 4, T_2 = 20\)</span>；</li>
+<li>RRI、资源重选概率、子信道数量为仿真要考虑的变量。</li>
+</ul>
+<h2 data-number="3.2" id="仿真结果"><span class="header-section-number">3.2</span> 仿真结果</h2>
+<p>评估的指标是Packet Delivery Ratio。</p>
+<h3 data-number="3.2.1" id="子信道数量的影响"><span class="header-section-number">3.2.1</span> 子信道数量的影响</h3>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/6c4601e0c60258332211eaaeb904e344.png" id="fig:子信道数量的影响" alt=""><figcaption>图 4: 子信道数量的影响</figcaption>
+</figure>
+<p>首先车流密度较大时PDR要更低一些（蓝色线），因为碰撞概率高。提升子信道数量可以降低碰撞概率，故提高了PDR。</p>
+<h3 data-number="3.2.2" id="sps-rri的影响"><span class="header-section-number">3.2.2</span> SPS RRI的影响</h3>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/57f0edba16fa11ad649602ee9ead85f5.png" id="fig:RRI的影响" alt=""><figcaption>图 5: RRI的影响，横轴表示100X ms</figcaption>
+</figure>
+<p>RRI越长那么UE使用信道的频率就越低，因此碰撞概率就越低。不过增加RRI会降低数据率，增加延时。</p>
+<h3 data-number="3.2.3" id="资源重选概率的影响"><span class="header-section-number">3.2.3</span> 资源重选概率的影响</h3>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/dedfd50375e203e7e8b9ae2472b34eb4.png" id="fig:资源重选概率的影响" alt=""><figcaption>图 6: 资源重选概率的影响，图中X表示不同的RRI值</figcaption>
+</figure>
+<p>图中体现出资源重选概率对于PDR的影响很小。</p>
 
         
       </div>
@@ -742,8 +736,17 @@ RRI越长那么UE使用信道的频率就越低，因此碰撞概率就越低。
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1015,6 +1018,23 @@ RRI越长那么UE使用信道的频率就越低，因此碰撞概率就越低。
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#资源池"><span class="nav-text">1 资源池</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spssemi-persistent-scheduling"><span class="nav-text">2 SPS(Semi-Persistent Scheduling)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仿真"><span class="nav-text">3 仿真</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真场景"><span class="nav-text">3.1 仿真场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仿真结果"><span class="nav-text">3.2 仿真结果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#子信道数量的影响"><span class="nav-text">3.2.1 子信道数量的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sps-rri的影响"><span class="nav-text">3.2.2 SPS RRI的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源重选概率的影响"><span class="nav-text">3.2.3 资源重选概率的影响</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

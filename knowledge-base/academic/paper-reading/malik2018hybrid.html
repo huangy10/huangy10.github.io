@@ -123,17 +123,20 @@
 
 
 
-  <meta name="description" content="## 概况  这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。  文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场">
+  <meta name="description" content="1 概况 这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。 文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场景的。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MANET + SDN">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/malik2018hybrid.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## 概况  这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。  文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场">
+<meta property="og:description" content="1 概况 这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。 文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场景的。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/132b4999081282f0a7d15a3397b0d636.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/19c29648612dd5aa060d2c161f28e7e6.png">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.503Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MANET + SDN">
-<meta name="twitter:description" content="## 概况  这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。  文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场">
+<meta name="twitter:description" content="1 概况 这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。 文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场景的。">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/132b4999081282f0a7d15a3397b0d636.png">
 
 
 
@@ -538,88 +541,63 @@
       <div class="post-body han-init-context">
         
         
-          
-## 概况
-
-这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。
-
-文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场景的。
-
-> In this paper, we propose a logically centralized approach for WDNs called centralized approach to mobile ad hoc networs (CATMAN). It is a self-healing and hybrid routing protocol. It combines distributed and logically centralized network control along with the flavors of reactive, proactive, and opportunistic routing protocols. CATMAN is designed to automatically switch between logically centralized routing protocol and distributed routing protocol based on the types of available network nodes.
-
-即文章旨在为移动组织网络提出一种逻辑上中心化的网络方案。
-
-## 特点
-
-CATMAN的特点是主动路由协议 BATMAN, OLSR，反应式路由协议 AODV，机会路由协议 JOKER，以及SDN的Southbound协议的结合。
-
-> A northbound interface is an interface that allows a particular component of a network to communicate with a higher-level component. Conversely, a southbound interface allows a particular network component to communicate with a lower-level component. -- [source](https://whatis.techtarget.com/definition/northbound-interface-southbound-interface)
-
-为了融合WDN的分布式特点和SDN的中心控制需求，将节点划分为两个类别：雾节点(Fog nodes)和一般节点(normal nodes)。雾节点拥有长距离和短距离通信接口，以支持同其他一般节点、中央控制器、管理层以及其他雾节点的通信，如下图。一般节点则只配备了短距离通信接口。因此，雾节点类似于BATMAN协议汇总的具有互联网连接的节点。CATMAN协议允许一般节点维持一跳和两跳节点信息。雾节点维护的网络要更大一些，以有助于维护一个逻辑上中心化的结构。在CATMAN协议中，一般节点对于每个目标节点只维护下一跳的地址，而不维护整个路由路径。
-
-![](https://imgs.codewoody.com/uploads/big/132b4999081282f0a7d15a3397b0d636.png)
-
-CATMAN协议也可以在没有雾节点的情况下工作，不过这个时候退化为传统的分布式路由协议。
-
-## 机制内容
-
-本文提出的网络架构分为两层：多级自组织层和控制/管理层。
-
-### 多级自组织层
-
-这层的意义在于：
-
-1. 通过组合两类节点（雾节点和一般节点）来构成逻辑中心化的控制平面(control plane)
-2. 在逻辑中心化的WDN网络上，添加分布式的控制功能
-
-#### 一般节点
-
-一般节点只有短距离通信能力。这些节点可以互相连接，也可以通过一个轻量级协议连接到雾节点。
-
-#### 雾节点
-
-雾节点同时具有远距离和近距离的通信接口。其中短距离通信接口用来构成自组织网络；远距离通信用来连接到控制管理层，或者其他雾节点。
-
-### 控制管理层
-
-控制和管理层拥有整个网络的信息，因此可以部署多种不通的路由和网络管理功能。这一层拥有强大的计算能力，可以运行复杂的算法。控制管理层可以有多种远距离通信接口来与多级自组织层通信。
-
-### 机制内容
-
-CATMAN协议是一种混合协议。CATMAN使用了originator, far node, route request, route reply, stats update, flow add以及configuration update等消息。
-
-其中originator消息的目的是告知第一跳节点originator节点的存在。route request和route reply的作用是获取目标节点的路由信息<span class="foot-note-span">【类似主动式路由协议】</span>。For node, stats update 和 flow add messages 用于创建逻辑中心网络控制，其中 Far node 和 stats update消息增加对雾节点网络的可见性，flow add消息为节点添加路由信息。Configuration update消息配置SDR（软件定义无线电）的物理层参数。
-
-上述消息中originator消息是主动的, Far node, flow add, configuration update, stats update, route request 还有 route reply消息是被动式。
-
-![](https://imgs.codewoody.com/uploads/big/19c29648612dd5aa060d2c161f28e7e6.png)
-
-SDN中有三类接口：
-
-- Southbound interface: 控制平面和数据平面之间的接口
-- East west interface: 控制平面之间的接口
-- Northbound interface: 控制平面到应用平面之间的接口
-
-一般节点到雾节点之间的协议为Southbound interface。
-
-在CATMAN中每个节点发送一个originator消息，只有在第一跳时originator消息才是广播的（不转发）。收到originator消息的节点从中提取有用的信息，并加入本地的表。通过多轮的originator广播，所有的节点可以获取其一跳和两跳邻居节点的信息。在本协议中，雾节点不广播任何收到的信息（自己的信息仍然广播？），但是仍然接收originator消息中的信息。
-
-在传输了 10 个 originator 消息以后，如果一个一般节点没有任何关于雾节点的信息，则发起一个far node消息。far node的消息的作用是增加fog node的可见性。这样雾节点可以掌握更大网络的信息。
-
-> 从这里来看，far node的作用是让fog节点能够尽可能多的掌握一般节点的信息。
-
-在 WDN 中，如果一个节点希望发送一个消息，首先检查目标节点是否在本地的路由表中。如果没有相关信息，则发送route request消息。（如果该节点表中有雾节点，request发给雾节点）
-
-链路质量通过 SNR 测量，当SNR低于40%，或者电池电量低于一定程度时，一般节点发送stats update消息。Stats update消息的作用是两方面的：
-
-- 告知邻居节点和雾节点链路断开
-- 告知邻居节点和雾节点自己的电池信息，以助于在路由中考虑电量
-
-Configuration update消息是一类专门为SDR特别设计的消息，用来配置物理层、MAC层以及TCP/IP参数。
-
-CATMAN运行在传输层和应用层之间。
-
-> 妈的这文章太啰嗦琐碎了，不看了。
+          <h1 data-number="1" id="概况"><span class="header-section-number">1</span> 概况</h1>
+<p>这篇文章是IEEE Access，不算特别好的期刊。文章的题目是 A Hybrid Routing Protocol for Wireless Distributed Networks，第一作者是 Malik Najmus Siraj，是巴基斯坦人。</p>
+<p>文章的Abstract里面提到网络从分布式向中心化演变是一个大的趋势，这个我要打一个问号。网络架构是分布式还是中心式还是要看业务场景的。</p>
+<blockquote>
+<p>In this paper, we propose a logically centralized approach for WDNs called centralized approach to mobile ad hoc networs (CATMAN). It is a self-healing and hybrid routing protocol. It combines distributed and logically centralized network control along with the flavors of reactive, proactive, and opportunistic routing protocols. CATMAN is designed to automatically switch between logically centralized routing protocol and distributed routing protocol based on the types of available network nodes.</p>
+</blockquote>
+<p>即文章旨在为移动组织网络提出一种逻辑上中心化的网络方案。</p>
+<h1 data-number="2" id="特点"><span class="header-section-number">2</span> 特点</h1>
+<p>CATMAN的特点是主动路由协议 BATMAN, OLSR，反应式路由协议 AODV，机会路由协议 JOKER，以及SDN的Southbound协议的结合。</p>
+<blockquote>
+<p>A northbound interface is an interface that allows a particular component of a network to communicate with a higher-level component. Conversely, a southbound interface allows a particular network component to communicate with a lower-level component. -- <a href="https://whatis.techtarget.com/definition/northbound-interface-southbound-interface" target="_blank" rel="noopener">source</a></p>
+</blockquote>
+<p>为了融合WDN的分布式特点和SDN的中心控制需求，将节点划分为两个类别：雾节点(Fog nodes)和一般节点(normal nodes)。雾节点拥有长距离和短距离通信接口，以支持同其他一般节点、中央控制器、管理层以及其他雾节点的通信，如下图。一般节点则只配备了短距离通信接口。因此，雾节点类似于BATMAN协议汇总的具有互联网连接的节点。CATMAN协议允许一般节点维持一跳和两跳节点信息。雾节点维护的网络要更大一些，以有助于维护一个逻辑上中心化的结构。在CATMAN协议中，一般节点对于每个目标节点只维护下一跳的地址，而不维护整个路由路径。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/132b4999081282f0a7d15a3397b0d636.png"></p>
+<p>CATMAN协议也可以在没有雾节点的情况下工作，不过这个时候退化为传统的分布式路由协议。</p>
+<h1 data-number="3" id="机制内容"><span class="header-section-number">3</span> 机制内容</h1>
+<p>本文提出的网络架构分为两层：多级自组织层和控制/管理层。</p>
+<h2 data-number="3.1" id="多级自组织层"><span class="header-section-number">3.1</span> 多级自组织层</h2>
+<p>这层的意义在于：</p>
+<ol type="1">
+<li>通过组合两类节点（雾节点和一般节点）来构成逻辑中心化的控制平面(control plane)</li>
+<li>在逻辑中心化的WDN网络上，添加分布式的控制功能</li>
+</ol>
+<h3 data-number="3.1.1" id="一般节点"><span class="header-section-number">3.1.1</span> 一般节点</h3>
+<p>一般节点只有短距离通信能力。这些节点可以互相连接，也可以通过一个轻量级协议连接到雾节点。</p>
+<h3 data-number="3.1.2" id="雾节点"><span class="header-section-number">3.1.2</span> 雾节点</h3>
+<p>雾节点同时具有远距离和近距离的通信接口。其中短距离通信接口用来构成自组织网络；远距离通信用来连接到控制管理层，或者其他雾节点。</p>
+<h2 data-number="3.2" id="控制管理层"><span class="header-section-number">3.2</span> 控制管理层</h2>
+<p>控制和管理层拥有整个网络的信息，因此可以部署多种不通的路由和网络管理功能。这一层拥有强大的计算能力，可以运行复杂的算法。控制管理层可以有多种远距离通信接口来与多级自组织层通信。</p>
+<h2 data-number="3.3" id="机制内容-1"><span class="header-section-number">3.3</span> 机制内容</h2>
+<p>CATMAN协议是一种混合协议。CATMAN使用了originator, far node, route request, route reply, stats update, flow add以及configuration update等消息。</p>
+<p>其中originator消息的目的是告知第一跳节点originator节点的存在。route request和route reply的作用是获取目标节点的路由信息<span class="foot-note-span">【类似主动式路由协议】</span>。For node, stats update 和 flow add messages 用于创建逻辑中心网络控制，其中 Far node 和 stats update消息增加对雾节点网络的可见性，flow add消息为节点添加路由信息。Configuration update消息配置SDR（软件定义无线电）的物理层参数。</p>
+<p>上述消息中originator消息是主动的, Far node, flow add, configuration update, stats update, route request 还有 route reply消息是被动式。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/19c29648612dd5aa060d2c161f28e7e6.png"></p>
+<p>SDN中有三类接口：</p>
+<ul>
+<li>Southbound interface: 控制平面和数据平面之间的接口</li>
+<li>East west interface: 控制平面之间的接口</li>
+<li>Northbound interface: 控制平面到应用平面之间的接口</li>
+</ul>
+<p>一般节点到雾节点之间的协议为Southbound interface。</p>
+<p>在CATMAN中每个节点发送一个originator消息，只有在第一跳时originator消息才是广播的（不转发）。收到originator消息的节点从中提取有用的信息，并加入本地的表。通过多轮的originator广播，所有的节点可以获取其一跳和两跳邻居节点的信息。在本协议中，雾节点不广播任何收到的信息（自己的信息仍然广播？），但是仍然接收originator消息中的信息。</p>
+<p>在传输了 10 个 originator 消息以后，如果一个一般节点没有任何关于雾节点的信息，则发起一个far node消息。far node的消息的作用是增加fog node的可见性。这样雾节点可以掌握更大网络的信息。</p>
+<blockquote>
+<p>从这里来看，far node的作用是让fog节点能够尽可能多的掌握一般节点的信息。</p>
+</blockquote>
+<p>在 WDN 中，如果一个节点希望发送一个消息，首先检查目标节点是否在本地的路由表中。如果没有相关信息，则发送route request消息。（如果该节点表中有雾节点，request发给雾节点）</p>
+<p>链路质量通过 SNR 测量，当SNR低于40%，或者电池电量低于一定程度时，一般节点发送stats update消息。Stats update消息的作用是两方面的：</p>
+<ul>
+<li>告知邻居节点和雾节点链路断开</li>
+<li>告知邻居节点和雾节点自己的电池信息，以助于在路由中考虑电量</li>
+</ul>
+<p>Configuration update消息是一类专门为SDR特别设计的消息，用来配置物理层、MAC层以及TCP/IP参数。</p>
+<p>CATMAN运行在传输层和应用层之间。</p>
+<blockquote>
+<p>妈的这文章太啰嗦琐碎了，不看了。</p>
+</blockquote>
 
         
       </div>
@@ -723,8 +701,17 @@ CATMAN运行在传输层和应用层之间。
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -996,6 +983,23 @@ CATMAN运行在传输层和应用层之间。
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概况"><span class="nav-text">1 概况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特点"><span class="nav-text">2 特点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#机制内容"><span class="nav-text">3 机制内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多级自组织层"><span class="nav-text">3.1 多级自组织层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一般节点"><span class="nav-text">3.1.1 一般节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#雾节点"><span class="nav-text">3.1.2 雾节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#控制管理层"><span class="nav-text">3.2 控制管理层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#机制内容-1"><span class="nav-text">3.3 机制内容</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

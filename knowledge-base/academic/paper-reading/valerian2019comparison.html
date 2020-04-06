@@ -123,17 +123,20 @@
 
 
 
-  <meta name="description" content="这里的ITS-G5标准，就是指的IEEE802.11p。  文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。  这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的[这个链接里面]">
+  <meta name="description" content="这里的ITS-G5标准，就是指的IEEE802.11p。 文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。 这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的这个链接里面有比较多的">
 <meta property="og:type" content="website">
 <meta property="og:title" content="ITS-G5和C-V2X的性能对比">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/valerian2019comparison.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这里的ITS-G5标准，就是指的IEEE802.11p。  文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。  这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的[这个链接里面]">
+<meta property="og:description" content="这里的ITS-G5标准，就是指的IEEE802.11p。 文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。 这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的这个链接里面有比较多的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/521c0e4a78c96e0e7d98fd0fef0349c3.png">
 <meta property="og:updated_time" content="2020-04-02T09:10:46.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ITS-G5和C-V2X的性能对比">
-<meta name="twitter:description" content="这里的ITS-G5标准，就是指的IEEE802.11p。  文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。  这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的[这个链接里面]">
+<meta name="twitter:description" content="这里的ITS-G5标准，就是指的IEEE802.11p。 文章的完整标题是A Comparison of the V2X Communication System: ITS-G5 and C-V2X。这是2019年的VTC文章，作者是法国人🇫🇷。 这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的这个链接里面有比较多的">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png">
 
 
 
@@ -538,62 +541,43 @@
       <div class="post-body han-init-context">
         
         
-          
-这里的ITS-G5标准，就是指的IEEE802.11p。
-
-文章的完整标题是<i>A Comparison of the V2X Communication System: ITS-G5 and C-V2X</i>。这是2019年的VTC文章，作者是法国人🇫🇷。
-
-这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的[这个链接里面](/knowledge-base/academic/its/wave/)有比较多的介绍和讨论；关于C-V2X的部分，则在[Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications](./rafael2018configuration.html)这篇文章的阅读笔记里面有介绍。本文中对比的主要是物理层和MAC层性能。文章的结论是C-V2X的性能在车辆密度较低时有优势，而在车流密度增长时，两者的性能差距逐渐缩小，最终ITS-G5的性能会反超。
-
-ITS-G5 这个词之前我看到的比较少，作者这里提到ITS-G5是欧洲方面(ETSI)的标准，对应美国版本的标注是DSRC。二者都是基于IEEE802.11p的，使用5.9GHz的频段。
-
-3GPP LTE Release 14中加入了ProSe(Proximity Service)功能，允许蜂窝网设备之间进行基于PC5接口的D2D通信。这里D2D通信可以在没有基站参与的情况下进行。PC5接口被设计用力啊满足有界的低延时需求，并在结合高速支持的情况下适应给定的交通密度环境。Release 14包含了模式3和模式4两种工作模式，其中前者需要使用基站，后者不需要。本文这里只关注模式4.
-
-IEEE802.11p协议是非常成熟的技术，测试数据也非常多，不过C-V2X方面的测试比较少（最早的测试在2017年末）。
-
-## 通信标准简介
-
-### IEEE802.11p
-
-IEEE802.11a的演进版本。使用OFDM，集合使用了卷积码。为了保证在多变的信道环境下的性能，时域上的参数被加倍，频域上的参数则减半。典型的参数如下图：
-
-![](https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png)
-
-IEEE802.11p的MAC层使用OCB(Outside the Context of a Basic Service Set)工作模式，其中认证、关联与数据加密服务没有使用。
-
-IEEE802.11p使用EDCA进行QoS管理，使用DCF解决接入问题。关于这些还是去看我的网站里关于[WAVE的文档](/knowledge-base/academic/its/wave/)。
-
-### C-V2X
-
-C-V2X物理层基于SC-FDMA技术，支持10MHz或者20MHz的信道。每个信道被划分成子帧(sub-frame)，Resource Block(RB)和子信道(Sub-channel)：
-
-- sub-frame: 时间尺度的概念，1ms长度的时间片段称为一个子帧
-- RB: 一个子帧上的180kHz带宽的资源，是时域和频域交叉的概念，这篇文章里说的RB的长度是0.5ms
-- sub-channel: 同一个子帧上的一组RB
-
-Subchannel是传输数据的通道，数据以Transport Blocks (TB)的形式，经由Phyisical Sidelink Shared Channels传输，控制信息SCI则通过Physical Sideink Control Channel传输。TB和SCI需要同时传输，其中SCI需要占据两个RB。
-
-TB可与选择不同的调制编码方式，如QPSK，16-QAM，不同的调制方式有不通的数据率，当然对应的抗干扰能力也不同。编码方面，C-V2X基于turbo码（SCI使用卷积码）。**相比于IEEE802.11p，C-V2X在配置方面引入了更多的灵活性**，包括
-
-- 带宽
-- MCS(调制编码方式)
-- MAC层参数
-
-这篇文章尝试了下图中的配置。
-
-![](https://imgs.codewoody.com/uploads/big/521c0e4a78c96e0e7d98fd0fef0349c3.png)
-
-从MAC的角度来看，根据模式4，C-V2X采用了基于感知的半持久调度(Sensing-Based Semi-Persistent Scheduling, SB-SPS机制。这个机制通过对通信媒介的估计，来预测可用资源。当车辆占用子信道时，对子信道占据会持续Reselection Counter(RC)次传输<span class="foot-note-span">【即在接下来的这么多次传输都是使用同样的资源，这里资源的占用是按照次数来进行，而非时间】</span>。RC的值从$[5, 15]$之间随机选出。每次传输之后RC减一。当RC为零时，以概率$P$继续使用当前的资源，即以概率$1 - P$重新选择资源。$P \in [0, 0.8]$。
-
-RC的值包含在SCI信息中，因此别的节点可以预测未来某个资源是否可用，从而避免碰撞。
-
-传输的可靠性通过HARQ重传来保证。
-
-## 对比结论
-
-1. 在相同的数据率的前提下，C-V2X的性能（通信距离）要更好，因为C-V2X提供了更多的参数配置灵活性。不过这里的性能改善是以资源(时间/频率)消耗为代价的。
-2. C-V2X在低密度（密度小于$150 user/km^2$）的情况下性能比ITS-G5好，之后就急剧恶化。
-3. 延时方面的比较没有结果，因为这取决于用户密度和操作距离。
+          <p>这里的ITS-G5标准，就是指的IEEE802.11p。</p>
+<p>文章的完整标题是<i>A Comparison of the V2X Communication System: ITS-G5 and C-V2X</i>。这是2019年的VTC文章，作者是法国人🇫🇷。</p>
+<p>这篇文章主要对比IEEE802.11p和3GPP Release 14之间的性能。关于IEEE802.11p，在我的这个网站的<a href="/knowledge-base/academic/its/wave/">这个链接里面</a>有比较多的介绍和讨论；关于C-V2X的部分，则在<a href="./rafael2018configuration.html">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a>这篇文章的阅读笔记里面有介绍。本文中对比的主要是物理层和MAC层性能。文章的结论是C-V2X的性能在车辆密度较低时有优势，而在车流密度增长时，两者的性能差距逐渐缩小，最终ITS-G5的性能会反超。</p>
+<p>ITS-G5 这个词之前我看到的比较少，作者这里提到ITS-G5是欧洲方面(ETSI)的标准，对应美国版本的标注是DSRC。二者都是基于IEEE802.11p的，使用5.9GHz的频段。</p>
+<p>3GPP LTE Release 14中加入了ProSe(Proximity Service)功能，允许蜂窝网设备之间进行基于PC5接口的D2D通信。这里D2D通信可以在没有基站参与的情况下进行。PC5接口被设计用力啊满足有界的低延时需求，并在结合高速支持的情况下适应给定的交通密度环境。Release 14包含了模式3和模式4两种工作模式，其中前者需要使用基站，后者不需要。本文这里只关注模式4.</p>
+<p>IEEE802.11p协议是非常成熟的技术，测试数据也非常多，不过C-V2X方面的测试比较少（最早的测试在2017年末）。</p>
+<h1 data-number="1" id="通信标准简介"><span class="header-section-number">1</span> 通信标准简介</h1>
+<h2 data-number="1.1" id="ieee802.11p"><span class="header-section-number">1.1</span> IEEE802.11p</h2>
+<p>IEEE802.11a的演进版本。使用OFDM，集合使用了卷积码。为了保证在多变的信道环境下的性能，时域上的参数被加倍，频域上的参数则减半。典型的参数如下图：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/8cb73c338f5851aef07e07f733247d67.png"></p>
+<p>IEEE802.11p的MAC层使用OCB(Outside the Context of a Basic Service Set)工作模式，其中认证、关联与数据加密服务没有使用。</p>
+<p>IEEE802.11p使用EDCA进行QoS管理，使用DCF解决接入问题。关于这些还是去看我的网站里关于<a href="/knowledge-base/academic/its/wave/">WAVE的文档</a>。</p>
+<h2 data-number="1.2" id="c-v2x"><span class="header-section-number">1.2</span> C-V2X</h2>
+<p>C-V2X物理层基于SC-FDMA技术，支持10MHz或者20MHz的信道。每个信道被划分成子帧(sub-frame)，Resource Block(RB)和子信道(Sub-channel)：</p>
+<ul>
+<li>sub-frame: 时间尺度的概念，1ms长度的时间片段称为一个子帧</li>
+<li>RB: 一个子帧上的180kHz带宽的资源，是时域和频域交叉的概念，这篇文章里说的RB的长度是0.5ms</li>
+<li>sub-channel: 同一个子帧上的一组RB</li>
+</ul>
+<p>Subchannel是传输数据的通道，数据以Transport Blocks (TB)的形式，经由Phyisical Sidelink Shared Channels传输，控制信息SCI则通过Physical Sideink Control Channel传输。TB和SCI需要同时传输，其中SCI需要占据两个RB。</p>
+<p>TB可与选择不同的调制编码方式，如QPSK，16-QAM，不同的调制方式有不通的数据率，当然对应的抗干扰能力也不同。编码方面，C-V2X基于turbo码（SCI使用卷积码）。<strong>相比于IEEE802.11p，C-V2X在配置方面引入了更多的灵活性</strong>，包括</p>
+<ul>
+<li>带宽</li>
+<li>MCS(调制编码方式)</li>
+<li>MAC层参数</li>
+</ul>
+<p>这篇文章尝试了下图中的配置。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/521c0e4a78c96e0e7d98fd0fef0349c3.png"></p>
+<p>从MAC的角度来看，根据模式4，C-V2X采用了基于感知的半持久调度(Sensing-Based Semi-Persistent Scheduling, SB-SPS机制。这个机制通过对通信媒介的估计，来预测可用资源。当车辆占用子信道时，对子信道占据会持续Reselection Counter(RC)次传输<span class="foot-note-span">【即在接下来的这么多次传输都是使用同样的资源，这里资源的占用是按照次数来进行，而非时间】</span>。RC的值从<span class="math inline">\([5, 15]\)</span>之间随机选出。每次传输之后RC减一。当RC为零时，以概率<span class="math inline">\(P\)</span>继续使用当前的资源，即以概率<span class="math inline">\(1 - P\)</span>重新选择资源。<span class="math inline">\(P \in [0, 0.8]\)</span>。</p>
+<p>RC的值包含在SCI信息中，因此别的节点可以预测未来某个资源是否可用，从而避免碰撞。</p>
+<p>传输的可靠性通过HARQ重传来保证。</p>
+<h1 data-number="2" id="对比结论"><span class="header-section-number">2</span> 对比结论</h1>
+<ol type="1">
+<li>在相同的数据率的前提下，C-V2X的性能（通信距离）要更好，因为C-V2X提供了更多的参数配置灵活性。不过这里的性能改善是以资源(时间/频率)消耗为代价的。</li>
+<li>C-V2X在低密度（密度小于<span class="math inline">\(150 user/km^2\)</span>）的情况下性能比ITS-G5好，之后就急剧恶化。</li>
+<li>延时方面的比较没有结果，因为这取决于用户密度和操作距离。</li>
+</ol>
 
         
       </div>
@@ -697,8 +681,17 @@ RC的值包含在SCI信息中，因此别的节点可以预测未来某个资源
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -970,6 +963,23 @@ RC的值包含在SCI信息中，因此别的节点可以预测未来某个资源
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#通信标准简介"><span class="nav-text">1 通信标准简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ieee802.11p"><span class="nav-text">1.1 IEEE802.11p</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-v2x"><span class="nav-text">1.2 C-V2X</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对比结论"><span class="nav-text">2 对比结论</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

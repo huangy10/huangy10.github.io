@@ -123,17 +123,19 @@
 
 
 
-  <meta name="description" content="## 前言  我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%.  这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[@hafeez2013performance]。  ## System Model  在进行理论分析前有必要给出我们使用的System Model。这里的System Model与">
+  <meta name="description" content="1 前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 2 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所">
 <meta property="og:type" content="website">
 <meta property="og:title" content="通信范围模型探讨">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/通信范围模型探讨.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## 前言  我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%.  这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[@hafeez2013performance]。  ## System Model  在进行理论分析前有必要给出我们使用的System Model。这里的System Model与">
+<meta property="og:description" content="1 前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 2 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png">
 <meta property="og:updated_time" content="2020-03-30T16:55:16.393Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="通信范围模型探讨">
-<meta name="twitter:description" content="## 前言  我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%.  这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[@hafeez2013performance]。  ## System Model  在进行理论分析前有必要给出我们使用的System Model。这里的System Model与">
+<meta name="twitter:description" content="1 前言 我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%. 这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[1]。 2 System Model 在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[1]中的系统模型是一致的。  注意，在这里我们整理了所">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png">
 
 
 
@@ -550,103 +552,83 @@
       <div class="post-body han-init-context">
         
         
-          
-## 前言
-
-我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%.
-
-这里我们更加细致地讨论一下更为符合实际条件的通信范围模型[@hafeez2013performance]。
-
-## System Model
-
-在进行理论分析前有必要给出我们使用的System Model。这里的System Model与[@hafeez2013performance]中的系统模型是一致的。
-
-> 注意，在这里我们整理了所有参考文章中提出的系统模型假设，不过并不是所有的假设都会用于本文的分析内容。
-
-对于VANETS中的安全类应用，车辆会广播两种类型的信息：
-
-1. Warning Message (Event driven): 事件驱动的警告信息。例如前方突然发生了碰撞，周围的车辆会产生对应的warning message来警告后续的车辆；
-2. Status Message。状态信息是周期性发送的，其中包含了车辆的运行状态（位置，速度，加速度，行驶方向等）。
-
-这里Warning message使用最高的优先级AC3(参见[EDCA](./edca.html))，周期性播报的状态消息则使用AC0.
-
-在我们的模型中，假设状态消息产生的速度是$\lambda_s$，那么同步间隔SI长度为$1/\lambda_s$(每个同步周期产生一个状态包). 假设所有包的大小都是一致的，为$L$比特。为了简化分析假设整个SI都用于传输安全信息，即CCHI=SI。每辆车会随机选择SI中的一个时隙发送状态包，warning message则随着事件的发生随机产生。
-
-假设所有的车辆发射功率都是$P_t$，对于接收方来说，若接收功率达到了门限$P_{th}$就认为能够成功地收到数据包。**由于信道衰减的随机性，接收功率也会是随机的，这意味着通信范围也是一个随机变量**。通信范围的累积概率函数(CDF)$F_R(r)$及其期望$E[R]$会在后续进行推导。
-
-![变量以及缩略语表](https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png)
-
-## 通信范围
-
-### 传输模型
-
-VANET的信道衰减在近距离上服从Rician分布，在长距离上趋近于Rayleigh分布。通过使用Nakagami分布可以综合这两种情况。Nakagami模型的概率密度函数（PDF）如下：
-
-\begin{equation}
+          <h1 data-number="1" id="前言"><span class="header-section-number">1</span> 前言</h1>
+<p>我们这里探讨对于通信模型的认识。一般来说，最简单的通信模型是截断模型，即在一定的距离范围内通信总是可靠，而超出这一范围之外丢包率变成100%.</p>
+<p>这里我们更加细致地讨论一下更为符合实际条件的通信范围模型<span class="citation" data-cites="hafeez2013performance">[1]</span>。</p>
+<h1 data-number="2" id="system-model"><span class="header-section-number">2</span> System Model</h1>
+<p>在进行理论分析前有必要给出我们使用的System Model。这里的System Model与<span class="citation" data-cites="hafeez2013performance">[1]</span>中的系统模型是一致的。</p>
+<blockquote>
+<p>注意，在这里我们整理了所有参考文章中提出的系统模型假设，不过并不是所有的假设都会用于本文的分析内容。</p>
+</blockquote>
+<p>对于VANETS中的安全类应用，车辆会广播两种类型的信息：</p>
+<ol type="1">
+<li>Warning Message (Event driven): 事件驱动的警告信息。例如前方突然发生了碰撞，周围的车辆会产生对应的warning message来警告后续的车辆；</li>
+<li>Status Message。状态信息是周期性发送的，其中包含了车辆的运行状态（位置，速度，加速度，行驶方向等）。</li>
+</ol>
+<p>这里Warning message使用最高的优先级AC3(参见<a href="./edca.html">EDCA</a>)，周期性播报的状态消息则使用AC0.</p>
+<p>在我们的模型中，假设状态消息产生的速度是<span class="math inline">\(\lambda_s\)</span>，那么同步间隔SI长度为<span class="math inline">\(1/\lambda_s\)</span>(每个同步周期产生一个状态包). 假设所有包的大小都是一致的，为<span class="math inline">\(L\)</span>比特。为了简化分析假设整个SI都用于传输安全信息，即CCHI=SI。每辆车会随机选择SI中的一个时隙发送状态包，warning message则随着事件的发生随机产生。</p>
+<p>假设所有的车辆发射功率都是<span class="math inline">\(P_t\)</span>，对于接收方来说，若接收功率达到了门限<span class="math inline">\(P_{th}\)</span>就认为能够成功地收到数据包。<strong>由于信道衰减的随机性，接收功率也会是随机的，这意味着通信范围也是一个随机变量</strong>。通信范围的累积概率函数(CDF)<span class="math inline">\(F_R(r)\)</span>及其期望<span class="math inline">\(E[R]\)</span>会在后续进行推导。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/eb7cb3261a821b6dc5274a1a67fadce8.png" alt=""><figcaption>变量以及缩略语表</figcaption>
+</figure>
+<h1 data-number="3" id="通信范围"><span class="header-section-number">3</span> 通信范围</h1>
+<h2 data-number="3.1" id="传输模型"><span class="header-section-number">3.1</span> 传输模型</h2>
+<p>VANET的信道衰减在近距离上服从Rician分布，在长距离上趋近于Rayleigh分布。通过使用Nakagami分布可以综合这两种情况。Nakagami模型的概率密度函数（PDF）如下：</p>
+<p><span class="math display">\[\begin{equation}
 
 \label{1}
 P_{z^{2}}(x)=\left(\frac{m}{P_{r}}\right)^{m} \frac{x^{m-1}}{\Gamma(m)} e^{-\frac{m x}{P_{r}}}, \quad \text { for } x \geq 0
 
-\end{equation}
-
-其中，$x$为接收到的信号功率，$\Gamma(\cdot)$为Gamma函数，$P_{r}=P_{t} K / r^{\alpha}$为平均接收功率，$r$为通信距离（米），$\alpha$为路径衰减指数。$K=G_{t} G_{r}\left(C /\left(4 \pi f_{c}\right)\right)^{2}$，其中$C$为光速，$f_c=5.9 \text{GHz}$为载波频率，$G_t$和$G_r$分别为发送者和接受者的天线增益。$m$为衰减系数。
-
-当$m=1$时，Nakagami退化成Rayleigh分布，当$m=(k+1)^2/(2k+1)$时，Nakagami分布可以近似为参数为$k$的Rician分布（$k$ is the ratio of power in the line of sight to the power
-in the non-line of sight）。
-
-通过$\eqref{1}$，我们可以计算出当接收能量超过$P_{th}$时，通信范围的CDF：
-
-\begin{equation}
+\end{equation}\]</span></p>
+<p>其中，<span class="math inline">\(x\)</span>为接收到的信号功率，<span class="math inline">\(\Gamma(\cdot)\)</span>为Gamma函数，<span class="math inline">\(P_{r}=P_{t} K / r^{\alpha}\)</span>为平均接收功率，<span class="math inline">\(r\)</span>为通信距离（米），<span class="math inline">\(\alpha\)</span>为路径衰减指数。<span class="math inline">\(K=G_{t} G_{r}\left(C /\left(4 \pi f_{c}\right)\right)^{2}\)</span>，其中<span class="math inline">\(C\)</span>为光速，<span class="math inline">\(f_c=5.9 \text{GHz}\)</span>为载波频率，<span class="math inline">\(G_t\)</span>和<span class="math inline">\(G_r\)</span>分别为发送者和接受者的天线增益。<span class="math inline">\(m\)</span>为衰减系数。</p>
+<p>当<span class="math inline">\(m=1\)</span>时，Nakagami退化成Rayleigh分布，当<span class="math inline">\(m=(k+1)^2/(2k+1)\)</span>时，Nakagami分布可以近似为参数为<span class="math inline">\(k\)</span>的Rician分布（<span class="math inline">\(k\)</span> is the ratio of power in the line of sight to the power in the non-line of sight）。</p>
+<p>通过<span class="math inline">\(\eqref{1}\)</span>，我们可以计算出当接收能量超过<span class="math inline">\(P_{th}\)</span>时，通信范围的CDF：</p>
+<p><span class="math display">\[\begin{equation}
 
 \label{2}
 F_{R}(r)=1-P\left(x \geq P_{th}\right)=1-\int_{P_{th}}^{\infty} P_{z^{2}}(x) d x
 
-\end{equation}
-
-将$\eqref{1}$代入到$\eqref{2}$，并记$u=(m x) / P_r$，CDF可以写作：
-
-\begin{equation}
+\end{equation}\]</span></p>
+<p>将<span class="math inline">\(\eqref{1}\)</span>代入到<span class="math inline">\(\eqref{2}\)</span>，并记<span class="math inline">\(u=(m x) / P_r\)</span>，CDF可以写作：</p>
+<p><span class="math display">\[\begin{equation}
 
 \label{3}
 F_{R}(r)=1-\frac{1}{\Gamma(m)} \int_{\frac{m P_{\mathrm{th}}}{P_{r}}}^{\infty} u^{m-1} e^{-u} d u
 
-\end{equation}
-
-使用下面的积分变换：
-
-\begin{equation}
+\end{equation}\]</span></p>
+<p>使用下面的积分变换：</p>
+<p><span class="math display">\[\begin{equation}
 
 \int x^{n} e^{c x} d x=\left(\frac{d}{d c}\right)^{n} \frac{e^{c x}}{c}
 
-\end{equation}
-
-CDF可以写成：
-
-\begin{equation}
+\end{equation}\]</span></p>
+<p>CDF可以写成：</p>
+<p><span class="math display">\[\begin{equation}
 
 \label{5}
 F_{R}(r)=1-\frac{1}{\Gamma(m)} \sum_{i=0}^{m-1} \frac{(m-1) !}{(m-1-i) !}\left(\frac{m P_{\mathrm{th}}}{P_{r}}\right)^{m-1-i} e^{-\frac{m P_{\mathrm{th}}}{P_{r}}}
 
-\end{equation}
-
-有了CDF以后，我们就可以计算通信范围的平均值$E[R]$了：
-
-\begin{equation}
+\end{equation}\]</span></p>
+<p>有了CDF以后，我们就可以计算通信范围的平均值<span class="math inline">\(E[R]\)</span>了：</p>
+<p><span class="math display">\[\begin{equation}
 \begin{aligned}
-E[R]=\frac{1}{\alpha \Gamma(m)} \sum_{i=0}^{m-1} & \frac{(m-1) !}{(m-1-i) !} \\ & \times \Gamma\left(m-1-i+\frac{1}{\alpha}\right)\left(\frac{m P_{\mathrm{th}}}{P_{t} K}\right)^{-\frac{1}{\alpha}}
+E[R]=\frac{1}{\alpha \Gamma(m)} \sum_{i=0}^{m-1} &amp; \frac{(m-1) !}{(m-1-i) !} \\ &amp; \times \Gamma\left(m-1-i+\frac{1}{\alpha}\right)\left(\frac{m P_{\mathrm{th}}}{P_{t} K}\right)^{-\frac{1}{\alpha}}
 \end{aligned}
 \label{6}
-\end{equation}
-
-上面推导的是能够成功通讯的范围。对于载波侦听的范围$E[L_{CS}]$可以通过$\eqref{6}$类似的过程进行推导。这里载波侦听范围指的是节点可以感知到包（但是未必能够成功收到此包）的范围。我们认为当接收功率达到阈值$P_{CS}$时即可。记$P_{CS}=\rho P_{th}$，其中$\rho \in (0, 1]$。则有下面的关系：
-
-\begin{equation}
+\end{equation}\]</span></p>
+<p>上面推导的是能够成功通讯的范围。对于载波侦听的范围<span class="math inline">\(E[L_{CS}]\)</span>可以通过<span class="math inline">\(\eqref{6}\)</span>类似的过程进行推导。这里载波侦听范围指的是节点可以感知到包（但是未必能够成功收到此包）的范围。我们认为当接收功率达到阈值<span class="math inline">\(P_{CS}\)</span>时即可。记<span class="math inline">\(P_{CS}=\rho P_{th}\)</span>，其中<span class="math inline">\(\rho \in (0, 1]\)</span>。则有下面的关系：</p>
+<p><span class="math display">\[\begin{equation}
 
 E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
 
-\end{equation}
+\end{equation}\]</span></p>
+<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
+<div id="refs" class="references" role="doc-bibliography">
+<div id="ref-hafeez2013performance">
+<p>[1] K. A. Hafeez, L. Zhao, B. Ma, and J. W. Mark, “Performance analysis and enhancement of the dsrc for vanet’s safety applications,” <em>IEEE Transactions on Vehicular Technology</em>, vol. 62, no. 7, pp. 3069–3083, 2013.</p>
+</div>
+</div>
 
-## Reference
         
       </div>
       
@@ -761,8 +743,17 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1034,6 +1025,23 @@ E\left[L_{CS}\right]=\frac{E[R]}{\sqrt[\alpha]{\rho}}
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">1 前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#system-model"><span class="nav-text">2 System Model</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信范围"><span class="nav-text">3 通信范围</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#传输模型"><span class="nav-text">3.1 传输模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

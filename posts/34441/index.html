@@ -123,18 +123,18 @@
 
 
 
-  <meta name="description" content="Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：  - Nginx - Gun">
+  <meta name="description" content="Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：  Nginx Gunicor">
 <meta name="keywords" content="教程,python,Django">
 <meta property="og:type" content="article">
 <meta property="og:title" content="旧文迁移|Django部署:Nginx+Gunicorn+virtualenv+supervisor+PostgreSQL">
 <meta property="og:url" content="http://www.codewoody.com/posts/34441/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：  - Nginx - Gun">
+<meta property="og:description" content="Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：  Nginx Gunicor">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-09-01T14:33:01.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="旧文迁移|Django部署:Nginx+Gunicorn+virtualenv+supervisor+PostgreSQL">
-<meta name="twitter:description" content="Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：  - Nginx - Gun">
+<meta name="twitter:description" content="Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：  Nginx Gunicor">
 
 
 
@@ -570,171 +570,94 @@
       
 
       
-        Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：
-
-- Nginx
-- Gunicorn
-- virtualenv
-- supervisor
-- PostgreSQL
-
+        <p>Django是最受欢迎的基于Python的web框架之一，也非常适合新手入门。虽然Django为我们提供了一个用于测试的轻量级server，但这个server不能用于实际生产环境的部署。最早的Django的部署方法推荐的是Apache+mod_wsgi。演化到现在，django的部署方法也变得越来越弹性、有效，也更加的复杂了。在下面的教程中我们需要使用下面的这些工具：</p>
+<ul>
+<li>Nginx</li>
+<li>Gunicorn</li>
+<li>virtualenv</li>
+<li>supervisor</li>
+<li>PostgreSQL</li>
+</ul>
 <a id="more"></a>
+<h3 data-number="0.0.1" id="前期准备"><span class="header-section-number">0.0.1</span> 前期准备</h3>
+<p>你需要一个你拥有root权限的server。下面的教程是基于Debian 7，所有相同的步骤对于Ubuntu和其他的基于Debian的发行版都是适用的。</p>
+<h3 data-number="0.0.2" id="更新系统"><span class="header-section-number">0.0.2</span> 更新系统</h3>
+<p>首先确保系统处于最新的状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo aptitude update</span><br><span class="line">$ sudo aptitude upgrade</span><br></pre></td></tr></table></figure>
+<h3 data-number="0.0.3" id="postgresql"><span class="header-section-number">0.0.3</span> PostgreSQL</h3>
+<p>为基于Debian的系统安装PostgreSQL，你只需要运行下面这个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo aptitude install postgresql postgresql-contrib</span><br></pre></td></tr></table></figure>
+<p>完成安装以后为我们的django应用创建一个用户和一个数据库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - postgres </span><br><span class="line">postgres@django:~$ createuser --interactive -P </span><br><span class="line">Enter name of role to add: hello_django </span><br><span class="line">Enter password <span class="keyword">for</span> new role: </span><br><span class="line">Enter it again: Shall the new role be a superuser? (y/n) n </span><br><span class="line">Shall the new role be allowed to create databases? (y/n) n </span><br><span class="line">Shall the new role be allowed to create more new roles? (y/n) n postgres@django:~$ </span><br><span class="line"></span><br><span class="line">postgres@django:~$ createdb --owner hello_django hello </span><br><span class="line">postgres@django:~$ <span class="built_in">logout</span> $</span><br></pre></td></tr></table></figure>
+<h3 data-number="0.0.4" id="创建一个运行账户"><span class="header-section-number">0.0.4</span> 创建一个运行账户</h3>
+<p>为了避免万一web应用被攻击以后带来不受控制的后果，我们一般会单独为web应用创建一个权限受限的用户来运行这个web应用。例如我们这里为我们的django应用创建一个名为<code>hello</code>的用户，并将其归入<code>webapps</code>这个组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo groupadd --system webapps</span><br><span class="line">$ sudo useradd --system --gid webapps --shell /bin/bash --home /webapps/hello_django hello</span><br></pre></td></tr></table></figure>
+<h3 data-number="0.0.5" id="virtualenv"><span class="header-section-number">0.0.5</span> virtualenv</h3>
+<p>Virtualenv是一个Python虚拟环境管理的工具，所谓虚拟环境就是讲你Web应用所需要的python环境从系统的python环境中独立出来，这使得你可以在不同的应用中使用不同版本的第三方库。</p>
+<p>用下面的命令来在Debian上安装Virtualenv</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo aptitude install python-virtualenv</span><br></pre></td></tr></table></figure>
+<h4 data-number="0.0.5.1" id="为你的django应用创建一个python环境"><span class="header-section-number">0.0.5.1</span> 为你的Django应用创建一个python环境</h4>
+<p>这里我将django应用放在了<code>/webapps</code>这个路径下面，如果你偏好<code>/var/www</code>, <code>srv</code>或者其他的路径也可以。首先在这个目录下面创建<code>/webapps/hello_django/</code>文件夹来存储应用，并将这个文件夹的owner设置为上面我们创建的运行账户<code>hello</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo mkdir -p /webapps/hello_django/</span><br><span class="line">$ sudo chown hello /webapps/hello_django/</span><br></pre></td></tr></table></figure>
+<p>切换到<code>hello</code>用户并创建虚拟环境</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - hello</span><br><span class="line">hello@django:~$ <span class="built_in">cd</span> /webapps/hello_django/</span><br><span class="line">hello@django:~$ virtualenv .</span><br><span class="line"></span><br><span class="line">New python executable <span class="keyword">in</span> hello_django/bin/python</span><br><span class="line">Installing distribute..............done.</span><br><span class="line">Installing pip.....................done. </span><br><span class="line">hello@django:~$ <span class="built_in">source</span> bin/activate </span><br><span class="line">(hello_django)hello@django:~$</span><br></pre></td></tr></table></figure>
+<p>现在虚拟环境就被激活了，我们可以将django安装到这个虚拟环境里面</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Downloading/unpacking django </span><br><span class="line">(...) </span><br><span class="line">Installing collected packages: django </span><br><span class="line">(...)</span><br><span class="line">Successfully installed django </span><br><span class="line">Cleaning up...</span><br></pre></td></tr></table></figure>
+<p>完成django的安装以后我们来创建一个空的django项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(hello_django)hello@django:~$ django-admin.py startproject hello</span><br></pre></td></tr></table></figure>
+<p>你可以通过启动测试服务器来测试是否一切正常</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">(hello_django)hello@django:~$ <span class="built_in">cd</span> hello </span><br><span class="line">(hello_django)hello@django:~$ python manage.py runserver example.com:8000 </span><br><span class="line">Validating models... </span><br><span class="line"></span><br><span class="line">0 errors found </span><br><span class="line">June 09, 2013 - 06:12:00 Django version 1.5.1, using settings <span class="string">'hello.settings'</span> </span><br><span class="line">Development server is running at http://example.com:8000/ </span><br><span class="line">Quit the server with CONTROL-C.</span><br></pre></td></tr></table></figure>
+<p>现在你可以通过<a href="http://example.com:8000" target="_blank" rel="noopener">http://example.com:8000</a>来访问了。</p>
+<h3 data-number="0.0.6" id="为django配置postgresql"><span class="header-section-number">0.0.6</span> 为Django配置PostgreSQL</h3>
+<p>Django默认的新工程使用的是SQLite3作为数据库的，这个数据库的性能不足以支持生产环境下的数据库应用。我们这里采用PostgreSQL来做为我们的Django项目的数据库。为了让Django能够使用PostgreSQL，我们需要将<code>psycopg2</code>安装到虚拟环境。首先安装这个包的依赖项</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">libpq-dev</span><br></pre></td></tr></table></figure>
+<p>然后通过pip来安装的<code>psycopg2</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(hello_django)hello@django:~$ pip install psycopg2</span><br></pre></td></tr></table></figure>
+<p>现在可以将Django的数据库设置修改为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES = &#123; </span><br><span class="line">    <span class="string">'default'</span>: &#123; </span><br><span class="line">        <span class="string">'ENGINE'</span>: <span class="string">'django.db.backends.postgresql_psycopg2'</span>, </span><br><span class="line">        <span class="string">'NAME'</span>: <span class="string">'hello'</span>, </span><br><span class="line">        <span class="string">'USER'</span>: <span class="string">'hello_django'</span>, </span><br><span class="line">        <span class="string">'PASSWORD'</span>: <span class="string">'Your password'</span>, </span><br><span class="line">        <span class="string">'HOST'</span>: <span class="string">'localhost'</span>, </span><br><span class="line">        <span class="string">'PORT'</span>: <span class="string">''</span>, <span class="comment"># Set to empty string for default. </span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后向向Postgres应用你的Django设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(hello_django)hello@django:~$ python manage.py migrate</span><br></pre></td></tr></table></figure>
+<h3 data-number="0.0.7" id="gunicorn"><span class="header-section-number">0.0.7</span> Gunicorn</h3>
+<p>在实际生产环境中我们不会使用Django的单线程开发服务器。这里我们使用<a href="http://gunicorn.org/" target="_blank" rel="noopener">Gunicorn</a>.</p>
+<p>通过pip来安装Gunicorn</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(hello_django)hello@django:~$ pip install gunicorn</span><br></pre></td></tr></table></figure>
+<p>安装好以后你可以尝试用Gunicorn来运行Django了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(hello_django)hello@django:~$ gunicorn hello.wsgi:application --<span class="built_in">bind</span> example.com:8001</span><br></pre></td></tr></table></figure>
+<p>上面的命令是一个简单的测试，为了真正在生产环境下使用Gunicorn，我们还需要增加一些配置。我们把这些配置文件写成一个bash脚本，保存为bin/gunicorn_start</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">NAME=<span class="string">"hello_app"</span> <span class="comment"># Name of the application</span></span><br><span class="line">DJANGODIR=/webapps/hello_django/hello <span class="comment"># Django project directory</span></span><br><span class="line">SOCKFILE=/webapps/hello_django/run/gunicorn.sock <span class="comment"># we will communicte using this unix socket</span></span><br><span class="line">USER=hello <span class="comment"># the user to run as</span></span><br><span class="line">GROUP=webapps <span class="comment"># the group to run as</span></span><br><span class="line">NUM_WORKERS=3 <span class="comment"># how many worker processes should Gunicorn spawn</span></span><br><span class="line">DJANGO_SETTINGS_MODULE=hello.settings <span class="comment"># which settings file should Django use</span></span><br><span class="line">DJANGO_WSGI_MODULE=hello.wsgi <span class="comment"># WSGI module name</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">echo</span> <span class="string">"Starting <span class="variable">$NAME</span> as `whoami`"</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Activate the virtual environment</span></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$DJANGODIR</span></span><br><span class="line"><span class="built_in">source</span> ../bin/activate</span><br><span class="line"><span class="built_in">export</span> DJANGO_SETTINGS_MODULE=<span class="variable">$DJANGO_SETTINGS_MODULE</span></span><br><span class="line"><span class="built_in">export</span> PYTHONPATH=<span class="variable">$DJANGODIR</span>:<span class="variable">$PYTHONPATH</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Create the run directory if it doesn't exist</span></span><br><span class="line">RUNDIR=$(dirname <span class="variable">$SOCKFILE</span>)</span><br><span class="line"><span class="built_in">test</span> -d <span class="variable">$RUNDIR</span> || mkdir -p <span class="variable">$RUNDIR</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Start your Django Unicorn</span></span><br><span class="line"><span class="comment"># Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)</span></span><br><span class="line"><span class="built_in">exec</span> ../bin/gunicorn <span class="variable">$&#123;DJANGO_WSGI_MODULE&#125;</span>:application \</span><br><span class="line">--name <span class="variable">$NAME</span> \</span><br><span class="line">--workers <span class="variable">$NUM_WORKERS</span> \</span><br><span class="line">--user=<span class="variable">$USER</span> --group=<span class="variable">$GROUP</span> \</span><br><span class="line">--<span class="built_in">bind</span>=unix:<span class="variable">$SOCKFILE</span> \</span><br><span class="line">--<span class="built_in">log</span>-level=debug \</span><br><span class="line">--<span class="built_in">log</span>-file=-</span><br></pre></td></tr></table></figure>
+<p>将这个文件改成可执行模式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chmod u+x bin/gunicorn_start</span><br></pre></td></tr></table></figure>
+<p>下面你可以尝试运行这个脚本了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo su - hello hello@django:~$ bin/gunicorn_start Starting hello_app as hello 2013-06-09 14:21:45 [10724] [INFO] Starting gunicorn 18.0 2013-06-09 14:21:45 [10724] [DEBUG] Arbiter booted 2013-06-09 14:21:45 [10724] [INFO] Listening at: unix:/webapps/hello_django/run/gunicorn.sock (10724) 2013-06-09 14:21:45 [10724] [INFO] Using worker: sync 2013-06-09 14:21:45 [10735] [INFO] Booting worker with pid: 10735 2013-06-09 14:21:45 [10736] [INFO] Booting worker with pid: 10736 2013-06-09 14:21:45 [10737] [INFO] Booting worker with pid: 10737 ^C (CONTROL-C to <span class="built_in">kill</span> Gunicorn) 2013-06-09 14:21:48 [10736] [INFO] Worker exiting (pid: 10736) 2013-06-09 14:21:48 [10735] [INFO] Worker exiting (pid: 10735) 2013-06-09 14:21:48 [10724] [INFO] Handling signal: int 2013-06-09 14:21:48 [10737] [INFO] Worker exiting (pid: 10737) 2013-06-09 14:21:48 [10724] [INFO] Shutting down: Master $ <span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>注意，如果你在上面的过程中设置了自定义的参数的话，需要将<code>gunicorn_start</code>脚本中对应的参数改过来。其中，worker的数量推荐设置为2 * CPUs + 1，这样的话，在任何时候都有一半的worker在做IO。</p>
+<h3 data-number="0.0.8" id="supervisor"><span class="header-section-number">0.0.8</span> Supervisor</h3>
+<p>Superviosr是一个进程监管的工具。简而言之，Superviosr可以保证你的程序在服务器开机时自动启动以及程序意外终止时重新启动。通过下面的命令即可安装:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo aptitude install supervisor</span><br></pre></td></tr></table></figure>
+<p>Superviosr通过配置文件来设置被监管的程序。一般配置文件都放置在<code>/etc/supervisor/conf.d</code>路径下面。此处我们创建一个名为<code>hello.conf</code>的配置文件，内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[program:hello]</span><br><span class="line"><span class="built_in">command</span> = /webapps/hello_django/bin/gunicorn_start ; Command to start app</span><br><span class="line">user = hello ; User to run as</span><br><span class="line">stdout_logfile = /webapps/hello_django/logs/gunicorn_supervisor.log ; Where to write <span class="built_in">log</span> messages</span><br><span class="line">redirect_stderr = <span class="literal">true</span> ; Save stderr <span class="keyword">in</span> the same <span class="built_in">log</span></span><br><span class="line">environment=LANG=en_US.UTF-8,LC_ALL=en_US.UTF-8 ; Set UTF-8 as default encoding</span><br></pre></td></tr></table></figure>
+<p>你可以参考<a href="http://supervisord.org/configuration.html#program-x-section-settings" target="_blank" rel="noopener">其他设置</a>，不过上面的设置一般情况下应该足够了。</p>
+<p>日志文件需要我们手动创建一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hello@django:~$ mkdir -p /webapps/hello_django/logs/ hello@django:~$ touch /webapps/hello_django/logs/gunicorn_supervisor.log</span><br></pre></td></tr></table></figure>
+<p>设置好上面的文件以后，我们可以通过<code>supervisorctl</code>工具来启用这些设置了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo supervisorctl reread </span><br><span class="line">hello: available </span><br><span class="line">$ sudo supervisorctl update </span><br><span class="line">hello: added process group</span><br></pre></td></tr></table></figure>
+<p>现在你可以start，stop或者restart你的进程了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ sudo supervisorctl status hello hello RUNNING pid 18020, uptime 0:00:50 </span><br><span class="line">$ sudo supervisorctl stop hello </span><br><span class="line">hello: stopped </span><br><span class="line">$ sudo supervisorctl start hello </span><br><span class="line">hello: started </span><br><span class="line">$ sudo supervisorctl restart hello </span><br><span class="line">hello: stopped </span><br><span class="line">hello: started</span><br></pre></td></tr></table></figure>
+<h3 data-number="0.0.9" id="nginx"><span class="header-section-number">0.0.9</span> Nginx</h3>
+<p>安装Nginx同样非常简单：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo aptitude install nginx </span><br><span class="line">$ sudo service nginx start</span><br></pre></td></tr></table></figure>
+<p>此时你访问server(<a href="http://example.com" target="_blank" rel="noopener">http://example.com</a>)就应该可以看见Nginx的欢迎页面了("Welcome to nginx")</p>
+<h4 data-number="0.0.9.1" id="为django创建一个虚拟server配置"><span class="header-section-number">0.0.9.1</span> 为Django创建一个虚拟server配置</h4>
+<p>每个Nginx的虚拟server都由<code>/etc/nginx/sites-available</code>路径下的一个配置文件来表示。而将其链接到的<code>/etc/nginx/sites-enabled</code>路径下则可以启用对应的站点。</p>
+<p>为我们的Django应用创建一个配置文件<code>/etc/nginx/sites-available/hello</code>. 文件内容如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">upstream hello_app_server &#123;</span><br><span class="line"><span class="comment"># fail_timeout=0 means we always retry an upstream even if it failed</span></span><br><span class="line"><span class="comment"># to return a good HTTP response (in case the Unicorn master nukes a</span></span><br><span class="line"><span class="comment"># single worker for timing out).</span></span><br><span class="line"> </span><br><span class="line">server unix:/webapps/hello_django/run/gunicorn.sock fail_timeout=0;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">server &#123;</span><br><span class="line"> </span><br><span class="line">listen 80;</span><br><span class="line">server_name example.com;</span><br><span class="line"> </span><br><span class="line">client_max_body_size 4G;</span><br><span class="line"> </span><br><span class="line">access_log /webapps/hello_django/logs/nginx-access.log;</span><br><span class="line">error_log /webapps/hello_django/logs/nginx-error.log;</span><br><span class="line"></span><br><span class="line">location /static/ &#123;</span><br><span class="line"><span class="built_in">alias</span> /webapps/hello_django/static/;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location /media/ &#123;</span><br><span class="line"><span class="built_in">alias</span> /webapps/hello_django/media/;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">location / &#123;</span><br><span class="line"><span class="comment"># an HTTP header important enough to have its own Wikipedia entry:</span></span><br><span class="line"><span class="comment"># http://en.wikipedia.org/wiki/X-Forwarded-For</span></span><br><span class="line">proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># enable this if and only if you use HTTPS, this helps Rack</span></span><br><span class="line"><span class="comment"># set the proper protocol for doing redirects:</span></span><br><span class="line"><span class="comment"># proxy_set_header X-Forwarded-Proto https;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># pass the Host: header from the client right along so redirects</span></span><br><span class="line"><span class="comment"># can be set properly within the Rack application</span></span><br><span class="line">proxy_set_header Host <span class="variable">$http_host</span>;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># we don't want nginx trying to do something clever with</span></span><br><span class="line"><span class="comment"># redirects, we set the Host: header above already.</span></span><br><span class="line">proxy_redirect off;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># set "proxy_buffering off" *only* for Rainbows! when doing</span></span><br><span class="line"><span class="comment"># Comet/long-poll stuff. It's also safe to set if you're</span></span><br><span class="line"><span class="comment"># using only serving fast clients with Unicorn + nginx.</span></span><br><span class="line"><span class="comment"># Otherwise you _want_ nginx to buffer responses to slow</span></span><br><span class="line"><span class="comment"># clients, really.</span></span><br><span class="line"><span class="comment"># proxy_buffering off;</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Try to serve static files from nginx, no point in making an</span></span><br><span class="line"><span class="comment"># *application* server like Unicorn/Rainbows! serve static files.</span></span><br><span class="line"><span class="keyword">if</span> (!-f <span class="variable">$request_filename</span>) &#123;</span><br><span class="line">proxy_pass http://hello_app_server;</span><br><span class="line"><span class="built_in">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Error pages</span></span><br><span class="line">error_page 500 502 503 504 /500.html;</span><br><span class="line">location = /500.html &#123;</span><br><span class="line">root /webapps/hello_django/static/;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将这个文件链接到<code>site-enabled</code>文件夹下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ln -s /etc/nginx/sites-available/hello /etc/nginx/sites-enabled/hello</span><br></pre></td></tr></table></figure>
+<p>然后重启nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service nginx restart</span><br></pre></td></tr></table></figure>
+<p>现在你再访问<a href="http://example.com" target="_blank" rel="noopener">http://example.com</a>看到的就应该不是nginx的欢迎页面，而是Django的欢迎页面了。</p>
+<p>至此配置就全部完成了，最终项目的整个结构应该如下所示：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/webapps/hello_django/ </span><br><span class="line">├── bin &lt;= Directory created by virtualenv </span><br><span class="line">│ ├── activate &lt;= Environment activation script</span><br><span class="line">│ ├── django-admin.py </span><br><span class="line">│ ├── gunicorn </span><br><span class="line">│ ├── gunicorn_django </span><br><span class="line">│ ├── gunicorn_start &lt;= Script to start application with Gunicorn </span><br><span class="line">│ └── python </span><br><span class="line">├── hello &lt;= Django project directory, add this to PYTHONPATH </span><br><span class="line">│ ├── manage.py </span><br><span class="line">│ ├── project_application_1 </span><br><span class="line">│ ├── project_application_2 </span><br><span class="line">│ └── hello &lt;= Project settings directory </span><br><span class="line">│ ├── __init__.py </span><br><span class="line">│ ├── settings.py &lt;= hello.settings - settings module Gunicorn will use </span><br><span class="line">│ ├── urls.py </span><br><span class="line">│ └── wsgi.py &lt;= hello.wsgi - WSGI module Gunicorn will use </span><br><span class="line">├── include </span><br><span class="line">│ └── python2.7 -&gt; /usr/include/python2.7 </span><br><span class="line">├── lib </span><br><span class="line">│ └── python2.7 </span><br><span class="line">├── lib64 -&gt; /webapps/hello_django/lib </span><br><span class="line">├── logs &lt;= Application logs directory </span><br><span class="line">│ ├── gunicorn_supervisor.log </span><br><span class="line">│ ├── nginx-access.log </span><br><span class="line">│ └── nginx-error.log </span><br><span class="line">├── media &lt;= User uploaded files folder </span><br><span class="line">├── run </span><br><span class="line">│ └── gunicorn.sock </span><br><span class="line">└── static &lt;= Collect and serve static files from here</span><br></pre></td></tr></table></figure>
 
-#### 前期准备
-
-你需要一个你拥有root权限的server。下面的教程是基于Debian 7，所有相同的步骤对于Ubuntu和其他的基于Debian的发行版都是适用的。
-
-#### 更新系统
-
-首先确保系统处于最新的状态
-
-<!--￼0-->
-
-#### PostgreSQL
-
-为基于Debian的系统安装PostgreSQL，你只需要运行下面这个命令：
-
-<!--￼1-->
-
-完成安装以后为我们的django应用创建一个用户和一个数据库
-
-<!--￼2-->
-
-#### 创建一个运行账户
-
-为了避免万一web应用被攻击以后带来不受控制的后果，我们一般会单独为web应用创建一个权限受限的用户来运行这个web应用。例如我们这里为我们的django应用创建一个名为`hello`的用户，并将其归入`webapps`这个组。
-
-<!--￼3-->
-
-#### virtualenv
-
-Virtualenv是一个Python虚拟环境管理的工具，所谓虚拟环境就是讲你Web应用所需要的python环境从系统的python环境中独立出来，这使得你可以在不同的应用中使用不同版本的第三方库。
-
-用下面的命令来在Debian上安装Virtualenv
-
-<!--￼4-->
-
-##### 为你的Django应用创建一个python环境
-
-这里我将django应用放在了`/webapps`这个路径下面，如果你偏好`/var/www`, `srv`或者其他的路径也可以。首先在这个目录下面创建`/webapps/hello_django/`文件夹来存储应用，并将这个文件夹的owner设置为上面我们创建的运行账户`hello`
-
-<!--￼5-->
-
-切换到`hello`用户并创建虚拟环境
-
-<!--￼6-->
-
-现在虚拟环境就被激活了，我们可以将django安装到这个虚拟环境里面
-
-<!--￼7-->
-
-完成django的安装以后我们来创建一个空的django项目
-
-<!--￼8-->
-
-你可以通过启动测试服务器来测试是否一切正常
-
-<!--￼9-->
-
-现在你可以通过[http://example.com:8000](http://example.com:8000)来访问了。
-
-#### 为Django配置PostgreSQL
-
-Django默认的新工程使用的是SQLite3作为数据库的，这个数据库的性能不足以支持生产环境下的数据库应用。我们这里采用PostgreSQL来做为我们的Django项目的数据库。为了让Django能够使用PostgreSQL，我们需要将`psycopg2`安装到虚拟环境。首先安装这个包的依赖项
-
-<!--￼10-->
-
-然后通过pip来安装的`psycopg2`
-
-<!--￼11-->
-
-现在可以将Django的数据库设置修改为：
-
-<!--￼12-->
-
-然后向向Postgres应用你的Django设置
-
-<!--￼13-->
-
-#### Gunicorn
-
-在实际生产环境中我们不会使用Django的单线程开发服务器。这里我们使用[Gunicorn](http://gunicorn.org/).
-
-通过pip来安装Gunicorn
-
-<!--￼14-->
-
-安装好以后你可以尝试用Gunicorn来运行Django了
-
-<!--￼15-->
-
-上面的命令是一个简单的测试，为了真正在生产环境下使用Gunicorn，我们还需要增加一些配置。我们把这些配置文件写成一个bash脚本，保存为bin/gunicorn_start
-
-<!--￼16-->
-
-将这个文件改成可执行模式
-
-<!--￼17-->
-
-下面你可以尝试运行这个脚本了
-
-<!--￼18-->
-
-注意，如果你在上面的过程中设置了自定义的参数的话，需要将`gunicorn_start`脚本中对应的参数改过来。其中，worker的数量推荐设置为2 * CPUs + 1，这样的话，在任何时候都有一半的worker在做IO。
-
-#### Supervisor
-
-Superviosr是一个进程监管的工具。简而言之，Superviosr可以保证你的程序在服务器开机时自动启动以及程序意外终止时重新启动。通过下面的命令即可安装:
-
-<!--￼19-->
-
-Superviosr通过配置文件来设置被监管的程序。一般配置文件都放置在`/etc/supervisor/conf.d`路径下面。此处我们创建一个名为`hello.conf`的配置文件，内容如下：
-
-<!--￼20-->
-
-你可以参考[其他设置](http://supervisord.org/configuration.html#program-x-section-settings)，不过上面的设置一般情况下应该足够了。
-
-日志文件需要我们手动创建一下：
-
-<!--￼21-->
-
-设置好上面的文件以后，我们可以通过`supervisorctl`工具来启用这些设置了：
-
-<!--￼22-->
-
-现在你可以start，stop或者restart你的进程了
-
-<!--￼23-->
-
-#### Nginx
-
-安装Nginx同样非常简单：
-
-<!--￼24-->
-
-此时你访问server([http://example.com](http://example.com))就应该可以看见Nginx的欢迎页面了("Welcome to nginx")
-
-##### 为Django创建一个虚拟server配置
-
-每个Nginx的虚拟server都由`/etc/nginx/sites-available`路径下的一个配置文件来表示。而将其链接到的`/etc/nginx/sites-enabled`路径下则可以启用对应的站点。
-
-为我们的Django应用创建一个配置文件`/etc/nginx/sites-available/hello`. 文件内容如下：
-
-<!--￼25-->
-
-将这个文件链接到`site-enabled`文件夹下：
-
-<!--￼26-->
-
-然后重启nginx
-
-<!--￼27-->
-
-现在你再访问[http://example.com](http://example.com)看到的就应该不是nginx的欢迎页面，而是Django的欢迎页面了。
-
-至此配置就全部完成了，最终项目的整个结构应该如下所示：
-
-<!--￼28-->
       
     </div>
 
@@ -837,8 +760,17 @@ Superviosr通过配置文件来设置被监管的程序。一般配置文件都�
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1110,6 +1042,23 @@ Superviosr通过配置文件来设置被监管的程序。一般配置文件都�
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-text">0.0.1 前期准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更新系统"><span class="nav-text">0.0.2 更新系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#postgresql"><span class="nav-text">0.0.3 PostgreSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个运行账户"><span class="nav-text">0.0.4 创建一个运行账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#virtualenv"><span class="nav-text">0.0.5 virtualenv</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为你的django应用创建一个python环境"><span class="nav-text">0.0.5.1 为你的Django应用创建一个python环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为django配置postgresql"><span class="nav-text">0.0.6 为Django配置PostgreSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gunicorn"><span class="nav-text">0.0.7 Gunicorn</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#supervisor"><span class="nav-text">0.0.8 Supervisor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx"><span class="nav-text">0.0.9 Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为django创建一个虚拟server配置"><span class="nav-text">0.0.9.1 为Django创建一个虚拟server配置</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

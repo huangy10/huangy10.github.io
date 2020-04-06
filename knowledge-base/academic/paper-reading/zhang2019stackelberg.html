@@ -123,17 +123,19 @@
 
 
 
-  <meta name="description" content="这篇文章的标题是[Stackelberg Game-Based Power Allocation for V2X Communications](https://www.mdpi.com/1424-8220/20/1/58)。作者是北京邮电大学的。  ## 简介  &amp;gt; 文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三">
+  <meta name="description" content="这篇文章的标题是Stackelberg Game-Based Power Allocation for V2X Communications。作者是北京邮电大学的。 1 简介  文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三大应用场景之一。  这篇文章研究的是Underlaying模式下的功率分配问题，使用的方法是S">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Stackelberg博弈来解决V2X的功率分配问题">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/zhang2019stackelberg.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这篇文章的标题是[Stackelberg Game-Based Power Allocation for V2X Communications](https://www.mdpi.com/1424-8220/20/1/58)。作者是北京邮电大学的。  ## 简介  &amp;gt; 文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三">
+<meta property="og:description" content="这篇文章的标题是Stackelberg Game-Based Power Allocation for V2X Communications。作者是北京邮电大学的。 1 简介  文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三大应用场景之一。  这篇文章研究的是Underlaying模式下的功率分配问题，使用的方法是S">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/cb8f1a62b3e94a79fcfcbfc26fd848bb.png">
 <meta property="og:updated_time" content="2020-03-30T14:02:03.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stackelberg博弈来解决V2X的功率分配问题">
-<meta name="twitter:description" content="这篇文章的标题是[Stackelberg Game-Based Power Allocation for V2X Communications](https://www.mdpi.com/1424-8220/20/1/58)。作者是北京邮电大学的。  ## 简介  &amp;gt; 文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三">
+<meta name="twitter:description" content="这篇文章的标题是Stackelberg Game-Based Power Allocation for V2X Communications。作者是北京邮电大学的。 1 简介  文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三大应用场景之一。  这篇文章研究的是Underlaying模式下的功率分配问题，使用的方法是S">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/cb8f1a62b3e94a79fcfcbfc26fd848bb.png">
 
 
 
@@ -538,119 +540,88 @@
       <div class="post-body han-init-context">
         
         
-          
-这篇文章的标题是[Stackelberg Game-Based Power Allocation for V2X Communications](https://www.mdpi.com/1424-8220/20/1/58)。作者是北京邮电大学的。
-
-## 简介
-
-> 文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三大应用场景之一。
-
-这篇文章研究的是Underlaying模式下的功率分配问题，使用的方法是[Stackelberg博弈](/knowledge-base/academic/基础知识/博弈论/stackelberg.html)。假设宏基站(Macro-cellular base station, MBS)设置了**干扰价格**以保护自己免受VUE用户的干扰。Stackberg工具则用来分析MBS和VUE之间的互动。其中MBS作为Leader，VUE作为Follower。\
-对于MBS，目标是在考虑干扰成本的同时，最大化从干扰收益中得到的效益^📒^ [For MBS, we aimed at maximizing its utility from interference revenue while considering the cost of interference]{.eng-origin}。对于VUE而言，目标则是最大化从单位功率消耗中获得的效用。Stackelberg模型会给出MBS的最佳定价和VUE的最佳发射功率。
-
-> 作者比较关注能耗效率，这一点比较牵强，至少在车辆平台上，能源供应应该不成问题，相比于动力系统的功率，通信系统的功率不值一提。而且作者将关注功率节约的问题作为了文章的两点。不过用博弈论解决资源分配问题的这个框架还是有借鉴意义的。
-
-## 系统模型和问题建模
-
-### 系统模型
-
-考虑单小区场景，采用Overlay方式，即V2I UL（上行链路）和V2V共享频谱，这会产生干扰问题。
-
-网络架构方面，宏基站MBS位于中央，另外有若干的Macrocell UE (MUE)随机分布于小区内。V2V通信对也是随机分布。如 @fig:系统模型 所示。
-
-![系统模型。实线箭头表示通信链路，虚线箭头表示干扰](https://imgs.codewoody.com/uploads/big/cb8f1a62b3e94a79fcfcbfc26fd848bb.png){#fig:系统模型}
-
-小区内UE（这里就是只MUE）的数量为$K$，VUE通信对有$N$对。$VT_i$和$VR_i$分别表示第$i$对V2V通信的发送者和接受者。每个VUE只装备有一个天线，在每个传输过程中信道状态保持恒定（但是在不同的传输中可以变化）。信道增益方面，
-
-- MUE $k$和MBS之间的增益为$g_{0k}$
-- $VT_i$和$VR_i$之间的是$g_{i}$
-- $VT_i$和MBS之间的是$h_i$
-- $l_{ik}$为MUE $k$到$VT_i$的增益
-
-所有的信道增益参数都视为是独立同分布的。背景噪声为搞死白噪声，功率为$\sigma^2$。
-
-下面引入**干扰价格**的概念。
-
-假设MUE以功率$P_P$发送，$VT_i$以功率$P_i$发送，那么在$VR_{i}$处的SINR为
-
-$$
+          <p>这篇文章的标题是<a href="https://www.mdpi.com/1424-8220/20/1/58" target="_blank" rel="noopener">Stackelberg Game-Based Power Allocation for V2X Communications</a>。作者是北京邮电大学的。</p>
+<h1 data-number="1" id="简介"><span class="header-section-number">1</span> 简介</h1>
+<blockquote>
+<p>文章中提到URLLC的概念，全称是Ultra-reliable low-latency communication，属于5G的三大应用场景之一。</p>
+</blockquote>
+<p>这篇文章研究的是Underlaying模式下的功率分配问题，使用的方法是<a href="/knowledge-base/academic/基础知识/博弈论/stackelberg.html">Stackelberg博弈</a>。假设宏基站(Macro-cellular base station, MBS)设置了<strong>干扰价格</strong>以保护自己免受VUE用户的干扰。Stackberg工具则用来分析MBS和VUE之间的互动。其中MBS作为Leader，VUE作为Follower。<br>
+对于MBS，目标是在考虑干扰成本的同时，最大化从干扰收益中得到的效益<sup>📒</sup> <span class="eng-origin">For MBS, we aimed at maximizing its utility from interference revenue while considering the cost of interference</span>。对于VUE而言，目标则是最大化从单位功率消耗中获得的效用。Stackelberg模型会给出MBS的最佳定价和VUE的最佳发射功率。</p>
+<blockquote>
+<p>作者比较关注能耗效率，这一点比较牵强，至少在车辆平台上，能源供应应该不成问题，相比于动力系统的功率，通信系统的功率不值一提。而且作者将关注功率节约的问题作为了文章的两点。不过用博弈论解决资源分配问题的这个框架还是有借鉴意义的。</p>
+</blockquote>
+<h1 data-number="2" id="系统模型和问题建模"><span class="header-section-number">2</span> 系统模型和问题建模</h1>
+<h2 data-number="2.1" id="系统模型"><span class="header-section-number">2.1</span> 系统模型</h2>
+<p>考虑单小区场景，采用Overlay方式，即V2I UL（上行链路）和V2V共享频谱，这会产生干扰问题。</p>
+<p>网络架构方面，宏基站MBS位于中央，另外有若干的Macrocell UE (MUE)随机分布于小区内。V2V通信对也是随机分布。如 <a href="#fig:系统模型">图 1</a> 所示。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/cb8f1a62b3e94a79fcfcbfc26fd848bb.png" id="fig:系统模型" alt=""><figcaption>图 1: 系统模型。实线箭头表示通信链路，虚线箭头表示干扰</figcaption>
+</figure>
+<p>小区内UE（这里就是只MUE）的数量为<span class="math inline">\(K\)</span>，VUE通信对有<span class="math inline">\(N\)</span>对。<span class="math inline">\(VT_i\)</span>和<span class="math inline">\(VR_i\)</span>分别表示第<span class="math inline">\(i\)</span>对V2V通信的发送者和接受者。每个VUE只装备有一个天线，在每个传输过程中信道状态保持恒定（但是在不同的传输中可以变化）。信道增益方面，</p>
+<ul>
+<li>MUE <span class="math inline">\(k\)</span>和MBS之间的增益为<span class="math inline">\(g_{0k}\)</span></li>
+<li><span class="math inline">\(VT_i\)</span>和<span class="math inline">\(VR_i\)</span>之间的是<span class="math inline">\(g_{i}\)</span></li>
+<li><span class="math inline">\(VT_i\)</span>和MBS之间的是<span class="math inline">\(h_i\)</span></li>
+<li><span class="math inline">\(l_{ik}\)</span>为MUE <span class="math inline">\(k\)</span>到<span class="math inline">\(VT_i\)</span>的增益</li>
+</ul>
+<p>所有的信道增益参数都视为是独立同分布的。背景噪声为搞死白噪声，功率为<span class="math inline">\(\sigma^2\)</span>。</p>
+<p>下面引入<strong>干扰价格</strong>的概念。</p>
+<p>假设MUE以功率<span class="math inline">\(P_P\)</span>发送，<span class="math inline">\(VT_i\)</span>以功率<span class="math inline">\(P_i\)</span>发送，那么在<span class="math inline">\(VR_{i}\)</span>处的SINR为</p>
+<p><span class="math display">\[
 \gamma = \frac{P_i g_i}{\sum_{k=1}^{K}P_P l_{ik} + \sigma^2}
-$$
-
-在V2X通信中考虑每焦耳的能量消耗的利润(Profit per Joule)以提高能量的利用效率。对于$VT_i$来说，其目标是在不影响正常的通信的前提下尽可能提高能源效率。下面的每焦耳利润函数：
-
-$$
+\]</span></p>
+<p>在V2X通信中考虑每焦耳的能量消耗的利润(Profit per Joule)以提高能量的利用效率。对于<span class="math inline">\(VT_i\)</span>来说，其目标是在不影响正常的通信的前提下尽可能提高能源效率。下面的每焦耳利润函数：</p>
+<p><span class="math display">\[
 \eta_i (P_i, p_i) = \frac{\xi_i \log_2 (1 + \gamma_i(P_i)) - p_i I_i(P_i)}{P_c + P_i}
-$$
-
-其中$\xi_i$为VUE $i$从其单位传输速率中得到的效益，$p_i$为MBS决定的价格，$I_{i}(P_i)$为$VT_i$需要从MBS处以价格$p_i$购买的干扰量（配额），$I_i(P_i) \triangleq P_i h_i$。$P_c$为设备传输过程中的额外功率消耗，是独立于数据传输功率之外的部分。
-
-### 问题建模
-
-Stackbelberg模型是经济学中的博弈模型，其中Leader需要先做出决策，然后Follower跟进。这类博弈中存在一个Leader和若干个Follower。Follower可以根据其观测到的Leader的行为在做出决策。
-
-> Stackelberg博弈中最关键的一点：Leader同时也知道Follower会根据其行为做出反应，并将这一因素纳入自己的决策考量中。Stackelberg博弈是一种完全信息博弈。进一步的信息可以参考：[Stackelberg博弈](/knowledge-base/academic/基础知识/博弈论/stackelberg.html)。
-
-本文将功率分配问题构建为两阶段的Stackelberg博弈，其中MBS是Leader，其他的$VT_i$为Follower。在初始阶段MBS为每个VUE $i$设置干扰配额的价格$p_i$，然后$VT_i$基于这个价格决定自己的传输功率$P_i$。
-
-综合上面的考虑，MBS的效益函数就是出售干扰配额获得的收益，扣除干扰带来的成本，即
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(\xi_i\)</span>为VUE <span class="math inline">\(i\)</span>从其单位传输速率中得到的效益，<span class="math inline">\(p_i\)</span>为MBS决定的价格，<span class="math inline">\(I_{i}(P_i)\)</span>为<span class="math inline">\(VT_i\)</span>需要从MBS处以价格<span class="math inline">\(p_i\)</span>购买的干扰量（配额），<span class="math inline">\(I_i(P_i) \triangleq P_i h_i\)</span>。<span class="math inline">\(P_c\)</span>为设备传输过程中的额外功率消耗，是独立于数据传输功率之外的部分。</p>
+<h2 data-number="2.2" id="问题建模"><span class="header-section-number">2.2</span> 问题建模</h2>
+<p>Stackbelberg模型是经济学中的博弈模型，其中Leader需要先做出决策，然后Follower跟进。这类博弈中存在一个Leader和若干个Follower。Follower可以根据其观测到的Leader的行为在做出决策。</p>
+<blockquote>
+<p>Stackelberg博弈中最关键的一点：Leader同时也知道Follower会根据其行为做出反应，并将这一因素纳入自己的决策考量中。Stackelberg博弈是一种完全信息博弈。进一步的信息可以参考：<a href="/knowledge-base/academic/基础知识/博弈论/stackelberg.html">Stackelberg博弈</a>。</p>
+</blockquote>
+<p>本文将功率分配问题构建为两阶段的Stackelberg博弈，其中MBS是Leader，其他的<span class="math inline">\(VT_i\)</span>为Follower。在初始阶段MBS为每个VUE <span class="math inline">\(i\)</span>设置干扰配额的价格<span class="math inline">\(p_i\)</span>，然后<span class="math inline">\(VT_i\)</span>基于这个价格决定自己的传输功率<span class="math inline">\(P_i\)</span>。</p>
+<p>综合上面的考虑，MBS的效益函数就是出售干扰配额获得的收益，扣除干扰带来的成本，即</p>
+<p><span class="math display">\[
 \mathcal{U}_{MBS}(p_i, \mathbf{P}) = \sum_{i = 1}^N \{p_i I_i(P_i) - \alpha I_i(P_i)\}
-$$
-
-注意到$P_i$为$p_i$的函数，所以$\mathcal{U}_{MBS}$实际上完全取决于$p_i$，故MBS需要寻找一个最优的$p_i$以最大化自己的收益，因此MBS的决策问题就成文
-
-$$
+\]</span></p>
+<p>注意到<span class="math inline">\(P_i\)</span>为<span class="math inline">\(p_i\)</span>的函数，所以<span class="math inline">\(\mathcal{U}_{MBS}\)</span>实际上完全取决于<span class="math inline">\(p_i\)</span>，故MBS需要寻找一个最优的<span class="math inline">\(p_i\)</span>以最大化自己的收益，因此MBS的决策问题就成文</p>
+<p><span class="math display">\[
 OP1:\quad \max_{\mathbf{p} \geq 0} \mathcal{U}_{MBS}(\mathbf{p}, \mathbf{P})
-$$
-
-其中$\mathbf{p}$为价格向量，$\mathbf{P}$为功率向量。
-
-接下来我们要考虑VUE的收益函数。令$\mathcal{U}_i(P_i, p_i) = \eta_i (P_i, p_i)$。容易发现$VT_i$的收益函数也由每焦耳的收益和成本组成。另外还需要考虑延时限制条件。假设VT的缓冲区足够大，包的到达过程为Poisson过程。综上$VT_i$的优化问题可以表述为
-
-\begin{equation}
+\]</span></p>
+<p>其中<span class="math inline">\(\mathbf{p}\)</span>为价格向量，<span class="math inline">\(\mathbf{P}\)</span>为功率向量。</p>
+<p>接下来我们要考虑VUE的收益函数。令<span class="math inline">\(\mathcal{U}_i(P_i, p_i) = \eta_i (P_i, p_i)\)</span>。容易发现<span class="math inline">\(VT_i\)</span>的收益函数也由每焦耳的收益和成本组成。另外还需要考虑延时限制条件。假设VT的缓冲区足够大，包的到达过程为Poisson过程。综上<span class="math inline">\(VT_i\)</span>的优化问题可以表述为</p>
+<p><span class="math display">\[\begin{equation}
 \begin{aligned}
-OP2:\quad & \max_{P_i \geq 0} \mathcal{U}_i(P_i, \mathbf{p}) \\
-& s.t. \quad E[W_i] \leq T_i
+OP2:\quad &amp; \max_{P_i \geq 0} \mathcal{U}_i(P_i, \mathbf{p}) \\
+&amp; s.t. \quad E[W_i] \leq T_i
 \end{aligned}
 \label{eq:5}
-\end{equation}
-
-其中$W_i$代表包的队列等待时间和服务时间（就是传输时间，服务时间是从排队论角度的说法）。$T_i$则为延时限制。通过M/G/1排队模型将延时限制转化成传输速率限制：
-
-$$
+\end{equation}\]</span></p>
+<p>其中<span class="math inline">\(W_i\)</span>代表包的队列等待时间和服务时间（就是传输时间，服务时间是从排队论角度的说法）。<span class="math inline">\(T_i\)</span>则为延时限制。通过M/G/1排队模型将延时限制转化成传输速率限制：</p>
+<p><span class="math display">\[
 R_i \geq \varphi (T_i, v_i, Z)
-$$
-
-其中$R_i = \log_2 (1 + \gamma_i(P_i))$，$v_i$代表包到达率，$Z$代表包大小。
-
-根据 $\eqref{eq:5}$，所有的$VT$会以非协作的方式竞争，以最大化其收益，这一竞争过程可以记为
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(R_i = \log_2 (1 + \gamma_i(P_i))\)</span>，<span class="math inline">\(v_i\)</span>代表包到达率，<span class="math inline">\(Z\)</span>代表包大小。</p>
+<p>根据 <span class="math inline">\(\eqref{eq:5}\)</span>，所有的<span class="math inline">\(VT\)</span>会以非协作的方式竞争，以最大化其收益，这一竞争过程可以记为</p>
+<p><span class="math display">\[
 G = \left\{\Omega, \{P_i\}_{i \in \Omega}, \{\mathcal{U}_i(P_i, \mathbf{p})\}_{i \in \Omega}\right\}
-$$
-
-其中$\Omega$为$VT$的集合。
-
-上面提出的两组优化问题即构成了Stackelberg问题的模型，可以用来计算均衡点。
-
-## 算法内容
-
-### Stackelberg均衡
-
-注意功率分配向量$\mathbf{P}$为价格向量$\mathbf{p}$的函数，Stackelberg均衡定义为
-
-**定义1**: 令$\mathbf{p}^*$为OP1的最优解，$\mathbf{P}^*$为OP2的最优解，那么$(\mathbf{p}^*, \mathbf{P}^*)$称为Stackelberg均衡点，如果对于任意的$(\mathbf{p}, \mathbf{P})$都满足
-
-$$
+\]</span></p>
+<p>其中<span class="math inline">\(\Omega\)</span>为<span class="math inline">\(VT\)</span>的集合。</p>
+<p>上面提出的两组优化问题即构成了Stackelberg问题的模型，可以用来计算均衡点。</p>
+<h1 data-number="3" id="算法内容"><span class="header-section-number">3</span> 算法内容</h1>
+<h2 data-number="3.1" id="stackelberg均衡"><span class="header-section-number">3.1</span> Stackelberg均衡</h2>
+<p>注意功率分配向量<span class="math inline">\(\mathbf{P}\)</span>为价格向量<span class="math inline">\(\mathbf{p}\)</span>的函数，Stackelberg均衡定义为</p>
+<p><strong>定义1</strong>: 令<span class="math inline">\(\mathbf{p}^*\)</span>为OP1的最优解，<span class="math inline">\(\mathbf{P}^*\)</span>为OP2的最优解，那么<span class="math inline">\((\mathbf{p}^*, \mathbf{P}^*)\)</span>称为Stackelberg均衡点，如果对于任意的<span class="math inline">\((\mathbf{p}, \mathbf{P})\)</span>都满足</p>
+<p><span class="math display">\[
 \begin{aligned}
-\mathcal{U}_{MBS}(\mathbf{p}^*, \mathbf{P}^*) &\geq \mathcal{U}_{MBS}(\mathbf{p}, \mathbf{P}^*)  \\
-\mathcal{U}_i (P_i^*, \mathbf{p}^*) & \geq \mathcal{U}_i (P_i, \mathbf{p}^*)
+\mathcal{U}_{MBS}(\mathbf{p}^*, \mathbf{P}^*) &amp;\geq \mathcal{U}_{MBS}(\mathbf{p}, \mathbf{P}^*)  \\
+\mathcal{U}_i (P_i^*, \mathbf{p}^*) &amp; \geq \mathcal{U}_i (P_i, \mathbf{p}^*)
 \end{aligned}
-$$
-
-> 至此问题已经比较清晰，后面的数学推导部分比较长这里就不梳理了，可以参考原文。
+\]</span></p>
+<blockquote>
+<p>至此问题已经比较清晰，后面的数学推导部分比较长这里就不梳理了，可以参考原文。</p>
+</blockquote>
 
         
       </div>
@@ -754,8 +725,17 @@ $$
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1027,6 +1007,23 @@ $$
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-text">1 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型和问题建模"><span class="nav-text">2 系统模型和问题建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统模型"><span class="nav-text">2.1 系统模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题建模"><span class="nav-text">2.2 问题建模</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#算法内容"><span class="nav-text">3 算法内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#stackelberg均衡"><span class="nav-text">3.1 Stackelberg均衡</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

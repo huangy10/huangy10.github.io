@@ -558,22 +558,14 @@
       
 
       
-        
-这里要研究的问题是，如果我们在之前的某一个提交中删除了一个文件，如何使用git将此文件恢复出来。
-
+        <p>这里要研究的问题是，如果我们在之前的某一个提交中删除了一个文件，如何使用git将此文件恢复出来。</p>
 <a id="more"></a>
-
-首先我们要做的是找到当时删除的这个文件对应的提交。比较简便的方法是使用一些图形化的Git软件，可以直接浏览找到对应的提交。这些软件包括SourceTree，Github Desktop等。纯命令行的环境可以使用如下的命令：
-
-<!--￼0-->
-
-在找到对应的提交后，使用如下命令：
-
-<!--￼1-->
-
-注意一下，这里的`$commit`指的是对应的commit id。后面的`~n`是git的一种语法，表明追溯某个提交的第`n`个祖先。详情可以参考[Git Treeishes Considered Awesome](https://www.bignerdranch.com/blog/git-treeishes-considered-awesome/)。那这里的意思就是检出删除这个文件的提交的上一个提交（届时那个文件还存在）中的对应文件。
-
-[参考链接](https://stackoverflow.com/a/953573/5081487)
+<p>首先我们要做的是找到当时删除的这个文件对应的提交。比较简便的方法是使用一些图形化的Git软件，可以直接浏览找到对应的提交。这些软件包括SourceTree，Github Desktop等。纯命令行的环境可以使用如下的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --diff-filter=D --summary</span><br></pre></td></tr></table></figure>
+<p>在找到对应的提交后，使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout $commit~1 path/to/file.ext</span><br></pre></td></tr></table></figure>
+<p>注意一下，这里的<code>$commit</code>指的是对应的commit id。后面的<code>~n</code>是git的一种语法，表明追溯某个提交的第<code>n</code>个祖先。详情可以参考<a href="https://www.bignerdranch.com/blog/git-treeishes-considered-awesome/" target="_blank" rel="noopener">Git Treeishes Considered Awesome</a>。那这里的意思就是检出删除这个文件的提交的上一个提交（届时那个文件还存在）中的对应文件。</p>
+<p><a href="https://stackoverflow.com/a/953573/5081487" target="_blank" rel="noopener">参考链接</a></p>
 
       
     </div>

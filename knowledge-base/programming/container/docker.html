@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="## 简介：什么是Docker  ## 镜像  ### 镜像管理  #### 镜像瘦身  - [Making Debian Docker Images Smaller](https://www.dajobe.org/blog/2015/04/18/making-debian-docker-images-smaller/)  #### 删除镜像  1. 删除所有未打标签的镜像(即悬挂镜像)">
+  <meta name="description" content="1 简介：什么是Docker 2 镜像 2.1 镜像管理 2.1.1 镜像瘦身  Making Debian Docker Images Smaller  2.1.2 删除镜像  删除所有未打标签的镜像(即悬挂镜像)  1docker rmi $(docker images | grep &quot;^&amp;lt;none&amp;gt;&quot; | awk &quot;&amp;#123;print $3&amp;#125;&quot;) 这个命令也可以用来">
 <meta property="og:type" content="website">
 <meta property="og:title" content="docker使用指南">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/container/docker.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## 简介：什么是Docker  ## 镜像  ### 镜像管理  #### 镜像瘦身  - [Making Debian Docker Images Smaller](https://www.dajobe.org/blog/2015/04/18/making-debian-docker-images-smaller/)  #### 删除镜像  1. 删除所有未打标签的镜像(即悬挂镜像)">
+<meta property="og:description" content="1 简介：什么是Docker 2 镜像 2.1 镜像管理 2.1.1 镜像瘦身  Making Debian Docker Images Smaller  2.1.2 删除镜像  删除所有未打标签的镜像(即悬挂镜像)  1docker rmi $(docker images | grep &quot;^&amp;lt;none&amp;gt;&quot; | awk &quot;&amp;#123;print $3&amp;#125;&quot;) 这个命令也可以用来">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.517Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker使用指南">
-<meta name="twitter:description" content="## 简介：什么是Docker  ## 镜像  ### 镜像管理  #### 镜像瘦身  - [Making Debian Docker Images Smaller](https://www.dajobe.org/blog/2015/04/18/making-debian-docker-images-smaller/)  #### 删除镜像  1. 删除所有未打标签的镜像(即悬挂镜像)">
+<meta name="twitter:description" content="1 简介：什么是Docker 2 镜像 2.1 镜像管理 2.1.1 镜像瘦身  Making Debian Docker Images Smaller  2.1.2 删除镜像  删除所有未打标签的镜像(即悬挂镜像)  1docker rmi $(docker images | grep &quot;^&amp;lt;none&amp;gt;&quot; | awk &quot;&amp;#123;print $3&amp;#125;&quot;) 这个命令也可以用来">
 
 
 
@@ -538,42 +538,30 @@
       <div class="post-body han-init-context">
         
         
-          
-## 简介：什么是Docker
+          <h1 data-number="1" id="简介什么是docker"><span class="header-section-number">1</span> 简介：什么是Docker</h1>
+<h1 data-number="2" id="镜像"><span class="header-section-number">2</span> 镜像</h1>
+<h2 data-number="2.1" id="镜像管理"><span class="header-section-number">2.1</span> 镜像管理</h2>
+<h3 data-number="2.1.1" id="镜像瘦身"><span class="header-section-number">2.1.1</span> 镜像瘦身</h3>
+<ul>
+<li><a href="https://www.dajobe.org/blog/2015/04/18/making-debian-docker-images-smaller/" target="_blank" rel="noopener">Making Debian Docker Images Smaller</a></li>
+</ul>
+<h3 data-number="2.1.2" id="删除镜像"><span class="header-section-number">2.1.2</span> 删除镜像</h3>
+<ol type="1">
+<li>删除所有未打标签的镜像(即悬挂镜像)</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $(docker images | grep "^&lt;none&gt;" | awk "&#123;print $3&#125;")</span><br></pre></td></tr></table></figure>
+<p>这个命令也可以用来删除<code>docker image ls</code>命令显示的REPOSITORY和TAG这两列为<code>&lt;none&gt;</code>的镜像。上面的命令是用<code>awk</code>处理提取IMAGE ID这一列的值进行删除。</p>
+<h2 data-number="2.2" id="docker-repo"><span class="header-section-number">2.2</span> Docker Repo</h2>
+<h2 data-number="2.3" id="dockerfile创建镜像"><span class="header-section-number">2.3</span> Dockerfile:创建镜像</h2>
+<h2 data-number="2.4" id="docker-composer"><span class="header-section-number">2.4</span> Docker Composer</h2>
+<h1 data-number="3" id="容器"><span class="header-section-number">3</span> 容器</h1>
+<h2 data-number="3.1" id="容器生命周期管理"><span class="header-section-number">3.1</span> 容器生命周期管理</h2>
+<h3 data-number="3.1.1" id="关闭容器"><span class="header-section-number">3.1.1</span> 关闭容器</h3>
+<ol type="1">
+<li>移除所有已经停止的容器</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $(docker ps -a -q)</span><br></pre></td></tr></table></figure>
 
-## 镜像
-
-### 镜像管理
-
-#### 镜像瘦身
-
-- [Making Debian Docker Images Smaller](https://www.dajobe.org/blog/2015/04/18/making-debian-docker-images-smaller/)
-
-#### 删除镜像
-
-1. 删除所有未打标签的镜像(即悬挂镜像)
-
-<!--￼0-->
-
-这个命令也可以用来删除`docker image ls`命令显示的REPOSITORY和TAG这两列为`<none>`的镜像。上面的命令是用`awk`处理提取IMAGE ID这一列的值进行删除。
-
-### Docker Repo
-
-### Dockerfile:创建镜像
-
-### Docker Composer
-
-## 容器
-
-### 容器生命周期管理
-
-#### 关闭容器
-
-1. 移除所有已经停止的容器
-
-<!--￼1-->
-
-</none>
         
       </div>
       
@@ -676,8 +664,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -949,6 +946,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介什么是docker"><span class="nav-text">1 简介：什么是Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#镜像"><span class="nav-text">2 镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#镜像管理"><span class="nav-text">2.1 镜像管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#镜像瘦身"><span class="nav-text">2.1.1 镜像瘦身</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除镜像"><span class="nav-text">2.1.2 删除镜像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-repo"><span class="nav-text">2.2 Docker Repo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dockerfile创建镜像"><span class="nav-text">2.3 Dockerfile:创建镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-composer"><span class="nav-text">2.4 Docker Composer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器"><span class="nav-text">3 容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#容器生命周期管理"><span class="nav-text">3.1 容器生命周期管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭容器"><span class="nav-text">3.1.1 关闭容器</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

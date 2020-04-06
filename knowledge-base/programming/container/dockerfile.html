@@ -123,17 +123,17 @@
 
 
 
-  <meta name="description" content="## Dockerfile的使用方式  Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像：    注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile文件的所在路径。  另外，在Docker中镜像没有名字，只有标签，即Tag。如果`docker build`命令">
+  <meta name="description" content="1 Dockerfile的使用方式 Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像： 1docker build -t tag_of_image /path/to/diretory/of/Dockerfile 注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dockerfile手册">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/programming/container/dockerfile.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## Dockerfile的使用方式  Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像：    注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile文件的所在路径。  另外，在Docker中镜像没有名字，只有标签，即Tag。如果`docker build`命令">
+<meta property="og:description" content="1 Dockerfile的使用方式 Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像： 1docker build -t tag_of_image /path/to/diretory/of/Dockerfile 注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.517Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dockerfile手册">
-<meta name="twitter:description" content="## Dockerfile的使用方式  Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像：    注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile文件的所在路径。  另外，在Docker中镜像没有名字，只有标签，即Tag。如果`docker build`命令">
+<meta name="twitter:description" content="1 Dockerfile的使用方式 Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像： 1docker build -t tag_of_image /path/to/diretory/of/Dockerfile 注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile">
 
 
 
@@ -538,20 +538,13 @@
       <div class="post-body han-init-context">
         
         
-          
-## Dockerfile的使用方式
+          <h1 data-number="1" id="dockerfile的使用方式"><span class="header-section-number">1</span> Dockerfile的使用方式</h1>
+<p>Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t tag_of_image /path/to/diretory/of/Dockerfile</span><br></pre></td></tr></table></figure>
+<p>注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile文件的所在路径。</p>
+<p>另外，在Docker中镜像没有名字，只有标签，即Tag。如果<code>docker build</code>命令使用的是本地已经存在的镜像的名字，那么那个镜像将会失去这个Tag，其Tag会成为<code>&lt;none&gt;</code>。这类失去Tag的镜像被称为悬挂(dangling)镜像。如果你忽视了这个我问题产生了一堆这样的<code>&lt;none&gt;</code>镜像，可以使用下面的命令进行批量删除。<a href="https://stackoverflow.com/questions/26401649/building-a-new-docker-image-with-the-same-name-as-an-existing-ones" target="_blank" rel="noopener">source</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi $(docker images | grep "^&lt;none&gt;" | awk "&#123;print $3&#125;")</span><br></pre></td></tr></table></figure>
 
-Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之后（下一部分为介绍Dockerfile文件的详细教程），使用下面的命令创建镜像：
-
-<!--￼0-->
-
-注意这里最后的参数不是指向Dockfile这个文件的路径，而是Dockerfile文件的所在路径。
-
-另外，在Docker中镜像没有名字，只有标签，即Tag。如果`docker build`命令使用的是本地已经存在的镜像的名字，那么那个镜像将会失去这个Tag，其Tag会成为`<none>`。这类失去Tag的镜像被称为悬挂(dangling)镜像。如果你忽视了这个我问题产生了一堆这样的`<none>`镜像，可以使用下面的命令进行批量删除。[source](https://stackoverflow.com/questions/26401649/building-a-new-docker-image-with-the-same-name-as-an-existing-ones)
-
-<!--￼1-->
-
-</none></none>
         
       </div>
       
@@ -654,8 +647,17 @@ Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之�
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -927,6 +929,23 @@ Dockfile文件用来创建自定义的镜像，在完成Dockerfile文件的之�
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#dockerfile的使用方式"><span class="nav-text">1 Dockerfile的使用方式</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

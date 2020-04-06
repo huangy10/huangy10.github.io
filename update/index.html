@@ -123,18 +123,19 @@
 
 
 
-  <meta name="description" content="## 2020.03.31  处理`search.xml`的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入`\x08`这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成`search.xml`时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符：    ## 2020.03.30  该由pandoc来处理Heading编号">
+  <meta name="description" content="2020.03.31 处理search.xml的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入\x08这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成search.xml时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符： 1234567891011121314151617181920212223242526272829">
 <meta property="og:type" content="website">
 <meta property="og:title" content="博客更新">
 <meta property="og:url" content="http://www.codewoody.com/update/index.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="## 2020.03.31  处理`search.xml`的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入`\x08`这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成`search.xml`时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符：    ## 2020.03.30  该由pandoc来处理Heading编号">
+<meta property="og:description" content="2020.03.31 处理search.xml的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入\x08这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成search.xml时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符： 1234567891011121314151617181920212223242526272829">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://imgs.codewoody.com/uploads/big/568ddaf99f047d48af770aae35b15b77.png">
+<meta property="og:image" content="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png">
 <meta property="og:updated_time" content="2020-04-01T11:41:03.775Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="博客更新">
-<meta name="twitter:description" content="## 2020.03.31  处理`search.xml`的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入`\x08`这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成`search.xml`时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符：    ## 2020.03.30  该由pandoc来处理Heading编号">
+<meta name="twitter:description" content="2020.03.31 处理search.xml的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入\x08这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成search.xml时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符： 1234567891011121314151617181920212223242526272829">
 <meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/568ddaf99f047d48af770aae35b15b77.png">
 
 
@@ -486,128 +487,80 @@
       <div class="post-body han-init-context">
         
         
-          
-## 2020.03.31
-
-处理`search.xml`的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入`\x08`这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成`search.xml`时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符：
-
-<!--￼0-->
-
-## 2020.03.30
-
-该由pandoc来处理Heading编号的问题。Next主体的编号只对侧栏有效，无法为正文的标题添加编号。
-
-修改方法是在`_config.yml`的`pandoc`设置加上
-
-<!--￼1-->
-
-> 上面的`shift-heading-level-by`是因为之前我在写文章的时候首级Heading使用的`##`，pandoc编号会出现`0.1`的现象，即pandoc是从`h1`开始编号的。加上`shift-heading-level-by`之后`##`会被渲染成`h1`
-
-同时还需要禁用Next主题的编号功能。方法是修改`theme/next/_config.yml`，设置
-
-<!--￼2-->
-
-同时，为了让一些特殊的文档的要求，需要支持通过front-matter关闭编号功能。这需要我们修改pandoc的逻辑。让hexo-render-pandoc检查输入文件的front-matter，如果发现有`unnumbered`就不添加`number-sections`的渲染选项。按照如下内容修改`node_modules/hexo-renderer-pandoc/index.js`
-
-<!--￼3-->
-
-> 注意在迁移的时候这部分代码会无法同步，需要再次手工修改
-
-不过有一个问题，那就是在渲染器中是看不到front-matter的。渲染的调用方式是(见`node_modules/hexo/lib/hexo/post.js`的`Post.prototype.render`函数)：
-
-<!--￼4-->
-
-因此我们可以通过`options`这个渲染器的输入参数获取front-matter中的`markdown`关键字下的内容，也就是说我们在文章的开头加入
-
-<!--￼5-->
-
-不过这个写法比较麻烦，我们注册一个`before-post-render`的过滤器来处理
-
-<!--￼6-->
-
-这样可以自动检测`unnumbered`并加入到`markdown`关键字下面。
-
-## 2020.03.25
-
-[挖掘pandoc的扩展markdown功能](/posts/40936/)
-
-## 2020.03.22
-
-为pages自动添加创建日期。方法为修改`scripts/utils.js`
-
-<!--￼7-->
-
-## 2020.03.17
-
-在pages中现实卜算子阅读计数。修改方法为修改主题中的`themes/next/layout/_partials/page/page-header.swig`文件，修改后的内容为
-
-<!--￼8-->
-
-## 2019.12.01
-
-在根目录下面创建了一个shell脚本文件`link_posts.sh`，用于创建从pages发布到posts的链接。测试发现Hexo不能识别软链接，所以这里创建的都是硬链接。
-按照原理来说git应该不能管理硬链接。所以这里我们创建一个shell脚本，用于将来出现问题之后批量恢复这些链接。
-
-## 2019.09.19
-
-将展示的代码的字体从14pt降低到13pt。
-
-## 2019.09.17
-
-添加了一种增加脚注的方法，表现形式为：
-
-<img src="https://imgs.codewoody.com/uploads/big/568ddaf99f047d48af770aae35b15b77.png" style="width: 80%">
-
-脚注字体较小，为红色。通过自定义脚本（根目录下`scripts`文件夹下`utils.js`文件）实现：
-
-<!--￼9-->
-
-## 2019.08.02
-
-Reference部分文字渲染时不使用标准汉字标准格式的`em`渲染样式。方法为在`_layout.swig`中运行
-
-<!--￼10-->
-
-## 2019.06.29
-
-在标题前方添加Emoji
-
-## 2019.06.28
-
-1. 修改了内容宽度
-
-具体方法为修改文件`themes/next/source/css/_variables/Pisces.styl`
-
-<!--￼11-->
-
-2. 启用了Han Support
-3. 在menu中添加update项目
-4. 字体修改为思源宋体：[关于如何在网页中引入思源字体：漫谈Typekit](https://imjad.cn/archives/lab/how-to-introduce-source-han-fonts-into-web-pages-through-typekit)
-
-![思源宋体](https://img.imjad.cn/images/2018/06/29/sp180629_130227.png)
-
-## 2019.05.20
-
-困扰很久的VS Code引入莫名其妙添加的不可见\x08和\x05等控制字符的问题，最后可以通过[“Remove backspace control character”](https://marketplace.visualstudio.com/items?itemName=satokaz.vscode-bs-ctrlchar-remover)这个插件解决。在VS Code的设置中将`editor.formatOnSave`设置为true来自动处理文件。
-
-## 2019.05.15
-
-1. 修复了搜索和Feed的问题：文章中存在不可见字符，导致`atom.xml`和`search.xml`的格式出错
-2. 替换了字体服务器的CDN，从`//fonts.googleapis.com`修改为`//fonts.css.network`
-
-## 20190507
-
-### 2
-修改了Reference的样式。方法是在`themes/next/source/css/_custom/custom.styl`文件中添加如下内容：
-
-<!--￼12-->
-
-### 1
-
-通过上标提供短的参考信息的方法：
-
-<!--￼13-->
-
+          <h1 id="section">2020.03.31</h1>
+<p>处理<code>search.xml</code>的格式问题。这个比较蛋疼，是编辑器vscode有时候会很诡异地在文档中插入<code>\x08</code>这个ASCII字符，这个字符表示的是backspace操作。这对于正文影响不大，但是生成<code>search.xml</code>时会导致UTF-8的格式问题。我写了一个脚本来搜索替换这个字符：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">replace_t = [chr(<span class="number">8</span>)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">replace_all</span><span class="params">(a)</span>:</span></span><br><span class="line">    replaced = <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> replace_t:</span><br><span class="line">        replaced = replaced <span class="keyword">or</span> (t <span class="keyword">in</span> a)</span><br><span class="line">        a = a.replace(t, <span class="string">''</span>)</span><br><span class="line">    <span class="keyword">return</span> a, replaced</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">process_directory</span><span class="params">(d)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> pname <span class="keyword">in</span> os.listdir(d):</span><br><span class="line">        pname = os.path.join(d, pname)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(pname):</span><br><span class="line">            process_directory(pname)</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> pname.endswith(<span class="string">'.md'</span>):</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> open(pname) <span class="keyword">as</span> f:</span><br><span class="line">            data = f.read()</span><br><span class="line">            data, replaced = replace_all(data)</span><br><span class="line">        <span class="keyword">if</span> replaced:</span><br><span class="line">            <span class="keyword">with</span> open(pname, <span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">process_directory(<span class="string">'./source'</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="section-1">2020.03.30</h1>
+<p>该由pandoc来处理Heading编号的问题。Next主体的编号只对侧栏有效，无法为正文的标题添加编号。</p>
+<p>修改方法是在<code>_config.yml</code>的<code>pandoc</code>设置加上</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pandoc:</span></span><br><span class="line"><span class="attr">  extra:</span></span><br><span class="line"><span class="attr">    - shift-heading-level-by:</span> <span class="bullet">-1</span></span><br><span class="line"><span class="attr">    - number-sections:</span> <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面的<code>shift-heading-level-by</code>是因为之前我在写文章的时候首级Heading使用的<code>##</code>，pandoc编号会出现<code>0.1</code>的现象，即pandoc是从<code>h1</code>开始编号的。加上<code>shift-heading-level-by</code>之后<code>##</code>会被渲染成<code>h1</code></p>
+</blockquote>
+<p>同时还需要禁用Next主题的编号功能。方法是修改<code>theme/next/_config.yml</code>，设置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">toc:</span></span><br><span class="line"><span class="attr">    number:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>同时，为了让一些特殊的文档的要求，需要支持通过front-matter关闭编号功能。这需要我们修改pandoc的逻辑。让hexo-render-pandoc检查输入文件的front-matter，如果发现有<code>unnumbered</code>就不添加<code>number-sections</code>的渲染选项。按照如下内容修改<code>node_modules/hexo-renderer-pandoc/index.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(config.extra) &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> e <span class="keyword">in</span> config.extra) &#123;</span><br><span class="line">    <span class="keyword">var</span> eoption = config.extra[e];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> eoption)&#123;</span><br><span class="line">      <span class="keyword">if</span> (key === <span class="string">"number-sections"</span> &amp;&amp; (<span class="string">'unnumbered'</span> <span class="keyword">in</span> options)) &#123;</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125;</span><br><span class="line">      extra.push(<span class="string">'--'</span> + key);</span><br><span class="line">      <span class="keyword">if</span>(eoption[key]!=<span class="literal">null</span>) &#123;</span><br><span class="line">        extra.push(eoption[key]); </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意在迁移的时候这部分代码会无法同步，需要再次手工修改</p>
+</blockquote>
+<p>不过有一个问题，那就是在渲染器中是看不到front-matter的。渲染的调用方式是(见<code>node_modules/hexo/lib/hexo/post.js</code>的<code>Post.prototype.render</code>函数)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> options = data.markdown || &#123;&#125;;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="keyword">return</span> ctx.render.render(&#123;</span><br><span class="line">  text: data.content,</span><br><span class="line">  path: source,</span><br><span class="line">  engine: data.engine,</span><br><span class="line">  toString: <span class="literal">true</span>,</span><br><span class="line">  onRenderEnd(content) &#123;</span><br><span class="line">    <span class="keyword">if</span> (disableNunjucks) <span class="keyword">return</span> content;</span><br><span class="line">    <span class="comment">// Replace cache data with real contents</span></span><br><span class="line">    data.content = cacheObj.loadContent(content);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Render with Nunjucks</span></span><br><span class="line">    <span class="keyword">return</span> tag.render(data.content, data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, options);</span><br></pre></td></tr></table></figure>
+<p>因此我们可以通过<code>options</code>这个渲染器的输入参数获取front-matter中的<code>markdown</code>关键字下的内容，也就是说我们在文章的开头加入</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"><span class="section"># ...</span></span><br><span class="line">markdown:</span><br><span class="line">  unnumbered: true</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>不过这个写法比较麻烦，我们注册一个<code>before-post-render</code>的过滤器来处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'before_post_render'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'unnumbered'</span> <span class="keyword">in</span> data) &#123;</span><br><span class="line">    <span class="keyword">let</span> config = data.markdown || &#123;&#125;</span><br><span class="line">    config.unnumbered = data.unnumbered</span><br><span class="line">    data.markdown = config</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样可以自动检测<code>unnumbered</code>并加入到<code>markdown</code>关键字下面。</p>
+<h1 id="section-2">2020.03.25</h1>
+<p><a href="/posts/40936/">挖掘pandoc的扩展markdown功能</a></p>
+<h1 id="section-3">2020.03.22</h1>
+<p>为pages自动添加创建日期。方法为修改<code>scripts/utils.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'before_post_render'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> log = <span class="keyword">this</span>.log;</span><br><span class="line">  <span class="comment">// before_post_render之前hexo会给data默认添加上date，所以我们要重新解析front-matter</span></span><br><span class="line">  <span class="keyword">var</span> tmpPost = front.parse(data.raw);</span><br><span class="line">  <span class="keyword">if</span> (!tmpPost.date &amp;&amp; !data.skipAutoDateGenerate) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="regexp">/.*\.org/</span>.test(data.source)) <span class="keyword">return</span> data;</span><br><span class="line">    <span class="comment">//add new generated link</span></span><br><span class="line">    tmpPost.date = data.date.format(<span class="string">'YYYY-MM-DD hh:mm:ss'</span>);</span><br><span class="line">    data.skipAutoDateGenerate = <span class="literal">true</span></span><br><span class="line">    <span class="comment">//process post</span></span><br><span class="line">    <span class="keyword">let</span> postStr = front.stringify(tmpPost);</span><br><span class="line">    postStr = <span class="string">'---\n'</span> + postStr;</span><br><span class="line">    fs.writeFileSync(data.full_source, postStr, <span class="string">'utf-8'</span>);</span><br><span class="line">    log.i(<span class="string">"Add creation date for "</span> + data.source)</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="section-4">2020.03.17</h1>
+<p>在pages中现实卜算子阅读计数。修改方法为修改主题中的<code>themes/next/layout/_partials/page/page-header.swig</code>文件，修改后的内容为</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-meta"</span>&gt;</span></span><br><span class="line">  &#123;% if page.description %&#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"post-description"</span>&gt;</span>&#123;&#123; page.description &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  &#123;% endif %&#125;</span><br><span class="line">  &#123;% include 'breadcrumb.swig' %&#125;</span><br><span class="line">  <span class="comment">&lt;!--下面的这个div为添加的内容--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;% if not is_index and theme.busuanzi_count.enable and theme.busuanzi_count.post_views %&#125;</span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-divider"</span>&gt;</span>|<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"post-meta-item-icon"</span></span></span><br><span class="line"><span class="tag">      &#123;% <span class="attr">if</span> <span class="attr">not</span> <span class="attr">theme.post_meta.item_text</span> %&#125; <span class="attr">title</span>=<span class="string">"&#123;&#123; __('post.views') &#125;&#125;"</span> &#123;% <span class="attr">endif</span> %&#125;&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"fa fa-&#123;&#123; theme.busuanzi_count.post_views_icon &#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">      &#123;% if theme.post_meta.item_text %&#125; &#123;&#123; __('post.views') + __('symbol.colon') &#125;&#125; &#123;% endif %&#125;</span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"busuanzi-value"</span> <span class="attr">id</span>=<span class="string">"busuanzi_value_page_pv"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    &#123;% endif %&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="section-5">2019.12.01</h1>
+<p>在根目录下面创建了一个shell脚本文件<code>link_posts.sh</code>，用于创建从pages发布到posts的链接。测试发现Hexo不能识别软链接，所以这里创建的都是硬链接。 按照原理来说git应该不能管理硬链接。所以这里我们创建一个shell脚本，用于将来出现问题之后批量恢复这些链接。</p>
+<h1 id="section-6">2019.09.19</h1>
+<p>将展示的代码的字体从14pt降低到13pt。</p>
+<h1 id="section-7">2019.09.17</h1>
+<p>添加了一种增加脚注的方法，表现形式为：</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/568ddaf99f047d48af770aae35b15b77.png" style="width: 80%"></p>
+<p>脚注字体较小，为红色。通过自定义脚本（根目录下<code>scripts</code>文件夹下<code>utils.js</code>文件）实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">hexo.extend.filter.register(<span class="string">'before_post_render'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> config = <span class="keyword">this</span>.config;</span><br><span class="line">  <span class="keyword">if</span> (data.footnote !== <span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">return</span> data;</span><br><span class="line">    &#125;</span><br><span class="line">  data.content = data.content.replace(<span class="regexp">/【~([^】]+)】/g</span>, <span class="string">'&lt;span class="foot-note-span"&gt;【$1】&lt;/span&gt;'</span>)</span><br><span class="line">  <span class="keyword">return</span> data;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h1 id="section-8">2019.08.02</h1>
+<p>Reference部分文字渲染时不使用标准汉字标准格式的<code>em</code>渲染样式。方法为在<code>_layout.swig</code>中运行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">"refs"</span>)</span><br><span class="line">    .setAttribute(<span class="string">"lang"</span>, <span class="string">"en_US"</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="section-9">2019.06.29</h1>
+<p>在标题前方添加Emoji</p>
+<h1 id="section-10">2019.06.28</h1>
+<ol type="1">
+<li>修改了内容宽度</li>
+</ol>
+<p>具体方法为修改文件<code>themes/next/source/css/_variables/Pisces.styl</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// $content-desktop-large        = 1160px</span></span><br><span class="line">$content-desktop-large        = <span class="number">960</span>px</span><br><span class="line"><span class="comment">// $content-desktop-largest      = 73%</span></span><br><span class="line">$content-desktop-largest        = <span class="number">960</span>px</span><br></pre></td></tr></table></figure>
+<ol start="2" type="1">
+<li>启用了Han Support</li>
+<li>在menu中添加update项目</li>
+<li>字体修改为思源宋体：<a href="https://imjad.cn/archives/lab/how-to-introduce-source-han-fonts-into-web-pages-through-typekit" target="_blank" rel="noopener">关于如何在网页中引入思源字体：漫谈Typekit</a></li>
+</ol>
+<figure>
+<img src="https://img.imjad.cn/images/2018/06/29/sp180629_130227.png" alt=""><figcaption>思源宋体</figcaption>
+</figure>
+<h1 id="section-11">2019.05.20</h1>
+<p>困扰很久的VS Code引入莫名其妙添加的不可见08和05等控制字符的问题，最后可以通过<a href="https://marketplace.visualstudio.com/items?itemName=satokaz.vscode-bs-ctrlchar-remover" target="_blank" rel="noopener">“Remove backspace control character”</a>这个插件解决。在VS Code的设置中将<code>editor.formatOnSave</code>设置为true来自动处理文件。</p>
+<h1 id="section-12">2019.05.15</h1>
+<ol type="1">
+<li>修复了搜索和Feed的问题：文章中存在不可见字符，导致<code>atom.xml</code>和<code>search.xml</code>的格式出错</li>
+<li>替换了字体服务器的CDN，从<code>//fonts.googleapis.com</code>修改为<code>//fonts.css.network</code></li>
+</ol>
+<h1 id="section-13">20190507</h1>
+<h2 id="section-14">2</h2>
+<p>修改了Reference的样式。方法是在<code>themes/next/source/css/_custom/custom.styl</code>文件中添加如下内容：</p>
+<figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">div<span class="selector-id">#refs</span> &#123;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">13px</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">div<span class="selector-id">#refs</span> <span class="selector-tag">p</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="section-15">1</h2>
+<p>通过上标提供短的参考信息的方法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">sup</span> <span class="attr">title</span>=<span class="string">"Hover Text"</span>&gt;</span>?<span class="tag">&lt;/<span class="name">sup</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
         
       </div>
@@ -657,8 +610,17 @@ Reference部分文字渲染时不使用标准汉字标准格式的`em`渲染样�
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -930,6 +892,23 @@ Reference部分文字渲染时不使用标准汉字标准格式的`em`渲染样�
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#section"><span class="nav-text">2020.03.31</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-1"><span class="nav-text">2020.03.30</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-2"><span class="nav-text">2020.03.25</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-3"><span class="nav-text">2020.03.22</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-4"><span class="nav-text">2020.03.17</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-5"><span class="nav-text">2019.12.01</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-6"><span class="nav-text">2019.09.19</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-7"><span class="nav-text">2019.09.17</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-8"><span class="nav-text">2019.08.02</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-9"><span class="nav-text">2019.06.29</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-10"><span class="nav-text">2019.06.28</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-11"><span class="nav-text">2019.05.20</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-12"><span class="nav-text">2019.05.15</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#section-13"><span class="nav-text">20190507</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#section-14"><span class="nav-text">2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#section-15"><span class="nav-text">1</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

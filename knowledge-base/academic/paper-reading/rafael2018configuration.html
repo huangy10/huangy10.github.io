@@ -123,17 +123,19 @@
 
 
 
-  <meta name="description" content="这篇文章的标题是[Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8691973)，2018年的文章，作者是西班牙的。  3GPP发布了C-V2X标准以支持使">
+  <meta name="description" content="这篇文章的标题是Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications，2018年的文章，作者是西班牙的。 3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支">
 <meta property="og:type" content="website">
 <meta property="og:title" content="C-V2X Mode 4">
 <meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/rafael2018configuration.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="这篇文章的标题是[Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8691973)，2018年的文章，作者是西班牙的。  3GPP发布了C-V2X标准以支持使">
+<meta property="og:description" content="这篇文章的标题是Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications，2018年的文章，作者是西班牙的。 3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 <meta property="og:updated_time" content="2020-03-22T17:25:00.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C-V2X Mode 4">
-<meta name="twitter:description" content="这篇文章的标题是[Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8691973)，2018年的文章，作者是西班牙的。  3GPP发布了C-V2X标准以支持使">
+<meta name="twitter:description" content="这篇文章的标题是Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications，2018年的文章，作者是西班牙的。 3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png">
 
 
 
@@ -538,86 +540,74 @@
       <div class="post-body han-init-context">
         
         
-          
-这篇文章的标题是<i>[Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8691973)</i>，2018年的文章，作者是西班牙的。
-
-3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支持下直接通信。不过这一模式下的正确运行需要各个节点正确的配置主要参数。本文研究的是对于C-V2X运行性能影响最大的参数的最优配置。这里的分析基于不同信道负载和交通条件的情况。
-
-## 介绍
-
-3GPP发布的Release 14 C-V2X标准中提出使用LTE PC5接口来实现V2V通信。这一标准包含两种工作模式，分别是模式3和模式4.
-
-在模式3中，车辆之间可以直接通信，但是通信管理由基站进行。基站负责选择每个V2V传输使用的子信道和无线资源。另一方面，模式4则不需要基站的支持，车辆自动选择需要的资源进行V2V传输。为了实现这个模式下各个节点的资源分配，3GPP标准定义了一种分布式的**半永久**调度机制。显然这里的配置问题就非常关键了。
-
-> 其实是两个核心点：一是通过何种形式的信息交换来同步不同节点之间的资源分配；二是如何达到最优的分配。
-
-**3GPP并未就模式4的所有参数配置给出固定的值或者推荐的值**。如果车辆处于蜂窝网络的覆盖范围之内，这些参数可以由基站设置。当车辆需要在蜂窝网的覆盖范围内工作时，这些参数就需要提前设置了(preconfigured)。一些标准制定的组织如ETSI正在致力于定义模式4工作的默认参数。
-
-这篇文章使用的模式4的模拟器来自
-
-## C-V2X Mode 4
-
-### 物理层和子信道划分
-
-C-V2X支持10MHz和20MHz信道，使用SF-FDMA(Single-Carrier Frequency-Division Multiple Access)的物理层标准。信道被划分成1ms的子帧(sub-frame)，并整合成带宽180kHz的资源块(Resource Block, RB)<span class="foot-note-span">【即每个RB是在180kHz的带宽上传输1ms】</span>。C-V2X语境下的子信道是指同一个子帧下的一组RBs。每一个子信道下面包含的RB的数量取决于包的大小和使用的调制编码制式(Modulation and Coding Scheme, MCS)。子信道用来传输数据和控制信息。
-
-> C-V2X 的带宽最大只有20MHz，这个也太窄了。5G的最大带宽有800MHz，而WAVE的带宽也有10MHz
-
-数据的传输过程为Physical Sideline Shared Channels (PSSCH)上的一个传输块(Transport Block, TB)。控制信息的阐述以Pyisical Sidelink Control Channels (PSCH，少了一个Shared) 上的Sidelink Control Information (SCI)的形式进行（也被称为 Scheduling Assignment, SA）。一个TB包含了一个完整的包，TB可以占据一个或者多个子信道。这里说的包，可以是beacon消息，或者是Cooperative Awareness Message (CAM)消息，或者任意其他形式的事件驱动的消息。每个TB都会关联一个SCI消息，且TB和SCI需要在同一个子帧中传输。SCI需要占据2个RB，SCI中的信息包括
-
-- MCS
-- TB需要占据的RB的信息
-- 资源保留间隔(resource reservation interval)
-
-这里第三项资源保留间隔为车辆发送消息的周期，一般是100ms的整数倍。SCI中的信息是至关重要的，SCI被正确收到之后才能正确地解码TB传输的消息。下面的图展示了C-V2X中的子信道划分方式，其中包含3个子信道。图中对于TB传输使用的RB和SCI使用的RB做出了区分。
-
-![](https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png)
-
-> 一个RB能够传输多少个字节呢？
-
-### 基于感知的半持久调度
-
-在C-V2X模式4中车辆自动选择器使用的子信道。对应的参数在车辆处于基站覆盖范围内时可以由基站来配置。在没有基站支持时，需要预先进行配置。这些参数包括
-
-- 载波频率
-- 同步参考(Synchronization references)
-- 每个子帧上子信道的数量
-- 每个子信道上RB的数量
-- 其他
-
-这些参数的配置3GPP没有给定参考值。在Release 14 中，车辆通过基于感知的半持久调度方法来选择子信道。车辆在接下来的若干个连续的包传输过程中保持使用选定的子信道，这里连续的包传输的数量称为<i>Reselection Counter</i>，即重选计数。重选计数的值在5到15之间随机选择<span class="foot-note-span">【考虑到包传输间隔一般是100ms，即10Hz，那么这个重选的间隔大概是秒级别】</span>。在SCI消息中会包含重选计数的值。每轮传输以后重选计数的值减一。当这个计数器到0时，车辆以概率$(1 - P)$重新选择通信资源（子信道）。另外，当车辆当前持有的资源无法满足包传输需求时，也需要重新分配资源。这里的$P$值在0到0.8之间选择。$P$值越高，意味着车辆倾向于延长占有资源的时间。
-
-资源的重选过程分为三步：
-
-1. 当需要选择资源时，车辆$V$可以在时间$T$内做出决策，这个$T$为最大的建立延时，一般是100ms或者更低。这个时间段被称为选择窗口(Selection Window)。在选择窗口内，$V$需要确定候选的单子帧资源(Candidate Single-Subframe Resources, CSR)。具体而言，CSR是同一个子帧上的一组相邻的子信道。
-2. 车辆$V$在选择窗口$T$之前监听1000个子帧内（称为感知窗口，Sensing Window）的所有包传输情况。车辆然后建立起一个包含了在感知窗口中所有的CSR的列表$L_1$，除非<span class="foot-note-span">【这里的除非是指如果CSR满足了下面两个条件就不会加入$L_i$列表】</span>：
-    1. $V$ 收到了来自其他车辆的SCI信息，且这一SCI信息表示该车辆将会使用$V$在接下来要使用的网络资源；
-    2. $V$ 从比别的节点使用的RB上检测出来的平均Reference Signal Received Power (RSRP)高于阈值；这里的RSRP阈值是可配置的参数。
-
-    车辆在这两个条件需要同时满足时$V$才会将对应CSR排除在$L_1$之外。这个步骤需要确保$L_1$中至少包含了20%的资源总量，否则这一步会一直循环知道20%的目标达到。而在每轮循环中，RSRP阈值会升高3dB。
-3. $V$创建第二个CSR的列表$L_2$。$L_2$中的CSR总数必须占CSR总数的20%。$L_2$来自$L_1$中最优最低的平均RSSI的CSR。当所有车辆的传输频率是10Hz时，这里的平均RSSI的计算范围是过去的第$T_{CSR} - 100 \times j, j \in N, 1 \leq j \leq 10$ 子帧，参考上图。车辆$V$随机从$L_2$中选择一个CSR使用，并在接下来的<i>Reselection Counter</i>次传输中保持使用这一资源。
-
-> 理论上在感知段结束以后$L_2$就一直了，那么应该能够立刻给出资源预留方案，为什么要设置一个$T$的周期呢？
-
-> 这个机制的资源重选过程延时会比较大，而且没有解决潜在冲突的机制。例如两个节点同时决策，选中同一个资源，那么冲突发生后如何解决呢？
-
-基于感知的SPS机制也能支持车辆以20pps和50pps的速度通信。这是需要做出下面的修改：
-
-1. 20pps和50pps对应的最大容忍延时分别是50ms和20ms，因此相应的选择窗口
-
-### 小结:模式4参数
-
-- 保持概率$P$，即保持当前占有的资源块的概率。
-- Sensing Window
-- RSRP 阈值
-- 传输功率
-- $L_2$的大小
-
-## 总结
-
-这篇文章讲的是C-V2X模式4的标准内容。比较诧异的是蜂窝网分配给V2X的带宽最高居然只有20MHz，这个容量太小了，因此底层的数据率相比于WAVE不会有根本性的优势。甚至，虽然WAVE里面单个信道只有10MHz，但是总带宽可是有75MHz。
-
-
+          <p>这篇文章的标题是<i><a href="https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=8691973" target="_blank" rel="noopener">Configuraiton of the C-V2X Mode 4 Sidelink PC5 Interface for Vehicular Communications</a></i>，2018年的文章，作者是西班牙的。</p>
+<p>3GPP发布了C-V2X标准以支持使用蜂窝网络Sidelink PC5接口的V2X通信。这一标准包含两种操作模式。这篇文章主要面向模式4。这个模式的可以允许用户设备在没有基站支持下直接通信。不过这一模式下的正确运行需要各个节点正确的配置主要参数。本文研究的是对于C-V2X运行性能影响最大的参数的最优配置。这里的分析基于不同信道负载和交通条件的情况。</p>
+<h1 data-number="1" id="介绍"><span class="header-section-number">1</span> 介绍</h1>
+<p>3GPP发布的Release 14 C-V2X标准中提出使用LTE PC5接口来实现V2V通信。这一标准包含两种工作模式，分别是模式3和模式4.</p>
+<p>在模式3中，车辆之间可以直接通信，但是通信管理由基站进行。基站负责选择每个V2V传输使用的子信道和无线资源。另一方面，模式4则不需要基站的支持，车辆自动选择需要的资源进行V2V传输。为了实现这个模式下各个节点的资源分配，3GPP标准定义了一种分布式的<strong>半永久</strong>调度机制。显然这里的配置问题就非常关键了。</p>
+<blockquote>
+<p>其实是两个核心点：一是通过何种形式的信息交换来同步不同节点之间的资源分配；二是如何达到最优的分配。</p>
+</blockquote>
+<p><strong>3GPP并未就模式4的所有参数配置给出固定的值或者推荐的值</strong>。如果车辆处于蜂窝网络的覆盖范围之内，这些参数可以由基站设置。当车辆需要在蜂窝网的覆盖范围内工作时，这些参数就需要提前设置了(preconfigured)。一些标准制定的组织如ETSI正在致力于定义模式4工作的默认参数。</p>
+<p>这篇文章使用的模式4的模拟器来自</p>
+<h1 data-number="2" id="c-v2x-mode-4"><span class="header-section-number">2</span> C-V2X Mode 4</h1>
+<h2 data-number="2.1" id="物理层和子信道划分"><span class="header-section-number">2.1</span> 物理层和子信道划分</h2>
+<p>C-V2X支持10MHz和20MHz信道，使用SF-FDMA(Single-Carrier Frequency-Division Multiple Access)的物理层标准。信道被划分成1ms的子帧(sub-frame)，并整合成带宽180kHz的资源块(Resource Block, RB)<span class="foot-note-span">【即每个RB是在180kHz的带宽上传输1ms】</span>。C-V2X语境下的子信道是指同一个子帧下的一组RBs。每一个子信道下面包含的RB的数量取决于包的大小和使用的调制编码制式(Modulation and Coding Scheme, MCS)。子信道用来传输数据和控制信息。</p>
+<blockquote>
+<p>C-V2X 的带宽最大只有20MHz，这个也太窄了。5G的最大带宽有800MHz，而WAVE的带宽也有10MHz</p>
+</blockquote>
+<p>数据的传输过程为Physical Sideline Shared Channels (PSSCH)上的一个传输块(Transport Block, TB)。控制信息的阐述以Pyisical Sidelink Control Channels (PSCH，少了一个Shared) 上的Sidelink Control Information (SCI)的形式进行（也被称为 Scheduling Assignment, SA）。一个TB包含了一个完整的包，TB可以占据一个或者多个子信道。这里说的包，可以是beacon消息，或者是Cooperative Awareness Message (CAM)消息，或者任意其他形式的事件驱动的消息。每个TB都会关联一个SCI消息，且TB和SCI需要在同一个子帧中传输。SCI需要占据2个RB，SCI中的信息包括</p>
+<ul>
+<li>MCS</li>
+<li>TB需要占据的RB的信息</li>
+<li>资源保留间隔(resource reservation interval)</li>
+</ul>
+<p>这里第三项资源保留间隔为车辆发送消息的周期，一般是100ms的整数倍。SCI中的信息是至关重要的，SCI被正确收到之后才能正确地解码TB传输的消息。下面的图展示了C-V2X中的子信道划分方式，其中包含3个子信道。图中对于TB传输使用的RB和SCI使用的RB做出了区分。</p>
+<p><img src="https://imgs.codewoody.com/uploads/big/498720d5a6ef76436bf460368a9b58c6.png"></p>
+<blockquote>
+<p>一个RB能够传输多少个字节呢？</p>
+</blockquote>
+<h2 data-number="2.2" id="基于感知的半持久调度"><span class="header-section-number">2.2</span> 基于感知的半持久调度</h2>
+<p>在C-V2X模式4中车辆自动选择器使用的子信道。对应的参数在车辆处于基站覆盖范围内时可以由基站来配置。在没有基站支持时，需要预先进行配置。这些参数包括</p>
+<ul>
+<li>载波频率</li>
+<li>同步参考(Synchronization references)</li>
+<li>每个子帧上子信道的数量</li>
+<li>每个子信道上RB的数量</li>
+<li>其他</li>
+</ul>
+<p>这些参数的配置3GPP没有给定参考值。在Release 14 中，车辆通过基于感知的半持久调度方法来选择子信道。车辆在接下来的若干个连续的包传输过程中保持使用选定的子信道，这里连续的包传输的数量称为<i>Reselection Counter</i>，即重选计数。重选计数的值在5到15之间随机选择<span class="foot-note-span">【考虑到包传输间隔一般是100ms，即10Hz，那么这个重选的间隔大概是秒级别】</span>。在SCI消息中会包含重选计数的值。每轮传输以后重选计数的值减一。当这个计数器到0时，车辆以概率<span class="math inline">\((1 - P)\)</span>重新选择通信资源（子信道）。另外，当车辆当前持有的资源无法满足包传输需求时，也需要重新分配资源。这里的<span class="math inline">\(P\)</span>值在0到0.8之间选择。<span class="math inline">\(P\)</span>值越高，意味着车辆倾向于延长占有资源的时间。</p>
+<p>资源的重选过程分为三步：</p>
+<ol type="1">
+<li>当需要选择资源时，车辆<span class="math inline">\(V\)</span>可以在时间<span class="math inline">\(T\)</span>内做出决策，这个<span class="math inline">\(T\)</span>为最大的建立延时，一般是100ms或者更低。这个时间段被称为选择窗口(Selection Window)。在选择窗口内，<span class="math inline">\(V\)</span>需要确定候选的单子帧资源(Candidate Single-Subframe Resources, CSR)。具体而言，CSR是同一个子帧上的一组相邻的子信道。</li>
+<li>车辆<span class="math inline">\(V\)</span>在选择窗口<span class="math inline">\(T\)</span>之前监听1000个子帧内（称为感知窗口，Sensing Window）的所有包传输情况。车辆然后建立起一个包含了在感知窗口中所有的CSR的列表<span class="math inline">\(L_1\)</span>，除非<span class="foot-note-span">【这里的除非是指如果CSR满足了下面两个条件就不会加入<span class="math inline">\(L_i\)</span>列表】</span>：
+<ol type="1">
+<li><span class="math inline">\(V\)</span> 收到了来自其他车辆的SCI信息，且这一SCI信息表示该车辆将会使用<span class="math inline">\(V\)</span>在接下来要使用的网络资源；</li>
+<li><span class="math inline">\(V\)</span> 从比别的节点使用的RB上检测出来的平均Reference Signal Received Power (RSRP)高于阈值；这里的RSRP阈值是可配置的参数。</li>
+</ol>
+车辆在这两个条件需要同时满足时<span class="math inline">\(V\)</span>才会将对应CSR排除在<span class="math inline">\(L_1\)</span>之外。这个步骤需要确保<span class="math inline">\(L_1\)</span>中至少包含了20%的资源总量，否则这一步会一直循环知道20%的目标达到。而在每轮循环中，RSRP阈值会升高3dB。</li>
+<li><span class="math inline">\(V\)</span>创建第二个CSR的列表<span class="math inline">\(L_2\)</span>。<span class="math inline">\(L_2\)</span>中的CSR总数必须占CSR总数的20%。<span class="math inline">\(L_2\)</span>来自<span class="math inline">\(L_1\)</span>中最优最低的平均RSSI的CSR。当所有车辆的传输频率是10Hz时，这里的平均RSSI的计算范围是过去的第<span class="math inline">\(T_{CSR} - 100 \times j, j \in N, 1 \leq j \leq 10\)</span> 子帧，参考上图。车辆<span class="math inline">\(V\)</span>随机从<span class="math inline">\(L_2\)</span>中选择一个CSR使用，并在接下来的<i>Reselection Counter</i>次传输中保持使用这一资源。</li>
+</ol>
+<blockquote>
+<p>理论上在感知段结束以后<span class="math inline">\(L_2\)</span>就一直了，那么应该能够立刻给出资源预留方案，为什么要设置一个<span class="math inline">\(T\)</span>的周期呢？</p>
+</blockquote>
+<blockquote>
+<p>这个机制的资源重选过程延时会比较大，而且没有解决潜在冲突的机制。例如两个节点同时决策，选中同一个资源，那么冲突发生后如何解决呢？</p>
+</blockquote>
+<p>基于感知的SPS机制也能支持车辆以20pps和50pps的速度通信。这是需要做出下面的修改：</p>
+<ol type="1">
+<li>20pps和50pps对应的最大容忍延时分别是50ms和20ms，因此相应的选择窗口</li>
+</ol>
+<h2 data-number="2.3" id="小结模式4参数"><span class="header-section-number">2.3</span> 小结:模式4参数</h2>
+<ul>
+<li>保持概率<span class="math inline">\(P\)</span>，即保持当前占有的资源块的概率。</li>
+<li>Sensing Window</li>
+<li>RSRP 阈值</li>
+<li>传输功率</li>
+<li><span class="math inline">\(L_2\)</span>的大小</li>
+</ul>
+<h1 data-number="3" id="总结"><span class="header-section-number">3</span> 总结</h1>
+<p>这篇文章讲的是C-V2X模式4的标准内容。比较诧异的是蜂窝网分配给V2X的带宽最高居然只有20MHz，这个容量太小了，因此底层的数据率相比于WAVE不会有根本性的优势。甚至，虽然WAVE里面单个信道只有10MHz，但是总带宽可是有75MHz。</p>
 
         
       </div>
@@ -721,8 +711,17 @@ C-V2X支持10MHz和20MHz信道，使用SF-FDMA(Single-Carrier Frequency-Division
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -994,6 +993,23 @@ C-V2X支持10MHz和20MHz信道，使用SF-FDMA(Single-Carrier Frequency-Division
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-text">1 介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-v2x-mode-4"><span class="nav-text">2 C-V2X Mode 4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#物理层和子信道划分"><span class="nav-text">2.1 物理层和子信道划分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于感知的半持久调度"><span class="nav-text">2.2 基于感知的半持久调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结模式4参数"><span class="nav-text">2.3 小结:模式4参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-text">3 总结</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
