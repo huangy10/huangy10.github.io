@@ -565,12 +565,12 @@ V2X的通信涉及资源分配的问题。<del>一般由基站分配的方式我
 <h2 data-number="1.3" id="v2x通信要求"><span class="header-section-number">1.3</span> V2X通信要求</h2>
 <h3 data-number="1.3.1" id="可靠性要求"><span class="header-section-number">1.3.1</span> 可靠性要求</h3>
 <p>可靠性要求的定量表达一般是Outage probability (OP) 或者 Packet Reception Ratio (PRR)。PRR 的定义是成功接收到消息的车辆，占发送者通信范围内的车辆的数量的百分比：</p>
-<p><span class="math display">\[
+<p><span><span class="math display">\[
 \begin{aligned}
 \operatorname{PRR}_{u}(t) &amp;=\frac{1}{N_{u}(t)} \sum_{j=1}^{N_{u}(t)} 1\left\{\gamma_{j}^{(u)}(t) \geq \gamma_{\operatorname{th}}\right\} \\
 \gamma_{j}^{(u)}(t) &amp;=\sum_{k=1}^{N_{R B}} \frac{s_{k}^{u}(t) P_{u}(t)\left|H_{u j}^{k}(t)\right|^{2}}{\sigma^{2}+\sum_{m=1}^{N_{L}} s_{m}^{u}(t) P_{j}(t)\left|H_{m}^{k}(t)\right|^{2}}
 \end{aligned}
-\]</span></p>
+\qquad(1)\]</span></span></p>
 <p>其中：</p>
 <ul>
 <li><span class="math inline">\(N_u(t)\)</span> 为车辆<span class="math inline">\(u^{th}\)</span>，在时刻<span class="math inline">\(t\)</span>的邻居数量</li>
@@ -581,11 +581,11 @@ V2X的通信涉及资源分配的问题。<del>一般由基站分配的方式我
 <li><span class="math inline">\(s_k^u(t)\)</span>为在时间<span class="math inline">\(t\)</span>处的RB分配，为指示函数。当RB资源<span class="math inline">\(k^{th}\)</span>在时刻<span class="math inline">\(t\)</span>被分配给车辆<span class="math inline">\(u^{th}\)</span>时取1，否则为0</li>
 </ul>
 <p>OP是使用的最多的。OP定义为的无法以任何编码方式无误地传输<span class="math inline">\(N_u\)</span>个比特的概率：</p>
-<p><span class="math display">\[
+<p><span><span class="math display">\[
 p_u^{out} \triangleq Pr \{
   \sum_{i = 1}^{E_{u}^{all}}\rho \log (1 + \gamma) &lt; N_u
   \}
-\]</span></p>
+\qquad(2)\]</span></span></p>
 <blockquote>
 <p>公式长的很像香农公式，可以视为是超过信道容量的概率</p>
 </blockquote>
