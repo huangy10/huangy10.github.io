@@ -123,17 +123,19 @@
 
 
 
-  <meta name="description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 1 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。">
+  <meta name="description" content="文章的标题是Joint Optimization of Spectrum and Energy Efficiency Considering the C-V2X Security: A Deep Reinforcement Learning Approach，是北邮的人的文章。 关注这篇文章是因为这篇文章应该为深度学习在C-V2X资源调度过程中的应用提供了一定的范本。之前在看Deep Reinfo">
 <meta property="og:type" content="website">
-<meta property="og:title" content="WAVE中的SCH调度机制研究状况">
-<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/its/wave/sch.html">
+<meta property="og:title" content="基于深度增强学习的频谱·能源效率联合优化">
+<meta property="og:url" content="http://www.codewoody.com/knowledge-base/academic/paper-reading/liu2020joint.html">
 <meta property="og:site_name" content="治部少辅">
-<meta property="og:description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 1 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。">
+<meta property="og:description" content="文章的标题是Joint Optimization of Spectrum and Energy Efficiency Considering the C-V2X Security: A Deep Reinforcement Learning Approach，是北邮的人的文章。 关注这篇文章是因为这篇文章应该为深度学习在C-V2X资源调度过程中的应用提供了一定的范本。之前在看Deep Reinfo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-05T07:57:48.381Z">
+<meta property="og:image" content="https://imgs.codewoody.com/uploads/big/11177302a003fb5e6d4914f8044234ab.png">
+<meta property="og:updated_time" content="2020-04-08T12:19:41.466Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WAVE中的SCH调度机制研究状况">
-<meta name="twitter:description" content="WAVE协议中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。 1 在SCH上进行调度（W-HDF） 以下部分整理自[1]，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。 WAVE DCF机制的主要问题在于无法保证带宽和延时性能。">
+<meta name="twitter:title" content="基于深度增强学习的频谱·能源效率联合优化">
+<meta name="twitter:description" content="文章的标题是Joint Optimization of Spectrum and Energy Efficiency Considering the C-V2X Security: A Deep Reinforcement Learning Approach，是北邮的人的文章。 关注这篇文章是因为这篇文章应该为深度学习在C-V2X资源调度过程中的应用提供了一定的范本。之前在看Deep Reinfo">
+<meta name="twitter:image" content="https://imgs.codewoody.com/uploads/big/11177302a003fb5e6d4914f8044234ab.png">
 
 
 
@@ -143,7 +145,7 @@
 
   
   
-  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/its/wave/sch">
+  <link rel="canonical" href="http://www.codewoody.com/knowledge-base/academic/paper-reading/liu2020joint">
 
 
 
@@ -153,7 +155,7 @@
   };
 </script>
 
-  <title>WAVE中的SCH调度机制研究状况 | 治部少辅</title>
+  <title>基于深度增强学习的频谱·能源效率联合优化 | 治部少辅</title>
   
 
 
@@ -453,7 +455,7 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">WAVE中的SCH调度机制研究状况
+<h2 class="post-title" itemprop="name headline">基于深度增强学习的频谱·能源效率联合优化
 
 </h2>
 
@@ -497,7 +499,7 @@
             
           
           
-            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+            <li><a href="/knowledge-base/academic/paper-reading/">PAPER-READING</a></li>
           
         
       
@@ -509,19 +511,7 @@
             
           
           
-            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
-          
-        
-      
-    
-      
-      
-        
-          
-            
-          
-          
-            <li>SCH</li>
+            <li>LIU2020JOINT</li>
           
         
       
@@ -550,44 +540,100 @@
       <div class="post-body han-init-context">
         
         
-          <p><a href="./">WAVE协议</a>中指定了CCH和SCH两种信道。在这个页面我们梳理一下现有的学术界对于如何调度使用SCH信道的机制研究。</p>
-<h1 data-number="1" id="在sch上进行调度w-hdf"><span class="header-section-number">1</span> 在SCH上进行调度（W-HDF）</h1>
-<p>以下部分整理自<span class="citation" data-cites="marica2012enhancing">[1]</span>，这篇文章提出了一个名为W-HCF(WAVE-based Hybrid Coordination Function)的信道访问机制。该机制优化的目标是非安全类应用。</p>
-<p><a href="./wave.html">WAVE DCF</a>机制的主要问题在于无法保证带宽和延时性能。这对于特定的应用是难以忍受的（如多媒体串流）。W-HCF机制的核心在于针对非安全类应用，区分QoS敏感和QoS不敏感的业务类型，并且针对这两种业务采取不同的SCH访问控制策略。</p>
-<p>对于QoS不敏感的业务，W-HCF保留了WAVE标准中的特点：</p>
-<ol type="1">
-<li>简化的WBSS结构，不需要认证(Authentication)和关联(Association)过程；</li>
-<li>EDCA on SCHI</li>
-</ol>
-<p>而对于QoS敏感的业务，需要一些额外的机制来保证带宽和延时性能。W-HCF提出的这些机制和WAVE完全兼容的。</p>
-<p>对于QoS敏感的服务的提供者，其必须要知道对其提供的服务感兴趣的用户，并且有能力为这些资源预留资源。这些欲求意味着：</p>
-<ol type="1">
-<li>对服务感兴趣的用户需要显式地(explicitly)发送消息来加入WBSS；</li>
-<li>服务的提供者需要显式地预留资源来确保相关用户访问服务时能够有无竞争的资源访问；</li>
-<li>要有机制确保只有目标用户还在服务提供者的覆盖范围内时才进行Polling (Polling的含义见下面的过程描述第五点)</li>
-<li>在竞争性的服务提供者之间建立协作机制，以避免无干扰的WBSS（通过使用不同的SCH信道或者是利用TDMA）</li>
-</ol>
-<p>W-HDF的主要过程如下：</p>
-<ol type="1">
-<li><em>Q-WBSS初始化</em>。在CCHI，Q-pr广播QoS-Enhanced WAVE Service Advertisements (Q-WSA) 来创建Q-WBSS。Q-WSA是对于原始WSA信息的扩展；</li>
-<li><em>A Gossip-based distributed CAP reservation scheme</em>: 减少临近的Q-pr之间的干扰和冲突。这里的CAP是指<em>controlled access period</em></li>
-<li><em>User registration and TXOP negotiation</em>: 在SCH上，Q-users向Q-pr请求分配CAP资源；</li>
-<li><em>Controlled data transfer</em>: 在SCH上，CAP阶段和竞争阶段交替。CAP的起始时间和持续时间由Q-pr控制。</li>
-<li><em>基于位置的Polling</em>：这里的Polling指由Q-pr主动，向多个用户拉取数据的过程。Q-pr会根据车辆的位置和速度来决定是否进行Polling，从而避免资源浪费（例如不要从已经不在Q-pr覆盖范围内的用户上拉取数据）</li>
-</ol>
-<p>上面步骤中的缩写含义为：Q-pr: QoS Provider，Q-user: QoS User。</p>
-<h2 data-number="1.1" id="q-wbss初始化"><span class="header-section-number">1.1</span> Q-WBSS初始化</h2>
-<p>Q-WBSS是围绕着Q-pr建立的，因此Q-WBSS的初始化实质就是Q-pr初始化的过程。Q-pr在CCH上通过EDCA的规则来尝试通过广播Q-WSA信息来占用信道。Q-WSA在原始WSA包的基础上新增了两个字段：CAP频段和4个字节的<code>Own_SCH_Allocation</code>字段。这一四字节字段包含两个两字节的子字段：<code>CAP_start</code>, <code>CAP_duration</code>。前者是预留的Contention-Free的CAP阶段的开始时间，后者是为了满足用户通信需求的CAP持续时间。在初始化阶段，Q-pr并不知道潜在的用户数量，因此最初的广播只包含了Q-pr自身的通信需求（主要是Beacon）。</p>
+          <p>文章的标题是Joint Optimization of Spectrum and Energy Efficiency Considering the C-V2X Security: A Deep Reinforcement Learning Approach，是北邮的人的文章。</p>
+<p>关注这篇文章是因为这篇文章应该为深度学习在C-V2X资源调度过程中的应用提供了一定的范本。之前在看<a href="/posts/34309/">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>这篇文章时也提到了类似的内容。文章的优化目标是最大化信道容量，同时减少延时。两个权重通过加权求和进行综合。其实信道容量和延时这两个要素就已经包含了频谱和能源效率这两个因素。不过这篇文章没有考虑编队的因素，也不曾考虑安全的问题。</p>
+<p>这篇文章解决的挑战性问题是 如何提升编队网络中的频谱效率和能源效率。这篇文章提出的机制名为a <strong>S</strong>ecurity-Aware Approach to Enhancing S<strong>E</strong> and E<strong>E</strong> Based on <strong>D</strong>eep Reinforcement Learning (SEED)。文章提出的优化问题的优化目标兼顾了频谱效率和能源效率，同时将保密速率(secrecy rate)作为限制条件。随后优化问题被转化成基于深度Q网络的 V2V和V2I 链路的频谱和功率分配问题。</p>
+<h1 data-number="1" id="intro中的新内容"><span class="header-section-number">1</span> Intro中的新内容</h1>
+<ul>
+<li>文章讨论了交叉路口的编队交会情形。在交叉路口，资源受限问题和安全问题会更加严峻。</li>
+<li>安全问题具体表现为车辆通信时要确保一个安全的传输速率(secrecy transmission rate)。</li>
+<li>C-V2X包含5.9GHz和2GHz两段频谱。<del>提到频谱共享问题，那应该是Mode 3的Overlay模式。Overlay模式会带来V2I和V2V的干扰问题。</del>，后文提到文章使用的是Mode-4</li>
+<li>本文的Contribution
+<ul>
+<li>考虑了V2I和V2V两种链路的频谱效率(SE)和能量效率(EE)。V2V和V2I的综合权重取决于使用频率。为了解决传统的状态行为空间爆炸问题，本文使用了DQN方法。</li>
+<li>本文宣称是第一个做SE和EE的联合优化，同时考虑V2V的安全速率的问题</li>
+<li>基于DQN策略，编队的Leader和编队成员会被分配专属的传输功率值<span class="foot-note-span">【即编队的成员和编队的Leader使用不同的功率传输】</span></li>
+</ul></li>
+</ul>
+<h1 data-number="2" id="系统模型"><span class="header-section-number">2</span> 系统模型</h1>
+<p>系统模型如 <a href="#fig:系统模型">图 1</a> 所示，这里考虑一个高密度的、资源受限的、存在窃听者的编队场景。在这个场景中路口同时存在编队以及自由车辆。</p>
+<figure>
+<img src="https://imgs.codewoody.com/uploads/big/11177302a003fb5e6d4914f8044234ab.png" id="fig:系统模型" alt=""><figcaption>图 1: 系统模型</figcaption>
+</figure>
+<p>编队中Leader需要将CAM消息发送给所有的编队成员，而编队内的其他成员只需要将CAM消息发送给相邻的车辆。编队的Leader和自由车辆可以通过V2I通信获取关于交通和娱乐的信息。文章中使用的资源分配管理机制是C-V2X的mode 4机制。每个V2V链路，视为一个代理，部署一个DQN模型来决定其使用的子信道和发射功率。 然后所有的链路通过共享的奖励函数(Reward function)联合决定编队网络的频谱和功率水平选择。</p>
+<p>假设V2I通信和多编队V2V通信使用的是是OFDM技术。</p>
 <blockquote>
-<p>作为广播，Q-pr在广播后不会收到任何反馈，作者在这里说可以通过多次广播来提高可靠性</p>
+<p>这有点扯淡了啊，C-V2X mode 4 标准有明文规定，使用SD-FDMA机制的。</p>
 </blockquote>
-<h2 data-number="1.2" id="gossip-based-distributed-cap-reservation"><span class="header-section-number">1.2</span> Gossip-based distributed CAP reservation</h2>
-<h1 class="unnumbered" data-number="" id="reference">Reference</h1>
-<div id="refs" class="references" role="doc-bibliography">
-<div id="ref-marica2012enhancing">
-<p>[1] M. Amadeo, C. Campolo, and A. Molinaro, “Enhancing ieee 802.11p/wave to provide infotainment applications in vanets,” <em>Ad Hoc Networks</em>, vol. 10, no. 2, pp. 253–269, 2012.</p>
+<p>假设在某一个时刻，编队网络包含了<span class="math inline">\(M\)</span>个V2V链路，标记为<span class="math inline">\(\mathcal{M} = \{1,2,\dots, m, \dots, M\}\)</span>，<span class="math inline">\(N\)</span>个V2I链路，标记为<span class="math inline">\(\mathcal{N} = \{1,2,\dots, n, \dots,N\}\)</span>以及<span class="math inline">\(N\)</span>个子信道。考虑到相比于V2V链路，V2I的使用率比较低，为了简化问题，V2I链路的数量被认为是固定的<span class="math inline">\(N\)</span>。本文假设V2V链路复用了V2I链路的上行链路。<span class="foot-note-span">【沙雕，你这是mode 3，不是mode 4，mode 4使用的sidelink频谱和UPLINK是不同的。】</span></p>
+<h2 data-number="2.1" id="计算模型"><span class="header-section-number">2.1</span> 计算模型</h2>
+<p>子信道分配矩阵为:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbf{A} &amp;=\left[\begin{array}{cccc}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1 N} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2 N} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+a_{M 1} &amp; a_{M 2} &amp; \cdots &amp; a_{M N}
+\end{array}\right] \\
+a_{m n}&amp;=\left\{\begin{array}{l}
+1, \text {mth} \text { V2V link reuse } n \text { th V2I link } \\
+0, \text { otherwise }
+\end{array}\right.
+\end{aligned}
+\]</span></p>
+<p>第n个V2I链路的传输速率是</p>
+<p><span class="math display">\[
+R_n = \log_2 \left(1 + \frac{P_{V2I} h_{n, b}}{\sum_{m = 1}^{M} a_{m,n}P_{V2V} h_{m, b} + \sigma^2} \right)
+\]</span></p>
+<p>其中<span class="math inline">\(P_{V2I}\)</span>和<span class="math inline">\(P_{V2V}\)</span>分别代表第n个V2I链路和第m个V2V链路的发射功率。<span class="math inline">\(h_{n, b}, h_{m, b}\)</span>为对应节点链路到基站的增益。<span class="math inline">\(\sigma^2\)</span>为噪声功率。第m个V2V链路的的传输速率为</p>
+<p><span class="math display">\[
+\begin{array}{c}
+R_{m} = \log_2\left(1 + \frac{P_{V2V}h_m}{I_m + \sigma^2}\right) \\
+I_m = \sum\limits_{n=1}^{N} a_{mn}P_{V2I}h_{n,m} + \sum\limits_{n=1}^{N}\sum\limits_{j\neq m}^{M}a_{mn} a_{jn} P_{V2V} h_{m,j}
+\end{array}
+\]</span></p>
+<p>其中<span class="math inline">\(h_m\)</span>和<span class="math inline">\(h_{m,j}\)</span>为对应的信道增益。<span class="math inline">\(I_m\)</span>为干扰水平。对于窃听者来说，</p>
+<p><span class="math display">\[
+\begin{array}{c}
+R_{m, e} = \log_2 \left(
+  1 + \frac{P_{V2V} h_{m, e}}{I_{eve} + \sigma^2}
+  \right) \\
+I_{eve} = \sum\limits_{n=1}^{N} a_{mn}P_{V2I}h_{n,e} + \sum\limits_{n=1}^{N}\sum\limits_{j\neq m}^{M}a_{mn} a_{jn} P_{V2V} h_{j,e}
+\end{array}
+\]</span></p>
+<p>保密率(Secrecy rate)概念为传输速率和窃听速率的差值。因此V2V链路的保密率为</p>
+<div class="note danger">
+<p>要算这个岂不是要知道窃听者的信道增益数据？换言之是需要知道窃听者的具体位置的。这个前提成立么？</p>
 </div>
-</div>
+<p><span class="math display">\[
+R_{m, security} = [R_m - R_{m, e}]^+
+\]</span></p>
+<p>其中<span class="math inline">\(y = [x]^+ = \max\{x, 0\}\)</span>。</p>
+<h2 data-number="2.2" id="问题建模"><span class="header-section-number">2.2</span> 问题建模</h2>
+<p>综合各个因素之后的V2V链路效率函数为</p>
+<p><span class="math display">\[
+\zeta_{V 2 V}=\sum_{m=1}^{M} B_{n} R_{m} /\left(\sum_{n=1}^{N} B_{n} \cdot \left(\sum_{m=1}^{M} P_{V 2 V}+M P_{C}\right)\right)
+\]</span></p>
+<p><span class="math inline">\(P_C\)</span>为电路消耗的功率，<span class="math inline">\(B_n\)</span>为带宽。V2I里链路的效用函数为</p>
+<p><span class="math display">\[
+\zeta_{V 2 I}=\sum_{n=1}^{N} B_{n} R_{n} /\left(\sum_{n=1}^{N} B_{n} \cdot\left(\sum_{n=1}^{N} P_{V 2 I}+N P_{C}\right)\right)
+\]</span></p>
+<p>最终要优化的总体的效用函数为</p>
+<p><span class="math display">\[
+\begin{array}{l}
+\max \lambda_\alpha \zeta_{V2V} + \lambda_{\alpha} \zeta_{V2I} \\
+\begin{aligned}
+s.t.&amp; \sum\limits_{n=1}^{N} a_{mn} \leq 1, \forall m \\
+&amp; R_{m, security} \geq R_T, \forall m \\
+&amp; 0 \leq P_{V2I} \leq P_{max 1} \\
+&amp; 0 \leq P_{V2V} \leq P_{max 2} \\
+&amp; a_{mn} = \{0, 1\}
+\end{aligned}
+\end{array}
+\]</span></p>
+<hr>
+<p>后面其实还有DQN的建模部分，不过这部分和<a href="/posts/34309/">Deep Reinforcement Learning Based Resource Allocation for V2V Communications</a>里提的也比较像，这里不再赘述。</p>
 
         
       </div>
@@ -633,7 +679,7 @@
             
           
           
-            <li><a href="/knowledge-base/academic/its/">ITS</a></li>
+            <li><a href="/knowledge-base/academic/paper-reading/">PAPER-READING</a></li>
           
         
       
@@ -645,19 +691,7 @@
             
           
           
-            <li><a href="/knowledge-base/academic/its/wave/">WAVE</a></li>
-          
-        
-      
-    
-      
-      
-        
-          
-            
-          
-          
-            <li>SCH</li>
+            <li>LIU2020JOINT</li>
           
         
       
@@ -996,7 +1030,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在sch上进行调度w-hdf"><span class="nav-text">1 在SCH上进行调度（W-HDF）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#q-wbss初始化"><span class="nav-text">1.1 Q-WBSS初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gossip-based-distributed-cap-reservation"><span class="nav-text">1.2 Gossip-based distributed CAP reservation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#reference"><span class="nav-text">Reference</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#intro中的新内容"><span class="nav-text">1 Intro中的新内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#系统模型"><span class="nav-text">2 系统模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#计算模型"><span class="nav-text">2.1 计算模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题建模"><span class="nav-text">2.2 问题建模</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -1182,9 +1216,9 @@
 
 <script>
   var disqus_config = function() {
-    this.page.url = "http://www.codewoody.com/knowledge-base/academic/its/wave/sch.html";
-    this.page.identifier = "knowledge-base/academic/its/wave/sch.html";
-    this.page.title = 'WAVE中的SCH调度机制研究状况';
+    this.page.url = "http://www.codewoody.com/knowledge-base/academic/paper-reading/liu2020joint.html";
+    this.page.identifier = "knowledge-base/academic/paper-reading/liu2020joint.html";
+    this.page.title = '基于深度增强学习的频谱·能源效率联合优化';
     };
   function loadComments() {
     var d = document, s = d.createElement('script');
