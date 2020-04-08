@@ -153,8 +153,8 @@ template {
 }
 body {
   position: relative;
-  font-family: "Biaodian Pro Sans GB", "Times New Roman", STSong, "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
-  font-size: 14px;
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", sans-serif;
+  font-size: 16px;
   line-height: 2;
   color: #555;
   background: #f5f7f9;
@@ -166,7 +166,7 @@ body {
 }
 @media (min-width: 1200px) {
   body {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 h1,
@@ -179,7 +179,7 @@ h6 {
   padding: 0;
   font-weight: bold;
   line-height: 1.5;
-  font-family: "Biaodian Pro Sans GB", "Times New Roman", STSong, "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", sans-serif;
 }
 h1 {
   font-size: 22px;
@@ -504,7 +504,7 @@ pre,
 }
 pre,
 code {
-  font-family: consolas, Menlo, "Biaodian Pro Sans GB", "Times New Roman", STSong, "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", monospace;
+  font-family: consolas, Menlo, "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", monospace;
 }
 code {
   overflow-wrap: break-word;
@@ -1132,7 +1132,7 @@ pre .javascript .function {
   line-height: 36px;
   font-size: 20px;
   font-weight: normal;
-  font-family: "Biaodian Pro Sans GB", "Times New Roman", STSong, "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", sans-serif;
 }
 .site-subtitle {
   margin-top: 10px;
@@ -1292,7 +1292,7 @@ pre .javascript .function {
 .post-body {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  font-family: "Biaodian Pro Sans GB", "Times New Roman", STSong, "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", sans-serif;
 }
 .post-body span.exturl .fa {
   font-size: 14px;
@@ -1308,7 +1308,7 @@ pre .javascript .function {
 .post-body .figure .caption {
   margin: -20px auto 15px;
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   color: #999;
   font-weight: bold;
   line-height: 1;
@@ -1557,7 +1557,7 @@ pre .javascript .function {
 .posts-expand .post-meta {
   margin: 3px 0 60px 0;
   color: #999;
-  font-family: "Biaodian Pro Sans GB", "Times New Roman", STSong, "Helvetica Neue", Helvetica, Arial, "Han Heiti GB", "PingFang SC", sans-serif;
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", sans-serif;
   font-size: 12px;
   text-align: center;
 }
@@ -1841,7 +1841,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #69329a;
+  background: #961879;
 }
 .feed-link,
 .chat {
@@ -2092,9 +2092,6 @@ pre .javascript .function {
   50%, 70% {
     transform: scale(1.1);
   }
-}
-i.fa {
-  font-family: FontAwesome !important;
 }
 .local-search-pop-overlay {
   position: fixed;
@@ -2448,7 +2445,7 @@ ul.breadcrumb {
   margin: 1em 0;
   padding: 0 2em;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
 }
 ul.breadcrumb li {
   display: inline;
@@ -2988,4 +2985,11 @@ div.poem-block .poem-author {
 section.footnotes p {
   margin-bottom: 0;
   font-size: 12px;
+}
+article strong:lang(zh-Hans) {
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", "PingFang SC", "Microsoft Yahei";
+  font-weight: bold;
+}
+article blockquote:lang(zh-Hans) {
+  font-family: "Biaodian Pro Sans GB", "Times New Roman", "思源宋体", "Source Han Serif CN", STSong, SimSun, "PingFang SC", sans-serif;
 }
